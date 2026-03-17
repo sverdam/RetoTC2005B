@@ -1,0 +1,11 @@
+{
+  "name": "reto",
+  "version": "1.0.0",
+  "description": "Hello world",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}
