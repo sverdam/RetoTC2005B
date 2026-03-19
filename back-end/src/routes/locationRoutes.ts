@@ -1,22 +1,22 @@
 import { Router } from 'express';
 import {
-  createUser,
-  deleteUser,
-  getAllUsers,
-  getUserById,
-  updateUser
-} from '../controllers/userController';
+  createLocation,
+  deleteLocation,
+  getAllLocations,
+  getLocationById,
+  updateLocation
+} from '../controllers/locationController';
 
-const userRouter: Router = Router();
+const locationRouter: Router = Router();
 
-userRouter.get('/', getAllUsers);
+locationRouter.get('/', getAllLocations);
 
-userRouter.get('/:id', getUserById);
+locationRouter.get('/:id', getLocationById);
 
-userRouter.post('/', createUser);
+locationRouter.post('/', createLocation);
 
-userRouter.patch('/:id', updateUser);
+locationRouter.patch('/:id', updateLocation);
 
-userRouter.delete('/', deleteUser);
+locationRouter.delete('/:id', deleteLocation);
 
-export default userRouter;
+export default locationRouter;
