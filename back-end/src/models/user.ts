@@ -36,7 +36,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes>{
      type: DataType.ENUM(...Object.values(UserRole)),
      allowNull: false,
    })
-   rol!: UserRole;
+   role!: UserRole;
 
    @ForeignKey(() => Company)
    @Column({
