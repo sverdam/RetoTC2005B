@@ -25,7 +25,7 @@ export class Contact extends Model<ContactAttributes, ContactCreationAttributes>
     type: DataType.ENUM(...Object.values(ContactType)),
     allowNull: false,
    })
-   rol!: ContactType;
+   type!: ContactType;
 
    @Column 
    contactInfo!: string; 
