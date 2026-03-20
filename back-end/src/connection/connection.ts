@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 import { Company } from "../models/company"; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
+import { Contact } from "../models/contact";
 
 const { loadEnvFile } = require('node:process');
 loadEnvFile('back-end/.env');
@@ -20,7 +21,8 @@ const connection = new Sequelize({
     models: [
         Company,
         User,
-        Location
+        Location,
+        Contact
     ] 
 }); 
 

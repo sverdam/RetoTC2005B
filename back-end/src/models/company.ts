@@ -2,7 +2,8 @@
 import {Table, Model, Column, CreatedAt, UpdatedAt, DataType, HasMany} from 'sequelize-typescript'; 
 import {Optional} from 'sequelize'; 
 import { User } from "../models/user";
-import { Location } from "../models/location"
+import { Location } from "../models/location";
+import { Contact } from "../models/contact";
 
 interface CompanyAttributes{ 
   id: number; 
@@ -53,4 +54,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @HasMany(() => Location)
    declare locations?: Location[];
+
+   @HasMany(() => Contact)
+   declare contacts?: Contact[];
 } 

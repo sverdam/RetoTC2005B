@@ -2,6 +2,7 @@ import { RequestHandler, Request, Response } from "express";
 import { Company } from "../models/company"; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
+import { Contact } from "../models/contact";
  
 
 //Create new company 
@@ -46,6 +47,10 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                 {
                     model: Location,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt"] }
+                },
+                {
+                    model: Contact,
+                    attributes: { exclude: ["companyId"] }
                 }
             ]
         }); 
@@ -73,6 +78,10 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                 {
                     model: Location,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt"] }
+                },
+                {
+                    model: Contact,
+                    attributes: { exclude: ["companyId"] }
                 }
             ]
         }); 
