@@ -27,7 +27,7 @@ export const createContact: RequestHandler = (req: Request, res: Response) => {
         .catch((err) => {
             res.status(500).json({
                 status: "error",
-                message: "Something happened creating a location. " + err.message,
+                message: "Something happened creating a contact. " + err.message,
                 payload: null,
             });
         });
@@ -62,7 +62,7 @@ export const getContactById: RequestHandler = async (req: Request, res: Response
             include: [{ model: Company, attributes: ["id", "name"] }],
         });
 
-        return res.status(200).json(location);
+        return res.status(200).json(contact);
     } catch (error) {
         return res.status(500).json({
             message: "Error getting contact",

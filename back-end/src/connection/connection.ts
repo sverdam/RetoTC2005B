@@ -3,8 +3,12 @@ import { Company } from "../models/company";
 import { User } from "../models/user";
 import { Location } from "../models/location";
 import { Contact } from "../models/contact";
-
-const { loadEnvFile } = require('node:process');
+import { Category } from "../models/category";
+import { Filter } from "../models/filter";
+import { CompanyFilter } from "../models/companyFilter";
+import { loadEnvFile } from 'node:process';
+/*
+const { loadEnvFile } = require('node:process');*/
 loadEnvFile('back-end/.env');
 
 const userID = process.env.DB_USERNAME ?? "unknown";
@@ -22,13 +26,16 @@ const connection = new Sequelize({
         Company,
         User,
         Location,
-        Contact
+        Contact,
+        Category,
+        Filter,
+        CompanyFilter
     ] 
 }); 
 
 async function connectionDB() {
   try {
-    await connection.authenticate(); // authenticate verifica la conexión
+    await connection.authenticate(); // authenticate verifies the connection
     console.log("Conexión exitosa a la base de datos.");
     await connection.sync();
   } catch (e) {

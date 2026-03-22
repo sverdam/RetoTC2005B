@@ -1,9 +1,11 @@
 
-import {Table, Model, Column, CreatedAt, UpdatedAt, DataType, HasMany} from 'sequelize-typescript'; 
-import {Optional} from 'sequelize'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, HasMany, BelongsToMany } from 'sequelize-typescript'; 
+import { Optional } from 'sequelize'; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
 import { Contact } from "../models/contact";
+import { Filter } from "../models/filter";
+import { CompanyFilter } from "../models/companyFilter";
 
 interface CompanyAttributes{ 
   id: number; 
@@ -57,4 +59,9 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @HasMany(() => Contact)
    declare contacts?: Contact[];
+
+   @BelongsToMany(() => Filter, { 
+    through: () => CompanyFilter,
+   })
+   declare filters?: Filter[];
 } 

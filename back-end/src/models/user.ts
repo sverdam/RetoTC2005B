@@ -1,6 +1,6 @@
 
-import {Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo} from 'sequelize-typescript'; 
-import {Optional} from 'sequelize'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
+import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
 enum UserRole {
