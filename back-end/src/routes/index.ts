@@ -12,7 +12,7 @@ apiRouter.use('/company', companyRoutes);
 apiRouter.use('/user', userRoutes);  
 apiRouter.use('/location', locationRoutes);
 apiRouter.use('/contact', contactRoutes);
-apiRouter.use('./category', categoryRoutes);
+apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
