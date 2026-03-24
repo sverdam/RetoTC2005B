@@ -6,10 +6,8 @@ import { Contact } from "../models/contact";
 import { Category } from "../models/category";
 import { Filter } from "../models/filter";
 import { CompanyFilter } from "../models/companyFilter";
-import { loadEnvFile } from 'node:process';
-/*
-const { loadEnvFile } = require('node:process');*/
-loadEnvFile('back-end/.env');
+import dotenv from "dotenv";
+dotenv.config({ path: "back-end/.env" });
 
 const userID = process.env.DB_USERNAME ?? "unknown";
 const userPassword = process.env.DB_PASSWORD ?? "unknown";
