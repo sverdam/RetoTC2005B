@@ -5,7 +5,7 @@ import { Company } from "../models/company";
 interface TextModuleAtributes{ 
   id: number; 
   title: string ; 
-  text: string ; 
+  text: Text ; 
   tier: number ;
 } 
 
@@ -20,7 +20,7 @@ export class TextModule extends Model<TextModuleAtributes, TextModuleCreationAtt
     title!: string;
 
     @Column
-    text!: string;
+    text!: Text;
 
     @Column
     tier!: number;
