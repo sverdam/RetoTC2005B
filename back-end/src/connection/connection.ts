@@ -6,6 +6,7 @@ import { Contact } from "../models/contact";
 import { Category } from "../models/category";
 import { Filter } from "../models/filter";
 import { CompanyFilter } from "../models/companyFilter";
+import { TextModule } from "../models/textModule";
 import { loadEnvFile } from 'node:process';
 /*
 const { loadEnvFile } = require('node:process');*/
@@ -29,7 +30,8 @@ const connection = new Sequelize({
         Contact,
         Category,
         Filter,
-        CompanyFilter
+        CompanyFilter,
+        TextModule
     ] 
 }); 
 
