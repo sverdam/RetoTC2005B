@@ -6,6 +6,7 @@ import contactRoutes from './contactRoutes';
 import categoryRoutes from './categoryRoutes';
 import filterRoutes from './filterRoutes';
 import textModuleRoutes from './textModuleRoutes';
+import authRoutes from './authRoutes';
 
 const apiRouter:Router = Router();  
 
@@ -16,6 +17,8 @@ apiRouter.use('/contact', contactRoutes);
 apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 apiRouter.use('/textModule', textModuleRoutes);
+
+apiRouter.use('/auth', authRoutes);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
 res.send('Hello World!')  
