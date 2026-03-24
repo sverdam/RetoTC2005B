@@ -1,7 +1,8 @@
 import { RequestHandler, Request, Response } from "express";
 import { User } from "../models/user";
 import { Company } from "../models/company";
-
+import { hashPassword } from "../security/hashing";
+import { hash } from "node:crypto";
 
 // Create new user
 export const createUser: RequestHandler = (req: Request, res: Response) => {
@@ -17,21 +18,35 @@ export const createUser: RequestHandler = (req: Request, res: Response) => {
 
     // Save user in db
     const user = { ...req.body };
-    User.create(user)
-        .then((data: User | null) => {
-            res.status(200).json({
-                status: "success",
-                message: "User successfully created",
-                payload: data,
+    console.log(user);
+    hashPassword(user.password).then( hashed => 
+    {
+        user.password = hashed;
+        console.log(user);
+        User.create(user)
+            .then((data: User | null) => {
+                res.status(200).json({
+                    status: "success",
+                    message: "User successfully created",
+                    payload: data,
+                });
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    status: "error",
+                    message: "Something happened creating a user. " + err.message,
+                    payload: null,
+                });
             });
-        })
-        .catch((err) => {
-            res.status(500).json({
-                status: "error",
-                message: "Something happened creating a user. " + err.message,
-                payload: null,
-            });
+    }
+    ).catch((err: Error) => 
+    {   
+        return res.status(500).json({
+            status: "error",
+            message: "Something happend while creating the password: " + err,
+            payload: null,
         });
+    });
 };
 
 
@@ -82,6 +97,15 @@ export const updateUser: RequestHandler = (req: Request, res: Response) => {
         });
     }
 
+    if ("password" in req.body)
+    {
+        return res.status(400).json({
+            status: "error",
+            message: "You cannot change users password in this type of request. Try /user/password/:id",
+            payload: null,
+        });
+    }
+
     User.update({ ...req.body }, { where: { id: req.params.id } })
         .then((isUpdated) => {
             if (isUpdated) {
@@ -107,6 +131,52 @@ export const updateUser: RequestHandler = (req: Request, res: Response) => {
         });
 };
 
+export const updatePassword: RequestHandler = (req: Request, res: Response) => {
+
+    if (!req.body) {
+        return res.status(400).json({
+            status: "error",
+            message: "Content can not be empty.",
+            payload: null,
+        });
+    }
+
+    if (!("password" in req.body)){
+        return res.status(400).json({
+            status: "error",
+            message: "Content needs to have a password",
+            payload: null,
+        });
+    }
+
+    hashPassword(req.body.password).then(hashed => {
+    req.body.password = hashed;
+    
+    User.update({ ...req.body }, { where: { id: req.params.id } })
+        .then((isUpdated) => {
+            if (isUpdated) {
+                return res.status(200).json({
+                    status: "success",
+                    message: "User successfully updated",
+                    payload: { ...req.body },
+                });
+            } else {
+                return res.status(500).json({
+                    status: "error",
+                    message: "Something happened updating the user.",
+                    payload: null,
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                status: "error",
+                message: "Something happened updating a user. " + err.message,
+                payload: null,
+            });
+        });
+    })
+}
 
 // Delete user
 export const deleteUser: RequestHandler = async (req: Request, res: Response): Promise<void> => {
