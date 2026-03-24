@@ -19,8 +19,8 @@ export class TextModule extends Model<TextModuleAtributes, TextModuleCreationAtt
     @Column
     title!: string;
 
-    @Column
-    text!: Text;
+    @Column(DataType.TEXT)
+    text!: string;
 
     @Column
     tier!: number;
