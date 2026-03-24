@@ -4,7 +4,7 @@ import { Filter } from '../models/filter';
 
 
 @Table({
-    tableName: 'CompanyFilters'
+    tableName: 'companyFilters'
 })
 
 export class CompanyFilter extends Model<CompanyFilter> {
