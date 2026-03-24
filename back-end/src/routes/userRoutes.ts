@@ -4,7 +4,8 @@ import {
   deleteUser,
   getAllUsers,
   getUserById,
-  updateUser
+  updateUser,
+  updatePassword
 } from '../controllers/userController';
 
 const userRouter: Router = Router();
@@ -14,6 +15,8 @@ userRouter.get('/', getAllUsers);
 userRouter.get('/:id', getUserById);
 
 userRouter.post('/', createUser);
+
+userRouter.patch('/password/:id', updatePassword);
 
 userRouter.patch('/:id', updateUser);
 

@@ -97,6 +97,15 @@ export const updateUser: RequestHandler = (req: Request, res: Response) => {
         });
     }
 
+    if ("password" in req.body)
+    {
+        return res.status(400).json({
+            status: "error",
+            message: "You cannot change users password in this type of request. Try /user/password/:id",
+            payload: null,
+        });
+    }
+
     User.update({ ...req.body }, { where: { id: req.params.id } })
         .then((isUpdated) => {
             if (isUpdated) {
@@ -122,6 +131,52 @@ export const updateUser: RequestHandler = (req: Request, res: Response) => {
         });
 };
 
+export const updatePassword: RequestHandler = (req: Request, res: Response) => {
+
+    if (!req.body) {
+        return res.status(400).json({
+            status: "error",
+            message: "Content can not be empty.",
+            payload: null,
+        });
+    }
+
+    if (!("password" in req.body)){
+        return res.status(400).json({
+            status: "error",
+            message: "Content needs to have a password",
+            payload: null,
+        });
+    }
+
+    hashPassword(req.body.password).then(hashed => {
+    req.body.password = hashed;
+    
+    User.update({ ...req.body }, { where: { id: req.params.id } })
+        .then((isUpdated) => {
+            if (isUpdated) {
+                return res.status(200).json({
+                    status: "success",
+                    message: "User successfully updated",
+                    payload: { ...req.body },
+                });
+            } else {
+                return res.status(500).json({
+                    status: "error",
+                    message: "Something happened updating the user.",
+                    payload: null,
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                status: "error",
+                message: "Something happened updating a user. " + err.message,
+                payload: null,
+            });
+        });
+    })
+}
 
 // Delete user
 export const deleteUser: RequestHandler = async (req: Request, res: Response): Promise<void> => {
