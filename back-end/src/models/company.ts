@@ -5,6 +5,7 @@ import { User } from "../models/user";
 import { Location } from "../models/location";
 import { Contact } from "../models/contact";
 import { Filter } from "../models/filter";
+import { TextModule } from "../models/textModule"
 import { CompanyFilter } from "../models/companyFilter";
 
 interface CompanyAttributes{ 
@@ -59,6 +60,9 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @HasMany(() => Contact)
    declare contacts?: Contact[];
+
+   @HasMany(() => TextModule)
+   declare textModules?: TextModule[];
 
    @BelongsToMany(() => Filter, { 
     through: () => CompanyFilter,
