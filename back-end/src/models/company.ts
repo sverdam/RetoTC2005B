@@ -12,8 +12,8 @@ interface CompanyAttributes{
   id: number; 
   name: string; 
   description: string; 
-  tier: number ; 
-  logo: Blob ; 
+  tier: number; 
+  logo: Blob; 
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 

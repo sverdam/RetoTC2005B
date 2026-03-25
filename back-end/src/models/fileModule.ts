@@ -16,7 +16,7 @@ interface FileModuleAtributes{
   route: string;
   mimeType: string;
   size: number;
-
+  companyId: number;
 
 } 
 
