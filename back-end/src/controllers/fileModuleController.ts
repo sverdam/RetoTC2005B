@@ -1,17 +1,16 @@
 import { RequestHandler, Request, Response } from "express";
 import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
+import { Where } from "sequelize/types/utils";
+import { rm } from 'node:fs/promises';
 
-//CHANGE THIS SO THAT
-//When creating fileModule if pos and company combination exist delete or update the current fileModule and file for the new one both in files folder and db
-//When updating a fileModule also change the file in the file folder not only in the db
-//when erasing a fileModule also erase the in file folder
+
+//To Do:
 //Investigar como devolver URL firmadas para seguridad
-//Investigar sobre como agregar un archivo desde el frontend a la carpeta de files (probablemente como un blob o file type)
 
 
 // Create new fileModule
-export const createFileModule: RequestHandler = (req: Request, res: Response) => {
+export const createFileModule: RequestHandler = async (req: Request, res: Response) => {
 
     if (!req.body) {
         return res.status(400).json({
@@ -21,23 +20,69 @@ export const createFileModule: RequestHandler = (req: Request, res: Response) =>
         });
     }
 
-    const fileModule = { ...req.body };
+    const fileBody = { ...req.body };
 
-    FileModule.create(fileModule)
+    //checa si company + position ya existe
+    //Maybe add try except here
+     const existingFileModule = await FileModule.findOne({
+        where: {
+            companyId: Number(fileBody.companyId), 
+            position: Number(fileBody.position)
+        },
+    });
+
+    //agregar datos del archivo generado
+    const newData = {
+        ...req.body,
+        storedName: req.file!.filename,
+        originalName: req.file!.originalname,
+        path: req.file!.path,
+        mimeType: req.file!.mimetype,
+        size: req.file!.size,
+            }
+
+    //si existe: reemplaza datos en base de datos y borra archivo viejo
+    if (existingFileModule) {
+        //delete old file
+        try {
+            await rm(existingFileModule.path);
+        } catch (error){
+            console.error('Error deleting file:', error);
+        }
+            //Update values
+        await existingFileModule.update(newData)
         .then((data: FileModule | null) => {
-            res.status(200).json({
-                status: "success",
-                message: "File Module successfully created",
-                payload: data,
+                res.status(200).json({
+                    status: "success",
+                    message: "File Module successfully created",
+                    payload: data,
+                });
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    status: "error",
+                    message: "Something happened creating a File Module. " + err.message,
+                    payload: null,
+                });
             });
-        })
-        .catch((err) => {
-            res.status(500).json({
-                status: "error",
-                message: "Something happened creating a File Module. " + err.message,
-                payload: null,
+    }
+    else{ //no existe: crea el modulo
+        FileModule.create(newData)
+            .then((data: FileModule | null) => {
+                res.status(200).json({
+                    status: "success",
+                    message: "File Module successfully created",
+                    payload: data,
+                });
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    status: "error",
+                    message: "Something happened creating a File Module. " + err.message,
+                    payload: null,
+                });
             });
-        });
+    }
 };
 
 

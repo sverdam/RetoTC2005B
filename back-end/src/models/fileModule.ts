@@ -1,34 +1,37 @@
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo, PrimaryKey } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
 enum FileType {
   LOGO = 'logo',
   IMAGE = 'image',
-  FILE = 'file'
+  DOCUMENT = 'document'
 }
 
-interface FileModuleAtributes{ 
+interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de modificarlo en fileModuleController en newData
   id: number;
+  companyId: number;
   position: number;
   type: FileType;
-  fileName: string;
-  route: string;
+  storedName: string;
+  originalName: string;
+  path: string;
   mimeType: string;
   size: number;
 
 
 } 
 
-interface FileModuleCreationAttributes extends Optional<FileModuleAtributes, 'id'>{} 
+interface FileModuleCreationAttributes extends Optional<FileModuleAtributes, 'id' | 'originalName' | 'path' | 'storedName' | 'size' | 'mimeType'>{} 
 
 @Table ({ 
   tableName: "fileModules" 
 }) 
 export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAttributes>{ 
 
-
-    @Column 
+    @Column({
+      unique: 'CompanyPosition'
+    })
    position!: number; 
 
 
@@ -39,10 +42,13 @@ export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAtt
    type!: FileType;
 
     @Column 
-   fileName!: string; 
+   storedName!: string;
+
+    @Column 
+   originalName!: string; 
 
    @Column 
-   route!: string; 
+   path!: string; 
 
    @Column 
    mimeType!: string;
@@ -50,9 +56,11 @@ export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAtt
    @Column 
    size!: number; 
 
+
    @ForeignKey(() => Company)
    @Column({
     type: DataType.INTEGER,
+    unique: 'CompanyPosition',
     allowNull: true,
    })
    declare companyId: number | null;
@@ -63,4 +71,8 @@ export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAtt
     @CreatedAt 
     @Column 
     createdAt!: Date; 
+
+    @UpdatedAt
+    @Column
+    updatedAt!: Date;
 }
