@@ -1,9 +1,10 @@
 
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
-import { loadEnvFile } from 'node:process';
 import { User } from '../models/user';
 
-loadEnvFile('back-end/.env');
+import dotenv from "dotenv";
+dotenv.config({ path: "back-end/.env" });
+
 const SECRET_KEY = process.env.SECRET_KEY ?? "unknown";
 
 // Optional: Define a custom payload structure
