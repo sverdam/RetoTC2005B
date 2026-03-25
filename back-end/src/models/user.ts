@@ -11,9 +11,10 @@ enum UserRole {
 interface UserAttributes{ 
   id: number; 
   name: string; 
-  email: string ; 
-  password: string ; 
-  role: UserRole ;
+  email: string; 
+  password: string; 
+  role: UserRole;
+  companyId: number;
 } 
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'>{} 

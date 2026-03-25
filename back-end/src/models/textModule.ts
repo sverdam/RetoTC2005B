@@ -4,9 +4,10 @@ import { Company } from "../models/company";
 
 interface TextModuleAtributes{ 
   id: number; 
-  title: string ; 
-  text: Text ; 
-  tier: number ;
+  title: string; 
+  text: Text; 
+  tier: number;
+  companyId: number;
 } 
 
 interface TextModuleCreationAttributes extends Optional<TextModuleAtributes, 'id'>{} 

@@ -6,12 +6,13 @@ import { Company } from "../models/company";
 interface LocationAttributes{ 
   id: number; 
   name: string; 
-  street: string ; 
-  number: number ;
-  neighborhood: string ;
+  street: string; 
+  number: number;
+  neighborhood: string;
   postalCode: string;
-  city: string ; 
-  country: string ;
+  city: string; 
+  country: string;
+  companyId: number;
 } 
 
 interface LocationCreationAttributes extends Optional<LocationAttributes, 'id'>{} 

@@ -9,6 +9,7 @@ interface FilterAttributes{
   id: number; 
   name: string; 
   tier: number;
+  categoryId: number;
 } 
 
 interface FilterCreationAttributes extends Optional<FilterAttributes, 'id'>{} 

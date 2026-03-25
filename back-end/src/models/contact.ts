@@ -11,7 +11,8 @@ enum ContactType {
 interface ContactAttributes{ 
   id: number; 
   type: ContactType; 
-  contactInfo: string ; 
+  contactInfo: string;
+  companyId: number; 
 } 
 
 interface ContactCreationAttributes extends Optional<ContactAttributes, 'id'>{} 

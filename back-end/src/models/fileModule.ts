@@ -19,7 +19,6 @@ interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de modific
   mimeType: string;
   size: number;
 
-
 } 
 
 interface FileModuleCreationAttributes extends Optional<FileModuleAtributes, 'id' | 'originalName' | 'path' | 'storedName' | 'size' | 'mimeType'>{} 
