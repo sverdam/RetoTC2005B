@@ -12,7 +12,6 @@ import { rm } from 'node:fs/promises';
 //agregar otras funciones Delete, search, update
 //agregar limites de tamaño de archivo
 
-
 // Create new fileModule
 export const createFileModule: RequestHandler = async (req: Request, res: Response) => {
 
@@ -25,12 +24,11 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
     }
 
     const fileBody = { ...req.body };
-
     //checa si company + position ya existe
     //Maybe add try except here
      const existingFileModule = await FileModule.findOne({
         where: {
-            companyId: Number(fileBody.companyId), 
+            companyId: Number(fileBody.companyId),
             position: Number(fileBody.position)
         },
     });
