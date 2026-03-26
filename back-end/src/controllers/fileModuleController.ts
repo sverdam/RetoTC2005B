@@ -3,6 +3,7 @@ import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
 import { Where } from "sequelize/types/utils";
 import { rm } from 'node:fs/promises';
+import { CheckPosBody, UpdateData } from "../services/fileModuleService";
 
 
 //To Do:
@@ -10,7 +11,6 @@ import { rm } from 'node:fs/promises';
 //que solo se puedan agregar archivos de imagen (png, jpg, etc) a logo e imagen y todo lo demas en documentos
 //que si falla la creacion o update del DB que se borre el archivo local para evitar files sin registros en el db y viceversa
 //agregar otras funciones Delete, search, update
-//agregar limites de tamaño de archivo
 
 // Create new fileModule
 export const createFileModule: RequestHandler = async (req: Request, res: Response) => {
@@ -22,28 +22,19 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
             payload: null,
         });
     }
-
-    const fileBody = { ...req.body };
-    //checa si company + position ya existe
-    //Maybe add try except here
-     const existingFileModule = await FileModule.findOne({
-        where: {
-            companyId: Number(fileBody.companyId),
-            position: Number(fileBody.position)
-        },
-    });
+    
+    const existingFileModule = await CheckPosBody(
+        Number(req.body.companyId),
+        Number(req.body.position)
+    )
 
     //agregar datos del archivo generado
-    const newData = {
-        ...req.body,
-        storedName: req.file!.filename,
-        originalName: req.file!.originalname,
-        path: req.file!.path,
-        mimeType: req.file!.mimetype,
-        size: req.file!.size,
-            }
-
-    //si existe: reemplaza datos en base de datos y borra archivo viejo
+    const newData = await UpdateData(
+        req.body,
+        req.file!
+    )
+    
+    //si existe archivo previo: reemplaza datos en base de datos y borra archivo viejo
     if (existingFileModule) {
         //delete old file
         try {
@@ -68,7 +59,7 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
                 });
             });
     }
-    else{ //no existe: crea el modulo
+    else{ //no existe archivo previo: crea el modulo
         FileModule.create(newData)
             .then((data: FileModule | null) => {
                 res.status(200).json({
@@ -87,6 +78,42 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
     }
 };
 
+// Update File Module 
+export const updateFileModule: RequestHandler = (req: Request, res: Response) => {
+
+    if (!req.body) {
+        return res.status(400).json({
+            status: "error",
+            message: "Content can not be empty.",
+            payload: null,
+        });
+    }
+
+    FileModule.update({ ...req.body }, { where: { id: req.params.id } })
+
+        .then((isUpdated) => {
+            if (isUpdated) {
+                return res.status(200).json({
+                    status: "success",
+                    message: "File Module successfully updated",
+                    payload: { ...req.body },
+                });
+            } else {
+                return res.status(500).json({
+                    status: "error",
+                    message: "Something happened updating the File Module.",
+                    payload: null,
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                status: "error",
+                message: "Something happened updating a File Module. " + err.message,
+                payload: null,
+            });
+        });
+};
 
 // Get all File Modules
 export const getAllFileModules: RequestHandler = async (req: Request, res: Response) => {
@@ -123,43 +150,6 @@ export const getFileModuleById: RequestHandler = async (req: Request, res: Respo
             error
         });
     }
-};
-
-
-// Update File Module 
-export const updateFileModule: RequestHandler = (req: Request, res: Response) => {
-
-    if (!req.body) {
-        return res.status(400).json({
-            status: "error",
-            message: "Content can not be empty.",
-            payload: null,
-        });
-    }
-
-    FileModule.update({ ...req.body }, { where: { id: req.params.id } })
-        .then((isUpdated) => {
-            if (isUpdated) {
-                return res.status(200).json({
-                    status: "success",
-                    message: "File Module successfully updated",
-                    payload: { ...req.body },
-                });
-            } else {
-                return res.status(500).json({
-                    status: "error",
-                    message: "Something happened updating the File Module.",
-                    payload: null,
-                });
-            }
-        })
-        .catch((err) => {
-            res.status(500).json({
-                status: "error",
-                message: "Something happened updating a File Module. " + err.message,
-                payload: null,
-            });
-        });
 };
 
 
