@@ -1,13 +1,10 @@
 import { RequestHandler, Request, Response } from "express";
 import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
-import { Where } from "sequelize/types/utils";
-import { rm } from 'node:fs/promises';
 import { CheckPosBody, CreateOrReplaceFileModule, UpdateData } from "../services/fileModuleService";
 
 
 //To Do:
-//Investigar como devolver URL firmadas para seguridad
 //agregar soft delete
 //que solo se puedan agregar archivos de imagen (png, jpg, etc) a logo e imagen y todo lo demas en documentos
 //agregar otras funciones Delete, search, update
@@ -22,7 +19,14 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
             payload: null,
         });
     }
-    
+    if (!req.body.companyId || !req.body.position || !req.body.type) {
+        return res.status(400).json({
+            status: "error",
+            message: "companyId, position and type are required.",
+            payload: null,
+        });
+    }
+        
     const existingFileModule = await CheckPosBody(
         Number(req.body.companyId),
         Number(req.body.position)
@@ -31,7 +35,7 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
     //agregar datos del archivo generado
     const newData = await UpdateData(
         req.body,
-        req.file!
+        req.file
     )
     
     const result = await CreateOrReplaceFileModule(existingFileModule, newData);
@@ -48,40 +52,48 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
 };
 
 // Update File Module 
-export const updateFileModule: RequestHandler = (req: Request, res: Response) => {
-
-    if (!req.body) {
-        return res.status(400).json({
-            status: "error",
-            message: "Content can not be empty.",
-            payload: null,
-        });
-    }
-
-    FileModule.update({ ...req.body }, { where: { id: req.params.id } })
-
-        .then((isUpdated) => {
-            if (isUpdated) {
-                return res.status(200).json({
-                    status: "success",
-                    message: "File Module successfully updated",
-                    payload: { ...req.body },
-                });
-            } else {
-                return res.status(500).json({
-                    status: "error",
-                    message: "Something happened updating the File Module.",
-                    payload: null,
-                });
-            }
-        })
-        .catch((err) => {
-            res.status(500).json({
+export const updateFileModule: RequestHandler = async (req: Request, res: Response) => {
+    try {
+        if (!req.body.companyId || !req.body.position || !req.body.type) {
+            return res.status(400).json({
                 status: "error",
-                message: "Something happened updating a File Module. " + err.message,
+                message: "companyId, position and type are required.",
                 payload: null,
             });
+        }
+
+        if (!req.body) {
+            return res.status(400).json({
+                status: "error",
+                message: "Content can not be empty.",
+                payload: null,
+            });
+        }
+        const existingFileModule = await CheckPosBody(
+            Number(req.body.companyId),
+            Number(req.body.position)
+        )
+
+        const newData = await UpdateData(
+            req.body,
+            req.file!
+        )
+
+        const result =await CreateOrReplaceFileModule(existingFileModule, newData);
+
+        return res.status(200).json({
+            status: "success",
+            message: "File Module successfully updated",
+            payload: result.data
         });
+    } catch (err: any){
+        return res.status(500).json({
+            status: "error",
+            message: "Something happened updating the File Module" + err.message,
+            payload: null
+        })
+    }
+
 };
 
 // Get all File Modules

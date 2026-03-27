@@ -1,4 +1,4 @@
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo, PrimaryKey } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo, PrimaryKey, AllowNull } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
@@ -13,23 +13,24 @@ interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de modific
   companyId: number;
   position: number;
   type: FileType;
-  storedName: string;
-  originalName: string;
-  path: string;
-  mimeType: string;
-  size: number;
+  storedName: string | null;
+  originalName: string | null;
+  path: string | null;
+  mimeType: string | null;
+  size: number | null;
 
 } 
 
 interface FileModuleCreationAttributes extends Optional<FileModuleAtributes, 'id' | 'originalName' | 'path' | 'storedName' | 'size' | 'mimeType'>{} 
 
 @Table ({ 
-  tableName: "fileModules" 
+  tableName: "fileModules"
 }) 
 export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAttributes>{ 
 
     @Column({
-      unique: 'CompanyPosition'
+      unique: 'CompanyPosition',
+      allowNull: false
     })
    position!: number; 
 
@@ -40,20 +41,30 @@ export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAtt
    })
    type!: FileType;
 
-    @Column 
-   storedName!: string;
+    @Column({
+      allowNull: true
+    })
+   storedName!: string | null;
 
-    @Column 
-   originalName!: string; 
+    @Column({
+      allowNull: true
+    })
+   originalName!: string | null; 
 
-   @Column 
-   path!: string; 
+   @Column({
+      allowNull: true
+    })
+   path!: string | null; 
 
-   @Column 
-   mimeType!: string;
+   @Column({
+      allowNull: true
+    })
+   mimeType!: string | null;
    
-   @Column 
-   size!: number; 
+   @Column({
+      allowNull: true
+    })
+   size!: number | null; 
 
 
    @ForeignKey(() => Company)
