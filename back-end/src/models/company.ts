@@ -7,6 +7,7 @@ import { Contact } from "../models/contact";
 import { Filter } from "../models/filter";
 import { TextModule } from "../models/textModule"
 import { CompanyFilter } from "../models/companyFilter";
+import { FileModule } from './fileModule';
 
 interface CompanyAttributes{ 
   id: number; 
@@ -52,17 +53,20 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    @Column 
    updatedAt!: Date; 
 
-   @HasMany(() => User)
+   @HasMany(() => User, {onDelete: 'CASCADE'})
    declare users?: User[];
 
-   @HasMany(() => Location)
+   @HasMany(() => Location, {onDelete: 'CASCADE'})
    declare locations?: Location[];
 
-   @HasMany(() => Contact)
+   @HasMany(() => Contact, {onDelete: 'CASCADE'})
    declare contacts?: Contact[];
 
-   @HasMany(() => TextModule)
+   @HasMany(() => TextModule, {onDelete: 'CASCADE'})
    declare textModules?: TextModule[];
+
+   @HasMany(() => FileModule, {onDelete: 'CASCADE'})
+   declare fileModules?: FileModule[];
 
    @BelongsToMany(() => Filter, { 
     through: () => CompanyFilter,

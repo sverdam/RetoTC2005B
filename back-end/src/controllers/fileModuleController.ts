@@ -8,8 +8,8 @@ import { CheckPosBody, CreateOrReplaceFileModule, UpdateData } from "../services
 
 //To Do:
 //Investigar como devolver URL firmadas para seguridad
+//agregar soft delete
 //que solo se puedan agregar archivos de imagen (png, jpg, etc) a logo e imagen y todo lo demas en documentos
-//que si falla la creacion o update del DB que se borre el archivo local para evitar files sin registros en el db y viceversa
 //agregar otras funciones Delete, search, update
 
 // Create new fileModule

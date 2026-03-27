@@ -1,7 +1,4 @@
-import { Json } from "sequelize/types/utils";
 import { FileModule, FileType} from "../models/fileModule";
-import multer from "multer";
-import { Where } from "sequelize/types/utils";
 import { rm, rename } from 'node:fs/promises';
 
 const fs = require('node:fs');
@@ -44,10 +41,6 @@ export const UpdateData = (oldData: FileData , file: Express.Multer.File) =>{
         size: file.size,
             }
     return newData
-}
-
-export const UpdateFileModule = async() =>{
-
 }
 
 export const ConstructFinalPath = (type: string, storedName: string) =>{
@@ -96,3 +89,7 @@ export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | 
         };
     };
 };
+
+export const UpdateFileModule = async() =>{
+
+}

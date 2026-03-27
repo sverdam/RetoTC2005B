@@ -12,13 +12,13 @@ export class CompanyFilter extends Model<CompanyFilter> {
   @Column
   companyId!: number;
 
-  @HasOne(() => Company, { foreignKey: "companyId" })
+  @HasOne(() => Company, { foreignKey: "companyId", onDelete: 'CASCADE'})
   declare company?: Company | null;
 
   @ForeignKey(() => Filter)
   @Column
   filterId!: number;
 
-  @HasOne(() => Filter, { foreignKey: "filterId" })
+  @HasOne(() => Filter, { foreignKey: "filterId", onDelete: 'CASCADE'})
   declare filter?: Filter | null;
 }

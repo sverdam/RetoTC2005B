@@ -26,6 +26,6 @@ export class Category extends Model<CategoryAttributes, CategoryCreationAttribut
    @Column 
    updatedAt!: Date; 
 
-   @HasMany(() => Filter)
+   @HasMany(() => Filter, {onDelete: 'CASCADE'})
       declare filters?: Filter[];
 } 
