@@ -8,15 +8,7 @@ import path from "node:path";
 const storage = multer.diskStorage({
     //modify destination for file
     destination: (req, file, cb) => {
-        if (req.body.type === 'image'){
-            cb(null, 'files/images' );
-        }
-        else if (req.body.type === 'logo'){
-            cb(null, 'files/logos');
-        }
-        else{
-            cb(null, 'files/documents');
-        }
+        cb(null, 'files/temp' );
     },
     //modify updated filenames
     filename: (req, file, cb) => {

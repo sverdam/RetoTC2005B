@@ -2,7 +2,7 @@ import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, Belon
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
-enum FileType {
+export enum FileType {
   LOGO = 'logo',
   IMAGE = 'image',
   DOCUMENT = 'document'

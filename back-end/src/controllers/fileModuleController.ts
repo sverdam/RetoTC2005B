@@ -3,7 +3,7 @@ import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
 import { Where } from "sequelize/types/utils";
 import { rm } from 'node:fs/promises';
-import { CheckPosBody, UpdateData } from "../services/fileModuleService";
+import { CheckPosBody, CreateOrReplaceFileModule, UpdateData } from "../services/fileModuleService";
 
 
 //To Do:
@@ -34,48 +34,17 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
         req.file!
     )
     
-    //si existe archivo previo: reemplaza datos en base de datos y borra archivo viejo
-    if (existingFileModule) {
-        //delete old file
-        try {
-            await rm(existingFileModule.path);
-        } catch (error){
-            console.error('Error deleting file:', error);
-        }
-            //Update values
-        await existingFileModule.update(newData)
-        .then((data: FileModule | null) => {
-                res.status(200).json({
-                    status: "success",
-                    message: "File Module successfully created",
-                    payload: data,
-                });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    status: "error",
-                    message: "Something happened creating a File Module. " + err.message,
-                    payload: null,
-                });
-            });
-    }
-    else{ //no existe archivo previo: crea el modulo
-        FileModule.create(newData)
-            .then((data: FileModule | null) => {
-                res.status(200).json({
-                    status: "success",
-                    message: "File Module successfully created",
-                    payload: data,
-                });
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    status: "error",
-                    message: "Something happened creating a File Module. " + err.message,
-                    payload: null,
-                });
-            });
-    }
+    const result = await CreateOrReplaceFileModule(existingFileModule, newData);
+
+    return res.status(result.action === "created" ? 201: 200).json({
+        status: "success",
+        message:
+            result.action === "created"
+            ? "File Module successfully created"
+            : "File Module successfully updated",
+        payload: result.data
+
+    })
 };
 
 // Update File Module 

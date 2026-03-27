@@ -1,6 +1,21 @@
 import { Json } from "sequelize/types/utils";
-import { FileModule } from "../models/fileModule";
+import { FileModule, FileType} from "../models/fileModule";
 import multer from "multer";
+import { Where } from "sequelize/types/utils";
+import { rm, rename } from 'node:fs/promises';
+
+const fs = require('node:fs');
+
+interface FileData {
+  companyId: number;
+  position: number;
+  type: FileType;
+  storedName: string;
+  originalName: string;
+  path: string;
+  mimeType: string;
+  size: number;
+}
 
 
 
@@ -17,11 +32,11 @@ export const CheckPosBody = async (companyId: number, position: number) =>{
 } 
 
 //createModule with new data
-export const UpdateData = (body: any , file: Express.Multer.File) =>{
+export const UpdateData = (oldData: FileData , file: Express.Multer.File) =>{
     const newData = {
-        companyId: Number(body.companyId),
-        position: Number(body.position),
-        type: body.type,
+        companyId: Number(oldData.companyId),
+        position: Number(oldData.position),
+        type: oldData.type,
         storedName: file.filename,
         originalName: file.originalname,
         path: file.path,
@@ -30,3 +45,54 @@ export const UpdateData = (body: any , file: Express.Multer.File) =>{
             }
     return newData
 }
+
+export const UpdateFileModule = async() =>{
+
+}
+
+export const ConstructFinalPath = (type: string, storedName: string) =>{
+    let finalPath = ''
+    if (type === 'image'){finalPath = `files/images/${storedName}`;}
+    else if(type === 'logo'){finalPath = `files/logos/${storedName}`;}
+    else if(type === 'document'){finalPath = `files/documents/${storedName}`;}
+
+    else {throw new Error(`Invalid file type: ${type}`);}
+    return finalPath;
+}
+
+export const MoveFileModule = async (data: FileData) =>{
+    const finalPath = await ConstructFinalPath(data.type, data.storedName)
+    await rename(data.path, finalPath);
+    return finalPath;
+}
+
+export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | null, newData: FileData) =>{
+    if(existingFileModule){
+        try {
+                await rm(existingFileModule.path);
+            } catch (error){
+                try {
+                    await rm(newData.path);
+                } catch {}
+                throw error;
+                }
+        
+        const newPath = await MoveFileModule(newData);
+        newData.path = newPath;
+        const updated = await existingFileModule.update(newData)
+
+        return {
+            action: "updated",
+            data: updated
+        };
+    }
+    else{
+        const newPath = await MoveFileModule(newData);
+        newData.path = newPath;
+        const created = await FileModule.create(newData)
+        return {
+            action: "created",
+            data: created
+        };
+    };
+};
