@@ -19,9 +19,9 @@ fileModuleRouter.get('/:id', getFileModuleById);
 
 fileModuleRouter.post('/', upload.single("file"), createFileModule); //el archivo debe ser mandado con el nombre file desde el frontend, upload.single se encarga de subir el archivo
 
-fileModuleRouter.patch('/:id', updateFileModuleData)
+fileModuleRouter.patch('/', updateFileModuleData)
 
-fileModuleRouter.patch('/:id/file',upload.single("file"), updateFileModuleFile);
+fileModuleRouter.patch('/file',upload.single("file"), updateFileModuleFile);
 
 fileModuleRouter.delete('/:id', deleteFileModule);
 
