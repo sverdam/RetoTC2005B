@@ -6,21 +6,11 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'files/temp' );
     },
-    //modify updated filenames
+    //TO DO: filename should be done afterwards in services leave a random or default name here meanwhile
     filename: (req, file, cb) => {
-        if (req.body.type === 'image'){
             const ext = path.extname(file.originalname);
-            cb(null, `img-${req.body.position}-${req.body.companyId}${ext}`);
-        }
-        else if(req.body.type === 'logo'){
-            const ext = path.extname(file.originalname);
-            cb(null, `logo-${req.body.position}-${req.body.companyId}${ext}`);
-        }
-        else{
-            const ext = path.extname(file.originalname);
-            cb(null, `document-${req.body.position}-${req.body.companyId}${ext}`);  
-        }
-    },
+            cb(null, `${Math.floor(Math.random()*100000000)}${ext}`);
+    }
 });
 
 export const upload = multer({

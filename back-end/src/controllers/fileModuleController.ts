@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from "express";
 import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
-import { CheckPosBody, CreateOrReplaceFileModule, BuildFileData, UpdateFileModule} from "../services/fileModuleService";
+import { CheckPosBody, CreateOrReplaceFileModule, BuildFileData, updateFileModuleFile, updateFileModuleData} from "../services/fileModuleService";
 
 
 //To Do:
@@ -53,7 +53,7 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
 };
 
 // Update File Module 
-export const updateFileModuleFile: RequestHandler = async (req: Request, res: Response) => {
+export const updateFileModuleFileHandler: RequestHandler = async (req: Request, res: Response) => {
     try {
         if (!req.body.companyId || !req.body.position || !req.body.type) {
             return res.status(400).json({
@@ -90,7 +90,7 @@ export const updateFileModuleFile: RequestHandler = async (req: Request, res: Re
             req.file
         )
 
-        const result = await UpdateFileModule(existingFileModule, newData);
+        const result = await updateFileModuleFile(existingFileModule, newData);
 
         return res.status(200).json({
             status: "success",
@@ -108,8 +108,44 @@ export const updateFileModuleFile: RequestHandler = async (req: Request, res: Re
 
 };
 
-export const updateFileModuleData: RequestHandler = async (req: Request, res: Response) => {
+export const updateFileModuleDataHandler: RequestHandler = async (req: Request, res: Response) => {
+    try {
+        if (!req.body.companyId || !req.body.position || !req.body.type) {
+            return res.status(400).json({
+                status: "error",
+                message: "companyId, position and type are required.",
+                payload: null,
+            });
+        }
+        const existingFileModule = await CheckPosBody(
+            Number(req.body.companyId),
+            Number(req.body.position)
+        )
 
+        if (existingFileModule === null){
+            return res.status(404).json({
+                status: "error",
+                message: "Existing FileModule not found.",
+                payload: null,
+            });
+        }
+
+        const result =  await updateFileModuleData(existingFileModule, req.body)
+
+         return res.status(200).json({
+            status: "success",
+            message: "File Module Data successfully updated",
+            payload: result.data
+        });
+
+
+    }catch (err: any){
+        return res.status(500).json({
+            status: "error",
+            message: "Something happened updating the File Module Data " + err.message,
+            payload: null
+        })
+    }
 }
 
 // Get all File Modules

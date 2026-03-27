@@ -1,5 +1,7 @@
 import { FileModule, FileType} from "../models/fileModule";
 import { rm, rename } from 'node:fs/promises';
+import path from "node:path";
+
 
 const fs = require('node:fs');
 
@@ -51,6 +53,17 @@ export const BuildFileData = (oldData: FileData , file?: Express.Multer.File) =>
     return newData
 }
 
+export const ChangeFileName = (FileModule: FileData) => {
+    let fileName = ''
+    const extension = path.extname(FileModule.originalName!)
+
+    if (FileModule.type === 'image'){FileModule.storedName = `img-${FileModule.companyId}-${FileModule.position}${extension}`;}
+    else if(FileModule.type === 'logo'){FileModule.storedName =  `logo-${FileModule.companyId}-${FileModule.position}${extension}`;}
+    else if(FileModule.type === 'document'){FileModule.storedName = `document-${FileModule.companyId}-${FileModule.position}${extension}`;}
+
+    else {throw new Error(`Invalid file type: ${FileModule.type}`);}
+}
+
 export const ConstructFinalPath = (type: string, storedName: string) =>{
     let finalPath = ''
     if (type === 'image'){finalPath = `files/images/${storedName}`;}
@@ -67,34 +80,81 @@ export const MoveFileModule = async (data: FileDataWithFile) =>{
     return finalPath;
 }
 
-export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | null, newData: FileData) =>{
-    if(existingFileModule) { //update existing module
-        if(existingFileModule.path){
-            try {
-                await rm(existingFileModule.path);
-            } catch (error){
-                if(newData.path){
+export const updateFileModuleFile = async(existingFileModule: FileModule, newData: FileData) =>{
+    if(existingFileModule.path){
+        try {
+            await rm(existingFileModule.path);
+        } 
+        catch (error){
+            if(newData.path){
                 try {
                     await rm(newData.path);
                 } catch {}}
                 throw error;
-                }
         }
-    
-        if (newData.path && newData.storedName){
-            const newPath = await MoveFileModule(newData as FileDataWithFile);
-            newData.path = newPath;
-        }
+    }
+        
+    if (newData.path && newData.originalName){
+        ChangeFileName(newData)
+        const newPath = await MoveFileModule(newData as FileDataWithFile);
+        newData.path = newPath;
+    }
 
-        const updated = await existingFileModule.update(newData)
+    const updated = await existingFileModule.update(newData)
+
+    return {
+        action: "updated",
+        data: updated
+    };
+}
+
+export const updateFileModuleData = async(existingFileModule: FileModule, data: FileData) => {
+    //TODO: no dejar que dos files tengan el mismo nombre en caso de que se modifique el stored name desde aqui
+    const oldPath = existingFileModule.path 
+    if (data.type !== existingFileModule.type){
+        existingFileModule.type = data.type
+    }
+
+    if (data.storedName !== existingFileModule.storedName && data.storedName){
+        if(!path.extname(data.storedName)&& existingFileModule.originalName){
+            data.storedName = `${data.storedName}${path.extname(existingFileModule.originalName)}`
+        }
+        existingFileModule.storedName = data.storedName
+    }
+    if (existingFileModule.storedName && oldPath){
+        existingFileModule.path = ConstructFinalPath(data.type, existingFileModule.storedName)
+    }
+
+    if (data.originalName !== existingFileModule.originalName){
+        existingFileModule.originalName = data.originalName 
+    }
+
+    if(oldPath && existingFileModule.path && oldPath !== existingFileModule.path){
+        await rename(oldPath, existingFileModule.path);
+        data.path = existingFileModule.path
+    }
+    
+    const updated = await existingFileModule.update(data)
+
+    return {
+        action: "updated",
+        data: updated
+    };
+
+}
+
+export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | null, newData: FileData) =>{
+    if(existingFileModule) { //update existing module
+        const updated = await updateFileModuleFile(existingFileModule, newData)
 
         return {
             action: "updated",
             data: updated
-        };
+        }
     }
     else{ //create new module
-        if (newData.path && newData.storedName){
+        if (newData.path && newData.originalName){
+            ChangeFileName(newData)
             const newPath = await MoveFileModule(newData as FileDataWithFile);
             newData.path = newPath;
         }
@@ -105,29 +165,3 @@ export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | 
         };
     };
 };
-
-export const UpdateFileModule = async(existingFileModule: FileModule, newData: FileData) =>{
-    if(existingFileModule.path){
-                try {
-                    await rm(existingFileModule.path);
-                } catch (error){
-                    if(newData.path){
-                    try {
-                        await rm(newData.path);
-                    } catch {}}
-                    throw error;
-                    }
-            }
-        
-            if (newData.path && newData.storedName){
-                const newPath = await MoveFileModule(newData as FileDataWithFile);
-                newData.path = newPath;
-            }
-
-            const updated = await existingFileModule.update(newData)
-
-            return {
-                action: "updated",
-                data: updated
-            };
-}

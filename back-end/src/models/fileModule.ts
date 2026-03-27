@@ -8,7 +8,7 @@ export enum FileType {
   DOCUMENT = 'document'
 }
 
-interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de modificarlo en fileModuleController en newData
+export interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de modificarlo en fileModuleController en newData
   id: number;
   companyId: number;
   position: number;
