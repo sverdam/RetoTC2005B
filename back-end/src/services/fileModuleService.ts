@@ -37,7 +37,7 @@ export const CheckPosBody = async (companyId: number, position: number) =>{
 } 
 
 //createModule with new data
-export const UpdateData = (oldData: FileData , file?: Express.Multer.File) =>{
+export const BuildFileData = (oldData: FileData , file?: Express.Multer.File) =>{
     const newData = {
         companyId: Number(oldData.companyId),
         position: Number(oldData.position),
@@ -106,6 +106,28 @@ export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | 
     };
 };
 
-export const UpdateFileModule = async() =>{
+export const UpdateFileModule = async(existingFileModule: FileModule, newData: FileData) =>{
+    if(existingFileModule.path){
+                try {
+                    await rm(existingFileModule.path);
+                } catch (error){
+                    if(newData.path){
+                    try {
+                        await rm(newData.path);
+                    } catch {}}
+                    throw error;
+                    }
+            }
+        
+            if (newData.path && newData.storedName){
+                const newPath = await MoveFileModule(newData as FileDataWithFile);
+                newData.path = newPath;
+            }
 
+            const updated = await existingFileModule.update(newData)
+
+            return {
+                action: "updated",
+                data: updated
+            };
 }

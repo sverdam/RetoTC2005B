@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response } from "express";
 import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
-import { CheckPosBody, CreateOrReplaceFileModule, UpdateData } from "../services/fileModuleService";
+import { CheckPosBody, CreateOrReplaceFileModule, BuildFileData, UpdateFileModule} from "../services/fileModuleService";
 
 
 //To Do:
@@ -11,14 +11,7 @@ import { CheckPosBody, CreateOrReplaceFileModule, UpdateData } from "../services
 
 // Create new fileModule
 export const createFileModule: RequestHandler = async (req: Request, res: Response) => {
-
-    if (!req.body) {
-        return res.status(400).json({
-            status: "error",
-            message: "Content can not be empty",
-            payload: null,
-        });
-    }
+    try{
     if (!req.body.companyId || !req.body.position || !req.body.type) {
         return res.status(400).json({
             status: "error",
@@ -33,7 +26,7 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
     )
 
     //agregar datos del archivo generado
-    const newData = await UpdateData(
+    const newData = await BuildFileData(
         req.body,
         req.file
     )
@@ -49,10 +42,18 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
         payload: result.data
 
     })
+
+    }catch (err: any){
+        return res.status(500).json({
+            status: "error",
+            message: "Something happened while creating the File Module" + err.message,
+            payload: null
+        })
+    }
 };
 
 // Update File Module 
-export const updateFileModule: RequestHandler = async (req: Request, res: Response) => {
+export const updateFileModuleFile: RequestHandler = async (req: Request, res: Response) => {
     try {
         if (!req.body.companyId || !req.body.position || !req.body.type) {
             return res.status(400).json({
@@ -62,30 +63,41 @@ export const updateFileModule: RequestHandler = async (req: Request, res: Respon
             });
         }
 
-        if (!req.body) {
+        if (!req.file) {
             return res.status(400).json({
                 status: "error",
-                message: "Content can not be empty.",
+                message: "File is required.",
                 payload: null,
             });
         }
+
+
         const existingFileModule = await CheckPosBody(
             Number(req.body.companyId),
             Number(req.body.position)
         )
 
-        const newData = await UpdateData(
+        if (existingFileModule === null){
+            return res.status(404).json({
+                status: "error",
+                message: "Existing FileModule not found.",
+                payload: null,
+            });
+        }
+
+        const newData = await BuildFileData(
             req.body,
-            req.file!
+            req.file
         )
 
-        const result =await CreateOrReplaceFileModule(existingFileModule, newData);
+        const result = await UpdateFileModule(existingFileModule, newData);
 
         return res.status(200).json({
             status: "success",
             message: "File Module successfully updated",
             payload: result.data
         });
+
     } catch (err: any){
         return res.status(500).json({
             status: "error",
@@ -95,6 +107,10 @@ export const updateFileModule: RequestHandler = async (req: Request, res: Respon
     }
 
 };
+
+export const updateFileModuleData: RequestHandler = async (req: Request, res: Response) => {
+
+}
 
 // Get all File Modules
 export const getAllFileModules: RequestHandler = async (req: Request, res: Response) => {
