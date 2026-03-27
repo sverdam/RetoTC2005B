@@ -42,26 +42,31 @@ export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAtt
    type!: FileType;
 
     @Column({
+      type: DataType.STRING,
       allowNull: true
     })
    storedName!: string | null;
 
     @Column({
+      type: DataType.STRING,
       allowNull: true
     })
    originalName!: string | null; 
 
    @Column({
+      type: DataType.STRING,
       allowNull: true
     })
    path!: string | null; 
 
    @Column({
+      type: DataType.STRING,
       allowNull: true
     })
    mimeType!: string | null;
    
    @Column({
+      type: DataType.BIGINT,
       allowNull: true
     })
    size!: number | null; 
