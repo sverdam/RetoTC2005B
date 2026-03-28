@@ -109,7 +109,6 @@ export const updateFileModuleFile = async(existingFileModule: FileModule, newDat
 }
 
 export const updateFileModuleData = async(existingFileModule: FileModule, data: FileData) => {
-    //TODO: no dejar que dos files tengan el mismo nombre en caso de que se modifique el stored name desde aqui
     const oldPath = existingFileModule.path 
     if (data.type !== existingFileModule.type){
         existingFileModule.type = data.type
@@ -117,7 +116,7 @@ export const updateFileModuleData = async(existingFileModule: FileModule, data: 
 
     if (data.storedName !== existingFileModule.storedName && data.storedName){
         if(!path.extname(data.storedName)&& existingFileModule.originalName){
-            data.storedName = `${data.storedName}${path.extname(existingFileModule.originalName)}`
+            data.storedName = `${data.storedName}${Math.floor(Math.random()*10000000)}${path.extname(existingFileModule.originalName)}`
         }
         existingFileModule.storedName = data.storedName
     }

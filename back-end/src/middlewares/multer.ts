@@ -6,7 +6,6 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'files/temp' );
     },
-    //TO DO: filename should be done afterwards in services leave a random or default name here meanwhile
     filename: (req, file, cb) => {
             const ext = path.extname(file.originalname);
             cb(null, `${Math.floor(Math.random()*100000000)}${ext}`);
