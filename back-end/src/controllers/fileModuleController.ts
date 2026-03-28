@@ -186,11 +186,31 @@ export const getFileModuleById: RequestHandler = async (req: Request, res: Respo
 
 
 // Delete File Module
-export const deleteFileModule: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-    const id = Number(req.params.id);
-
+export const deleteFileModuleFile: RequestHandler = async (req: Request, res: Response) => {
     try {
-        await FileModule.destroy({ where: { id } });
+        if (!req.body.companyId || !req.body.position) {
+                return res.status(400).json({
+                    status: "error",
+                    message: "companyId and position are required.",
+                    payload: null,
+                });
+                }
+
+        const existingFileModule = await CheckPosBody(
+                Number(req.body.companyId),
+                Number(req.body.position)
+        )
+
+        if (existingFileModule === null){
+            return res.status(404).json({
+            status: "error",
+            message: "FileModule to be deleted not found.",
+            payload: null,
+                });
+        }
+
+        const result = await DeleteFile(existingFileModule)
+
 
         res.status(200).json({
             message: "File Module deleted"
@@ -203,7 +223,7 @@ export const deleteFileModule: RequestHandler = async (req: Request, res: Respon
     }
 };
 
-export const deleteFileModuleFile: RequestHandler = async (req: Request, res: Response) => {
+export const deleteFileModule: RequestHandler = async (req: Request, res: Response) => {
     try{
         if (!req.body.companyId || !req.body.position) {
         return res.status(400).json({
@@ -225,23 +245,16 @@ export const deleteFileModuleFile: RequestHandler = async (req: Request, res: Re
             payload: null,
                 });
         }
-
-        if (existingFileModule.path === null){      
-            return res.status(404).json({
-            status: "error",
-            message: "File to be deleted not found, Check path.",
-            payload: null,
-            });
+        if (existingFileModule.path){      
+           await DeleteFile(existingFileModule)
         }
-
-        const result = await DeleteFile(existingFileModule)
-
-    
+        
+        await existingFileModule.destroy()
 
         return res.status(200).json({
             status: "success",
-            message: "File Module Data successfully updated",
-            payload: result
+            message: "File and FileModule deleted successfully",
+            payload: null
         });
     } catch (error) {
         return res.status(500).json({
