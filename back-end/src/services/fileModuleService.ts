@@ -164,3 +164,25 @@ export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | 
         };
     };
 };
+
+export const DeleteFile = async(existingFileModule: FileModule) =>{
+    if (existingFileModule.path){
+        try{
+            await rm(existingFileModule.path);
+            existingFileModule.storedName = null
+            existingFileModule.originalName = null
+            existingFileModule.path = null
+            existingFileModule.mimeType = null
+            existingFileModule.size = null
+            const saved = await existingFileModule.save()
+
+            return {
+            action: "updated",
+            data: saved
+            }
+        }catch (error){
+            throw error;
+        }
+    }
+    
+}

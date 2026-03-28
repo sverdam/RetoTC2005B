@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { upload } from '../middlewares/multer';
 import {
   createFileModule,
+  deleteFileModuleFile,
   deleteFileModule,
   getAllFileModules,
   getFileModuleById,
@@ -23,6 +24,8 @@ fileModuleRouter.patch('/', updateFileModuleDataHandler)
 
 fileModuleRouter.patch('/file',upload.single("file"), updateFileModuleFileHandler);
 
-fileModuleRouter.delete('/:id', deleteFileModule);
+fileModuleRouter.delete('/file', deleteFileModuleFile);
+
+fileModuleRouter.delete('/', deleteFileModule);
 
 export default fileModuleRouter;

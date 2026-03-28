@@ -1,8 +1,7 @@
 import { RequestHandler, Request, Response } from "express";
 import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
-import { CheckPosBody, CreateOrReplaceFileModule, BuildFileData, updateFileModuleFile, updateFileModuleData} from "../services/fileModuleService";
-
+import { CheckPosBody, CreateOrReplaceFileModule, BuildFileData, updateFileModuleFile, updateFileModuleData, DeleteFile} from "../services/fileModuleService";
 
 //To Do:
 //agregar soft delete
@@ -107,7 +106,7 @@ export const updateFileModuleFileHandler: RequestHandler = async (req: Request, 
     }
 
 };
-
+//Update the Data of a FileModule
 export const updateFileModuleDataHandler: RequestHandler = async (req: Request, res: Response) => {
     try {
         if (!req.body.companyId || !req.body.position || !req.body.type) {
@@ -202,4 +201,52 @@ export const deleteFileModule: RequestHandler = async (req: Request, res: Respon
             error,
         });
     }
+};
+
+export const deleteFileModuleFile: RequestHandler = async (req: Request, res: Response) => {
+    try{
+        if (!req.body.companyId || !req.body.position) {
+        return res.status(400).json({
+            status: "error",
+            message: "companyId and position are required.",
+            payload: null,
+        });
+        }
+
+        const existingFileModule = await CheckPosBody(
+                Number(req.body.companyId),
+                Number(req.body.position)
+        )
+
+        if (existingFileModule === null){
+            return res.status(404).json({
+            status: "error",
+            message: "FileModule to be deleted not found.",
+            payload: null,
+                });
+        }
+
+        if (existingFileModule.path === null){      
+            return res.status(404).json({
+            status: "error",
+            message: "File to be deleted not found, Check path.",
+            payload: null,
+            });
+        }
+
+        const result = await DeleteFile(existingFileModule)
+
+    
+
+        return res.status(200).json({
+            status: "success",
+            message: "File Module Data successfully updated",
+            payload: result
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error deleting File",
+            error
+        });
+    }  
 };
