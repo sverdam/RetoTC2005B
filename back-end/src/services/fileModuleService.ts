@@ -5,7 +5,7 @@ import path from "node:path";
 
 const fs = require('node:fs');
 
-interface FileData {
+export interface FileData {
   companyId: number;
   position: number;
   type: FileType;
@@ -15,7 +15,7 @@ interface FileData {
   mimeType: string | null;
   size: number | null;
 }
-interface FileDataWithFile{
+export interface FileDataWithFile{
   companyId: number;
   position: number;
   type: FileType;
@@ -39,11 +39,12 @@ export const CheckPosBody = async (companyId: number, position: number) =>{
 } 
 
 //createModule with new data
-export const BuildFileData = (oldData: FileData , file?: Express.Multer.File) =>{
+export const BuildFileDataForCreate = (body: FileData, file?: Express.Multer.File) =>{
+
     const newData = {
-        companyId: Number(oldData.companyId),
-        position: Number(oldData.position),
-        type: oldData.type,
+        companyId:Number(body.companyId),
+        position:Number(body.position),
+        type: body.type,
         storedName: file? file.filename : null,
         originalName: file? file.originalname : null,
         path: file? file.path : null,
@@ -53,8 +54,22 @@ export const BuildFileData = (oldData: FileData , file?: Express.Multer.File) =>
     return newData
 }
 
+export const BuildFileDataForUpdate = (body: FileData, oldFile: FileModule , file: Express.Multer.File) =>{
+
+    const newData = {
+        companyId: body.companyId? Number(body.companyId) : Number(oldFile.companyId),
+        position: body.position? Number(body.position) : Number(oldFile.position),
+        type: body.type? body.type : oldFile.type,
+        storedName: file.filename,
+        originalName:file.originalname,
+        path:file.path,
+        mimeType:file.mimetype,
+        size:file.size,
+            }
+    return newData
+}
+
 export const ChangeFileName = (FileModule: FileData) => {
-    let fileName = ''
     const extension = path.extname(FileModule.originalName!)
 
     if (FileModule.type === 'image'){FileModule.storedName = `img-${FileModule.companyId}-${FileModule.position}${extension}`;}
@@ -80,7 +95,42 @@ export const MoveFileModule = async (data: FileDataWithFile) =>{
     return finalPath;
 }
 
-export const updateFileModuleFile = async(existingFileModule: FileModule, newData: FileData) =>{
+export const updateFileModuleData = async(existingFileModule: FileModule, data: FileData) => {
+    const oldPath = existingFileModule.path 
+    if (data.type !== existingFileModule.type && data.type){
+        existingFileModule.type = data.type
+    }
+
+    if (data.storedName !== existingFileModule.storedName && data.storedName){
+        if(!path.extname(data.storedName)&& existingFileModule.originalName){
+            data.storedName = `${data.storedName}${Math.floor(Math.random()*10000000)}${path.extname(existingFileModule.originalName)}`
+        }
+        existingFileModule.storedName = data.storedName
+    }
+    if (existingFileModule.storedName && oldPath){
+        existingFileModule.path = ConstructFinalPath(existingFileModule.type, existingFileModule.storedName)
+    }
+
+    if (data.originalName !== existingFileModule.originalName){
+        existingFileModule.originalName = data.originalName 
+    }
+
+    if(oldPath && existingFileModule.path && oldPath !== existingFileModule.path){
+        await rename(oldPath, existingFileModule.path);
+    }
+
+    console.log("changed fields:", existingFileModule.changed());
+    console.log("before save:", existingFileModule.toJSON());
+    const saved = await existingFileModule.save()
+    console.log("after save:", saved.toJSON());
+    return {
+        action: "updated",
+        data: saved
+    };
+
+}
+
+export const updateFileModuleFile = async(existingFileModule: FileModule, newData: FileData, body?: FileData ) =>{
     if(existingFileModule.path){
         try {
             await rm(existingFileModule.path);
@@ -94,52 +144,34 @@ export const updateFileModuleFile = async(existingFileModule: FileModule, newDat
         }
     }
         
-    if (newData.path && newData.originalName){
+    if (newData.path && newData.storedName){
         ChangeFileName(newData)
         const newPath = await MoveFileModule(newData as FileDataWithFile);
         newData.path = newPath;
     }
+    existingFileModule.companyId = newData.companyId;
+    existingFileModule.position = newData.position;
+    existingFileModule.type = newData.type;
+    existingFileModule.storedName = newData.storedName;
+    existingFileModule.originalName = newData.originalName;
+    existingFileModule.path = newData.path;
+    existingFileModule.mimeType = newData.mimeType;
+    existingFileModule.size = newData.size;
 
-    const updated = await existingFileModule.update(newData)
-
-    return {
-        action: "updated",
-        data: updated
-    };
-}
-
-export const updateFileModuleData = async(existingFileModule: FileModule, data: FileData) => {
-    const oldPath = existingFileModule.path 
-    if (data.type !== existingFileModule.type){
-        existingFileModule.type = data.type
-    }
-
-    if (data.storedName !== existingFileModule.storedName && data.storedName){
-        if(!path.extname(data.storedName)&& existingFileModule.originalName){
-            data.storedName = `${data.storedName}${Math.floor(Math.random()*10000000)}${path.extname(existingFileModule.originalName)}`
-        }
-        existingFileModule.storedName = data.storedName
-    }
-    if (existingFileModule.storedName && oldPath){
-        existingFileModule.path = ConstructFinalPath(data.type, existingFileModule.storedName)
-    }
-
-    if (data.originalName !== existingFileModule.originalName){
-        existingFileModule.originalName = data.originalName 
-    }
-
-    if(oldPath && existingFileModule.path && oldPath !== existingFileModule.path){
-        await rename(oldPath, existingFileModule.path);
-        data.path = existingFileModule.path
-    }
+    const updated = await existingFileModule.save()
     
-    const updated = await existingFileModule.update(data)
+    if (body){
+        const result  = await updateFileModuleData(existingFileModule, body) //checa el resto del body y lo implementa si fue agregado
+        return{
+            action: "updated",
+            data: result.data
+        }
+    }
 
     return {
         action: "updated",
         data: updated
     };
-
 }
 
 export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | null, newData: FileData) =>{
@@ -157,7 +189,7 @@ export const CreateOrReplaceFileModule = async(existingFileModule: FileModule | 
             const newPath = await MoveFileModule(newData as FileDataWithFile);
             newData.path = newPath;
         }
-        const created = await FileModule.create(newData)
+        const created = await FileModule.create(newData as FileDataWithFile)
         return {
             action: "created",
             data: created

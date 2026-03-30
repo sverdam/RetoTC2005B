@@ -1,12 +1,10 @@
 import { RequestHandler, Request, Response } from "express";
 import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
-import { CheckPosBody, CreateOrReplaceFileModule, BuildFileData, updateFileModuleFile, updateFileModuleData, DeleteFile} from "../services/fileModuleService";
-
+import { FileData, FileDataWithFile , CheckPosBody, CreateOrReplaceFileModule, BuildFileDataForCreate, BuildFileDataForUpdate, updateFileModuleFile, updateFileModuleData, DeleteFile, ChangeFileName, MoveFileModule} from "../services/fileModuleService";
 //To Do:
 //agregar soft delete
 //que solo se puedan agregar archivos de imagen (png, jpg, etc) a logo e imagen y todo lo demas en documentos
-//agregar otras funciones Delete, search, update
 
 // Create new fileModule
 export const createFileModule: RequestHandler = async (req: Request, res: Response) => {
@@ -25,7 +23,7 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
     )
 
     //agregar datos del archivo generado
-    const newData = await BuildFileData(
+    const newData = await BuildFileDataForCreate(
         req.body,
         req.file
     )
@@ -54,14 +52,6 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
 // Update File Module 
 export const updateFileModuleFileHandler: RequestHandler = async (req: Request, res: Response) => {
     try {
-        if (!req.body.companyId || !req.body.position || !req.body.type) {
-            return res.status(400).json({
-                status: "error",
-                message: "companyId, position and type are required.",
-                payload: null,
-            });
-        }
-
         if (!req.file) {
             return res.status(400).json({
                 status: "error",
@@ -69,12 +59,8 @@ export const updateFileModuleFileHandler: RequestHandler = async (req: Request, 
                 payload: null,
             });
         }
-
-
-        const existingFileModule = await CheckPosBody(
-            Number(req.body.companyId),
-            Number(req.body.position)
-        )
+        const id = Number(req.params.id);
+        const existingFileModule: FileModule | null = await FileModule.findByPk(id)
 
         if (existingFileModule === null){
             return res.status(404).json({
@@ -84,12 +70,14 @@ export const updateFileModuleFileHandler: RequestHandler = async (req: Request, 
             });
         }
 
-        const newData = await BuildFileData(
+
+        const newData = await BuildFileDataForUpdate(
             req.body,
+            existingFileModule,
             req.file
         )
 
-        const result = await updateFileModuleFile(existingFileModule, newData);
+        const result = await updateFileModuleFile(existingFileModule, newData, req.body); //checa q pedo con esto
 
         return res.status(200).json({
             status: "success",
@@ -109,17 +97,15 @@ export const updateFileModuleFileHandler: RequestHandler = async (req: Request, 
 //Update the Data of a FileModule
 export const updateFileModuleDataHandler: RequestHandler = async (req: Request, res: Response) => {
     try {
-        if (!req.body.companyId || !req.body.position || !req.body.type) {
-            return res.status(400).json({
-                status: "error",
-                message: "companyId, position and type are required.",
-                payload: null,
-            });
-        }
-        const existingFileModule = await CheckPosBody(
-            Number(req.body.companyId),
-            Number(req.body.position)
-        )
+        if (!req.body) {
+        return res.status(400).json({
+            status: "error",
+            message: "body is required.",
+            payload: null,
+        });
+    }
+        const id = Number(req.params.id);
+        const existingFileModule: FileModule | null = await FileModule.findByPk(id)
 
         if (existingFileModule === null){
             return res.status(404).json({
@@ -134,7 +120,7 @@ export const updateFileModuleDataHandler: RequestHandler = async (req: Request, 
          return res.status(200).json({
             status: "success",
             message: "File Module Data successfully updated",
-            payload: result.data
+            payload: result
         });
 
 
@@ -184,22 +170,117 @@ export const getFileModuleById: RequestHandler = async (req: Request, res: Respo
     }
 };
 
+export const getFileModulesByCompanyId: RequestHandler = async(req: Request, res: Response) =>{
+    const companyId = Number(req.params.id);
+    try {
+        const fileModule: Array<FileModule> = await FileModule.findAll({
+            where: {
+                companyId: companyId,
+            },
+            attributes: { exclude: ["companyId"] },
+            include: [{ model: Company, attributes: ["id", "name"] }],
+        });
+
+        return res.status(200).json(fileModule);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error getting File Modules",
+            error
+        });
+    }
+}
+
+export const getFileModulesByPosition: RequestHandler = async(req:Request, res: Response) =>{
+    const position = Number(req.params.position);
+    try {
+        const fileModule: Array<FileModule> = await FileModule.findAll({
+            where: {
+                position: position,
+            },
+            attributes: { exclude: ["companyId"] },
+            include: [{ model: Company, attributes: ["id", "name"] }],
+        });
+
+        return res.status(200).json(fileModule);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error getting File Modules",
+            error
+        });
+    }
+}
+
+export const getFileModulesByCompanyIdAndPosition: RequestHandler = async(req: Request, res: Response) =>{
+    const companyId = Number(req.params.companyId);
+    const position = Number(req.params.position);
+    try {
+        const fileModule = await FileModule.findOne({
+            where: {
+                position: position,
+                companyId: companyId
+            },
+            attributes: { exclude: ["companyId"] },
+            include: [{ model: Company, attributes: ["id", "name"] }],
+        });
+
+        return res.status(200).json(fileModule);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error getting File Modules",
+            error
+        });
+    }
+}
+
+export const getFileModuleByType: RequestHandler = async(req:Request, res: Response) => {
+    const type = req.params.type
+    try {
+        const fileModule: Array<FileModule> = await FileModule.findAll({
+            where: {
+                type: type,
+            },
+            attributes: { exclude: ["companyId"] },
+            include: [{ model: Company, attributes: ["id", "name"] }],
+        });
+
+        return res.status(200).json(fileModule);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error getting File Modules",
+            error
+        });
+    }
+}
+
+export const getFileModuleByCompanyAndType: RequestHandler = async(req:Request, res: Response) => {
+    const companyId = Number(req.params.companyId);
+    const type = req.params.type
+    try {
+        const fileModule: Array<FileModule> = await FileModule.findAll({
+            where: {
+                companyId: companyId,
+                type: type
+            },
+            attributes: { exclude: ["companyId"] },
+            include: [{ model: Company, attributes: ["id", "name"] }],
+        });
+
+        return res.status(200).json(fileModule);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error getting File Modules",
+            error
+        });
+    }
+}
+
 
 // Delete File Module
 export const deleteFileModuleFile: RequestHandler = async (req: Request, res: Response) => {
     try {
-        if (!req.body.companyId || !req.body.position) {
-                return res.status(400).json({
-                    status: "error",
-                    message: "companyId and position are required.",
-                    payload: null,
-                });
-                }
 
-        const existingFileModule = await CheckPosBody(
-                Number(req.body.companyId),
-                Number(req.body.position)
-        )
+        const id = Number(req.params.id);
+        const existingFileModule: FileModule | null = await FileModule.findByPk(id)
 
         if (existingFileModule === null){
             return res.status(404).json({
@@ -225,18 +306,8 @@ export const deleteFileModuleFile: RequestHandler = async (req: Request, res: Re
 
 export const deleteFileModule: RequestHandler = async (req: Request, res: Response) => {
     try{
-        if (!req.body.companyId || !req.body.position) {
-        return res.status(400).json({
-            status: "error",
-            message: "companyId and position are required.",
-            payload: null,
-        });
-        }
-
-        const existingFileModule = await CheckPosBody(
-                Number(req.body.companyId),
-                Number(req.body.position)
-        )
+        const id = Number(req.params.id);
+        const existingFileModule: FileModule | null = await FileModule.findByPk(id)
 
         if (existingFileModule === null){
             return res.status(404).json({
