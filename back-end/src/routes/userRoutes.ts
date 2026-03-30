@@ -5,7 +5,8 @@ import {
   getAllUsers,
   getUserById,
   updateUser,
-  updatePassword
+  updatePassword,
+  restoreUser
 } from '../controllers/userController';
 
 const userRouter: Router = Router();
@@ -21,5 +22,7 @@ userRouter.patch('/password/:id', updatePassword);
 userRouter.patch('/:id', updateUser);
 
 userRouter.delete('/:id', deleteUser);
+
+userRouter.patch('/restore/:id', restoreUser);
 
 export default userRouter;

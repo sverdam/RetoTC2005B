@@ -148,4 +148,17 @@ export const deleteCompany: RequestHandler = async (req: Request, res: Response)
     } 
 }; 
 
+// Restore a Company
 
+export const restoreCompany: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    const id = Number(req.params.id);
+    try { 
+        await Company.restore({ where: { id } }); 
+        res.status(200).json({ message: "Company restored" }); 
+    } catch (error) { 
+        res.status(500).json({ 
+            message: "Error restoring companies", 
+            error, 
+        }); 
+    } 
+}; 

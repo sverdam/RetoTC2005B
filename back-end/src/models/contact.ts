@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
@@ -18,7 +18,9 @@ interface ContactAttributes{
 interface ContactCreationAttributes extends Optional<ContactAttributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "contacts" 
+  tableName: "contacts",
+  paranoid: true,
+  timestamps: true
 }) 
 export class Contact extends Model<ContactAttributes, ContactCreationAttributes>{ 
 
@@ -48,4 +50,8 @@ export class Contact extends Model<ContactAttributes, ContactCreationAttributes>
    @UpdatedAt 
    @Column 
    updatedAt!: Date; 
+
+   @DeletedAt
+   @Column
+   deletedAt?: Date;
 } 

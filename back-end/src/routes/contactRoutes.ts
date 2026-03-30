@@ -4,7 +4,8 @@ import {
   deleteContact,
   getAllContacts,
   getContactById,
-  updateContact
+  updateContact,
+  restoreContact
 } from '../controllers/contactController';
 
 const contactRouter: Router = Router();
@@ -18,5 +19,7 @@ contactRouter.post('/', createContact);
 contactRouter.patch('/:id', updateContact);
 
 contactRouter.delete('/:id', deleteContact);
+
+contactRouter.patch('/restore/:id', restoreContact);
 
 export default contactRouter;

@@ -126,3 +126,17 @@ export const deleteLocation: RequestHandler = async (req: Request, res: Response
         });
     }
 };
+
+// Restore location
+export const restoreLocation: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    const id = Number(req.params.id);
+    try { 
+        await Location.restore({ where: { id } }); 
+        res.status(200).json({ message: "Location restored" }); 
+    } catch (error) { 
+        res.status(500).json({ 
+            message: "Error restoring locations", 
+            error, 
+        }); 
+    } 
+}; 

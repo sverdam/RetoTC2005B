@@ -4,7 +4,8 @@ import {
   deleteLocation,
   getAllLocations,
   getLocationById,
-  updateLocation
+  updateLocation,
+  restoreLocation
 } from '../controllers/locationController';
 
 const locationRouter: Router = Router();
@@ -18,5 +19,7 @@ locationRouter.post('/', createLocation);
 locationRouter.patch('/:id', updateLocation);
 
 locationRouter.delete('/:id', deleteLocation);
+
+locationRouter.patch('/restore/:id', restoreLocation);
 
 export default locationRouter;

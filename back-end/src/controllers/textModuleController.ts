@@ -126,3 +126,17 @@ export const deleteTextModule: RequestHandler = async (req: Request, res: Respon
         });
     }
 };
+
+// Restore Text Module
+export const restoreTextModule: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    const id = Number(req.params.id);
+    try { 
+        await TextModule.restore({ where: { id } }); 
+        res.status(200).json({ message: "Text Module restored" }); 
+    } catch (error) { 
+        res.status(500).json({ 
+            message: "Error restoring Text Module", 
+            error, 
+        }); 
+    } 
+}; 

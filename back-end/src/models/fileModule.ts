@@ -1,4 +1,4 @@
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo, PrimaryKey, AllowNull } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, ForeignKey, BelongsTo, PrimaryKey, AllowNull } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
@@ -24,7 +24,9 @@ export interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de 
 interface FileModuleCreationAttributes extends Optional<FileModuleAtributes, 'id' | 'originalName' | 'path' | 'storedName' | 'size' | 'mimeType'>{} 
 
 @Table ({ 
-  tableName: "fileModules"
+  tableName: "fileModules",
+  paranoid: true,
+  timestamps: true
 }) 
 export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAttributes>{ 
 
@@ -90,4 +92,8 @@ export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAtt
     @UpdatedAt
     @Column
     updatedAt!: Date;
+
+    @DeletedAt
+    @Column
+    deletedAt?: Date;
 }

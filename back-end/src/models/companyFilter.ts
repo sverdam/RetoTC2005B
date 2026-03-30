@@ -1,13 +1,20 @@
-import { Table, Column, Model, ForeignKey, HasOne } from 'sequelize-typescript';
+import { Table, Column, Model, DeletedAt, ForeignKey, HasOne } from 'sequelize-typescript';
 import { Company } from '../models/company';
 import { Filter } from '../models/filter';
 
 
 @Table({
-    tableName: 'companyFilters'
+    tableName: 'companyFilters',
+    paranoid: true,
+    timestamps: true
 })
 
 export class CompanyFilter extends Model<CompanyFilter> {
+
+  @DeletedAt
+  @Column
+  deletedAt?: Date;
+
   @ForeignKey(() => Company)
   @Column
   companyId!: number;

@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, HasMany, BelongsToMany } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
@@ -20,7 +20,9 @@ interface CompanyAttributes{
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "companies" 
+  tableName: "companies",
+  paranoid: true,
+  timestamps: true
 }) 
 export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>{ 
 
@@ -52,6 +54,10 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    @UpdatedAt 
    @Column 
    updatedAt!: Date; 
+
+   @DeletedAt
+   @Column
+   deletedAt?: Date;
 
    @HasMany(() => User, {onDelete: 'CASCADE'})
    declare users?: User[];

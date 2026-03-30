@@ -4,7 +4,8 @@ import {
   deleteCategory,
   getAllCategories,
   getCategoryById,
-  updateCategory
+  updateCategory,
+  restoreCategory
 } from '../controllers/categoryController';
 
 const categoryRouter: Router = Router();
@@ -18,5 +19,7 @@ categoryRouter.post('/', createCategory);
 categoryRouter.patch('/:id', updateCategory);
 
 categoryRouter.delete('/:id', deleteCategory);
+
+categoryRouter.patch('/restore/:id', restoreCategory);
 
 export default categoryRouter;
