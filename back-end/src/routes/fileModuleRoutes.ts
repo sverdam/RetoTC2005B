@@ -12,7 +12,8 @@ import {
   getFileModuleByType,
   getFileModuleByCompanyAndType,
   updateFileModuleFileHandler,
-  updateFileModuleDataHandler
+  updateFileModuleDataHandler,
+  restoreFileModule
 } from '../controllers/fileModuleController';
 
 //TO DO: fileModuleRouter.delete('/:id/file', removeFileFromModule); esto para solamente borrar el archivo, ya se puede hacer de forma extraña con updateFileModuleFile
@@ -41,5 +42,7 @@ fileModuleRouter.patch('/:id/file',upload.single("file"), updateFileModuleFileHa
 fileModuleRouter.delete('/:id/file', deleteFileModuleFile);
 
 fileModuleRouter.delete('/:id', deleteFileModule);
+
+fileModuleRouter.patch('/restore/:id', restoreFileModule);
 
 export default fileModuleRouter;

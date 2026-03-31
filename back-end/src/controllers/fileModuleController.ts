@@ -334,3 +334,16 @@ export const deleteFileModule: RequestHandler = async (req: Request, res: Respon
         });
     }  
 };
+
+export const restoreFileModule: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    const id = Number(req.params.id);
+    try { 
+        await FileModule.restore({ where: { id } }); 
+        res.status(200).json({ message: "FileModule restored" }); 
+    } catch (error) { 
+        res.status(500).json({ 
+            message: "Error restoring file modules", 
+            error, 
+        }); 
+    } 
+}; 

@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
@@ -25,6 +25,29 @@ interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{}
   timestamps: true
 }) 
 export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>{ 
+
+  // Sequelize Hooks
+   @AfterDestroy
+   static async deleteCascade(instance: Company) {
+     const id = instance.id;
+    
+     await User.destroy({ where: { companyId: id } });
+     await Location.destroy({ where: { companyId: id } });
+     await Contact.destroy({ where: { companyId: id } });
+     await TextModule.destroy({ where: { companyId: id } });
+     await FileModule.destroy({ where: { companyId: id } });
+   }
+
+   @AfterRestore
+   static async restoreCascade(instance: Company) {
+     const id = instance.id;
+
+     await User.restore({ where: { companyId: id } });
+     await Location.restore({ where: { companyId: id } });
+     await Contact.restore({ where: { companyId: id } });
+     await TextModule.restore({ where: { companyId: id } });
+     await FileModule.restore({ where: { companyId: id } });
+   }
 
 
 // Here, TS infers Data Type from the JS Type 
