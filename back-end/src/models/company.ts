@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, HasMany, BelongsToMany } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
@@ -7,21 +7,47 @@ import { Contact } from "../models/contact";
 import { Filter } from "../models/filter";
 import { TextModule } from "../models/textModule"
 import { CompanyFilter } from "../models/companyFilter";
+import { FileModule } from './fileModule';
 
 interface CompanyAttributes{ 
   id: number; 
   name: string; 
   description: string; 
-  tier: number ; 
-  logo: Blob ; 
+  tier: number; 
+  logo: Blob; 
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "companies" 
+  tableName: "companies",
+  paranoid: true,
+  timestamps: true
 }) 
 export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>{ 
+
+  // Sequelize Hooks
+   @AfterDestroy
+   static async deleteCascade(instance: Company) {
+     const id = instance.id;
+    
+     await User.destroy({ where: { companyId: id } });
+     await Location.destroy({ where: { companyId: id } });
+     await Contact.destroy({ where: { companyId: id } });
+     await TextModule.destroy({ where: { companyId: id } });
+     await FileModule.destroy({ where: { companyId: id } });
+   }
+
+   @AfterRestore
+   static async restoreCascade(instance: Company) {
+     const id = instance.id;
+
+     await User.restore({ where: { companyId: id } });
+     await Location.restore({ where: { companyId: id } });
+     await Contact.restore({ where: { companyId: id } });
+     await TextModule.restore({ where: { companyId: id } });
+     await FileModule.restore({ where: { companyId: id } });
+   }
 
 
 // Here, TS infers Data Type from the JS Type 
@@ -52,17 +78,24 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    @Column 
    updatedAt!: Date; 
 
-   @HasMany(() => User)
+   @DeletedAt
+   @Column
+   deletedAt?: Date;
+
+   @HasMany(() => User, {onDelete: 'CASCADE'})
    declare users?: User[];
 
-   @HasMany(() => Location)
+   @HasMany(() => Location, {onDelete: 'CASCADE'})
    declare locations?: Location[];
 
-   @HasMany(() => Contact)
+   @HasMany(() => Contact, {onDelete: 'CASCADE'})
    declare contacts?: Contact[];
 
-   @HasMany(() => TextModule)
+   @HasMany(() => TextModule, {onDelete: 'CASCADE'})
    declare textModules?: TextModule[];
+
+   @HasMany(() => FileModule, {onDelete: 'CASCADE'})
+   declare fileModules?: FileModule[];
 
    @BelongsToMany(() => Filter, { 
     through: () => CompanyFilter,

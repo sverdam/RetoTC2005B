@@ -1,23 +1,26 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
 interface LocationAttributes{ 
   id: number; 
   name: string; 
-  street: string ; 
-  number: number ;
-  neighborhood: string ;
+  street: string; 
+  number: number;
+  neighborhood: string;
   postalCode: string;
-  city: string ; 
-  country: string ;
+  city: string; 
+  country: string;
+  companyId: number;
 } 
 
 interface LocationCreationAttributes extends Optional<LocationAttributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "locations" 
+  tableName: "locations",
+  paranoid: true,
+  timestamps: true
 }) 
 export class Location extends Model<LocationAttributes, LocationCreationAttributes>{ 
 
@@ -59,4 +62,8 @@ export class Location extends Model<LocationAttributes, LocationCreationAttribut
    @UpdatedAt 
    @Column 
    updatedAt!: Date; 
+
+   @DeletedAt
+   @Column
+   deletedAt?: Date;
 } 

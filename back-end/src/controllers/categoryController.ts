@@ -134,3 +134,17 @@ export const deleteCategory: RequestHandler = async (req: Request, res: Response
         });
     }
 };
+
+// Restore category
+export const restoreCategory: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    const id = Number(req.params.id);
+    try { 
+        await Category.restore({ where: { id } }); 
+        res.status(200).json({ message: "Category restored" }); 
+    } catch (error) { 
+        res.status(500).json({ 
+            message: "Error restoring categories", 
+            error, 
+        }); 
+    } 
+}; 

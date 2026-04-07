@@ -4,7 +4,8 @@ import {
   deleteFilter,
   getAllFilters,
   getFilterById,
-  updateFilter
+  updateFilter,
+  restoreFilter
 } from '../controllers/filterController';
 
 const filterRouter: Router = Router();
@@ -18,5 +19,7 @@ filterRouter.post('/', createFilter);
 filterRouter.patch('/:id', updateFilter);
 
 filterRouter.delete('/:id', deleteFilter);
+
+filterRouter.patch('/restore/:id', restoreFilter);
 
 export default filterRouter;

@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { Category } from "../models/category";
 import { Company } from "../models/company";
@@ -9,12 +9,15 @@ interface FilterAttributes{
   id: number; 
   name: string; 
   tier: number;
+  categoryId: number;
 } 
 
 interface FilterCreationAttributes extends Optional<FilterAttributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "filters" 
+  tableName: "filters",
+  paranoid: true,
+  timestamps: true
 }) 
 export class Filter extends Model<FilterAttributes, FilterCreationAttributes>{ 
 
@@ -41,6 +44,10 @@ export class Filter extends Model<FilterAttributes, FilterCreationAttributes>{
    @UpdatedAt 
    @Column 
    updatedAt!: Date; 
+
+   @DeletedAt
+   @Column
+   deletedAt?: Date;
 
    @BelongsToMany(() => Company, { 
     through: () => CompanyFilter,

@@ -126,3 +126,17 @@ export const deleteContact: RequestHandler = async (req: Request, res: Response)
         });
     }
 };
+
+// Restore contact
+export const restoreContact: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    const id = Number(req.params.id);
+    try { 
+        await Contact.restore({ where: { id } }); 
+        res.status(200).json({ message: "Contact restored" }); 
+    } catch (error) { 
+        res.status(500).json({ 
+            message: "Error restoring contacts", 
+            error, 
+        }); 
+    } 
+}; 

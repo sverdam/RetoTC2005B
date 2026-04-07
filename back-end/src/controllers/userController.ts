@@ -194,3 +194,17 @@ export const deleteUser: RequestHandler = async (req: Request, res: Response): P
         });
     }
 };
+
+// Restore user
+export const restoreUser: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    const id = Number(req.params.id);
+    try { 
+        await User.restore({ where: { id } }); 
+        res.status(200).json({ message: "User restored" }); 
+    } catch (error) { 
+        res.status(500).json({ 
+            message: "Error restoring users", 
+            error, 
+        }); 
+    } 
+}; 
