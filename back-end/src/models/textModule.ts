@@ -1,25 +1,28 @@
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
 interface TextModuleAtributes{ 
   id: number; 
-  title: string ; 
-  text: string ; 
-  tier: number ;
+  title: string; 
+  text: Text; 
+  tier: number;
+  companyId: number;
 } 
 
 interface TextModuleCreationAttributes extends Optional<TextModuleAtributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "textModules" 
+  tableName: "textModules",
+  paranoid: true,
+  timestamps: true
 }) 
 export class TextModule extends Model<TextModuleAtributes, TextModuleCreationAttributes>{ 
 
     @Column
     title!: string;
 
-    @Column
+    @Column(DataType.TEXT)
     text!: string;
 
     @Column
@@ -43,5 +46,7 @@ export class TextModule extends Model<TextModuleAtributes, TextModuleCreationAtt
     @Column 
     updatedAt!: Date; 
 
-
+    @DeletedAt
+    @Column
+    deletedAt?: Date;
 }

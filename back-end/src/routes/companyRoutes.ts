@@ -4,7 +4,8 @@ import {
     deleteCompany,  
     getAllCompanies,  
     getCompanyById,  
-    updateCompany  
+    updateCompany,
+    restoreCompany
 } from '../controllers/companyController'; 
 
 const companyRouter:Router = Router();  
@@ -17,7 +18,9 @@ companyRouter.post('/', createCompany);
 
 companyRouter.patch('/:id', updateCompany);  
 
-companyRouter.delete('/:id', deleteCompany);  
+companyRouter.delete('/:id', deleteCompany); 
+
+companyRouter.patch('/restore/:id', restoreCompany);
 
 export default companyRouter; 
 

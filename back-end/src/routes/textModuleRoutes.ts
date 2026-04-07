@@ -4,7 +4,8 @@ import {
   deleteTextModule,
   getAllTextModules,
   getTextModuleById,
-  updateTextModule
+  updateTextModule,
+  restoreTextModule
 } from '../controllers/textModuleController';
 
 const textModuleRouter: Router = Router();
@@ -18,5 +19,7 @@ textModuleRouter.post('/', createTextModule);
 textModuleRouter.patch('/:id', updateTextModule);
 
 textModuleRouter.delete('/:id', deleteTextModule);
+
+textModuleRouter.patch('/restore/:id', restoreTextModule);
 
 export default textModuleRouter;
