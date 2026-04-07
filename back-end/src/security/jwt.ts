@@ -14,7 +14,6 @@ interface UserPayload extends JwtPayload {
   role: string;
 }
 
-
 export function createToken(user: User)
 {
     const token = jwt.sign(
@@ -22,4 +21,17 @@ export function createToken(user: User)
         SECRET_KEY, 
         { expiresIn: '2 hours' });
     return token;
+}
+
+export function decodeToken(token: String)
+{
+    // Verifying a token
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY) as UserPayload;
+        console.log('User ID:', decoded.id);
+        console.log('User Email:', decoded.email);
+        console.log('User Role: ', decoded.role)
+    } catch (error) {
+        console.error('Invalid or expired token');
+    } 
 }
