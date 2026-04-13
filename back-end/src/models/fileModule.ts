@@ -25,7 +25,7 @@ interface FileModuleCreationAttributes extends Optional<FileModuleAtributes, 'id
 
 @Table ({ 
   tableName: "fileModules",
-  paranoid: true,
+  //paranoid: true,
   timestamps: true
 }) 
 export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAttributes>{ 
@@ -92,8 +92,10 @@ export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAtt
     @UpdatedAt
     @Column
     updatedAt!: Date;
-
+/*
     @DeletedAt
     @Column
     deletedAt?: Date;
+*/
+
 }
