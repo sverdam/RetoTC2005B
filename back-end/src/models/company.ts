@@ -46,7 +46,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Location.restore({ where: { companyId: id } });
      await Contact.restore({ where: { companyId: id } });
      await TextModule.restore({ where: { companyId: id } });
-     await FileModule.restore({ where: { companyId: id } });
+     //await FileModule.restore({ where: { companyId: id } });
    }
 
 
