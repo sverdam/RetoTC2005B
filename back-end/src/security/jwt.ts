@@ -41,5 +41,6 @@ export function decodeToken(token: string)
         return decoded;
     } catch (error) {
         console.error('Invalid or expired token');
+        throw error;
     } 
 }
