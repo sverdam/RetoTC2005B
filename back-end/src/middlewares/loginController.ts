@@ -4,12 +4,6 @@ import { verifyPassword } from "../security/hashing";
 import { createToken, decodeToken } from "../security/jwt";
 
 
-declare namespace Express {
-   export interface Request {
-      user?: string
-   }
-}
-
 
 export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 
