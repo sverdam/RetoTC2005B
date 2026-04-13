@@ -32,6 +32,7 @@ export function decodeToken(token: string)
         console.log('User ID:', decoded.id);
         console.log('User Email:', decoded.email);
         console.log('User Role: ', decoded.role)
+        return decoded;
     } catch (error) {
         console.error('Invalid or expired token');
     } 
