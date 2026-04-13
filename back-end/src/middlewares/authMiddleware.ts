@@ -1,7 +1,7 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import { User } from "../models/user";
 import { verifyPassword } from "../security/hashing";
-import { createToken, decodeToken } from "../security/jwt";
+import { createToken, decodeToken, unverifiedUser } from "../security/jwt";
 
 
 
@@ -11,12 +11,13 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  // If no token is provided, return an error
+  // If request doesnt have token
   if (!token) {
-    return res.status(401).json({
-      message: 'Unauthorized. No token provided.'
-    });
+    // Asign the unverified user profile
+    req.user = unverifiedUser; 
+    return next();
   }
+
   try {
     // Verify the token
     const decoded = decodeToken(token);
@@ -25,9 +26,10 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
 
     next(); // Continue to the next middleware or route
   } catch (error) {
-    return res.status(403).json({
-     message: 'Forbidden - Invalid or expired token',
-    });
+    
+    // Asign the unverified user profile
+    req.user = unverifiedUser; 
+    next();
   }
 };
 

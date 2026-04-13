@@ -7,12 +7,18 @@ dotenv.config({ path: "back-end/.env" });
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "unknown";
 
-// Optional: Define a custom payload structure
 interface UserPayload extends JwtPayload {
   id: string;
   email: string;
   companyId: number
   role: string;
+}
+
+export const unverifiedUser: UserPayload = {
+    id: "-1",
+    email: 'unknown',
+    companyId: -1,
+    role: 'unverified'
 }
 
 export function createToken(user: User)
