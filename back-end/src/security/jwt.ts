@@ -24,7 +24,7 @@ export function createToken(user: User)
     return token;
 }
 
-export function decodeToken(token: String)
+export function decodeToken(token: string)
 {
     // Verifying a token
     try {
