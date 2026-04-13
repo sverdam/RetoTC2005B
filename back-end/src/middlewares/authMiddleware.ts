@@ -1,7 +1,38 @@
-import { RequestHandler, Request, Response } from "express";
+import { RequestHandler, Request, Response, NextFunction } from "express";
 import { User } from "../models/user";
 import { verifyPassword } from "../security/hashing";
-import { createToken } from "../security/jwt";
+import { createToken, decodeToken, unverifiedUser } from "../security/jwt";
+
+
+
+export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+
+  // Grab token from the authorization header
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  // If request doesnt have token
+  if (!token) {
+    // Asign the unverified user profile
+    req.user = unverifiedUser; 
+    return next();
+  }
+
+  try {
+    // Verify the token
+    const decoded = decodeToken(token);
+
+    req.user = decoded; // Save user info in the request
+
+    next(); // Continue to the next middleware or route
+  } catch (error) {
+    
+    // Asign the unverified user profile
+    req.user = unverifiedUser; 
+    next();
+  }
+};
+
 
 export const loginAuthentication: RequestHandler = async (req: Request, res: Response) => {
 
