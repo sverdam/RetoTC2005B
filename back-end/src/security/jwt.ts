@@ -7,7 +7,7 @@ dotenv.config({ path: "back-end/.env" });
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "unknown";
 
-interface UserPayload extends JwtPayload {
+export interface UserPayload extends JwtPayload {
   id: string;
   email: string;
   companyId: number
