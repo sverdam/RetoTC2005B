@@ -1,4 +1,4 @@
-import type { Company } from "my-types";
+import type { Company } from "clas-types";
 import { InformationCircleIcon, StarIcon } from "@heroicons/react/24/outline";
 
 interface Props {
@@ -12,7 +12,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
             <img 
-                src={company.logo}
+                src={company.logo} // TODO: Arreglar esto!!
                 alt={company.name}
                 className="w-full h-25 object-contain"
             />

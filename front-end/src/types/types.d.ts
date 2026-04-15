@@ -3,13 +3,19 @@ declare module "clas-types" {
         id: number;
         name: string;
     }
+    
+    export enum MemberType {
+        AFFILIATE = 'Afiliado',
+        ASSOCIATE = 'Asociado',
+    }
 
     export interface Company {
         id: number;
         name: string;
         description: string;
         tier: number;
-        // logo: Blob;
+        logo: Blob;
+        memberType: MemberType;
     }
 
     export enum ContactType {
