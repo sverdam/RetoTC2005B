@@ -18,7 +18,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
             />
             <div className="flex gap-2 items-center">
                 <InformationCircleIcon className="h-5 w-5 text-gray-400"/>
-                <h4 className="text-gray-400">{company.rating}</h4>
+                <h4 className="text-gray-400">{company.memberType}</h4>
                 <StarIcon className="h-5 w-5 text-gray-400"/>
                 <h4 className="text-gray-400">|</h4>
                 <h4 className="text-gray-400">{company.tier}</h4>
@@ -26,7 +26,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
             <h2 className="text-lg font-medium">
                 {company.name}
             </h2>
-            <p className="text-gray-400">{company.address}</p>
+            <p className="text-gray-400">{company.location.address}</p>
 
             <button className="font-medium text-sm text-gray-400">
                 Learn More

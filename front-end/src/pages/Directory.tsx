@@ -5,7 +5,7 @@ import {
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllCompanies } from "../api/CompanyAPI";
-import type { Company } from "my-types";
+import type { Company } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
 
 

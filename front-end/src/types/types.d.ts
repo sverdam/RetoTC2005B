@@ -16,6 +16,7 @@ declare module "clas-types" {
         tier: number;
         logo: Blob;
         memberType: MemberType;
+        location: Location;
     }
 
     export enum ContactType {
@@ -57,13 +58,8 @@ declare module "clas-types" {
     
     interface Location{ 
         id: number; 
-        name: string; 
-        street: string; 
-        number: number;
-        neighborhood: string;
-        postalCode: string;
-        city: string; 
-        country: string;
+        address: string;
+        link: string;
         companyId: number;
     }
 
