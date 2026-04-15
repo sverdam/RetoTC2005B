@@ -12,7 +12,7 @@ import DirectoryCard from "../components/DirectoryCard";
 const UserPage: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
-    const [tier, setTier] = useState<string | null>(null);
+    const [tier, setTier] = useState<number | null>(null);
 
     useEffect(() => {
         getAllCompanies().then((companies: Company[]) => setCompanies(companies));
@@ -53,7 +53,7 @@ const UserPage: React.FC = () => {
                             className="border-none focus:outline-none focus:ring-0"
                             value={tier ?? ""}
                             onChange={(e) => 
-                            setTier(e.target.value === "" ? null : (e.target.value))
+                            setTier(e.target.value === "" ? null : Number((e.target.value)))
                         }>
                             <option value="">All Tiers</option>
                             <option>
@@ -73,7 +73,7 @@ const UserPage: React.FC = () => {
             {/*grid de cacharros*/}
             <div className="grid grid-cols-4 gap-4">
                 {companies.map((company) => (
-                    <CompanyCard key={company.id} company={company} />
+                    <DirectoryCard key={company.id} company={company} />
                 ))}
             </div>
         </div>
