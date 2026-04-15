@@ -1,11 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import type { FC } from 'react'
+import { Outlet } from 'react-router'
 import './App.css'
 
-function App() {
+const App: FC = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <header>
+        {/* TODO: NAVBAR */}
+      </header>
+      <main className="max-w-6xl mx-auto px-4 py-6">
+        <Outlet />
+      </main>
+    </div>
+  );
   
-}
+};
 
 export default App

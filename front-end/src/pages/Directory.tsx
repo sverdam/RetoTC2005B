@@ -9,7 +9,7 @@ import type { Company } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
 
 
-const UserPage: React.FC = () => {
+const DirectoryPage: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
     const [tier, setTier] = useState<number | null>(null);
@@ -81,4 +81,4 @@ const UserPage: React.FC = () => {
 
 };
 
-export default UserPage;
+export default DirectoryPage;
