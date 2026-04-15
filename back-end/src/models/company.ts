@@ -9,12 +9,19 @@ import { TextModule } from "../models/textModule"
 import { CompanyFilter } from "../models/companyFilter";
 import { FileModule } from './fileModule';
 
+enum MemberType {
+  AFFILIATE = 'Affiliate',
+  ASSOCIATE = 'Associate',
+  ADMIN = 'Admin',
+}
+
 interface CompanyAttributes{ 
   id: number; 
   name: string; 
   description: string; 
   tier: number; 
   logo: Blob; 
+  memberType: MemberType;
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
@@ -69,6 +76,12 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
       type: DataType.BLOB 
    }) 
    logo?: Blob; 
+
+   @Column({
+      type: DataType.ENUM(...Object.values(MemberType)),
+      allowNull: false,
+    })
+    memberType!: MemberType;
 
    @CreatedAt 
    @Column 
