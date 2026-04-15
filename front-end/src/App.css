@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
 
 @theme {
   --color-clas: #2c419a;
   --color-clas-claro: #446fb6;
+  --color-clas-gris: #c4c4c4;
+  --color-clas-negro: #2e2e2e;
 }
 
 #root {
@@ -10,6 +15,8 @@
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-  }
+    font-family: 'Google Sans', sans-serif;
+    font-weight: 300;
+}
 
 
