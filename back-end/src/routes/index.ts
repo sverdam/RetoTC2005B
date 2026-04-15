@@ -9,8 +9,11 @@ import textModuleRoutes from './textModuleRoutes';
 import authRoutes from './authRoutes';
 import fileModuleRoutes from './fileModuleRoutes';
 import certificationRouter from './certificationRoutes';
+import { tokenAuthorization } from '../middlewares/authMiddleware';
 
 const apiRouter:Router = Router();  
+
+apiRouter.use(tokenAuthorization);
 
 apiRouter.use('/company', companyRoutes);  
 apiRouter.use('/user', userRoutes);  
