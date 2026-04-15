@@ -12,7 +12,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
             <img 
-                src={company.logo} // TODO: Arreglar esto!!
+                src={String(company.logo)} // TODO: Arreglar esto!!
                 alt={company.name}
                 className="w-full h-25 object-contain"
             />
