@@ -6,7 +6,7 @@ interface Props {
     // onClose: () => void;
     // onEdit: () => void;
 }
-const CompanyCard: React.FC<Props> = ({ company }) => {
+const DirectoryCard: React.FC<Props> = ({ company }) => {
     console.log(company)
     return (
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
@@ -35,4 +35,4 @@ const CompanyCard: React.FC<Props> = ({ company }) => {
     );
 }
 
-export default CompanyCard;
+export default DirectoryCard;
