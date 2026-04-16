@@ -9,10 +9,10 @@ import {
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import type { User, Company } from "clas-types";
-import { getAllUsers, deleteUser} from "../api/UserAPI";
+import { getAllUsers, deleteUser } from "../api/UserAPI";
 import { getAllCompanies } from "../api/CompanyAPI";
 import DeleteConfirmModal from "../components/DeleteConfirmModal";
-import UserDetailModal from "../components/userDetailModal";
+//import UserDetailModal from "../components/userDetailModal";
 
 const SortIcon = ({ className }: { className?: string }) => (
   <svg
@@ -58,10 +58,10 @@ const UserPage: React.FC = () => {
     const _name= nameQuery.trim().toLowerCase();
     const _position = positionQuery.trim().toLowerCase();
 
-    return users.filter((p) => {
-      const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name);
-      const matchesPosition = _position.length === 0 || p.position.toLowerCase().includes(_position);
-      const matchesCompany = companyId === null || p.company.id === companyId;
+    return users.filter((u) => {
+      const matchesName = _name.length === 0 || u.name.toLowerCase().includes(_name);
+      const matchesPosition = _position.length === 0 || u.role.toLowerCase().includes(_position);
+      const matchesCompany = companyId === null || u.companyId === companyId;
 
       return matchesName && matchesPosition && matchesCompany;
     });
@@ -231,7 +231,7 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">
-                        {user.position}
+                        {user.role}
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">
@@ -239,7 +239,7 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3 text-gray-700 text-center">
-                        {user.isAdmin ? (
+                        {user.role.toLowerCase() === "admin" ? (
                           <CheckCircleIcon className="h-4 w-4 text-green-600 inline-block" />
                         ) : (
                           <XCircleIcon className="h-4 w-4 inline-block" />
@@ -273,12 +273,12 @@ const UserPage: React.FC = () => {
               user={userToDelete}
               onClose={() => setUserToDelete(null)}
               onConfirm={handleDelete} />
-            <UserDetailModal 
+            {/* <UserDetailModal 
               user={userToView}
               onClose={() => setUserToView(null)}
               onEdit={() => {navigate(`/users/${userToView?.id}/edit`, {state: {user: userToView } });
                 setUserToView(null);
-              }} />
+              }} /> */}
           </div>
         </div>
       </div>
