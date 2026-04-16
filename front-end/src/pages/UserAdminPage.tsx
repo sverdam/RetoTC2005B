@@ -61,7 +61,7 @@ const UserPage: React.FC = () => {
     return users.filter((u) => {
       const matchesName = _name.length === 0 || u.name.toLowerCase().includes(_name);
       const matchesPosition = _position.length === 0 || u.role.toLowerCase().includes(_position);
-      const matchesCompany = companyId === null || u.companyId === companyId;
+      const matchesCompany = companyId === null || u.company?.id === companyId;
 
       return matchesName && matchesPosition && matchesCompany;
     });
@@ -164,7 +164,7 @@ const UserPage: React.FC = () => {
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Image
+                    Company
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
@@ -215,7 +215,7 @@ const UserPage: React.FC = () => {
                       </td>
                       
                       <td className="px-3 py-3 text-center text-gray-700">
-                        <PhotoIcon className="mx-auto h-4 w-4 text-gray-400" />
+                        {user.company?.name}
                       </td>
 
                       <td className="px-3 py-3">
