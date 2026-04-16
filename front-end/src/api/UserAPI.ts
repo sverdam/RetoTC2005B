@@ -8,9 +8,9 @@ interface ApiResponse<T> {
 
 export const getAllUsers = async (): Promise<User[]> => {
     try{
-        const res = await api.get<ApiResponse<User[]>> ("/user");
-        console.log(res.data.payload)
-        return res.data.payload;
+        const res = await api.get<User[]> ("/user");
+        console.log(res.data);
+        return res.data;
     } catch (error) {
         const err = error as AxiosError;
         console.error("Error fecthing users: ", err.message);
@@ -20,9 +20,9 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const deleteUser = async (id: number): Promise<User> => {
     try{
-        const res = await api.delete<ApiResponse<User>> (`/user/${id}`)
-        console.log(res.data.payload)
-        return res.data.payload;
+        const res = await api.delete<User> (`/user/${id}`)
+        console.log(res.data)
+        return res.data;
     }
     catch (error) {
         const err = error as AxiosError;

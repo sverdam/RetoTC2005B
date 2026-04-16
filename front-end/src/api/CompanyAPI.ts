@@ -8,9 +8,9 @@ interface ApiResponse<T> {
 
 export const getAllCompanies = async (): Promise<Company[]> => {
     try{
-        const res = await api.get<ApiResponse<Company[]>> ("/company");
-        console.log(res.data.payload)
-        return res.data.payload;
+        const res = await api.get<Company[]> ("/company");
+        console.log(res.data)
+        return res.data;
     } catch (error) {
         const err = error as AxiosError;
         console.error("Error fecthing companies: ", err.message);
