@@ -7,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { getAllCompanies } from "../api/CompanyAPI";
 import type { Company } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
+import FilterModal from "../components/FilterModal";
 
 
 const DirectoryPage: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
     const [tier, setTier] = useState<number | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         getAllCompanies().then((companies: Company[]) => setCompanies(companies));
@@ -43,7 +45,9 @@ const DirectoryPage: React.FC = () => {
                         setNameQuery(e.target.value)}
                     ></input>
                 </div>
-                <button className=" w-20 bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                <button
+                    onClick={() => setIsOpen(true)} 
+                    className=" w-20 bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                     Filtros
                 </button>
             </div>
@@ -53,6 +57,10 @@ const DirectoryPage: React.FC = () => {
                     <DirectoryCard key={company.id} company={company} />
                 ))}
             </div>
+            <FilterModal 
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+            />
         </div>
     )
 
