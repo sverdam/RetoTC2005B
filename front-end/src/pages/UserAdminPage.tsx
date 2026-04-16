@@ -139,12 +139,6 @@ const UserPage: React.FC = () => {
               </select>
             </div>
 
-            <div>
-              <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
-                Filter
-              </button>
-            </div>
-
           </div>
         </div>
 
