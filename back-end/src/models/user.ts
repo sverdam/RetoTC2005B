@@ -29,7 +29,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes>{
    @Column 
    name!: string; 
 
-   @Column 
+   @Column({
+    unique: 'uniqueEmail'
+   })
    email!: string; 
 
    @Column 
