@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
@@ -20,7 +20,6 @@ interface CompanyAttributes{
   name: string; 
   description: string; 
   tier: number; 
-  logo: Blob; 
   memberType: MemberType;
 } 
 
@@ -71,12 +70,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @Column 
    tier!: number; 
-
-   @Column({ 
-      type: DataType.BLOB 
-   }) 
-   logo?: Blob; 
-
+  
    @Column({
       type: DataType.ENUM(...Object.values(MemberType)),
       allowNull: false,
