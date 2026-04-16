@@ -83,5 +83,11 @@ declare module "clas-types" {
         password: string; 
         role: UserRole;
         companyId: number;
+        company?: CompanyLite
     } 
+
+    interface CompanyLite{
+        id: number,
+        name: string
+    }
 }
