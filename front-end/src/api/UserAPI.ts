@@ -20,7 +20,7 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const deleteUser = async (id: number): Promise<User> => {
     try{
-        const res = await api.delete<ApiResponse<User>> ("/user/")
+        const res = await api.delete<ApiResponse<User>> (`/user/${id}`)
         console.log(res.data.payload)
         return res.data.payload;
     }
