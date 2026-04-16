@@ -5,13 +5,8 @@ import { Company } from "../models/company";
 
 interface LocationAttributes{ 
   id: number; 
-  name: string; 
-  street: string; 
-  number: number;
-  neighborhood: string;
-  postalCode: string;
-  city: string; 
-  country: string;
+  address: string;
+  mapLink: string;
   companyId: number;
 } 
 
@@ -25,25 +20,10 @@ interface LocationCreationAttributes extends Optional<LocationAttributes, 'id'>{
 export class Location extends Model<LocationAttributes, LocationCreationAttributes>{ 
 
    @Column 
-   name!: string; 
+   address!: string; 
 
    @Column 
-   street!: string; 
-
-   @Column 
-   number!: number; 
-
-   @Column
-   neighborhood!: string;
-
-   @Column
-   postalCode!: string;
-
-   @Column
-   city!: string;
-
-   @Column
-   country!: string;
+   mapLink!: string; 
 
    @ForeignKey(() => Company)
    @Column({
