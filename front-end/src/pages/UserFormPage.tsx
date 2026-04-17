@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { ArrowLeftIcon, PlusIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import type { Company, User, NewUserInput } from "clas-types";
+import type { Company, User, NewUserInput, UserRole } from "clas-types";
 import { getAllCompanies } from '../api/CompanyAPI';
-import { createUser, updateUser } from '../api/UserAPI';
+//import { createUser, updateUser } from '../api/UserAPI';
 
 
 const inputClass =
@@ -14,10 +14,9 @@ const labelClass = "block text-xs font-medium text-gray-600 mb-1";
 // Valor inicial del formulario
 const emptyForm: NewUserInput ={
     name: "",
-    position: "",
     email: "",
     password: "",
-    isAdmin: false,
+    role: 'user',
     companyId: 0,
 };
 
@@ -38,11 +37,10 @@ const UserFormPage: React.FC = () => {
             const user = location.state.user as User;
             setForm({
                 name: user.name,
-                position: user.position,
                 email: user.email,
                 password: user.password,
-                isAdmin: user.isAdmin,
-                companyId: user.company.id,
+                role: user.role,
+                companyId: user.company?.id ?? 0,
             });
         }
     },[]);
@@ -54,9 +52,9 @@ const UserFormPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isEditing){
-            updateUser(Number(id), form).then(() => navigate("/users"));
+            //updateUser(Number(id), form).then(() => navigate("/users"));
         } else {
-            createUser(form).then(() => navigate("/users"));
+            //createUser(form).then(() => navigate("/users"));
         }
     };
 
@@ -93,20 +91,6 @@ const UserFormPage: React.FC = () => {
                                 placeholder="User name"
                                 value={form.name}
                                 onChange={(e) => handleChange("name", e.target.value)}>
-                            </input>
-                        </div>
-                        {/* Position */}
-                        <div>
-                            <label className={labelClass}>
-                                Position
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                className={inputClass}
-                                placeholder="User Position"
-                                value={form.position}
-                                onChange={(e) => handleChange("position", e.target.value)}>
                             </input>
                         </div>
                         {/* 2-column grid */}
@@ -163,21 +147,21 @@ const UserFormPage: React.FC = () => {
                             {/* isAdmin */}
                             <div>
                                 <label className={labelClass}>
-                                    isAdmin
+                                    User Type
                                 </label>
                                 <select
                                     required 
                                     className={inputClass}
-                                    value={form.isAdmin.toString()}
-                                    onChange={(e) => handleChange("isAdmin",e.target.value === "true")}
+                                    value={form.role.toString()}
+                                    onChange={(e) => handleChange("role", e.target.value )}
                                     >
                                     <option
-                                        value="false">
-                                        No
+                                        value="user">
+                                        USER
                                     </option>
                                     <option
-                                        value="true">
-                                        Yes
+                                        value="admin">
+                                        ADMIN
                                     </option>
                                     
                                 </select>
