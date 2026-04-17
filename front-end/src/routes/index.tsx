@@ -3,6 +3,7 @@ import App from "../App";
 import DirectoryPage from "../pages/Directory";
 import ErrorPage from "../pages/ErrorPage";
 import UserPage from "../pages/UserAdminPage";
+import UserFormPage from "../pages/UserFormPage";
 import CompanyPage from "../pages/CompanyPage";
 
 const router = createBrowserRouter([
@@ -13,6 +14,8 @@ const router = createBrowserRouter([
         children: [
             { path: 'directorio', element: <DirectoryPage />},
             { path: 'users', element: <UserPage/>},
+            { path: 'users/new', element: <UserFormPage />},
+            { path: 'users/:id', element: <UserFormPage />},
             { path: 'empresa', element: <CompanyPage />}
         ]
     },
