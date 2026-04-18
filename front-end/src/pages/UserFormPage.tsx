@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { ArrowLeftIcon, PlusIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import type { Company, User, NewUserInput, UserRole } from "clas-types";
 import { getAllCompanies } from '../api/CompanyAPI';
+import { createUser } from '../api/UserAPI';
 //import { createUser, updateUser } from '../api/UserAPI';
 
 
@@ -54,7 +55,7 @@ const UserFormPage: React.FC = () => {
         if (isEditing){
             //updateUser(Number(id), form).then(() => navigate("/users"));
         } else {
-            //createUser(form).then(() => navigate("/users"));
+            createUser(form).then(() => navigate("/users"));
         }
     };
 
