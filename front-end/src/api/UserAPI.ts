@@ -1,6 +1,6 @@
 import api from ".";
 import { AxiosError } from "axios";
-import type { User } from "clas-types";
+import type { NewUserInput, User } from "clas-types";
 
 interface ApiResponse<T> {
     payload: T;
@@ -30,3 +30,17 @@ export const deleteUser = async (id: number): Promise<User> => {
         throw err;
     }
 }
+
+export const createUser = async (data: NewUserInput): Promise<User> => {
+  try {
+    const res = await api.post<User>("/user", data);
+
+    return res.data;
+  } catch (error) {
+    const err = error as AxiosError;
+
+    console.error("Error creating user:", err.message);
+
+    throw err;
+  }
+};
