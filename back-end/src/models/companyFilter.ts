@@ -1,4 +1,4 @@
-import { Table, Column, Model, DeletedAt, ForeignKey, HasOne } from 'sequelize-typescript';
+import { Table, Column, Model, DeletedAt, ForeignKey } from 'sequelize-typescript';
 import { Company } from '../models/company';
 import { Filter } from '../models/filter';
 
@@ -19,13 +19,8 @@ export class CompanyFilter extends Model<CompanyFilter> {
   @Column
   companyId!: number;
 
-  @HasOne(() => Company, { foreignKey: "companyId", onDelete: 'CASCADE'})
-  declare company?: Company | null;
-
   @ForeignKey(() => Filter)
   @Column
   filterId!: number;
 
-  @HasOne(() => Filter, { foreignKey: "filterId", onDelete: 'CASCADE'})
-  declare filter?: Filter | null;
 }

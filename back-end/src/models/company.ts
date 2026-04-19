@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
@@ -9,12 +9,18 @@ import { TextModule } from "../models/textModule"
 import { CompanyFilter } from "../models/companyFilter";
 import { FileModule } from './fileModule';
 
+enum MemberType {
+  AFFILIATE = 'Affiliate',
+  ASSOCIATE = 'Associate',
+  ADMIN = 'Admin',
+}
+
 interface CompanyAttributes{ 
   id: number; 
   name: string; 
   description: string; 
   tier: number; 
-  logo: Blob; 
+  memberType: MemberType;
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
@@ -46,7 +52,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Location.restore({ where: { companyId: id } });
      await Contact.restore({ where: { companyId: id } });
      await TextModule.restore({ where: { companyId: id } });
-     await FileModule.restore({ where: { companyId: id } });
+     //await FileModule.restore({ where: { companyId: id } });
    }
 
 
@@ -64,11 +70,12 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @Column 
    tier!: number; 
-
-   @Column({ 
-      type: DataType.BLOB 
-   }) 
-   logo?: Blob; 
+  
+   @Column({
+      type: DataType.ENUM(...Object.values(MemberType)),
+      allowNull: false,
+    })
+    memberType!: MemberType;
 
    @CreatedAt 
    @Column 
