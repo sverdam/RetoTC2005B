@@ -1,0 +1,33 @@
+import { useNavigate } from "react-router";
+
+const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
+    return(
+        <div className="grid grid-cols-2 gap-2">
+            <div className=" flex flex-col justify-end rounded-lg  h-screen bg-gradient-to-t from-clas to-clas-claro">
+                <h4 className="px-10 font-semibold text-white text-left text-lg">Puedes facilmente</h4>
+                <h1 className="px-10 py-10 font-bold text-white text-left text-2xl">Acceder a información sobre empresas líderes en la industria automotriz</h1>
+            </div>
+            <div className="flex flex-col items-start  justify-center rounded-lg">
+                <img src="..\src\assets\CLAS-Logotipo-03.jpeg" className="p-10 w-40"/>
+                <h1 className="px-10 pt-5 text-clas-negro font-bold text-3xl text-left">Inicia Sesión</h1>
+                <p className="px-10 pt-2 pb-5 text-clas-negro/70 text-lg text-left">Accede al directorio, boletín de noticias y más</p>
+                {/* Formulario */}
+                <form action="/login" method="post">
+                    <div className="flex flex-col items-start px-10">
+                        <label className="font-semibold text-lg pb-2">E-mail</label>
+                        <input type="text" placeholder="Tu e-mail" className="border border-clas-gris rounded-lg px-2 py-1 text-clas-negro/80 w-md"></input>
+                    </div>
+                    <div className="flex flex-col items-start px-10 py-5">
+                        <label className="font-semibold text-lg pb-2">Contraseña</label>
+                        <input type="password" placeholder="contraseña" className="border border-clas-gris rounded-lg px-2 py-1 text-clas-negro/80 w-md"></input>
+                    </div>
+                    {/*TODO: Arreglar submit para dirigir al directorio */}
+                    <button type="submit" onClick={() => navigate("/directorio")} className="w-md bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">Entrar</button>
+                </form>
+            </div>
+        </div>
+    )
+}
+
+export default LoginPage;
