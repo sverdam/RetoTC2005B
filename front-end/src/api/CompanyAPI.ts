@@ -2,9 +2,6 @@ import api from ".";
 import { AxiosError } from "axios";
 import type { Company } from "clas-types";
 
-interface ApiResponse<T> {
-    payload: T;
-}
 
 export const getAllCompanies = async (): Promise<Company[]> => {
     try{
