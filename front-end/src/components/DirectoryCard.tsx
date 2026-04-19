@@ -12,7 +12,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
             <img 
-                src={String(company.logo)} // TODO: Arreglar esto!!
+                src={!company?.logo ? "..\assets\Default_Logo.jpeg" : String(company.logo.path)} // TODO: Arreglar esto!!
                 alt={company.name}
                 className="w-full h-25 object-contain"
             />
@@ -26,10 +26,10 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
             <h2 className="text-lg font-medium">
                 {company.name}
             </h2>
-            <p className="text-gray-400">{company.location.address}</p>
+            <p className="text-gray-400">{!company.location ? "No existe dirección ingresada aún..." :company.location.address }</p>
 
             <button className="font-medium text-sm text-gray-400">
-                Learn More
+                Leer más
             </button>
         </div>
     );
