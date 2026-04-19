@@ -7,6 +7,7 @@ import { TextModule } from "../models/textModule";
 import { FileModule, FileType } from "../models/fileModule";
 
 
+// This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
 const addLogoToCompany = async (company: Company | null) => {
 
     if (company == null) return company;
