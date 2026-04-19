@@ -45,6 +45,15 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
         }); 
     } 
     
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'){
+        return res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to register a company.", 
+        payload: null, 
+        }); 
+    }
+
     // Save Company in the database 
     const company = { ...req.body }; 
     Company.create(company) 
