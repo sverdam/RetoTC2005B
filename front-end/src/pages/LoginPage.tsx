@@ -25,6 +25,14 @@ const LoginPage: React.FC = () => {
                     {/*TODO: Arreglar submit para dirigir al directorio */}
                     <button type="submit" onClick={() => navigate("/directorio")} className="w-md bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">Entrar</button>
                 </form>
+                <div className="w-lg flex justify-center px-10 py-5 gap-2">
+                    <p className="pt-2 pb-5 text-clas-negro/70 text-sm">
+                        ¿Te gustaría formar parte de CLAS?
+                    </p>
+                    <a href="/membresia" className="pt-2 pb-5 text-clas-claro text-sm font-semibold hover:text-clas">
+                        Contáctanos aquí
+                    </a>
+                </div>
             </div>
         </div>
     )
