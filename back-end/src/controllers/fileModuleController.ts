@@ -1,3 +1,5 @@
+
+import path from 'path';
 import { RequestHandler, Request, Response } from "express";
 import { FileModule } from "../models/fileModule";
 import { Company } from "../models/company";
@@ -169,6 +171,33 @@ export const getFileModuleById: RequestHandler = async (req: Request, res: Respo
         });
     }
 };
+
+// Get File by Id
+export const getFileById: RequestHandler = async (req: Request, res: Response) => {
+    const id = Number(req.params.id);
+
+    try {
+        const fileModule: FileModule | null = await FileModule.findByPk(id, {
+            attributes: { exclude: ["companyId"] },
+            include: [{ model: Company, attributes: ["id", "name"] }],
+        });
+        
+        if (fileModule?.path == null) throw Error;
+
+        const filePath = path.join(__dirname, '..', '..', '..', fileModule?.path);
+        console.log(`PATH: <${filePath}>`)
+        return res.sendFile(filePath, (err) => {
+            if (err) {
+            res.status(500).send('Error occurred while sending the file.');
+            }
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error getting File",
+            error
+        });
+    }
+}
 
 export const getFileModulesByCompanyId: RequestHandler = async(req: Request, res: Response) =>{
     const companyId = Number(req.params.id);
