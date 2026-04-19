@@ -4,6 +4,18 @@ import { verifyPassword } from "../security/hashing";
 import { createToken, decodeToken, unverifiedUser } from "../security/jwt";
 
 
+export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    const unsafeMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+
+    if (unsafeMethods.includes(req.method) && req.user?.role !== 'admin') {
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have permission to modify data." 
+        });
+    }
+    next();
+}
+
+
 
 export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 
