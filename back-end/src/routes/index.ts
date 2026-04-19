@@ -12,8 +12,7 @@ import { tokenAuthorization, adminCheck } from '../middlewares/authMiddleware';
 
 const apiRouter:Router = Router();  
 
-apiRouter.use(tokenAuthorization);
-apiRouter.use(adminCheck);
+apiRouter.use(authRoutes); // Auth routes and middleware
 
 apiRouter.use('/company', companyRoutes);  
 apiRouter.use('/user', userRoutes);  
@@ -23,8 +22,6 @@ apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 apiRouter.use('/textModule', textModuleRoutes);
 apiRouter.use('/fileModule', fileModuleRoutes)
-
-apiRouter.use('/auth', authRoutes);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
 res.send('Hello World!')  

@@ -1,11 +1,17 @@
 
 import { Request, Response } from 'express';
 import { Router } from 'express';
-import { loginAuthentication, tokenAuthorization } from '../middlewares/authMiddleware';
+import { loginAuthentication, tokenAuthorization, adminCheck } from '../middlewares/authMiddleware';
 
 const authRouter: Router = Router();
 
-authRouter.get('/test', tokenAuthorization, (req: Request, res: Response) => 
+// Decodes JWT token from the request
+authRouter.use(tokenAuthorization);
+
+// Check admin requierements and blocks unauthorized modifications requests 
+authRouter.use(adminCheck);         
+
+authRouter.get('/auth/test', tokenAuthorization, (req: Request, res: Response) => 
     {
         console.log("Test");
         res.status(200).json({
@@ -18,6 +24,6 @@ authRouter.get('/test', tokenAuthorization, (req: Request, res: Response) =>
     }
 )
 
-authRouter.get('/', loginAuthentication);
+authRouter.get('/auth/', loginAuthentication);
 
 export default authRouter;
