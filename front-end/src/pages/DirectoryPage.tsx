@@ -53,7 +53,7 @@ const DirectoryPage: React.FC = () => {
             </div>
             {/*grid de cacharros*/}
             <div className="grid grid-cols-4 gap-4">
-                {companies.map((company) => (
+                {filteredCompanies.map((company) => (
                     <DirectoryCard key={company.id} company={company} />
                 ))}
             </div>

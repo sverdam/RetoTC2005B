@@ -14,7 +14,7 @@ declare module "clas-types" {
         name: string;
         description: string;
         tier: number;
-        logo: Blob;
+        logo: FileModule;
         memberType: MemberType;
         location: Location;
     }
