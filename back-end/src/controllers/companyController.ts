@@ -3,7 +3,7 @@ import { Company } from "../models/company";
 import { User } from "../models/user";
 import { Location } from "../models/location";
 import { Contact } from "../models/contact";
- 
+import { TextModule } from "../models/textModule";
 
 //Create new company 
 export const createCompany: RequestHandler = (req: Request, res: Response) => { 
@@ -42,15 +42,19 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
             include: [
                 {
                     model: User,
-                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Location,
-                    attributes: { exclude: ["companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Contact,
                     attributes: { exclude: ["companyId"] }
+                },
+                {
+                    model: TextModule,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 }
             ]
         }); 
@@ -73,15 +77,19 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
             include: [ 
                 {
                     model: User,
-                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Location,
-                    attributes: { exclude: ["companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Contact,
                     attributes: { exclude: ["companyId"] }
+                },
+                {
+                    model: TextModule,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 }
             ]
         }); 
