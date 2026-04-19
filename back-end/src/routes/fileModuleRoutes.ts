@@ -4,6 +4,7 @@ import {
   createFileModule,
   deleteFileModuleFile,
   deleteFileModule,
+  getFileById,
   getAllFileModules,
   getFileModuleById,
   getFileModulesByCompanyId,
@@ -29,6 +30,7 @@ fileModuleRouter.get('/position/:position', getFileModulesByPosition);
 fileModuleRouter.get('/type/:type', getFileModuleByType);
 
 fileModuleRouter.get('/:id', getFileModuleById);
+fileModuleRouter.get('/files/:id', getFileById);
 
 fileModuleRouter.post('/', upload.single("file"), createFileModule); //el atribute de archivo debe ser mandado con el nombre file desde el frontend, upload.single se encarga de subir el archivo
 

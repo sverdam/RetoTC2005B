@@ -3,7 +3,25 @@ import { Company } from "../models/company";
 import { User } from "../models/user";
 import { Location } from "../models/location";
 import { Contact } from "../models/contact";
- 
+import { TextModule } from "../models/textModule";
+import { FileModule, FileType } from "../models/fileModule";
+
+
+// This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
+const addLogoToCompany = async (company: Company | null) => {
+
+    if (company == null) return company;
+
+    const logoModule: FileModule | null = await FileModule.findOne({
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt"] },
+            where: { companyId: company.id, type: 'logo' },
+            plain: true      
+        });
+
+    const result = {...company.dataValues, logo: logoModule?.dataValues};
+
+    return result;
+}
 
 //Create new company 
 export const createCompany: RequestHandler = (req: Request, res: Response) => { 
@@ -42,19 +60,31 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
             include: [
                 {
                     model: User,
-                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Location,
-                    attributes: { exclude: ["companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Contact,
                     attributes: { exclude: ["companyId"] }
+                },
+                {
+                    model: TextModule,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 }
             ]
         }); 
-        return res.status(200).json(companies); 
+
+        //companies.map(company => addLogoToCompany);
+        const logoPromises = companies.map(async (item) => {
+            return await addLogoToCompany(item);
+        });
+
+        const companiesWithLogos = await Promise.all(logoPromises);
+
+        return res.status(200).json(companiesWithLogos); 
     } catch (error) { 
         return res.status(500).json({ 
         "message":"Error getting companies",  
@@ -73,22 +103,30 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
             include: [ 
                 {
                     model: User,
-                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Location,
-                    attributes: { exclude: ["companyId", "createdAt", "updatedAt"] }
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Contact,
                     attributes: { exclude: ["companyId"] }
+                },
+                {
+                    model: TextModule,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 }
             ]
         }); 
-        return res.status(200).json(company); 
-    } catch (error) { 
+
+        const companyWithLogo = await addLogoToCompany(company);
+
+        return res.status(200).json(companyWithLogo); 
+    } 
+    catch (error) { 
         return res.status(500).json({ 
-        "message":"Error getting company",  
+        "message": `Error getting company: ${error}`,  
         error 
         }); 
     } 
