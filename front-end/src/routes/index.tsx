@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import DirectoryPage from "../pages/Directory";
+import DirectoryPage from "../pages/DirectoryPage";
 import ErrorPage from "../pages/ErrorPage";
 import UserPage from "../pages/UserAdminPage";
 import UserFormPage from "../pages/UserFormPage";
@@ -13,9 +13,9 @@ const router = createBrowserRouter([
         errorElement: < ErrorPage/>,
         children: [
             { path: 'directorio', element: <DirectoryPage />},
-            { path: 'users', element: <UserPage/>},
-            { path: 'users/new', element: <UserFormPage />},
-            { path: 'users/:id', element: <UserFormPage />},
+            { path: 'usuarios', element: <UserPage/>},
+            { path: 'usuarios/nuevo', element: <UserFormPage />},
+            { path: 'usuarios/:id', element: <UserFormPage />},
             { path: 'empresa', element: <CompanyPage />}
         ]
     },
