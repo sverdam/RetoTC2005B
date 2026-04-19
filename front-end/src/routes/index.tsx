@@ -6,6 +6,7 @@ import UserPage from "../pages/UserAdminPage";
 import UserFormPage from "../pages/UserFormPage";
 import CompanyPage from "../pages/CompanyPage";
 import LoginPage from "../pages/LoginPage";
+import PaywallPage from "../pages/PaywallPage";
 
 const router = createBrowserRouter([
     {
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
             { path: 'users/new', element: <UserFormPage />},
             { path: 'users/:id', element: <UserFormPage />},
             { path: 'empresa', element: <CompanyPage />},
-            { path: 'login', element: <LoginPage />}
+            { path: 'login', element: <LoginPage />},
+            {path: 'membresia', element: <PaywallPage />}
         ]
     },
 ]);
