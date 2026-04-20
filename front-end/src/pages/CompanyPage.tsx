@@ -78,7 +78,7 @@ const CompanyPage: React.FC = () => {
                 </div>
             </div>
             <h2 className="text-xl font-medium text-clas-negro">Producto / Servicio </h2>
-            <ProductCatalog documentLink="..\src\assets\CLAS - Manual de Uso.pdf" />
+            <ProductCatalog documentLink="..\src\assets\ManualCLAS.pdf" />
             <h2 className="text-xl font-medium text-clas-negro">Capacidades</h2>
             <p className="text-left text-clas-negro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin odio ligula, vestibulum id fringilla sit amet, consectetur at libero. In gravida 100% sed purus nec feugiat. In id cursus metus. In hac habitasse platea dictumst. Sed turpis lorem, ultricies vel elit ut, varius scelerisque magna. 2400 eget arcu eget arcu aliquam aliquet et eu arcu. Nam quis nulla quis dui dignissim placerat nec mattis mi. Integer nulla sapien, commodo eget erat eget, ultrices egestas massa. 
                 Nulla interdum ornare arcu, ac lobortis ex porta in. Curabitur quis consectetur leo, sed porta magna. Nam tempor hendrerit quam, et eleifend tortor faucibus vitae.
