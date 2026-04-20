@@ -77,7 +77,9 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
 export const getAllCompanies: RequestHandler = async (req:Request, res:Response)=>{ 
     try { 
         const companies:Array<Company> = await Company.findAll({
-            include: [
+            include: 
+            req.user?.role === 'unverified' ? [] :
+            [
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -129,7 +131,8 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
     const id = Number(req.params.id)
     try { 
         const company:Company | null = await Company.findByPk(id, {
-            include: [ 
+            include: 
+            req.user?.role === 'unverified' ? [] :[ 
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -181,7 +184,18 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
         message: "Content can not be empty.", 
         payload: null, 
         }); 
-    } 
+    }
+    
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'          // if not part of CLAS
+        && req.user?.companyId !== Number(req.params.id) // nor is it part of the company
+    ){
+        return res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to register a company.", 
+        payload: null, 
+        }); 
+    }
 
     // Save Company in the database 
     Company.update({ ...req.body }, { where: { id: req.params.id } }) 
@@ -212,6 +226,17 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
 // Delete a Company with the specified id in the request 
 
 export const deleteCompany: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'){
+        res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to delete a company.", 
+        payload: null, 
+        }); 
+        return;
+    }
+    
     const id = Number(req.params.id);
     try { 
         await Company.destroy({ where: { id } }); 
@@ -227,6 +252,16 @@ export const deleteCompany: RequestHandler = async (req: Request, res: Response)
 // Restore a Company
 
 export const restoreCompany: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'){
+        res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to restore a company.", 
+        payload: null, 
+        }); 
+        return;
+    }
+    
     const id = Number(req.params.id);
     try { 
         await Company.restore({ where: { id } }); 
