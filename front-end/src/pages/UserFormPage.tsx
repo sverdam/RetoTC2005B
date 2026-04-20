@@ -83,7 +83,7 @@ const UserFormPage: React.FC = () => {
                         {/* Name - Full Width */}
                         <div>
                             <label className={labelClass}>
-                                Name
+                                Nombre
                             </label>
                             <input
                                 type="text"
@@ -99,7 +99,7 @@ const UserFormPage: React.FC = () => {
                             {/* Email */}
                             <div>
                                 <label className={labelClass}>
-                                    E-mail
+                                    Correo
                                 </label>
                                 <input
                                     type="text"
@@ -113,7 +113,7 @@ const UserFormPage: React.FC = () => {
                             {/* Password */}
                             <div>
                                 <label className={labelClass}>
-                                    Password
+                                    Contraseña
                                 </label>
                                 <input
                                     type="text"
@@ -127,7 +127,7 @@ const UserFormPage: React.FC = () => {
                             {/* Company */}
                             <div>
                                 <label className={labelClass}>
-                                    Company
+                                    Compañia
                                 </label>
                                 <select
                                     required
@@ -136,7 +136,7 @@ const UserFormPage: React.FC = () => {
                                     onChange={(e) => handleChange("companyId", parseInt(e.target.value) || 0)}
                                 >
                                     <option value="">
-                                        Select a Company
+                                        Selecciona una compañia
                                     </option>
                                     {companies.map((com) => (
                                         <option key={com.id} value={com.id}>
@@ -148,7 +148,7 @@ const UserFormPage: React.FC = () => {
                             {/* isAdmin */}
                             <div>
                                 <label className={labelClass}>
-                                    User Type
+                                    Tipo de usuario
                                 </label>
                                 <select
                                     required 
@@ -177,12 +177,12 @@ const UserFormPage: React.FC = () => {
                             className="rounded-md border border-gray-500 bg-white
                             px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50
                             focus:outline-none focus:ring-2 focus:ring-gray-300">
-                                Cancel
+                                Cancelar
                         </button>
                         <button className="inline-flex items-center gap-2 rounded-md
                         bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm
                         hover:bg-blue-700 focus: outline-none focus:ring-2 focus:ring-blue-500/30">
-                            {isEditing ? <><PencilSquareIcon className="h-4 w-4" /> Save Changes</>: <><PlusIcon className="h-4 w-4" />Save User</>}
+                            {isEditing ? <><PencilSquareIcon className="h-4 w-4" />Guardar Cambios</>: <><PlusIcon className="h-4 w-4" />Guardar Usuario</>}
                         </button>
                     </div>
                 </div>
