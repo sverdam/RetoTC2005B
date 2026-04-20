@@ -53,7 +53,7 @@ declare module "clas-types" {
         id: number; 
         name: string; 
         tier: number;
-        categoryId: number;
+        category: Category;
     } 
     
     interface Location{ 
