@@ -147,7 +147,7 @@ const UserPage: React.FC = () => {
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-sm font-semibold text-gray-900">Results</h2>
             <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-              onClick={() => navigate("/users/new")}>
+              onClick={() => navigate("/usuarios/nuevo")}>
               NEW USER
             </button>
           </div>
@@ -270,7 +270,7 @@ const UserPage: React.FC = () => {
             {/* <UserDetailModal 
               user={userToView}
               onClose={() => setUserToView(null)}
-              onEdit={() => {navigate(`/users/${userToView?.id}/edit`, {state: {user: userToView } });
+              onEdit={() => {navigate(`/usuarios/${userToView?.id}`, {state: {user: userToView } });
                 setUserToView(null);
               }} /> */}
           </div>
