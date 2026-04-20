@@ -83,19 +83,19 @@ const UserPage: React.FC = () => {
         <div className="border-b border-blue-200 bg-blue-50 px-4 py-3 flex items-center !gap-2">
           <UserIcon className="!h-4 !w-4 text-blue-700" />
           <p className="text-sm font-semibold text-blue-900">
-            All Users
+            Usuarios
           </p>
         </div>
 
         {/* Filter */}
         <div className="px-4 py-4 space-y-3">
-          <h2 className="text-sm font-semibold text-gray-900">Filter</h2>
+          <h2 className="text-sm font-semibold text-gray-900">Filtros</h2>
 
           <div className="flex flex-wrap gap-3 items-end">
 
             <div>
               <label className="block text-xs font-medium text-gray-600">
-                Name
+                Nombre
               </label>
               <input
                 className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
@@ -108,7 +108,7 @@ const UserPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-medium text-gray-600">
-                Position
+                Rol
               </label>
               <input
                 className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
@@ -122,7 +122,7 @@ const UserPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-medium text-gray-600">
-                Company
+                Compañia
               </label>
               <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 value={companyId ?? ""}
@@ -145,10 +145,10 @@ const UserPage: React.FC = () => {
         {/* Results */}
         <div className="px-4 py-4 space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-sm font-semibold text-gray-900">Results</h2>
+            <h2 className="text-sm font-semibold text-gray-900">Resultados</h2>
             <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               onClick={() => navigate("/usuarios/nuevo")}>
-              NEW USER
+              NUEVO USUARIO
             </button>
           </div>
 
@@ -159,43 +159,43 @@ const UserPage: React.FC = () => {
                 <tr className="border-b border-gray-200">
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      #
+                      #ID
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Company
+                    Compañia
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Name
+                      Nombre
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Position
+                      Posición
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Email
+                      Correo
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      isAdmin
+                      Administrador
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Modify
+                    Modificar
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Delete
+                    Eliminar
                   </th>
                 </tr>
               </thead>
