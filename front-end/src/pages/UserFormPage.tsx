@@ -116,7 +116,7 @@ const UserFormPage: React.FC = () => {
                                     Contraseña
                                 </label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     required
                                     className={inputClass}
                                     placeholder="User password"
