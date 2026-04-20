@@ -10,7 +10,6 @@ interface Props {
 const DirectoryCard: React.FC<Props> = ({ company }) => {
     const navigate = useNavigate();
     console.log(company)
-    const navigate = useNavigate();
     return (
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
