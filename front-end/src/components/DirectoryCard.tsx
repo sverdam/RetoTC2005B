@@ -1,5 +1,6 @@
 import type { Company } from "clas-types";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { InformationCircleIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router";
 
 interface Props {
     company: Company;
@@ -8,6 +9,7 @@ interface Props {
 }
 const DirectoryCard: React.FC<Props> = ({ company }) => {
     console.log(company)
+    const navigate = useNavigate();
     return (
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
@@ -27,8 +29,9 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
             </h2>
             <p className="text-gray-400 text-left">{!company.location ? "No existe dirección ingresada aún..." :company.location.address }</p>
 
-            <button className="font-medium text-sm text-gray-400">
+            <button className="font-medium text-sm text-clas flex gap-2 items-center hover:text-clas-claro" onClick={() => navigate("/empresa")}>
                 Leer más
+                <ArrowRightIcon className="h-4 w-4"/>
             </button>
         </div>
     );
