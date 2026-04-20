@@ -8,8 +8,8 @@ interface Props {
     // onEdit: () => void;
 }
 const DirectoryCard: React.FC<Props> = ({ company }) => {
-    console.log(company)
     const navigate = useNavigate();
+    console.log(company)
     return (
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
@@ -29,7 +29,9 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
             </h2>
             <p className="text-gray-400 text-left">{!company.location ? "No existe dirección ingresada aún..." :company.location.address }</p>
 
-            <button className="font-medium text-sm text-clas flex gap-2 items-center hover:text-clas-claro" onClick={() => navigate("/empresa")}>
+            <button 
+            onClick={() => navigate(`/empresa`, {state : {company}})}
+            className="font-medium text-sm text-gray-400">
                 Leer más
                 <ArrowRightIcon className="h-4 w-4"/>
             </button>
