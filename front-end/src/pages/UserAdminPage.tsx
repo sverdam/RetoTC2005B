@@ -38,7 +38,7 @@ const UserPage: React.FC = () => {
 
   const [users, setUsers] = useState<User[]>([]);
   const [nameQuery, setNameQuery] = useState("");
-  const [positionQuery, setPositionQuery] = useState("");
+  const [emailQuery, setEmailQuery] = useState("");
   const [companies, setCompanies] = useState<Company[]>([]);
   const [companyId, setCompanyId] = useState<number | null> (null);
   const [userToDelete, setUserToDelete] = useState<User | null> (null);
@@ -56,16 +56,16 @@ const UserPage: React.FC = () => {
   const filteredUsers = useMemo(() => {
     console.log(users);
     const _name= nameQuery.trim().toLowerCase();
-    const _position = positionQuery.trim().toLowerCase();
+    const _email = emailQuery.trim().toLowerCase();
 
     return users.filter((u) => {
       const matchesName = _name.length === 0 || u.name.toLowerCase().includes(_name);
-      const matchesPosition = _position.length === 0 || u.role.toLowerCase().includes(_position);
+      const matchesEmail = _email.length === 0 || u.email.toLowerCase().includes(_email);
       const matchesCompany = companyId === null || u.company?.id === companyId;
 
-      return matchesName && matchesPosition && matchesCompany;
+      return matchesName && matchesEmail && matchesCompany;
     });
-  }, [positionQuery, nameQuery, companyId, users]);
+  }, [emailQuery, nameQuery, companyId, users]);
 
   const handleDelete = () => {
     if(!userToDelete) return;
@@ -83,54 +83,27 @@ const UserPage: React.FC = () => {
         <div className=" rounded-t-lg border-b border-clas bg-clas/20 px-4 py-3 flex items-center !gap-2">
           <UserIcon className="!h-4 !w-4 text-clas" />
           <p className="text-sm font-semibold text-clas">
-            All Users
+            Usuarios
           </p>
         </div>
 
         {/* Filter */}
         <div className="px-4 py-4 space-y-3">
-          <h2 className="text-sm font-semibold text-clas-negro">Filter</h2>
+          <h2 className="text-sm font-semibold text-clas-negro">Filtros</h2>
 
           <div className="flex flex-wrap gap-3 items-end">
 
             <div>
               <label className="block text-xs font-medium text-clas-negro/70">
-                Name
+                Compañia
               </label>
-              <input
-                className="mt-1 w-40 rounded-md border border-clas-negro/70 bg-white px-2 py-1.5 text-sm text-clas-negro/70 shadow-sm focus:border-clas focus:outline-none focus:ring-2 focus:ring-clas/20"
-                type="text"
-                placeholder="Name"
-                value={nameQuery}
-                onChange={(e) => setNameQuery(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-clas-negro/70">
-                Position
-              </label>
-              <input
-                className="mt-1 w-40 rounded-md border border-clas-negro/70 bg-white px-2 py-1.5 text-sm text-clas-negro/70 shadow-sm focus:border-clas focus:outline-none focus:ring-2 focus:ring-clas/20"
-                type="text"
-                placeholder="Position"
-                value={positionQuery}
-                onChange={(e) =>
-                  setPositionQuery(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-clas-negro/70">
-                Company
-              </label>
-              <select className="mt-1 w-40 rounded-md border border-clas-negro/70 bg-white px-2 py-1.5 text-sm text-clas-negro/70 shadow-sm focus:border-clas focus:outline-none focus:ring-2 focus:ring-clas/20"
+              <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 value={companyId ?? ""}
                 onChange={(e) => 
                   setCompanyId(e.target.value === "" ? null : Number(e.target.value))
                 }
               >
-                <option value="">All Companies</option>
+                <option value="">Todas</option>
                 {companies.map((com) => (
                   <option key={com.id} value={com.id}>
                     {com.name}
@@ -139,16 +112,44 @@ const UserPage: React.FC = () => {
               </select>
             </div>
 
+
+            <div>
+              <label className="block text-xs font-medium text-gray-600">
+                Nombre
+              </label>
+              <input
+                className="mt-1 w-40 rounded-md border border-clas-negro/70 bg-white px-2 py-1.5 text-sm text-clas-negro/70 shadow-sm focus:border-clas focus:outline-none focus:ring-2 focus:ring-clas/20"
+                type="text"
+                placeholder="Nombre"
+                value={nameQuery}
+                onChange={(e) => setNameQuery(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-clas-negro/70">
+                Correo
+              </label>
+              <input
+                className="mt-1 w-40 rounded-md border border-clas-negro/70 bg-white px-2 py-1.5 text-sm text-clas-negro/70 shadow-sm focus:border-clas focus:outline-none focus:ring-2 focus:ring-clas/20"
+                type="text"
+                placeholder="Correo"
+                value={emailQuery}
+                onChange={(e) =>
+                  setEmailQuery(e.target.value)}
+              />
+            </div>
+
           </div>
         </div>
 
         {/* Results */}
         <div className="px-4 py-4 space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-sm font-semibold text-clas-negro">Results</h2>
-            <button className="inline-flex items-center justify-center rounded-md bg-clas px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-clas-claro focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-              onClick={() => navigate("/users/new")}>
-              NEW USER
+            <h2 className="text-sm font-semibold text-clas-negro">Resultados</h2>
+            <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              onClick={() => navigate("/usuarios/nuevo")}>
+              NUEVO USUARIO
             </button>
           </div>
 
@@ -159,43 +160,37 @@ const UserPage: React.FC = () => {
                 <tr className="border-b border-gray-200">
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      #
+                      #ID
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Company
+                    Compañia
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Name
+                      Nombre
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Position
+                      Correo
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Email
+                      Administrador
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      isAdmin
-                      <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    Modificar
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Modify
-                  </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Delete
+                    Eliminar
                   </th>
                 </tr>
               </thead>
@@ -203,7 +198,7 @@ const UserPage: React.FC = () => {
               <tbody className="divide-y divide-gray-200">
                 {filteredUsers.length === 0 ? (
                   <tr>
-                    <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={10}>
+                    <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={9}>
                       No users found.
                     </td>
                   </tr>
@@ -222,10 +217,6 @@ const UserPage: React.FC = () => {
                         <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
                           {user.name}
                         </button>
-                      </td>
-
-                      <td className="px-3 py-3 text-sm text-gray-600">
-                        {user.role}
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">
@@ -270,7 +261,7 @@ const UserPage: React.FC = () => {
             {/* <UserDetailModal 
               user={userToView}
               onClose={() => setUserToView(null)}
-              onEdit={() => {navigate(`/users/${userToView?.id}/edit`, {state: {user: userToView } });
+              onEdit={() => {navigate(`/usuarios/${userToView?.id}`, {state: {user: userToView } });
                 setUserToView(null);
               }} /> */}
           </div>

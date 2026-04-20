@@ -18,6 +18,19 @@ export const getAllUsers = async (): Promise<User[]> => {
     }
 }
 
+export const getUserById = async (id: number): Promise<User> => {
+    try {
+        const res = await api.get<User> (`/user/${id}`);
+        console.log(res.data);
+        return res.data;
+    }catch(error)
+    {
+        const err = error as AxiosError;
+        console.error("Error fetching user: ", err.message);
+        throw err;
+    }
+}
+
 export const deleteUser = async (id: number): Promise<User> => {
     try{
         const res = await api.delete<User> (`/user/${id}`)
@@ -44,3 +57,17 @@ export const createUser = async (data: NewUserInput): Promise<User> => {
     throw err;
   }
 };
+
+export const updateUser = async (id: number, data: NewUserInput): Promise<User> => {
+    try {
+        const res = await api.patch<User>(`/user/${id}`, data);
+
+        return res.data;
+    } catch (error){
+        const err = error as AxiosError;
+
+        console.error("Error updating user:", err.message)
+
+        throw err;
+    }
+}
