@@ -95,6 +95,26 @@ const UserPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-medium text-gray-600">
+                Compañia
+              </label>
+              <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                value={companyId ?? ""}
+                onChange={(e) => 
+                  setCompanyId(e.target.value === "" ? null : Number(e.target.value))
+                }
+              >
+                <option value="">Todas</option>
+                {companies.map((com) => (
+                  <option key={com.id} value={com.id}>
+                    {com.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+
+            <div>
+              <label className="block text-xs font-medium text-gray-600">
                 Nombre
               </label>
               <input
@@ -118,25 +138,6 @@ const UserPage: React.FC = () => {
                 onChange={(e) =>
                   setPositionQuery(e.target.value)}
               />
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-gray-600">
-                Compañia
-              </label>
-              <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                value={companyId ?? ""}
-                onChange={(e) => 
-                  setCompanyId(e.target.value === "" ? null : Number(e.target.value))
-                }
-              >
-                <option value="">All Companies</option>
-                {companies.map((com) => (
-                  <option key={com.id} value={com.id}>
-                    {com.name}
-                  </option>
-                ))}
-              </select>
             </div>
 
           </div>
