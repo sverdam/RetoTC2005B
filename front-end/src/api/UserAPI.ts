@@ -18,9 +18,9 @@ export const getAllUsers = async (): Promise<User[]> => {
     }
 }
 
-export const getUserById = async (): Promise<User> => {
+export const getUserById = async (id: number): Promise<User> => {
     try {
-        const res = await api.get<User> ("/user");
+        const res = await api.get<User> (`/user/${id}`);
         console.log(res.data);
         return res.data;
     }catch(error)
