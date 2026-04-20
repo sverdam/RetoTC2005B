@@ -3,7 +3,6 @@ import {
   MagnifyingGlassIcon
 } from "@heroicons/react/24/outline";
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { getAllCompanies } from "../api/CompanyAPI";
 import type { Company } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
