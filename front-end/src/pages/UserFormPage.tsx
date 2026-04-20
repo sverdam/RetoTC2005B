@@ -3,8 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { ArrowLeftIcon, PlusIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import type { Company, User, NewUserInput, UserRole } from "clas-types";
 import { getAllCompanies } from '../api/CompanyAPI';
-import { createUser } from '../api/UserAPI';
-//import { createUser, updateUser } from '../api/UserAPI';
+import { createUser, getUserById, updateUser } from '../api/UserAPI';
 
 
 const inputClass =
@@ -24,7 +23,6 @@ const emptyForm: NewUserInput ={
 const UserFormPage: React.FC = () => {
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
-    const location = useLocation();
 
     const isEditing = id !== undefined;
 
@@ -34,15 +32,19 @@ const UserFormPage: React.FC = () => {
     useEffect(() => {
         getAllCompanies().then(setCompanies);
 
-        if(isEditing && location.state?.user) {
-            const user = location.state.user as User;
-            setForm({
-                name: user.name,
-                email: user.email,
-                password: user.password,
-                role: user.role,
-                companyId: user.company?.id ?? 0,
-            });
+        if (isEditing)
+        {
+            getUserById(Number(id)).then( user => {
+                setForm({
+                    name: user.name,
+                    email: user.email,
+                    password: user.password,
+                    role: user.role,
+                    companyId: user.company?.id ?? 0
+                })
+            }).catch(
+
+            );
         }
     },[]);
 
@@ -53,7 +55,7 @@ const UserFormPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isEditing){
-            //updateUser(Number(id), form).then(() => navigate("/usuarios"));
+            updateUser(Number(id), form).then(() => navigate("/usuarios"));
         } else {
             createUser(form).then(() => navigate("/usuarios"));
         }
@@ -111,7 +113,7 @@ const UserFormPage: React.FC = () => {
                                 </input>
                             </div>
                             {/* Password */}
-                            <div>
+                            {isEditing ? <></> : <div>
                                 <label className={labelClass}>
                                     Contraseña
                                 </label>
@@ -123,7 +125,8 @@ const UserFormPage: React.FC = () => {
                                     value={form.password}
                                     onChange={(e) => handleChange("password", e.target.value)}>
                                 </input>
-                            </div>
+                            </div>}
+                            
                             {/* Company */}
                             <div>
                                 <label className={labelClass}>
