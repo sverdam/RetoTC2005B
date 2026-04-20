@@ -53,9 +53,9 @@ const UserFormPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isEditing){
-            //updateUser(Number(id), form).then(() => navigate("/users"));
+            //updateUser(Number(id), form).then(() => navigate("/usuarios"));
         } else {
-            createUser(form).then(() => navigate("/users"));
+            createUser(form).then(() => navigate("/usuarios"));
         }
     };
 
@@ -67,7 +67,7 @@ const UserFormPage: React.FC = () => {
                     <div className="border-b border-blue-200 bg-blue-50 px-4 py-3 flex items-center gap-3">
                         <button
                             type="button"
-                            onClick={() => navigate("/users")}
+                            onClick={() => navigate("/usuarios")}
                             className="text-blue-700 hover:text:blue-900"    
                         >
                             <ArrowLeftIcon className="h-4 w-4" />
@@ -173,7 +173,7 @@ const UserFormPage: React.FC = () => {
                     <div className="flex justify-end gap-2 border-t border-gray-200 px-6 py-4">
                         <button
                             type="button"
-                            onClick={() => navigate("/users")}
+                            onClick={() => navigate("/usuarios")}
                             className="rounded-md border border-gray-500 bg-white
                             px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50
                             focus:outline-none focus:ring-2 focus:ring-gray-300">
