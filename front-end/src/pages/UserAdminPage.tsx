@@ -38,7 +38,7 @@ const UserPage: React.FC = () => {
 
   const [users, setUsers] = useState<User[]>([]);
   const [nameQuery, setNameQuery] = useState("");
-  const [positionQuery, setPositionQuery] = useState("");
+  const [emailQuery, setEmailQuery] = useState("");
   const [companies, setCompanies] = useState<Company[]>([]);
   const [companyId, setCompanyId] = useState<number | null> (null);
   const [userToDelete, setUserToDelete] = useState<User | null> (null);
@@ -56,16 +56,16 @@ const UserPage: React.FC = () => {
   const filteredUsers = useMemo(() => {
     console.log(users);
     const _name= nameQuery.trim().toLowerCase();
-    const _position = positionQuery.trim().toLowerCase();
+    const _email = emailQuery.trim().toLowerCase();
 
     return users.filter((u) => {
       const matchesName = _name.length === 0 || u.name.toLowerCase().includes(_name);
-      const matchesPosition = _position.length === 0 || u.role.toLowerCase().includes(_position);
+      const matchesEmail = _email.length === 0 || u.email.toLowerCase().includes(_email);
       const matchesCompany = companyId === null || u.company?.id === companyId;
 
-      return matchesName && matchesPosition && matchesCompany;
+      return matchesName && matchesEmail && matchesCompany;
     });
-  }, [positionQuery, nameQuery, companyId, users]);
+  }, [emailQuery, nameQuery, companyId, users]);
 
   const handleDelete = () => {
     if(!userToDelete) return;
@@ -111,7 +111,7 @@ const UserPage: React.FC = () => {
                 ))}
               </select>
             </div>
-            
+
 
             <div>
               <label className="block text-xs font-medium text-gray-600">
@@ -120,7 +120,7 @@ const UserPage: React.FC = () => {
               <input
                 className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 type="text"
-                placeholder="Name"
+                placeholder="Nombre"
                 value={nameQuery}
                 onChange={(e) => setNameQuery(e.target.value)}
               />
@@ -128,15 +128,15 @@ const UserPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-medium text-gray-600">
-                Rol
+                Correo
               </label>
               <input
                 className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 type="text"
-                placeholder="Position"
-                value={positionQuery}
+                placeholder="Correo"
+                value={emailQuery}
                 onChange={(e) =>
-                  setPositionQuery(e.target.value)}
+                  setEmailQuery(e.target.value)}
               />
             </div>
 
