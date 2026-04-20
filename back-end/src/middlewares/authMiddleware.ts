@@ -4,6 +4,16 @@ import { verifyPassword } from "../security/hashing";
 import { createToken, decodeToken, unverifiedUser } from "../security/jwt";
 import { Company } from "../models/company";
 
+// Middleware that blocks accesss to users that are no logged in
+export const unverifiedCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    if (req.user?.role === 'unverified'){
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have access to this data." 
+        });
+    }
+    next();
+}
+
 export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     const unsafeMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
 
