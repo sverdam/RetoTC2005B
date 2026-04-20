@@ -2,9 +2,6 @@ import api from ".";
 import { AxiosError } from "axios";
 import type { NewUserInput, User } from "clas-types";
 
-interface ApiResponse<T> {
-    payload: T;
-}
 
 export const getAllUsers = async (): Promise<User[]> => {
     try{
