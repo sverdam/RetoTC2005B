@@ -176,12 +176,6 @@ const UserPage: React.FC = () => {
                   
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Posición
-                      <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
-                  </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
                       Correo
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
@@ -204,7 +198,7 @@ const UserPage: React.FC = () => {
               <tbody className="divide-y divide-gray-200">
                 {filteredUsers.length === 0 ? (
                   <tr>
-                    <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={10}>
+                    <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={9}>
                       No users found.
                     </td>
                   </tr>
@@ -223,10 +217,6 @@ const UserPage: React.FC = () => {
                         <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
                           {user.name}
                         </button>
-                      </td>
-
-                      <td className="px-3 py-3 text-sm text-gray-600">
-                        {user.role}
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">
