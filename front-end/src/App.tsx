@@ -6,15 +6,17 @@ import Navbar from './components/Navbar'
 
 const App: FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header>
-        <Navbar/>
-      </header>
-      <main className="max-w-6xl mx-auto px-4 py-6">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
+    <div className="min-h-screen w-full px-2">
+      <div>
+        <header>
+          <Navbar/>
+        </header>
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+     </div>
   );
   
 };
