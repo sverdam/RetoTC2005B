@@ -5,6 +5,7 @@ import ErrorPage from "../pages/ErrorPage";
 import UserPage from "../pages/UserAdminPage";
 import UserFormPage from "../pages/UserFormPage";
 import CompanyPage from "../pages/CompanyPage";
+import HomePage from "../pages/HomePage";
 
 const router = createBrowserRouter([
     {
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
         element: <App />,
         errorElement: < ErrorPage/>,
         children: [
+            { index: true, element: <HomePage />},
             { path: 'directorio', element: <DirectoryPage />},
             { path: 'usuarios', element: <UserPage/>},
             { path: 'usuarios/nuevo', element: <UserFormPage />},
