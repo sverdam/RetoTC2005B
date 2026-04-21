@@ -43,18 +43,11 @@ const Navbar: React.FC = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/newsletter"
-                    className={navLinkClass}
-                  >
-                    Newsletter
-                  </NavLink>
-                </li>
-                <li>
                     <Button
                     text="Iniciar Sesión"
-                    to="/usuarios/nuevo"
+                    to="/"  
                     />
+                     {/* TO DO: add login button navigation */}
                 </li>
               </ul>
             </div>
