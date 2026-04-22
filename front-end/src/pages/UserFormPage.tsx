@@ -38,7 +38,7 @@ const UserFormPage: React.FC = () => {
                 setForm({
                     name: user.name,
                     email: user.email,
-                    password: user.password,
+                    password: "",
                     role: user.role,
                     companyId: user.company?.id ?? 0
                 })
