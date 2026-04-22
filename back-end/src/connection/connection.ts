@@ -9,6 +9,7 @@ import { CompanyFilter } from "../models/companyFilter";
 import { TextModule } from "../models/textModule";
 import { FileModule } from "../models/fileModule";
 import dotenv from "dotenv";
+import { Certification } from "../models/certification";
 dotenv.config({ path: "./.env" });
 
 const userID = process.env.DB_USERNAME ?? "unknown";
@@ -31,7 +32,8 @@ const connection = new Sequelize({
         Filter,
         CompanyFilter,
         TextModule,
-        FileModule
+        FileModule,
+        Certification
     ] 
 }); 
 
