@@ -38,9 +38,7 @@ declare module "clas-types" {
     export interface Contact {
         id: number; 
         type: ContactType; 
-        position: String;
         contactInfo: string;
-        companyId: number; 
     }
 
     export enum FileType {
@@ -51,14 +49,7 @@ declare module "clas-types" {
 
     export interface FileModule{
         id: number;
-        companyId: number;
-        position: number;
         type: FileType;
-        storedName: string | null;
-        originalName: string | null;
-        path: string | null;
-        mimeType: string | null;
-        size: number | null;
     }
 
     interface Filter{ 
@@ -72,14 +63,11 @@ declare module "clas-types" {
         id: number; 
         address: string;
         link: string;
-        companyId: number;
     }
 
     interface TextModule{ 
         id: number; 
         text: Text; 
-        tier: number;
-        companyId: number;
     } 
 
     export const UserRole = {
