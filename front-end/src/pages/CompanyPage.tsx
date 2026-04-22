@@ -5,6 +5,7 @@ import { getAllCompanies } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
+import Button from "../components/Button";
 
 interface TagProps {
     value:string;
@@ -31,6 +32,9 @@ const CompanyPage: React.FC = () => {
     !company ? navigate(`/error`) : null
     return(
         <div className="flex flex-col gap-5 items-center p-5 bg-white rounded-lg">
+            <div className="flex w-full justify-end">
+                <Button text="Editar" to="editar"/>
+            </div>
             <img src="../src/assets/logoipsum.png" className="w-75"/>
             <h1 className="font-semibold text-3xl text-clas-negro">{company?.name}</h1>
             <div className="flex gap-2">
@@ -48,13 +52,7 @@ const CompanyPage: React.FC = () => {
             <div className="grid grid-cols-2 gap-15 p-5 items-center">
                 <p className="text-left text-clas-negro">{company?.description} {/*Aquí va un text_module */}</p>
                 <div className="flex flex-col gap-2 items-center">
-                    <iframe
-                        
-                        src="https://www.google.com/maps/place/Cl%C3%BAster+Automotriz+de+Sonora/@29.0941459,-110.9981578,17z/data=!3m1!4b1!4m6!3m5!1s0x86ce8543be63d777:0xcbfc449d5fa1bb40!8m2!3d29.0941459!4d-110.9955829!16s%2Fg%2F11wwsl1g6g?entry=ttu&g_ep=EgoyMDI2MDQxMy4wIKXMDSoASAFQAw%3D%3D"
-                        title="Example Location"
-                        className="rounded-xl"
-                    >
-                    </iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15695.29597219136!2d-110.91489855!3d29.170230649999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ce87d095decee9%3A0x856739bc6d718ca5!2sTecnol%C3%B3gico%20de%20Monterrey!5e1!3m2!1ses-419!2smx!4v1776732607196!5m2!1ses-419!2smx"></iframe>
                     <div className="flex gap-2">
                         <div className="flex gap-1 items-center">
                             <div className=" flex justify-center items-center rounded-full h-7 w-7 bg-gray-50">
