@@ -136,7 +136,16 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                 {
                     model: TextModule,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
-                }
+                },
+                {
+                    model: FileModule,
+                    attributes: {  exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"] }
+                },
+                {
+                    model: Certification,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
             ]
         }); 
 
