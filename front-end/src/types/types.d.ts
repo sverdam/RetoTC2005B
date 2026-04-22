@@ -28,6 +28,7 @@ declare module "clas-types" {
         textModules: TextModule[]; 
         fileModules: FileModule[];
         certifications: Certification[];
+        filters: Filter[];
     }
 
     export enum ContactType {
