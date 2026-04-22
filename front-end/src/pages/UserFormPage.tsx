@@ -113,32 +113,19 @@ const UserFormPage: React.FC = () => {
                                 </input>
                             </div>
                             {/* Password */}
-                            {isEditing ? 
                             <div>
                                 <label className={labelClass}>
-                                    Restablecer Contraseña
-                                </label>
-                                <input
-                                    type="password"
-                                    className={inputClass}
-                                    placeholder="Dejar vacío para mantener contraseña actual"
-                                    value={form.password}
-                                    onChange={(e) => handleChange("password", e.target.value)}>
-                                </input>
-                            </div> 
-                            : <div>
-                                <label className={labelClass}>
-                                    Contraseña
+                                    {isEditing ? "Restablecer " : ""}Contraseña
                                 </label>
                                 <input
                                     type="password"
                                     required
                                     className={inputClass}
-                                    placeholder="User password"
+                                    placeholder={isEditing ? "Dejar vacío para mantener contraseña actual" : "User password"}
                                     value={form.password}
                                     onChange={(e) => handleChange("password", e.target.value)}>
                                 </input>
-                            </div>}
+                            </div>
                             
                             {/* Company */}
                             <div>
