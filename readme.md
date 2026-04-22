@@ -1,7 +1,5 @@
 
 
-Hello world
-
 # Backend Setup
 In there /back-end folder you must add a file named ".env" to store some local info for the database. It needs to have this structure:
 
