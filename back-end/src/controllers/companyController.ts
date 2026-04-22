@@ -5,6 +5,7 @@ import { Location } from "../models/location";
 import { Contact } from "../models/contact";
 import { TextModule } from "../models/textModule";
 import { FileModule, FileType } from "../models/fileModule";
+import { Certification } from "../models/certification";
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
@@ -88,7 +89,11 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                     model: FileModule,
                     attributes: {  exclude: ["company", "createdAt", "updatedAt", "deletedAt",
                                     "storedName", "originalName", "path", "mimeType", "size", "position"] }
-                }
+                },
+                {
+                    model: Certification,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
             ]
         }); 
 
