@@ -1,5 +1,5 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, HasOne, BelongsToMany, AfterDestroy, AfterRestore, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
@@ -95,8 +95,8 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    @HasMany(() => User, {onDelete: 'CASCADE'})
    declare users?: User[];
 
-   @HasMany(() => Location, {onDelete: 'CASCADE'})
-   declare locations?: Location[];
+   @HasOne(() => Location, {onDelete: 'CASCADE'})
+   declare locations?: Location;
 
    @HasMany(() => Contact, {onDelete: 'CASCADE'})
    declare contacts?: Contact[];
