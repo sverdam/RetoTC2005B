@@ -1,12 +1,12 @@
 
 import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, HasOne, BelongsToMany, AfterDestroy, AfterRestore, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
-import { User } from "../models/user";
-import { Location } from "../models/location";
-import { Contact } from "../models/contact";
-import { Filter } from "../models/filter";
-import { TextModule } from "../models/textModule"
-import { CompanyFilter } from "../models/companyFilter";
+import { User } from "./user";
+import { Location } from "./location";
+import { Contact } from "./contact";
+import { Filter } from "./filter";
+import { TextModule } from "./textModule"
+import { CompanyFilter } from "./companyFilter";
 import { FileModule } from './fileModule';
 import { Certification } from './certification';
 
