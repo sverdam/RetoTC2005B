@@ -8,7 +8,7 @@ import { FileModule, FileType } from "../models/fileModule";
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
-const addLogoToCompany = async (company: Company | null) => {
+const addFilesToCompany = async (company: Company | null) => {
 
     if (company == null) return company;
 
@@ -18,7 +18,13 @@ const addLogoToCompany = async (company: Company | null) => {
             plain: true      
         });
 
-    const result = {...company.dataValues, logo: logoModule?.dataValues};
+    const pdfModule: FileModule | null = await FileModule.findOne({
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt"] },
+            where: { companyId: company.id, type: 'document' },
+            plain: true      
+        });
+
+    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule};
 
     return result;
 }
@@ -78,13 +84,13 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
         }); 
 
         //companies.map(company => addLogoToCompany);
-        const logoPromises = companies.map(async (item) => {
-            return await addLogoToCompany(item);
+        const filePromises = companies.map(async (item) => {
+            return await addFilesToCompany(item);
         });
 
-        const companiesWithLogos = await Promise.all(logoPromises);
+        const companiesWithFiles = await Promise.all(filePromises);
 
-        return res.status(200).json(companiesWithLogos); 
+        return res.status(200).json(companiesWithFiles); 
     } catch (error) { 
         return res.status(500).json({ 
         "message":"Error getting companies",  
@@ -120,9 +126,9 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
             ]
         }); 
 
-        const companyWithLogo = await addLogoToCompany(company);
+        const companyWithFiles = await addFilesToCompany(company);
 
-        return res.status(200).json(companyWithLogo); 
+        return res.status(200).json(companyWithFiles); 
     } 
     catch (error) { 
         return res.status(500).json({ 
