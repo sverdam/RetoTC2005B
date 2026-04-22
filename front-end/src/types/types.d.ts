@@ -7,6 +7,11 @@ declare module "clas-types" {
     export enum MemberType {
         AFFILIATE = 'Afiliado',
         ASSOCIATE = 'Asociado',
+        ADMIN = 'Admin',
+    }
+
+    interface Certification {
+        name: string;
     }
 
     export interface Company {
@@ -15,8 +20,14 @@ declare module "clas-types" {
         description: string;
         tier: number;
         logo: FileModule;
+        catalogo: FileModule;
         memberType: MemberType;
         location: Location;
+        contact: Contact[];
+        user: User[];
+        textModules: TextModule[]; 
+        fileModules: FileModule[];
+        certifications: Certification[];
     }
 
     export enum ContactType {
@@ -27,6 +38,7 @@ declare module "clas-types" {
     export interface Contact {
         id: number; 
         type: ContactType; 
+        position: String;
         contactInfo: string;
         companyId: number; 
     }
@@ -65,7 +77,6 @@ declare module "clas-types" {
 
     interface TextModule{ 
         id: number; 
-        title: string; 
         text: Text; 
         tier: number;
         companyId: number;
