@@ -91,7 +91,7 @@ const UserFormPage: React.FC = () => {
                                 type="text"
                                 required
                                 className={inputClass}
-                                placeholder="User name"
+                                placeholder="Nombre de usuario"
                                 value={form.name}
                                 onChange={(e) => handleChange("name", e.target.value)}>
                             </input>
@@ -107,7 +107,7 @@ const UserFormPage: React.FC = () => {
                                     type="text"
                                     required
                                     className={inputClass}
-                                    placeholder="User e-mail"
+                                    placeholder="Correo electrónico del usuario"
                                     value={form.email}
                                     onChange={(e) => handleChange("email", e.target.value)}>
                                 </input>
@@ -121,7 +121,7 @@ const UserFormPage: React.FC = () => {
                                     type="password"
                                     required
                                     className={inputClass}
-                                    placeholder={isEditing ? "Dejar vacío para mantener contraseña actual" : "User password"}
+                                    placeholder={isEditing ? "Dejar vacío para mantener contraseña actual" : "Contraseña del usuario"}
                                     value={form.password}
                                     onChange={(e) => handleChange("password", e.target.value)}>
                                 </input>
