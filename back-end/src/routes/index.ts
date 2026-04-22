@@ -8,6 +8,7 @@ import filterRoutes from './filterRoutes';
 import textModuleRoutes from './textModuleRoutes';
 import authRoutes from './authRoutes';
 import fileModuleRoutes from './fileModuleRoutes';
+import certificationRouter from './certificationRoutes';
 
 const apiRouter:Router = Router();  
 
@@ -18,7 +19,8 @@ apiRouter.use('/contact', contactRoutes);
 apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 apiRouter.use('/textModule', textModuleRoutes);
-apiRouter.use('/fileModule', fileModuleRoutes)
+apiRouter.use('/fileModule', fileModuleRoutes);
+apiRouter.use('/certifications', certificationRouter);
 
 apiRouter.use('/auth', authRoutes);
 
