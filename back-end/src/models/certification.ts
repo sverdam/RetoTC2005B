@@ -11,7 +11,7 @@ export interface CertificationAttribute{
 interface CertificationCreationAttributes extends Optional<CertificationAttribute, 'id'>{} 
 
 @Table ({ 
-  tableName: "locations",
+  tableName: "certifications",
   paranoid: true,
   timestamps: true
 }) 
