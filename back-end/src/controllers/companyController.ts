@@ -13,18 +13,22 @@ const addFilesToCompany = async (company: Company | null) => {
     if (company == null) return company;
 
     const logoModule: FileModule | null = await FileModule.findOne({
-            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt"] },
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"
+            ] },
             where: { companyId: company.id, type: 'logo' },
             plain: true      
         });
 
     const pdfModule: FileModule | null = await FileModule.findOne({
-            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt"] },
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"
+            ] },
             where: { companyId: company.id, type: 'document' },
             plain: true      
         });
 
-    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule};
+    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule?.dataValues};
 
     return result;
 }
