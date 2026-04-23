@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
 import { Router } from 'express';
-import { loginAuthentication, tokenAuthorization, adminCheck, getProfile } from '../middlewares/authMiddleware';
+import { loginAuthentication, tokenAuthorization, adminCheck, getProfile, logout } from '../middlewares/authMiddleware';
 
 const authRouter: Router = Router();
 
@@ -25,6 +25,7 @@ authRouter.get('/auth/test', tokenAuthorization, (req: Request, res: Response) =
 )
 
 authRouter.post('/auth/login', loginAuthentication);
+authRouter.post('/auth/logout', logout);
 authRouter.get('/auth/profile', getProfile)
 
 export default authRouter;

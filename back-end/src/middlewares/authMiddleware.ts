@@ -70,6 +70,21 @@ export const getProfile: RequestHandler = async (req: Request, res: Response) =>
     });
 }
 
+export const logout: RequestHandler = async (req: Request, res:Response) => {
+  
+    const node_env_var = process.env.NODE_ENV ?? 'dev'
+    
+    // Clears the specified cookie
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: node_env_var === 'production', // Use true in prod (HTTPS)
+        sameSite: node_env_var === 'production' ? 'none' : 'lax',
+        path: '/'
+    });
+
+  return res.status(200).json({ message: 'Logged out successfully' });
+}
+
 export const loginAuthentication: RequestHandler = async (req: Request, res: Response) => {
 
     console.log(req.body);
