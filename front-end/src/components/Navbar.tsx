@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Button from "./Button";
 import { logout, getProfile } from "../api/LoginAPI";
 import { useEffect, useState } from "react";
@@ -22,12 +22,13 @@ const unverifiedUser : UserProfile = {
 }
 
 const Navbar: React.FC = () => {
-
+    
+    const location = useLocation();
     const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
 
     useEffect(() => {
       getProfile().then(result => setUserProfile(result))
-    }, [])
+    }, [location.pathname])
 
     const clickLogout = () => {
       logout().finally(
