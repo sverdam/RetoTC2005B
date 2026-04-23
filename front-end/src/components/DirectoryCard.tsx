@@ -10,7 +10,7 @@ interface Props {
 const DirectoryCard: React.FC<Props> = ({ company }) => {
     const navigate = useNavigate();
     console.log(company)
-    return (
+    return company.memberType == "Admin" ? <></> : (
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
             <img 
@@ -22,7 +22,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
                 <InformationCircleIcon className="h-5 w-5 text-gray-400"/>
                 <h4 className="text-gray-400">{company.memberType}</h4>
                 <h4 className="text-gray-400">|</h4>
-                <h4 className="text-gray-400">Tier {company.tier}</h4>
+                <h4 className="text-gray-400">{company.tier === 0 ? 'OEM' : `Tier ${company.tier}`}</h4>
             </div>
             <h2 className="text-lg font-medium text-left">
                 {company.name}
