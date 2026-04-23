@@ -20,7 +20,9 @@ const LoginPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(form);
-        login(form);
+        login(form).then(
+            () => navigate("/directorio")
+        );
     };
 
     // useEffect(() => {
@@ -65,7 +67,7 @@ const LoginPage: React.FC = () => {
                         </input>
                     </div>
                     {/*TODO: Arreglar submit para dirigir al directorio */}
-                    <button type="submit" onClick={() => navigate("/directorio")} 
+                    <button type="submit" 
                     className="w-md bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">Entrar</button>
                 </form>
                 <div className="w-lg flex justify-center px-10 py-5 gap-2">
