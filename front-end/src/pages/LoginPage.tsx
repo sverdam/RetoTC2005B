@@ -12,7 +12,8 @@ const LoginPage: React.FC = () => {
     
     const navigate = useNavigate();
     const [ form, setForm] = useState<LoginUser>(emptyForm);
-    
+    const [ failAttempt, setFailAttempt] = useState<boolean>(false);
+
     const handleChange = (field: keyof LoginUser, value: string | number | boolean) => {
         setForm((prev) => ({...prev, [field]: value}));
     };
@@ -21,7 +22,12 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         console.log(form);
         login(form).then(
-            () => navigate("/directorio")
+            () => {
+                navigate("/directorio");
+                setFailAttempt(false);
+            }
+        ).catch(
+            () => setFailAttempt(true)
         );
     };
 
@@ -66,9 +72,11 @@ const LoginPage: React.FC = () => {
 
                         </input>
                     </div>
-                    {/*TODO: Arreglar submit para dirigir al directorio */}
                     <button type="submit" 
                     className="w-md bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">Entrar</button>
+                    {failAttempt ? <div className="text-red-500 p-2">
+                        <p>Contraseña o usuario incorrecto</p>
+                    </div> : <></>}
                 </form>
                 <div className="w-lg flex justify-center px-10 py-5 gap-2">
                     <p className="pt-2 pb-5 text-clas-negro/70 text-sm">
