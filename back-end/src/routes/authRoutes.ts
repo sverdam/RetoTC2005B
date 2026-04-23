@@ -1,7 +1,8 @@
 
 import { Request, Response } from 'express';
 import { Router } from 'express';
-import { loginAuthentication, tokenAuthorization } from '../middlewares/authMiddleware';
+import { loginAuthentication, tokenAuthorization, getProfile } from '../middlewares/authMiddleware';
+import { profile } from 'node:console';
 
 const authRouter: Router = Router();
 
@@ -19,5 +20,6 @@ authRouter.get('/test', tokenAuthorization, (req: Request, res: Response) =>
 )
 
 authRouter.get('/', loginAuthentication);
+authRouter.get('/profile', getProfile)
 
 export default authRouter;
