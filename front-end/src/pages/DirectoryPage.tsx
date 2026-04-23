@@ -2,12 +2,22 @@ import {
   PhoneIcon,
   MagnifyingGlassIcon
 } from "@heroicons/react/24/outline";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Profiler } from "react";
 import { getAllCompanies } from "../api/CompanyAPI";
-import type { Company } from "clas-types";
+import type { Company, UserProfile } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
 import FilterModal from "../components/FilterModal";
 import NewDirectoryCardButton from "../components/NewDirectoryCardButton";
+import { getProfile } from "../api/LoginAPI";
+
+
+const unverifiedUser : UserProfile = {
+    id: "-1",
+    email: 'unknown',
+    companyId: -1,
+    companyMemberType: 'none',
+    role: 'unverified'
+}
 
 interface TagProps {
     value:string;
@@ -18,7 +28,8 @@ const DirectoryPage: React.FC = () => {
     const [nameQuery, setNameQuery] = useState("");
     const [tier, setTier] = useState<number | null>(null);
     const [isOpen, setIsOpen] = useState(false);
-
+    
+    const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
     
     const Tag: React.FC<TagProps> = ({value, tagTier}) => {
         return(
@@ -40,6 +51,7 @@ const DirectoryPage: React.FC = () => {
     
     useEffect(() => {
         getAllCompanies().then((companies: Company[]) => setCompanies(companies));
+        getProfile().then((profile: UserProfile) => setUserProfile(profile))
     }, []);
 
     const filteredCompanies = useMemo(() => {
