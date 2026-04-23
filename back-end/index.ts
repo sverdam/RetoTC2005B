@@ -10,7 +10,10 @@ const morgan = require('morgan');
 const app: Express = express(); 
 const port = 3000; 
 
-
+app.use(cors({ 
+    origin: true, // <- change when dealing with different servers
+    credentials: true
+}))
 app.use(morgan('dev')); 
 app.use(express.json());  
 app.use(cookieParser());
