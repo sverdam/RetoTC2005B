@@ -9,13 +9,35 @@ import DirectoryCard from "../components/DirectoryCard";
 import FilterModal from "../components/FilterModal";
 import NewDirectoryCardButton from "../components/NewDirectoryCardButton";
 
-
+interface TagProps {
+    value:string;
+    tagTier: number;
+}
 const DirectoryPage: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
     const [tier, setTier] = useState<number | null>(null);
     const [isOpen, setIsOpen] = useState(false);
 
+    
+    const Tag: React.FC<TagProps> = ({value, tagTier}) => {
+        return(
+            <div className="bg-white border border-clas-gris rounded-full">
+                <button onClick={() => {
+                    if (tagTier === tier) {
+                        setTier(null);
+                    }else{
+                        setTier(tagTier);
+                    }
+                }}
+                className="text-clas-negro bg-white rounded-full w-full h-full px-4 py-2 hover:bg-clas hover:text-white focus:bg-clas focus:text-white">
+                    {value}
+                </button>
+            </div>
+        )
+    };
+
+    
     useEffect(() => {
         getAllCompanies().then((companies: Company[]) => setCompanies(companies));
     }, []);
@@ -23,8 +45,9 @@ const DirectoryPage: React.FC = () => {
     const filteredCompanies = useMemo(() => {
         console.log(companies);
         const _name = nameQuery.trim().toLowerCase();
-
         return companies.filter((p) => {
+            
+            console.log(`tag ${tier}, tier ${p.tier}`);
             const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name);
             const matchesTier = tier === null || p.tier === tier;
 
@@ -45,6 +68,9 @@ const DirectoryPage: React.FC = () => {
                         setNameQuery(e.target.value)}
                     ></input>
                 </div>
+                <Tag value="Tier 1" tagTier={1} />
+                <Tag value="Tier 2" tagTier={2}/>
+                <Tag value="OEM" tagTier={0}/>
                 <button
                     onClick={() => setIsOpen(true)} 
                     className=" w-20 bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
