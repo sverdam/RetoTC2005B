@@ -2,7 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import Button from "./Button";
 import { logout, getProfile } from "../api/LoginAPI";
 import { useEffect, useState } from "react";
-import type { User, UserProfile } from "clas-types";
+import type { UserProfile } from "clas-types";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) => {
   return [
