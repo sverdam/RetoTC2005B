@@ -1,12 +1,17 @@
 
 import { Request, Response } from 'express';
 import { Router } from 'express';
-import { loginAuthentication, tokenAuthorization, getProfile } from '../middlewares/authMiddleware';
-import { profile } from 'node:console';
+import { loginAuthentication, tokenAuthorization, adminCheck, getProfile } from '../middlewares/authMiddleware';
 
 const authRouter: Router = Router();
 
-authRouter.get('/test', tokenAuthorization, (req: Request, res: Response) => 
+// Decodes JWT token from the request
+authRouter.use(tokenAuthorization);
+
+// Check admin requierements and blocks unauthorized modifications requests 
+authRouter.use(adminCheck);         
+
+authRouter.get('/auth/test', tokenAuthorization, (req: Request, res: Response) => 
     {
         console.log("Test");
         res.status(200).json({
@@ -19,7 +24,7 @@ authRouter.get('/test', tokenAuthorization, (req: Request, res: Response) =>
     }
 )
 
-authRouter.post('/login', loginAuthentication);
-authRouter.get('/profile', getProfile)
+authRouter.post('/auth/login', loginAuthentication);
+authRouter.get('/auth/profile', getProfile)
 
 export default authRouter;

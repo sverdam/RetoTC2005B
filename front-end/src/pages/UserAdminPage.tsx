@@ -13,6 +13,7 @@ import { getAllUsers, deleteUser } from "../api/UserAPI";
 import { getAllCompanies } from "../api/CompanyAPI";
 import DeleteConfirmModal from "../components/DeleteConfirmModal";
 //import UserDetailModal from "../components/userDetailModal";
+//import UserDetailModal from "../components/userDetailModal";
 
 const SortIcon = ({ className }: { className?: string }) => (
   <svg
@@ -217,6 +218,10 @@ const UserPage: React.FC = () => {
                         <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
                           {user.name}
                         </button>
+                      </td>
+
+                      <td className="px-3 py-3 text-sm text-gray-600">
+                        {user.role}
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">

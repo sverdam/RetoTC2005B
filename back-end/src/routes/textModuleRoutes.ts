@@ -7,8 +7,11 @@ import {
   updateTextModule,
   restoreTextModule
 } from '../controllers/textModuleController';
+import { unverifiedCheck } from '../middlewares/authMiddleware';
 
 const textModuleRouter: Router = Router();
+
+textModuleRouter.use(unverifiedCheck);
 
 textModuleRouter.get('/', getAllTextModules);
 

@@ -21,7 +21,7 @@ const router = createBrowserRouter([
             { path: 'usuarios/nuevo', element: <UserFormPage />},
             { path: 'usuarios/:id', element: <UserFormPage />},
             { path: 'empresa', element: <CompanyPage />},
-            {path: 'empresa/editar', element: <EditCompanyPage />},
+            { path: 'empresa/editar', element: <EditCompanyPage />},
             { path: 'login', element: <LoginPage/>}
         ]
     },
