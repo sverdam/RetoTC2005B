@@ -16,6 +16,20 @@ export const login = async (data: LoginUser) : Promise <any> => {
   }
 }
 
+export const logout = async () : Promise <any> => {
+  try {
+    const res = await api.post<any>("/auth/logout");
+
+    return res.data;
+  } catch (error) {
+    const err = error as AxiosError;
+
+    console.error("Error creating user:", err.message);
+
+    throw err;
+  }
+}
+
 export const getProfile = async() : Promise<any> => {
     try {
         const res = await api.get<any>("/auth/profile");
