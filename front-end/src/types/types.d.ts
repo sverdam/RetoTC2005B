@@ -103,4 +103,12 @@ declare module "clas-types" {
         email: string,
         password: string
     }
+    
+    interface UserProfile {
+        id: string;
+        email: string;
+        companyId: number;
+        companyMemberType: string;
+        role: string;
+    }   
 }
