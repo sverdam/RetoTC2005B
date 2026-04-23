@@ -37,7 +37,10 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
 
 export const getProfile: RequestHandler = async (req: Request, res: Response) => {
     const token = req.cookies.token; // Look ma, no manual headers!
-
+    
+    console.log("GET PROFILE");
+    console.log(req.user);
+    
     return res.status(200).json({ 
         status: 'success',
         messege: token ? 'Valid Token' : 'Invalid token',
