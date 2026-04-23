@@ -67,7 +67,7 @@ const Navbar: React.FC = () => {
                     Directorio
                   </NavLink>
                 </li>
-                {userProfile.companyMemberType === "Admin" ? 
+                {(userProfile.companyMemberType === "Admin" && userProfile.role === 'admin') ? 
                 <li>
                   <NavLink
                     to="/usuarios"
