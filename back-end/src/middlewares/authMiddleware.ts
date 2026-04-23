@@ -89,11 +89,13 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
                     
                     const jwt = createToken(user);
 
+                    const node_env_var = process.env.NODE_ENV ?? 'dev'
+
                     console.log();
                     res.cookie('token', jwt, {
                         httpOnly: true, 
-                        secure: process.env.NODE_ENV === 'production', // Use true in prod (HTTPS)
-                        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                        secure: node_env_var === 'production', // Use true in prod (HTTPS)
+                        sameSite: node_env_var === 'production' ? 'none' : 'lax',
                         maxAge: 7200000  // 2 hours
                     });
                     
