@@ -221,10 +221,6 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">
-                        {user.role}
-                      </td>
-
-                      <td className="px-3 py-3 text-sm text-gray-600">
                         {user.email}
                       </td>
 
