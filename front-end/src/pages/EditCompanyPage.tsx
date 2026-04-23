@@ -1,6 +1,6 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { Company } from "clas-types";
 import { getAllCompanies } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
@@ -8,7 +8,6 @@ import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicon
 import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
 import FileUpload from "../components/FileUpload";
-import { Button } from "@headlessui/react";
 import FilterModal from "../components/FilterModal";
 
 interface TagProps {
@@ -23,12 +22,22 @@ const Tag: React.FC<TagProps> = ({value}) => {
     )
 };
 
+
 const EditCompanyPage: React.FC = () => {
    
+    {/* File Handling */}
     const handleFileSelect = (file: File) => {
         console.log(file);
     };
+    {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
+
+    {/* Navigate */}
+    const navigate = useNavigate();
+    {/* access id parameter from current URL*/}
+    const { id } = useParams<{ id: string }>();
+
+    {/* Obtain data */}
 
     return(
     <div className="flex flex-col items-center justify-center p-5 gap-3 w-full">
