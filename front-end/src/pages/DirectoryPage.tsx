@@ -7,6 +7,7 @@ import { getAllCompanies } from "../api/CompanyAPI";
 import type { Company } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
 import FilterModal from "../components/FilterModal";
+import NewDirectoryCardButton from "../components/NewDirectoryCardButton";
 
 
 const DirectoryPage: React.FC = () => {
@@ -50,8 +51,9 @@ const DirectoryPage: React.FC = () => {
                     Filtros
                 </button>
             </div>
-            {/*grid de cacharros*/}
+            {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
+                <NewDirectoryCardButton />
                 {filteredCompanies.map((company) => (
                     <DirectoryCard key={company.id} company={company} />
                 ))}
