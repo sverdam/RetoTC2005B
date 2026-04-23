@@ -52,24 +52,19 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
                 if (result){  
                     
                     const jwt = createToken(user);
-                    
-                    const responsePayload = { 
-                        token: jwt, 
-                        userInfo: {
-                            username: user.name,
-                            companyId: user.companyId,
-                            isAdmin: user.role === 'admin',
-                            companyRole: user.company?.memberType
-                        }
-                    };
 
                     console.log();
-
-                    return res.status(200).json({
-                        status: "success",
-                        message: "User verified",
-                        payload: responsePayload,
+                    res.cookie('token', jwt, {
+                        httpOnly: true, 
+                        secure: true,   
+                        sameSite: 'none',// Required if Frontend and Backend are on different URLs
+                        maxAge: 7200000 
                     });
+                    
+                    res.status(200).json({
+                        status: "success",
+                        message: "Logged in successfully"
+                    })
                 }else{
                     return res.status(401).json({
                         status: "fail",
