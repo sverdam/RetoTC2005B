@@ -11,7 +11,10 @@ const app: Express = express();
 const port = 3000; 
 
 
-app.use(cors({ origin: true }))
+app.use(cors({ 
+    origin: true,
+    credentials: true
+}))
 app.use(morgan('dev')); 
 app.use(express.json());  
 app.use(cookieParser());
