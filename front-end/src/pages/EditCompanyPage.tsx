@@ -10,6 +10,8 @@ import CertificationCard from "../components/CertificationCard";
 import FileUpload from "../components/FileUpload";
 import { Button } from "@headlessui/react";
 import FilterModal from "../components/FilterModal";
+import DeleteCompanyConfirmModal from "../components/DeleteCompanyConfirmModal";
+import { deleteCompany } from "../api/CompanyAPI";
 
 interface TagProps {
     value:string;
@@ -29,6 +31,16 @@ const EditCompanyPage: React.FC = () => {
         console.log(file);
     };
     const [isOpen, setIsOpen] = useState(false);
+
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    const [companyToDelete, setCompanyToDelete] = useState<Company | null>(null);
+
+    const handleDelete = () => {
+        if(!companyToDelete) return;
+        deleteCompany(companyToDelete.id).then(() => {
+          setCompanyToDelete(null);
+        });
+      };
 
     return(
     <div className="flex flex-col items-center justify-center p-5 gap-3 w-full">
@@ -175,13 +187,25 @@ const EditCompanyPage: React.FC = () => {
             </div>
         </div>
         <div className="m-5 flex w-2xl gap-3 justify-end">
-            <button className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1">Cancelar</button>
-            <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1">Aplicar Cambios</button>
+            <button className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1 hover:bg-clas-negro/20">Cancelar</button>
+            <button className="bg-red-400 text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
+                onClick={()=> setCompanyToDelete(company)}
+            >
+                Eliminar Empresa
+            </button>
+            <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">Aplicar Cambios</button>
         </div>
         
         <FilterModal 
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
+        />
+        <DeleteCompanyConfirmModal 
+            company={companyToDelete}
+            onClose={() => setCompanyToDelete(null)}
+            onConfirm={handleDelete}
+
+
         />
     </div>
    )
