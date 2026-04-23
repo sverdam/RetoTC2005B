@@ -1,6 +1,6 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { Company } from "clas-types";
 import { getAllCompanies } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
@@ -8,8 +8,9 @@ import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicon
 import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
 import FileUpload from "../components/FileUpload";
-import { Button } from "@headlessui/react";
 import FilterModal from "../components/FilterModal";
+import NewCertificationModal from "../components/NewCertificationModal";
+import NewContactModal from "../components/NewContactModal";
 import DeleteCompanyConfirmModal from "../components/DeleteCompanyConfirmModal";
 import { deleteCompany } from "../api/CompanyAPI";
 
@@ -25,12 +26,28 @@ const Tag: React.FC<TagProps> = ({value}) => {
     )
 };
 
+
 const EditCompanyPage: React.FC = () => {
    
+    {/* File Handling */}
     const handleFileSelect = (file: File) => {
         console.log(file);
     };
+    {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
+
+    {/* Certification Modal */}
+    const [isCertificationOpen, setIsCertificationOpen] = useState(false);
+
+    {/* Contact Modal */}
+    const [isContactOpen, setIscontactOpen] = useState(false);
+
+    {/* Navigate */}
+    const navigate = useNavigate();
+    {/* access id parameter from current URL*/}
+    const { id } = useParams<{ id: string }>();
+
+    {/* Obtain data */}
 
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [companyToDelete, setCompanyToDelete] = useState<Company | null>(null);
@@ -137,7 +154,9 @@ const EditCompanyPage: React.FC = () => {
                 <CertificationCard name="C-TPAT / OEA" />
                 <div className=" flex flex-col flex-wrap justify-center items-center rounded-lg border border-clas bg-clas w-30 h-30 p-2">
                     {/* Hacer Modal de agregar certificaciones y hacer que funcione el boton de agregar */}
-                    <button className="hover:bg-clas-claro">
+                    <button className="hover:bg-clas-claro"
+                        onClick={() => setIsCertificationOpen(true)}
+                    >
                         <div className="rounded-full w-7 h-7 border border-white m-1">
                             <PlusIcon className="text-white p-1"/>
                         </div>
@@ -151,7 +170,9 @@ const EditCompanyPage: React.FC = () => {
                 Contactos
             </label>
             <div className="w-full flex justify-end">
-                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro">
+                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                    onClick={() => setIscontactOpen(true)}
+                >
                     Nuevo Contacto
                     <PlusIcon className="h-4 w-4"/>
                 </button>
@@ -204,8 +225,16 @@ const EditCompanyPage: React.FC = () => {
             company={companyToDelete}
             onClose={() => setCompanyToDelete(null)}
             onConfirm={handleDelete}
+        />
+        
+        <NewCertificationModal 
+            isCertificationOpen={isCertificationOpen}
+            onClose={() => setIsCertificationOpen(false)}
+        />
 
-
+        <NewContactModal 
+            isContactOpen={isContactOpen}
+            onClose={() => setIscontactOpen(false)}
         />
     </div>
    )

@@ -110,6 +110,23 @@ const CompanyPage: React.FC = () => {
             </div>
             </> 
             : <></>    }
+            {/* TODO: HACER QUE SE VEAN LOS CONTACTOS DE LA EMPRESA!!  */}
+            <div className="rounded-md border-2 border-clas/50">
+                <table className="min-w-full">
+                    <thead className="bg-clas/30">
+                        <tr>
+                            <th className="text-clas-negro">Puesto</th>
+                            <th className="text-clas-negro">Contacto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className="text-clas-negro text-center">Ventas</td>
+                            <td className="text-clas-negro text-center">ventas@ford.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 };
