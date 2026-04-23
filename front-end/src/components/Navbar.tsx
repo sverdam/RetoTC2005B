@@ -67,6 +67,15 @@ const Navbar: React.FC = () => {
                     Directorio
                   </NavLink>
                 </li>
+                {userProfile.companyMemberType === "Admin" ? 
+                <li>
+                  <NavLink
+                    to="/usuarios"
+                    className={navLinkClass}
+                  >
+                    Administracion de usuarios
+                  </NavLink>
+                </li> : <></>}
                 <li>{
                     userProfile.role === "unverified" ? 
                     <Button
