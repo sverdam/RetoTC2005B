@@ -7,8 +7,11 @@ import {
   updateCertification,
   restoreCertification
 } from '../controllers/certificationController';
+import { unverifiedCheck } from '../middlewares/authMiddleware';
 
 const certificationRouter: Router = Router();
+
+certificationRouter.use(unverifiedCheck);
 
 certificationRouter.get('/', getAllCertifications);
 

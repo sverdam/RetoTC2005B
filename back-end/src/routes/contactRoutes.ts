@@ -7,8 +7,11 @@ import {
   updateContact,
   restoreContact
 } from '../controllers/contactController';
+import { unverifiedCheck } from '../middlewares/authMiddleware';
 
 const contactRouter: Router = Router();
+
+contactRouter.use(unverifiedCheck);
 
 contactRouter.get('/', getAllContacts);
 
