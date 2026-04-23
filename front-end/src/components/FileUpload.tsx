@@ -22,7 +22,7 @@ const FileUpload: React.FC<Props> = ({ onFileSelect }) => {
         <div className="w-md">
             <label
                 htmlFor="fileUpload"
-                className="flex flex-col items-center justify-center w-md h-44 border-2 border-dashed border-clas-gris rounded-lg cursor-pointer hover:bg-clas-gris/20 transition"
+                className="flex flex-col items-center justify-center w-2xl h-44 border-2 border-dashed border-clas-gris rounded-lg cursor-pointer hover:bg-clas-gris/20 transition"
             >
                 <input 
                     id="fileUpload"
