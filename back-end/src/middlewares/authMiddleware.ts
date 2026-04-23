@@ -2,7 +2,7 @@ import { RequestHandler, Request, Response, NextFunction } from "express";
 import { User } from "../models/user";
 import { verifyPassword } from "../security/hashing";
 import { createToken, decodeToken, unverifiedUser } from "../security/jwt";
-
+import { Company } from "../models/company";
 
 
 export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -37,11 +37,12 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
 export const loginAuthentication: RequestHandler = async (req: Request, res: Response) => {
 
     console.log(req.body);
-    
+
     const user = await User.findOne({
         where: {
             email: req.body.email
-        }
+        },
+        include: [{ model: Company, attributes: ["id", "name", "memberType"] }]
     });
 
     if (user) {
@@ -51,11 +52,23 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
                 if (result){  
                     
                     const jwt = createToken(user);
+                    
+                    const responsePayload = { 
+                        token: jwt, 
+                        userInfo: {
+                            username: user.name,
+                            companyId: user.companyId,
+                            isAdmin: user.role === 'admin',
+                            companyRole: user.company?.memberType
+                        }
+                    };
+
+                    console.log();
 
                     return res.status(200).json({
                         status: "success",
                         message: "User verified",
-                        payload: jwt,
+                        payload: responsePayload,
                     });
                 }else{
                     return res.status(401).json({

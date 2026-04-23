@@ -11,6 +11,7 @@ enum ContactType {
 interface ContactAttributes{ 
   id: number; 
   type: ContactType; 
+  position: string;
   contactInfo: string;
   companyId: number; 
 } 

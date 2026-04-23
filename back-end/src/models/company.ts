@@ -1,13 +1,14 @@
 
-import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, BelongsToMany, AfterDestroy, AfterRestore, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
+import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, HasOne, BelongsToMany, AfterDestroy, AfterRestore, ForeignKey, BelongsTo } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize'; 
-import { User } from "../models/user";
-import { Location } from "../models/location";
-import { Contact } from "../models/contact";
-import { Filter } from "../models/filter";
-import { TextModule } from "../models/textModule"
-import { CompanyFilter } from "../models/companyFilter";
+import { User } from "./user";
+import { Location } from "./location";
+import { Contact } from "./contact";
+import { Filter } from "./filter";
+import { TextModule } from "./textModule"
+import { CompanyFilter } from "./companyFilter";
 import { FileModule } from './fileModule';
+import { Certification } from './certification';
 
 enum MemberType {
   AFFILIATE = 'Affiliate',
@@ -42,6 +43,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Contact.destroy({ where: { companyId: id } });
      await TextModule.destroy({ where: { companyId: id } });
      await FileModule.destroy({ where: { companyId: id } });
+     await Certification.destroy({ where: { companyId: id } })
    }
 
    @AfterRestore
@@ -52,6 +54,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Location.restore({ where: { companyId: id } });
      await Contact.restore({ where: { companyId: id } });
      await TextModule.restore({ where: { companyId: id } });
+     await Certification.restore({ where: {companyId: id} });
      //await FileModule.restore({ where: { companyId: id } });
    }
 
@@ -92,8 +95,8 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    @HasMany(() => User, {onDelete: 'CASCADE'})
    declare users?: User[];
 
-   @HasMany(() => Location, {onDelete: 'CASCADE'})
-   declare locations?: Location[];
+   @HasOne(() => Location, {onDelete: 'CASCADE'})
+   declare locations?: Location;
 
    @HasMany(() => Contact, {onDelete: 'CASCADE'})
    declare contacts?: Contact[];
@@ -103,6 +106,9 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @HasMany(() => FileModule, {onDelete: 'CASCADE'})
    declare fileModules?: FileModule[];
+
+   @HasMany(() => Certification, {onDelete: 'CASCADE'})
+   declare certifications?: Certification[];
 
    @BelongsToMany(() => Filter, { 
     through: () => CompanyFilter,
