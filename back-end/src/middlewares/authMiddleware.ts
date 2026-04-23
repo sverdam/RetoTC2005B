@@ -8,8 +8,9 @@ import { Company } from "../models/company";
 export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 
   // Grab token from the authorization header
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  //const authHeader = req.headers['authorization'];
+  //const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies.token;
 
   // If request doesnt have token
   if (!token) {
@@ -33,6 +34,16 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
   }
 };
 
+
+export const getProfile: RequestHandler = async (req: Request, res: Response) => {
+    const token = req.cookies.token; // Look ma, no manual headers!
+
+    return res.status(200).json({ 
+        status: 'success',
+        messege: token ? 'Valid Token' : 'Invalid token',
+        payload: req.user 
+    });
+}
 
 export const loginAuthentication: RequestHandler = async (req: Request, res: Response) => {
 
