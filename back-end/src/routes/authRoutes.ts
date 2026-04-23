@@ -19,7 +19,7 @@ authRouter.get('/test', tokenAuthorization, (req: Request, res: Response) =>
     }
 )
 
-authRouter.post('/', loginAuthentication);
+authRouter.post('/login', loginAuthentication);
 authRouter.get('/profile', getProfile)
 
 export default authRouter;
