@@ -91,7 +91,8 @@ const DirectoryPage: React.FC = () => {
             </div>
             {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
-                <NewDirectoryCardButton />
+                {(userProfile.companyMemberType === "Admin" && userProfile.role === 'admin') ? 
+                <NewDirectoryCardButton /> : <></> }
                 {filteredCompanies.map((company) => (
                     <DirectoryCard key={company.id} company={company} />
                 ))}
