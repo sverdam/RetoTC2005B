@@ -1,5 +1,8 @@
 import { NavLink } from "react-router-dom";
 import Button from "./Button";
+import { logout, getProfile } from "../api/LoginAPI";
+import { useEffect, useState } from "react";
+import type { User, UserProfile } from "clas-types";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) => {
   return [
@@ -10,7 +13,28 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) => {
   ].join(" ");
 };
 
+const unverifiedUser : UserProfile = {
+    id: "-1",
+    email: 'unknown',
+    companyId: -1,
+    companyMemberType: 'none',
+    role: 'unverified'
+}
+
 const Navbar: React.FC = () => {
+
+    const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
+
+    useEffect(() => {
+      getProfile().then(result => setUserProfile(result))
+    }, [])
+
+    const clickLogout = () => {
+      logout().finally(
+        () => getProfile().then(result => setUserProfile(result))
+      )
+    }
+
     return (
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 border-b">
           <div className="flex flex-wrap items-center justify-between mx-auto max-w-screen-xl">
@@ -42,11 +66,19 @@ const Navbar: React.FC = () => {
                     Directorio
                   </NavLink>
                 </li>
-                <li>
+                <li>{
+                    userProfile.role === "unverified" ? 
                     <Button
                     text="Iniciar Sesión"
                     to="/login"  
-                    />
+                    /> : 
+                    <button
+                    onClick={clickLogout}
+                    className="inline-flex items-center justify-end text-white bg-clas hover:bg-clas-claro focus:ring-4 
+                    focus:ring-blue-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none focus:ring-offset-2"> 
+                    Cerrar Sessión
+                    </button>
+                    }
                 </li>
               </ul>
             </div>
