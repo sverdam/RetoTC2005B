@@ -99,4 +99,9 @@ declare module "clas-types" {
         id: number,
         name: string
     }
+
+    interface LoginUser{
+        email: string,
+        password: string
+    }
 }
