@@ -10,7 +10,7 @@ export const login = async (data: LoginUser) : Promise <any> => {
   } catch (error) {
     const err = error as AxiosError;
 
-    console.error("Error creating user:", err.message);
+    console.error("Error logging in", err.message);
 
     throw err;
   }
@@ -24,7 +24,7 @@ export const logout = async () : Promise <any> => {
   } catch (error) {
     const err = error as AxiosError;
 
-    console.error("Error creating user:", err.message);
+    console.error("Error logging out:", err.message);
 
     throw err;
   }
@@ -38,7 +38,7 @@ export const getProfile = async() : Promise<any> => {
   } catch (error) {
     const err = error as AxiosError;
 
-    console.error("Error creating user:", err.message);
+    console.error("Error getting profile:", err.message);
 
     throw err;
   }
