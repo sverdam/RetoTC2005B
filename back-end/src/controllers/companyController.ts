@@ -5,20 +5,31 @@ import { Location } from "../models/location";
 import { Contact } from "../models/contact";
 import { TextModule } from "../models/textModule";
 import { FileModule, FileType } from "../models/fileModule";
+import { Certification } from "../models/certification";
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
-const addLogoToCompany = async (company: Company | null) => {
+const addFilesToCompany = async (company: Company | null) => {
 
     if (company == null) return company;
 
     const logoModule: FileModule | null = await FileModule.findOne({
-            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt"] },
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"
+            ] },
             where: { companyId: company.id, type: 'logo' },
             plain: true      
         });
 
-    const result = {...company.dataValues, logo: logoModule?.dataValues};
+    const pdfModule: FileModule | null = await FileModule.findOne({
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"
+            ] },
+            where: { companyId: company.id, type: 'document' },
+            plain: true      
+        });
+
+    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule?.dataValues};
 
     return result;
 }
@@ -73,18 +84,27 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                 {
                     model: TextModule,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
-                }
+                },
+                {
+                    model: FileModule,
+                    attributes: {  exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"] }
+                },
+                {
+                    model: Certification,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
             ]
         }); 
 
         //companies.map(company => addLogoToCompany);
-        const logoPromises = companies.map(async (item) => {
-            return await addLogoToCompany(item);
+        const filePromises = companies.map(async (item) => {
+            return await addFilesToCompany(item);
         });
 
-        const companiesWithLogos = await Promise.all(logoPromises);
+        const companiesWithFiles = await Promise.all(filePromises);
 
-        return res.status(200).json(companiesWithLogos); 
+        return res.status(200).json(companiesWithFiles); 
     } catch (error) { 
         return res.status(500).json({ 
         "message":"Error getting companies",  
@@ -116,13 +136,22 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                 {
                     model: TextModule,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
-                }
+                },
+                {
+                    model: FileModule,
+                    attributes: {  exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"] }
+                },
+                {
+                    model: Certification,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
             ]
         }); 
 
-        const companyWithLogo = await addLogoToCompany(company);
+        const companyWithFiles = await addFilesToCompany(company);
 
-        return res.status(200).json(companyWithLogo); 
+        return res.status(200).json(companyWithFiles); 
     } 
     catch (error) { 
         return res.status(500).json({ 

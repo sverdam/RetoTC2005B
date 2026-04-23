@@ -99,11 +99,16 @@ export const updateUser: RequestHandler = (req: Request, res: Response) => {
 
     if ("password" in req.body)
     {
-        return res.status(400).json({
-            status: "error",
-            message: "You cannot change users password in this type of request. Try /user/password/:id",
-            payload: null,
-        });
+        if (req.body.password.length > 0)
+        {
+            return res.status(400).json({
+                status: "error",
+                message: "You cannot change users password in this type of request. Try /user/password/:id",
+                payload: null,
+            });
+        }
+
+        delete req.body.password;
     }
 
     User.update({ ...req.body }, { where: { id: req.params.id } })

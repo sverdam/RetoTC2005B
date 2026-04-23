@@ -38,7 +38,7 @@ const UserFormPage: React.FC = () => {
                 setForm({
                     name: user.name,
                     email: user.email,
-                    password: user.password,
+                    password: "",
                     role: user.role,
                     companyId: user.company?.id ?? 0
                 })
@@ -91,7 +91,7 @@ const UserFormPage: React.FC = () => {
                                 type="text"
                                 required
                                 className={inputClass}
-                                placeholder="User name"
+                                placeholder="Nombre de usuario"
                                 value={form.name}
                                 onChange={(e) => handleChange("name", e.target.value)}>
                             </input>
@@ -107,25 +107,25 @@ const UserFormPage: React.FC = () => {
                                     type="text"
                                     required
                                     className={inputClass}
-                                    placeholder="User e-mail"
+                                    placeholder="Correo electrónico del usuario"
                                     value={form.email}
                                     onChange={(e) => handleChange("email", e.target.value)}>
                                 </input>
                             </div>
                             {/* Password */}
-                            {isEditing ? <></> : <div>
+                            <div>
                                 <label className={labelClass}>
-                                    Contraseña
+                                    {isEditing ? "Restablecer " : ""}Contraseña
                                 </label>
                                 <input
                                     type="password"
                                     required
                                     className={inputClass}
-                                    placeholder="User password"
+                                    placeholder={isEditing ? "Dejar vacío para mantener contraseña actual" : "Contraseña del usuario"}
                                     value={form.password}
                                     onChange={(e) => handleChange("password", e.target.value)}>
                                 </input>
-                            </div>}
+                            </div>
                             
                             {/* Company */}
                             <div>
