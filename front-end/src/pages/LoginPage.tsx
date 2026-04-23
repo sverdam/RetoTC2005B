@@ -23,14 +23,14 @@ const LoginPage: React.FC = () => {
         login(form);
     };
 
-    useEffect(() => {
-        getProfile().then(response => {
-            console.log("GET PROFILE: ");
-            console.log(response)
-        }).finally(
-            () => console.log("get profile attempted")
-        );
-    }, [])
+    // useEffect(() => {
+    //     getProfile().then(response => {
+    //         console.log("GET PROFILE: ");
+    //         console.log(response)
+    //     }).finally(
+    //         () => console.log("get profile attempted")
+    //     );
+    // }, [])
 
     return(
         <div className="grid grid-cols-2 gap-2">
