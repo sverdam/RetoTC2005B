@@ -56,9 +56,9 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
                     console.log();
                     res.cookie('token', jwt, {
                         httpOnly: true, 
-                        secure: true,   
-                        sameSite: 'none',// Required if Frontend and Backend are on different URLs
-                        maxAge: 7200000 
+                        secure: process.env.NODE_ENV === 'production', // Use true in prod (HTTPS)
+                        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                        maxAge: 7200000  // 2 hours
                     });
                     
                     res.status(200).json({
