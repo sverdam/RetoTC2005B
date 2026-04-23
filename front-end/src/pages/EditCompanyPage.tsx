@@ -9,6 +9,8 @@ import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
 import FileUpload from "../components/FileUpload";
 import FilterModal from "../components/FilterModal";
+import NewCertificationModal from "../components/NewCertificationModal";
+import NewContactModal from "../components/NewContactModal";
 
 interface TagProps {
     value:string;
@@ -31,6 +33,12 @@ const EditCompanyPage: React.FC = () => {
     };
     {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
+
+    {/* Certification Modal */}
+    const [isCertificationOpen, setIsCertificationOpen] = useState(false);
+
+    {/* Contact Modal */}
+    const [isContactOpen, setIscontactOpen] = useState(false);
 
     {/* Navigate */}
     const navigate = useNavigate();
@@ -134,7 +142,9 @@ const EditCompanyPage: React.FC = () => {
                 <CertificationCard name="C-TPAT / OEA" />
                 <div className=" flex flex-col flex-wrap justify-center items-center rounded-lg border border-clas bg-clas w-30 h-30 p-2">
                     {/* Hacer Modal de agregar certificaciones y hacer que funcione el boton de agregar */}
-                    <button className="hover:bg-clas-claro">
+                    <button className="hover:bg-clas-claro"
+                        onClick={() => setIsCertificationOpen(true)}
+                    >
                         <div className="rounded-full w-7 h-7 border border-white m-1">
                             <PlusIcon className="text-white p-1"/>
                         </div>
@@ -148,7 +158,9 @@ const EditCompanyPage: React.FC = () => {
                 Contactos
             </label>
             <div className="w-full flex justify-end">
-                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro">
+                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                    onClick={() => setIscontactOpen(true)}
+                >
                     Nuevo Contacto
                     <PlusIcon className="h-4 w-4"/>
                 </button>
@@ -191,6 +203,16 @@ const EditCompanyPage: React.FC = () => {
         <FilterModal 
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
+        />
+        
+        <NewCertificationModal 
+            isCertificationOpen={isCertificationOpen}
+            onClose={() => setIsCertificationOpen(false)}
+        />
+
+        <NewContactModal 
+            isContactOpen={isContactOpen}
+            onClose={() => setIscontactOpen(false)}
         />
     </div>
    )
