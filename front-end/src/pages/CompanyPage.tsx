@@ -4,6 +4,7 @@ import type { Company } from "clas-types";
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
+import Button from "../components/Button";
 
 interface TagProps {
     value:string;
@@ -30,6 +31,9 @@ const CompanyPage: React.FC = () => {
     !company ? navigate(`/error`) : null
     return(
         <div className="flex flex-col gap-5 items-center p-5 bg-white rounded-lg">
+            <div className="flex w-full justify-end">
+                <Button text="Editar" to="editar"/>
+            </div>
             <img src="../src/assets/logoipsum.png" className="w-75"/>
             <h1 className="font-semibold text-3xl text-clas-negro">{company?.name}</h1>
             {company?.filters != null ? 
