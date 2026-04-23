@@ -173,7 +173,10 @@ const EditCompanyPage: React.FC = () => {
                     </tbody>
                 </table>
             </div>
-            
+        </div>
+        <div className="m-5 flex w-2xl gap-3 justify-end">
+            <button className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1">Cancelar</button>
+            <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1">Aplicar Cambios</button>
         </div>
         
         <FilterModal 
