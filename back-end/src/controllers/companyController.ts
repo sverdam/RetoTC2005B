@@ -46,7 +46,7 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
     } 
     
     //Validate credentials
-    if (req.user?.companyMemberType !== 'Admin'){
+    if (req.user?.companyMemberType !== 'Admin'  && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true"){
         return res.status(403).json({ 
         status: "error", 
         message: "Forbidden: You do not have pemission to register a company.", 
@@ -78,7 +78,7 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
     try { 
         const companies:Array<Company> = await Company.findAll({
             include: 
-            req.user?.role === 'unverified' ? [] :
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :
             [
                 {
                     model: User,
@@ -132,7 +132,7 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
     try { 
         const company:Company | null = await Company.findByPk(id, {
             include: 
-            req.user?.role === 'unverified' ? [] :[ 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :[ 
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
