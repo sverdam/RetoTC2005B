@@ -45,9 +45,8 @@ const Navbar: React.FC = () => {
                 <li>
                     <Button
                     text="Iniciar Sesión"
-                    to="/"  
+                    to="/login"  
                     />
-                     {/* TO DO: add login button navigation */}
                 </li>
               </ul>
             </div>
