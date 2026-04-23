@@ -5,12 +5,12 @@ const NewDirectoryCardButton: React.FC = () => {
 	const navigate = useNavigate();
 	
 	return(
-		<div className="p-2 border border-clas rounded-lg flex flex-col gap-3 items-start"
+		<div className="border-2 border-clas rounded-lg flex flex-col gap-3 items-start hover:bg-clas/20"
 		>
-			<button className="w-full h-full bg-clas"
+			<button className="w-full h-full flex justify-center items-center hover:bg-clas/20"
 				onClick={() => navigate("/empresa/editar")}
 			>
-				<PlusIcon className="h-7 w-7 text-white" />
+				<PlusIcon className="h-10 w-10 text-clas" />
 			</button>
 			
 		</div>
