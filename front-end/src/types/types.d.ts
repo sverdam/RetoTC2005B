@@ -71,11 +71,10 @@ declare module "clas-types" {
         text: Text; 
     } 
 
-    export const UserRole = {
-        ADMIN: 'admin',
-        USER: 'user',
-    } as const;
-    export type UserRole = typeof Color[keyof typeof UserRole]
+    enum UserRole {
+        ADMIN = 'admin',
+        USER = 'user',
+    }
 
     export interface User{ 
         id: number; 
@@ -99,4 +98,17 @@ declare module "clas-types" {
         id: number,
         name: string
     }
+
+    interface LoginUser{
+        email: string,
+        password: string
+    }
+    
+    interface UserProfile {
+        id: string;
+        email: string;
+        companyId: number;
+        companyMemberType: string;
+        role: string;
+    }   
 }

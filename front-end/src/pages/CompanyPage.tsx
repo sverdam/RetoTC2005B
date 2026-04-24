@@ -4,6 +4,7 @@ import type { Company } from "clas-types";
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
+import Button from "../components/Button";
 
 interface TagProps {
     value:string;
@@ -31,6 +32,9 @@ const CompanyPage: React.FC = () => {
     !company ? navigate(`/error`) : null
     return(
         <div className="flex flex-col gap-5 items-center p-5 bg-white rounded-lg">
+            <div className="flex w-full justify-end">
+                <Button text="Editar" to="editar"/>
+            </div>
             <img src="../src/assets/logoipsum.png" className="w-75"/>
             <h1 className="font-semibold text-3xl text-clas-negro">{company?.name}</h1>
             {company?.filters != null ? 
@@ -107,6 +111,23 @@ const CompanyPage: React.FC = () => {
             </div>
             </> 
             : <></>    }
+            {/* TODO: HACER QUE SE VEAN LOS CONTACTOS DE LA EMPRESA!!  */}
+            <div className="rounded-md border-2 border-clas/50">
+                <table className="min-w-full">
+                    <thead className="bg-clas/30">
+                        <tr>
+                            <th className="text-clas-negro">Puesto</th>
+                            <th className="text-clas-negro">Contacto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className="text-clas-negro text-center">Ventas</td>
+                            <td className="text-clas-negro text-center">ventas@ford.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 };

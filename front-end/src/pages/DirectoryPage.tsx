@@ -2,28 +2,64 @@ import {
   PhoneIcon,
   MagnifyingGlassIcon
 } from "@heroicons/react/24/outline";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Profiler } from "react";
 import { getAllCompanies } from "../api/CompanyAPI";
-import type { Company, Filter } from "clas-types";
+import type { Company, Filter, UserProfile } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
 import FilterModal from "../components/FilterModal";
+import NewDirectoryCardButton from "../components/NewDirectoryCardButton";
+import { getProfile } from "../api/LoginAPI";
 
 
+const unverifiedUser : UserProfile = {
+    id: "-1",
+    email: 'unknown',
+    companyId: -1,
+    companyMemberType: 'none',
+    role: 'unverified'
+}
+
+interface TagProps {
+    value:string;
+    tagTier: number;
+}
 const DirectoryPage: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<Filter[]>([]);
+    
+    const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
+    
+    const Tag: React.FC<TagProps> = ({value, tagTier}) => {
+        return(
+            <div className="bg-white border border-clas-gris rounded-full">
+                <button onClick={() => {
+                    if (tagTier === tier) {
+                        setTier(null);
+                    }else{
+                        setTier(tagTier);
+                    }
+                }}
+                className="text-clas-negro bg-white rounded-full w-full h-full px-4 py-2 hover:bg-clas hover:text-white focus:bg-clas focus:text-white">
+                    {value}
+                </button>
+            </div>
+        )
+    };
 
+    
     useEffect(() => {
         getAllCompanies().then((companies: Company[]) => setCompanies(companies));
+        getProfile().then((profile: UserProfile) => setUserProfile(profile))
     }, []);
 
     const filteredCompanies = useMemo(() => {
         console.log(companies);
         const _name = nameQuery.trim().toLowerCase();
-
         return companies.filter((p) => {
+            
+            console.log(`tag ${tier}, tier ${p.tier}`);
             const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name);
             const matchesFilter = selected.length === 0 || selected.every((f) => 
             p.filters?.some((c) => c.name === f.name)
@@ -51,14 +87,19 @@ const DirectoryPage: React.FC = () => {
                         setNameQuery(e.target.value)}
                     ></input>
                 </div>
+                <Tag value="Tier 1" tagTier={1} />
+                <Tag value="Tier 2" tagTier={2}/>
+                <Tag value="OEM" tagTier={0}/>
                 <button
                     onClick={() => setIsOpen(true)} 
                     className=" w-20 bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                     Filtros
                 </button>
             </div>
-            {/*grid de cacharros*/}
+            {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
+                {(userProfile.companyMemberType === "Admin" && userProfile.role === 'admin') ? 
+                <NewDirectoryCardButton /> : <></> }
                 {filteredCompanies.map((company) => (
                     <DirectoryCard key={company.id} company={company} />
                 ))}
