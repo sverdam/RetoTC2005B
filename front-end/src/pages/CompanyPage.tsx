@@ -18,6 +18,7 @@ const Tag: React.FC<TagProps> = ({value}) => {
 
 const CompanyPage: React.FC = () => {
     {/* TODO: Hacer que se vea la info de la empresa seleccionada desde el directorio */}
+    
     const location = useLocation();
     const navigate = useNavigate();
     const [company, setcompany] = useState<Company>();
