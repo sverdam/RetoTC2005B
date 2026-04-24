@@ -26,6 +26,7 @@ interface TagProps {
 const DirectoryPage: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
+    const [tier, setTier] = useState<number | null>( null )
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<Filter[]>([]);
     
