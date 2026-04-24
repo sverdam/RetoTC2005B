@@ -6,9 +6,9 @@ import Navbar from './components/Navbar'
 
 const App: FC = () => {
   return (
-    <div className="min-h-screen w-full px-2">
+    <div className="min-h-screen w-full">
       <div>
-        <header>
+        <header className="sticky top-0 z-50">
           <Navbar/>
         </header>
         <main>
