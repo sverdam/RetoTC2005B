@@ -1,7 +1,7 @@
 const Footer: React.FC = () => {
     return(
         <footer>
-            <div className="flex flex-col p-4 gap-7 bg-gray-100">
+            <div className="flex flex-col p-4 gap-7">
                 <div className="flex justify-between items-center">
                     <img src="..\src\assets\CLAS-Logotipo-03.jpeg" className="h-15"/>
                     {/* Suscribirse al Newsletter */}
