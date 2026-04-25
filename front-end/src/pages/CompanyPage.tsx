@@ -34,7 +34,7 @@ const CompanyPage: React.FC = () => {
             <div className="flex w-full justify-end">
                 <Button text="Editar" to="editar"/>
             </div>
-            <img src="../src/assets/logoipsum.png" className="w-75"/>
+            <img src={!company?.logo ? "../src/assets/logoipsum.png" : `http://localhost:3000/fileModule/files/${company.logo.id}`} className="w-75"/>
             <h1 className="font-semibold text-3xl text-clas-negro">{company?.name}</h1>
             {company?.filters != null ? 
             <div className="flex gap-2">
@@ -120,10 +120,14 @@ const CompanyPage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
+                        {company?.contact?.map( c => (
+                            <>
                         <tr>
-                            <td className="text-clas-negro text-center">Ventas</td>
-                            <td className="text-clas-negro text-center">ventas@ford.com</td>
+                            <td className="text-clas-negro text-center">{c.position}</td>
+                            <td className="text-clas-negro text-center">{c.contactInfo}</td>
+                            
                         </tr>
+                        </>))}
                     </tbody>
                 </table>
             </div>
