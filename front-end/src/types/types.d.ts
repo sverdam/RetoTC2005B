@@ -40,6 +40,7 @@ declare module "clas-types" {
         id: number; 
         type: ContactType; 
         contactInfo: string;
+        position: string;
     }
 
     export enum FileType {
