@@ -1,15 +1,15 @@
 
 import { Request, Response } from 'express';
 import { Router } from 'express';
-import { loginAuthentication, tokenAuthorization, adminCheck, getProfile, logout } from '../middlewares/authMiddleware';
+import { loginAuthentication, tokenAuthorization, editorCheck, getProfile, logout } from '../middlewares/authMiddleware';
 
 const authRouter: Router = Router();
 
 // Decodes JWT token from the request
 authRouter.use(tokenAuthorization);
 
-// Check admin requierements and blocks unauthorized modifications requests 
-authRouter.use(adminCheck);         
+// Check editor requierements and blocks unauthorized modifications requests 
+authRouter.use(editorCheck);         
 
 authRouter.get('/auth/test', tokenAuthorization, (req: Request, res: Response) => 
     {

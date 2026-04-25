@@ -9,7 +9,6 @@ import textModuleRoutes from './textModuleRoutes';
 import authRoutes from './authRoutes';
 import fileModuleRoutes from './fileModuleRoutes';
 import certificationRouter from './certificationRoutes';
-import { tokenAuthorization, adminCheck } from '../middlewares/authMiddleware';
 
 const apiRouter:Router = Router();  
 

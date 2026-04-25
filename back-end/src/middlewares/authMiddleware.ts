@@ -14,7 +14,7 @@ export const unverifiedCheck: RequestHandler = async (req: Request, res: Respons
     next();
 }
 
-export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const editorCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     const unsafeMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
 
     if (unsafeMethods.includes(req.method) && req.user?.role !== 'admin' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
