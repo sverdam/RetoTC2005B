@@ -38,8 +38,8 @@ const CompanyPage: React.FC = () => {
 
     useEffect(() => {
         const companies = location.state.company as Company
-        setcompany(companies);
-        
+        setcompany(companies)
+        //console.log(company?.locations);
         getProfile().then((profile: UserProfile) => setUserProfile(profile))
     }, [])
 
@@ -73,10 +73,10 @@ const CompanyPage: React.FC = () => {
                 <p className="text-left text-clas-negro">{String(company?.textModules?.find(t => t.id === 2)?.text)} {/*Aquí va un text_module */}</p>
                 : <></>}
                 <div className="flex flex-col gap-2 items-center">
-                    {!company?.location ? 
+                    {!company?.locations ? 
                     <></>:
                     <iframe
-                        src={company.location.link}
+                        src={company.locations.mapLink}
                         title="Location"
                         className="rounded-xl"
                     >
@@ -90,7 +90,7 @@ const CompanyPage: React.FC = () => {
                             </div>
                             <div className="flex flex-col gap-1 items-start">
                                 <p className="font-semibold text-clas-negro">Detalles de Contacto</p>
-                                <p className="font-thin text-clas-negro">{company?.contact?.find(c => c.type ==="phone")?.contactInfo || "No se encontró telefono"}</p>
+                                <p className="font-thin text-clas-negro">{company?.contacts?.find(c => c.type ==="phone")?.contactInfo || "No se encontró telefono"}</p>
                             </div>
                         </div>
                         <div className="flex gap-1 items-center">
@@ -99,7 +99,7 @@ const CompanyPage: React.FC = () => {
                             </div>
                             <div className="flex flex-col gap-1 items-start">
                                 <p className="font-semibold text-clas-negro">Mándanos un e-mail</p>
-                                <p className="font-thin text-clas-negro">{company?.contact?.find(c => c.type === "email")?.contactInfo || "No se encontró mail disponible" }</p>
+                                <p className="font-thin text-clas-negro">{company?.contacts?.find(c => c.type === "email")?.contactInfo || "No se encontró mail disponible" }</p>
                             </div>
                         </div>
                     </div>
@@ -138,14 +138,12 @@ const CompanyPage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {company?.contact?.map( c => (
-                            <>
+                        {company?.contacts?.map( c => (
                         <tr>
                             <td className="text-clas-negro text-center">{c.position}</td>
                             <td className="text-clas-negro text-center">{c.contactInfo}</td>
                             
-                        </tr>
-                        </>))}
+                        </tr>))}
                     </tbody>
                 </table>
             </div>
