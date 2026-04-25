@@ -56,19 +56,18 @@ const DirectoryPage: React.FC = () => {
     }, []);
 
     const filteredCompanies = useMemo(() => {
-        console.log(companies);
+        //console.log(companies);
         const _name = nameQuery.trim().toLowerCase();
         return companies.filter((p) => {
-            
-            console.log(`tag ${tier}, tier ${p.tier}`);
             const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name);
             const matchesFilter = selected.length === 0 || selected.every((f) => 
             p.filters?.some((c) => c.name === f.name)
-        );
+            );;
+            const matchesTier = tier === null || tier == p.tier;
 
-            return matchesName && matchesFilter;
+            return matchesName && matchesFilter && matchesTier;
         });
-    }, [nameQuery, selected, companies]);
+    }, [nameQuery, selected, companies, tier]);
 
     const handleFilter = (newFilters: Filter[]) => {
         setSelected(newFilters)
@@ -88,6 +87,7 @@ const DirectoryPage: React.FC = () => {
                         setNameQuery(e.target.value)}
                     ></input>
                 </div>
+                {userProfile.role !== 'unverified' ? <>
                 <Tag value="Tier 1" tagTier={1} />
                 <Tag value="Tier 2" tagTier={2}/>
                 <Tag value="OEM" tagTier={0}/>
@@ -96,6 +96,7 @@ const DirectoryPage: React.FC = () => {
                     className=" w-20 bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                     Filtros
                 </button>
+                </> : <></>}
             </div>
             {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
