@@ -110,12 +110,13 @@ const CompanyPage: React.FC = () => {
             <h2 className="text-xl font-medium text-clas-negro">Producto / Servicio </h2>
             <ProductCatalog documentLink={ company?.catalogo != null ? `http://localhost:3000/filemodule/files/${company.catalogo.id}` :"..\src\assets\ManualCLAS.pdf"} /> </>
             : <></>}
-            {company?.certifications ? 
+            {company?.textModules ? 
+            ( company?.textModules?.find(c => c.id === 3)?.text ?
             <>
             <h2 className="text-xl font-medium text-clas-negro">Capacidades</h2>
-            <p className="text-left text-clas-negro">{String(company?.textModules?.find(c => c.id === 3)?.text) || "No hay text module 3"}
+            <p className="text-left text-clas-negro">{String(company?.textModules?.find(c => c.id === 3)?.text) ?? "No hay text module 3"}
             </p>
-            </>
+            </> : <></>)
             : <></>}
             {company?.certifications ? 
             (company.certifications.length > 0 ? <>
