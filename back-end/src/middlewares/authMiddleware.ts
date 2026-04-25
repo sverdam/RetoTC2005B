@@ -15,9 +15,12 @@ export const unverifiedCheck: RequestHandler = async (req: Request, res: Respons
 }
 
 export const editorCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const unsafeMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+    const editorMethods = ['POST', 'DELETE', 'PATCH', 'PUT'];
 
-    if (unsafeMethods.includes(req.method) && req.user?.role !== 'admin' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
+    if (editorMethods.includes(req.method) 
+        // && req.user?.role !== 'admin' 
+        && !(['admin', 'CLAS editor', 'company editor'].includes(req.user?.role ?? 'unverified'))
+        && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
         return res.status(403).json({ 
         message: "Forbidden: You do not have permission to modify data." 
         });
