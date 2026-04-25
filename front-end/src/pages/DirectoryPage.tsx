@@ -4,7 +4,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState, useEffect, useMemo, Profiler } from "react";
 import { getAllCompanies } from "../api/CompanyAPI";
-import type { Company, UserProfile } from "clas-types";
+import type { Company, Filter, UserProfile } from "clas-types";
 import DirectoryCard from "../components/DirectoryCard";
 import FilterModal from "../components/FilterModal";
 import NewDirectoryCardButton from "../components/NewDirectoryCardButton";
@@ -26,8 +26,9 @@ interface TagProps {
 const DirectoryPage: React.FC = () => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
-    const [tier, setTier] = useState<number | null>(null);
+    const [tier, setTier] = useState<number | null>( null )
     const [isOpen, setIsOpen] = useState(false);
+    const [selected, setSelected] = useState<Filter[]>([]);
     
     const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
     
@@ -61,11 +62,18 @@ const DirectoryPage: React.FC = () => {
             
             console.log(`tag ${tier}, tier ${p.tier}`);
             const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name);
-            const matchesTier = tier === null || p.tier === tier;
+            const matchesFilter = selected.length === 0 || selected.every((f) => 
+            p.filters?.some((c) => c.name === f.name)
+        );
 
-            return matchesName && matchesTier;
+            return matchesName && matchesFilter;
         });
-    }, [nameQuery, tier, companies]);
+    }, [nameQuery, selected, companies]);
+
+    const handleFilter = (newFilters: Filter[]) => {
+        setSelected(newFilters)
+
+    }
 
     return (
         <div className="flex flex-col gap-10 items-center mx-2">
@@ -100,6 +108,8 @@ const DirectoryPage: React.FC = () => {
             <FilterModal 
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
+                selectFilter = {selected}
+                setSelectFilter = {handleFilter}
             />
         </div>
     )
