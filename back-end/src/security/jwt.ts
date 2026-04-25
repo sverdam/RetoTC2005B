@@ -11,7 +11,6 @@ export interface UserPayload extends JwtPayload {
   id: string;
   email: string;
   companyId: number;
-  companyMemberType: string;
   role: string;
 }
 
@@ -19,7 +18,6 @@ export const unverifiedUser: UserPayload = {
     id: "-1",
     email: 'unknown',
     companyId: -1,
-    companyMemberType: 'none',
     role: 'unverified'
 }
 

@@ -93,7 +93,7 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
         where: {
             email: req.body.email
         },
-        include: [{ model: Company, attributes: ["id", "name", "memberType"] }]
+        include: [{ model: Company, attributes: ["id", "name"] }]
     });
 
     if (user) {
