@@ -46,9 +46,11 @@ const CompanyPage: React.FC = () => {
     !company ? navigate(`/error`) : null
     return(
         <div className="flex flex-col gap-5 items-center p-5 bg-white rounded-lg">
+            {(userProfile.role === "admin" && (userProfile.companyMemberType === "Admin" || userProfile.companyId === company?.id)) ?
             <div className="flex w-full justify-end">
                 <Button text="Editar" to="editar"/>
-            </div>
+            </div> : <></>
+            }
             <img src={!company?.logo ? "../src/assets/logoipsum.png" : `http://localhost:3000/fileModule/files/${company.logo.id}`} className="w-75"/>
             <h1 className="font-semibold text-3xl text-clas-negro">{company?.name}</h1>
             {company?.filters != null ? 
