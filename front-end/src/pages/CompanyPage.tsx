@@ -118,14 +118,14 @@ const CompanyPage: React.FC = () => {
             </>
             : <></>}
             {company?.certifications ? 
-            <>
+            (company.certifications.length > 0 ? <>
             <h2 className="text-xl font-medium text-clas-negro">Certificaciones</h2>
             <div className="flex flex-wrap gap-5">
                 {company?.certifications?.map( (c) => (
                 <CertificationCard name={c.name} />
                 )) || "No hay certificaciones"}
             </div>
-            </> 
+            </> : <></> )
             : <></>    }
             {/* TODO: HACER QUE SE VEAN LOS CONTACTOS DE LA EMPRESA!!  */}
             <div className="rounded-md border-2 border-clas/50">
