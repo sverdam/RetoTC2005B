@@ -1,14 +1,24 @@
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import type { Company } from "clas-types";
+import type { Company, UserProfile } from "clas-types";
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
 import Button from "../components/Button";
+import { getProfile } from "../api/LoginAPI";
+
+const unverifiedUser : UserProfile = {
+    id: "-1",
+    email: 'unknown',
+    companyId: -1,
+    companyMemberType: 'none',
+    role: 'unverified'
+}
 
 interface TagProps {
     value:string;
 }
+
 const Tag: React.FC<TagProps> = ({value}) => {
     return(
         <div className="bg-white border border-clas-gris py-2 px-4 rounded-full">
@@ -23,10 +33,14 @@ const CompanyPage: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [company, setcompany] = useState<Company>();
+    const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
+        
 
     useEffect(() => {
         const companies = location.state.company as Company
         setcompany(companies);
+        
+        getProfile().then((profile: UserProfile) => setUserProfile(profile))
     }, [])
 
     !company ? navigate(`/error`) : null
