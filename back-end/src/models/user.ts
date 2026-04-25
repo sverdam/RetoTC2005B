@@ -5,7 +5,9 @@ import { Company } from "../models/company";
 
 enum UserRole {
   ADMIN = 'admin',
-  USER = 'user',
+  EDITORMASTER = 'CLAS editor',
+  EDITORCOMPANY = 'company editor',
+  USER = 'user'
 }
 
 interface UserAttributes{ 
