@@ -35,7 +35,7 @@ const addFilesToCompany = async (company: Company | null) => {
     
     const productsArray: Array<Product> = await Product.findAll({
             attributes: { exclude: ["createdAt", "updatedAt"] },
-            include: [{ model: FileModule, attributes: ["path"], where: {companyId: company.id}
+            include: [{ model: FileModule, attributes: [], where: {companyId: company.id}
                 }],
         });
 
