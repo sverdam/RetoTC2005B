@@ -2,3 +2,7 @@
 
 node_modules/
 dist/
+
+files/**/*.jpg
+files/**/*.png
+files/**/*.pdf
