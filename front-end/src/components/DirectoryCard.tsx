@@ -9,7 +9,7 @@ interface Props {
 }
 const DirectoryCard: React.FC<Props> = ({ company }) => {
     const navigate = useNavigate();
-    console.log(company)
+    //console.log(company)
     return company.memberType == "Admin" ? <></> : (
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
@@ -27,7 +27,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
             <h2 className="text-lg font-medium text-left">
                 {company.name}
             </h2>
-            <p className="text-gray-400 text-left">{!company.location ? "No existe dirección ingresada aún..." :company.location.address }</p>
+            <p className="text-gray-400 text-left">{!company.locations ? "No existe dirección ingresada aún..." :company.locations.address }</p>
 
             <button 
             onClick={() => navigate(`/empresa`, {state : {company}})}

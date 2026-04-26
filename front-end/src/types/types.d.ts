@@ -22,8 +22,8 @@ declare module "clas-types" {
         logo: FileModule;
         catalogo: FileModule;
         memberType: MemberType;
-        location: Location;
-        contact: Contact[];
+        locations: Location;
+        contacts: Contact[];
         user: User[];
         textModules: TextModule[]; 
         fileModules: FileModule[];
@@ -40,6 +40,7 @@ declare module "clas-types" {
         id: number; 
         type: ContactType; 
         contactInfo: string;
+        position: string;
     }
 
     export enum FileType {
@@ -63,7 +64,7 @@ declare module "clas-types" {
     interface Location{ 
         id: number; 
         address: string;
-        link: string;
+        mapLink: string;
     }
 
     interface TextModule{ 

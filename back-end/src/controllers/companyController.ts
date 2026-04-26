@@ -188,11 +188,13 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
     
     //Validate credentials
     if (req.user?.companyMemberType !== 'Admin'          // if not part of CLAS
-        && req.user?.companyId !== Number(req.params.id) // nor is it part of the company
+        && req.user?.companyId !== Number(req.params.id  // nor is it part of the company
+        && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true"  
+        ) 
     ){
         return res.status(403).json({ 
         status: "error", 
-        message: "Forbidden: You do not have pemission to register a company.", 
+        message: "Forbidden: You do not have pemission to modify a company.", 
         payload: null, 
         }); 
     }

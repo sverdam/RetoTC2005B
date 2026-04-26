@@ -2,7 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import Button from "./Button";
 import { logout, getProfile } from "../api/LoginAPI";
 import { useEffect, useState } from "react";
-import type { User, UserProfile } from "clas-types";
+import type { UserProfile } from "clas-types";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) => {
   return [
@@ -37,8 +37,8 @@ const Navbar: React.FC = () => {
     }
 
     return (
-        <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 border-b">
-          <div className="flex flex-wrap items-center justify-between mx-auto max-w-screen-xl">
+        <nav className="bg-white w-full border-b border-gray-200">
+          <div className="w-full px-4 lg:px-6 py-2.5 flex items-center justify-between">
             <NavLink to="/" className="flex items-center">
               <img
                 src="..\src\assets\CLAS-Logotipo-03.jpeg"
@@ -67,6 +67,15 @@ const Navbar: React.FC = () => {
                     Directorio
                   </NavLink>
                 </li>
+                {(userProfile.companyMemberType === "Admin" && userProfile.role === 'admin') ? 
+                <li>
+                  <NavLink
+                    to="/usuarios"
+                    className={navLinkClass}
+                  >
+                    Administracion de usuarios
+                  </NavLink>
+                </li> : <></>}
                 <li>{
                     userProfile.role === "unverified" ? 
                     <Button
