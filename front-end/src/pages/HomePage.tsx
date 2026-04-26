@@ -6,7 +6,7 @@ import schnellecke from "../assets/LogoLoop_Logos/schnellecke.png"
 import soluciones_industriales from "../assets/LogoLoop_Logos/soluciones_industriales.png"
 import suppliers_city from "../assets/LogoLoop_Logos/suppliers_city.png"
 import Button from "../components/Button";
-import heroImage from "../assets/hero.jpg"
+import heroImage from "../assets/hero.jpeg"
 
 const companyLogos = [
   { src: ford, alt: "Ford"},
@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
         <div className="flex flex-col gap-20 items-center">
 
             <div className="relative h-[720px] w-full flex items-center">
-                <img src={heroImage} alt="" className="w-full h-[720px] object-cover absolute z-0" ></img>
+                <img src={heroImage} alt="landing background" className="w-full h-[720px] object-cover absolute z-0" ></img>
                 <div className="relative z-10 max-w-2xl px-10 text-left text-white">
                     <h1 className="text-5xl font-bold mb-4">
                     Impulsando el futuro automotriz de Sonora

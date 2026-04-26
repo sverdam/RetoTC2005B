@@ -3,9 +3,11 @@ import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, Foreig
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
-enum UserRole {
+export enum UserRole {
   ADMIN = 'admin',
-  USER = 'user',
+  EDITORMASTER = 'CLAS editor',
+  EDITORCOMPANY = 'company editor',
+  USER = 'user'
 }
 
 interface UserAttributes{ 

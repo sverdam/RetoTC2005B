@@ -8,9 +8,11 @@ import { Filter } from "./filter";
 import { TextModule } from "./textModule"
 import { CompanyFilter } from "./companyFilter";
 import { FileModule } from './fileModule';
+import { Service } from './services';
 import { Certification } from './certification';
+import { Capacity } from './capacities';
 
-enum MemberType {
+export enum MemberType {
   AFFILIATE = 'Affiliate',
   ASSOCIATE = 'Associate',
   ADMIN = 'Admin',
@@ -22,6 +24,14 @@ interface CompanyAttributes{
   description: string; 
   tier: number; 
   memberType: MemberType;
+  
+  website: string;
+  slogan: string;
+  employees: number;
+  pieces: number;
+  space: number;
+  capacity: string;
+  color: string;
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
@@ -43,7 +53,8 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Contact.destroy({ where: { companyId: id } });
      await TextModule.destroy({ where: { companyId: id } });
      await FileModule.destroy({ where: { companyId: id } });
-     await Certification.destroy({ where: { companyId: id } })
+     await Certification.destroy({ where: { companyId: id } });
+     await Service.destroy({where: { companyId: id } })
    }
 
    @AfterRestore
@@ -54,7 +65,8 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Location.restore({ where: { companyId: id } });
      await Contact.restore({ where: { companyId: id } });
      await TextModule.restore({ where: { companyId: id } });
-     await Certification.restore({ where: {companyId: id} });
+     await Certification.restore({ where: { companyId: id} });
+     await Service.restore({where: { companyId: id }})
      //await FileModule.restore({ where: { companyId: id } });
    }
 
@@ -73,6 +85,27 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @Column 
    tier!: number; 
+
+   @Column
+   website?: string;
+
+   @Column
+   slogan?: string;
+   
+   @Column
+   employees?: number;
+   
+   @Column
+   pieces?: number;
+   
+   @Column
+   space?: number;
+
+   @Column
+   capacity?: string;
+
+   @Column
+   color?: string;
   
    @Column({
       type: DataType.ENUM(...Object.values(MemberType)),
@@ -107,8 +140,15 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    @HasMany(() => FileModule, {onDelete: 'CASCADE'})
    declare fileModules?: FileModule[];
 
+   @HasMany(() => Service, {onDelete: 'CASCADE'})
+   declare services?: Service[];
+
    @HasMany(() => Certification, {onDelete: 'CASCADE'})
    declare certifications?: Certification[];
+
+   @HasMany(() => Capacity, {onDelete: 'CASCADE'})
+   declare capacities?: Capacity[];
+
 
    @BelongsToMany(() => Filter, { 
     through: () => CompanyFilter,
