@@ -74,7 +74,9 @@ declare module "clas-types" {
 
     enum UserRole {
         ADMIN = 'admin',
-        USER = 'user',
+        EDITORMASTER = 'CLAS editor',
+        EDITORCOMPANY = 'company editor',
+        USER = 'user'
     }
 
     export interface User{ 
@@ -109,7 +111,6 @@ declare module "clas-types" {
         id: string;
         email: string;
         companyId: number;
-        companyMemberType: string;
         role: string;
     }   
 }

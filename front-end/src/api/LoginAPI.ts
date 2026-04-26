@@ -1,4 +1,4 @@
-import type { LoginUser } from "clas-types";
+import type { LoginUser, UserProfile } from "clas-types";
 import api from ".";
 import { AxiosError } from "axios";
 
@@ -30,7 +30,7 @@ export const logout = async () : Promise <any> => {
   }
 }
 
-export const getProfile = async() : Promise<any> => {
+export const getProfile = async() : Promise<UserProfile> => {
     try {
         const res = await api.get<any>("/auth/profile");
         console.log(res.data.payload);
