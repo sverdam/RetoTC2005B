@@ -69,9 +69,14 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
 export const getAllCompanies: RequestHandler = async (req:Request, res:Response)=>{ 
     try { 
         const companies:Array<Company> = await Company.findAll({
+            attributes: { exclude: (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ?
+            ["website", "slogan", "employees", "pieces", "space", "capacity"]  
+            :
+            []},
             include: 
-            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [
-                { attributes: { exclude: ["website", "slogan", "pieces", "space", "capacity"] }} ] :
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? 
+            []
+             :
             [
                 {
                     model: User,
@@ -128,9 +133,12 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
     const id = Number(req.params.id)
     try { 
         const company:Company | null = await Company.findByPk(id, {
+            attributes: { exclude: (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ?
+            ["website", "slogan", "employees", "pieces", "space", "capacity"]  
+            :
+            []},
             include: 
-            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [
-                { attributes: { exclude: ["website", "slogan", "pieces", "space", "capacity"] }} ] :[ 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :[ 
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
