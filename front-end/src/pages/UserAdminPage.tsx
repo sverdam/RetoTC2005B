@@ -183,7 +183,7 @@ const UserPage: React.FC = () => {
                   </th>
                   <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
                     <span className="flex items-center gap-1">
-                      Administrador
+                      Rol
                       <SortIcon className="h-4 w-4 text-gray-400" />
                     </span>
                   </th>
@@ -225,11 +225,7 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3 text-gray-700 text-center">
-                        {user.role.toLowerCase() === "admin" ? (
-                          <CheckCircleIcon className="h-4 w-4 text-green-600 inline-block" />
-                        ) : (
-                          <XCircleIcon className="h-4 w-4 inline-block" />
-                        )}
+                        {user.role.toUpperCase()}
                       </td>
 
                       {/*Edit*/}
