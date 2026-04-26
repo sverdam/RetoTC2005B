@@ -119,7 +119,7 @@ const UserFormPage: React.FC = () => {
                                 </label>
                                 <input
                                     type="password"
-                                    required
+                                    required={!isEditing}
                                     className={inputClass}
                                     placeholder={isEditing ? "Dejar vacío para mantener contraseña actual" : "Contraseña del usuario"}
                                     value={form.password}
