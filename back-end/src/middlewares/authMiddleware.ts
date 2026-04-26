@@ -60,7 +60,12 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
   // Grab token from the authorization header
   //const authHeader = req.headers['authorization'];
   //const token = authHeader && authHeader.split(' ')[1];
-  const token = req.cookies.token;
+  let token = req.cookies.token;
+
+  if (!token && (process.env.ALLOW_JWT_IN_HEADER ?? "true") === 'true'){
+    const authHeader = req.headers['authorization'];
+    token = authHeader && authHeader.split(' ')[1];
+  }
 
   // If request doesnt have token
   if (!token) {
