@@ -8,6 +8,7 @@ import filterRoutes from './filterRoutes';
 import textModuleRoutes from './textModuleRoutes';
 import authRoutes from './authRoutes';
 import fileModuleRoutes from './fileModuleRoutes';
+import serviceRouter from './serviceRoutes';
 import certificationRouter from './certificationRoutes';
 
 const apiRouter:Router = Router();  
@@ -22,6 +23,7 @@ apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 apiRouter.use('/textModule', textModuleRoutes);
 apiRouter.use('/fileModule', fileModuleRoutes);
+apiRouter.use('/services', serviceRouter)
 apiRouter.use('/certifications', certificationRouter);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
