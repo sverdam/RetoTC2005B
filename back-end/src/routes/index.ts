@@ -23,8 +23,8 @@ apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 apiRouter.use('/textModule', textModuleRoutes);
 apiRouter.use('/fileModule', fileModuleRoutes);
-apiRouter.use('/services', serviceRouter)
-apiRouter.use('/certifications', certificationRouter);
+apiRouter.use('/service', serviceRouter)
+apiRouter.use('/certification', certificationRouter);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
 res.send('Hello World!')  
