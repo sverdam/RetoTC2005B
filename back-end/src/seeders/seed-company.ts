@@ -14,7 +14,8 @@ export async function seedCompanies() {
       employees: 3200,
       pieces: 145000,
       space: 320000,
-      capacity: "Alta capacidad de manufactura y ensamble"
+      capacity: "Alta capacidad de manufactura y ensamble",
+      color: "#003478"
     },
     {
       id: 2,
@@ -28,7 +29,8 @@ export async function seedCompanies() {
       employees: 950,
       pieces: 78000,
       space: 98000,
-      capacity: "Estampado, ensamble y estructuras"
+      capacity: "Estampado, ensamble y estructuras",
+      color: "#1D4F91"
     },
     {
       id: 3,
@@ -42,7 +44,8 @@ export async function seedCompanies() {
       employees: 140,
       pieces: 0,
       space: 12000,
-      capacity: "Gestión de flotillas y movilidad"
+      capacity: "Gestión de flotillas y movilidad",
+      color: "#00A86B"
     },
     {
       id: 4,
@@ -56,7 +59,8 @@ export async function seedCompanies() {
       employees: 2100,
       pieces: 112000,
       space: 156000,
-      capacity: "Interiores automotrices y cableado"
+      capacity: "Interiores automotrices y cableado",
+      color: "#C8102E"
     },
     {
       id: 5,
@@ -70,7 +74,8 @@ export async function seedCompanies() {
       employees: 260,
       pieces: 0,
       space: 45000,
-      capacity: "Patio vehicular y distribución"
+      capacity: "Patio vehicular y distribución",
+      color: "#4A4A4A"
     }
   ]);
 }
