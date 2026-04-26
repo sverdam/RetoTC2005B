@@ -45,7 +45,7 @@ async function connectionDB() {
   try {
     await connection.authenticate(); // authenticate verifies the connection
     console.log("Conexión exitosa a la base de datos.");
-    await connection.sync();
+    await connection.sync({ alter: true });
   } catch (e) {
     console.log("Error al conectar con la base de datos:", e);
   }
