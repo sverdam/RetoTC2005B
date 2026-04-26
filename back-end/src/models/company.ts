@@ -10,6 +10,7 @@ import { CompanyFilter } from "./companyFilter";
 import { FileModule } from './fileModule';
 import { Service } from './services';
 import { Certification } from './certification';
+import { Capacity } from './capacities';
 
 enum MemberType {
   AFFILIATE = 'Affiliate',
@@ -140,6 +141,10 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @HasMany(() => Certification, {onDelete: 'CASCADE'})
    declare certifications?: Certification[];
+
+   @HasMany(() => Capacity, {onDelete: 'CASCADE'})
+   declare capacities?: Capacity[];
+
 
    @BelongsToMany(() => Filter, { 
     through: () => CompanyFilter,
