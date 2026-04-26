@@ -161,15 +161,15 @@ const UserFormPage: React.FC = () => {
                                     >
                                     <option
                                         value="user">
-                                        USER
+                                        USUARIO
                                     </option>
                                     <option
                                         value="company editor">
-                                        COMPANY EDITOR
+                                        EDITOR EMPRESA
                                     </option>
                                     <option
                                         value="CLAS editor">
-                                        CLAS EDITOR
+                                        EDITOR CLAS
                                     </option>
                                     <option
                                         value="admin">
