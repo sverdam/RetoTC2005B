@@ -35,11 +35,8 @@ const connection = new Sequelize({
         CompanyFilter,
         TextModule,
         FileModule,
-<<<<<<< HEAD
         Product,
-=======
         Service,
->>>>>>> 0cb9a3a2f5ce6110c578551ddc4495334377158b
         Certification
     ] 
 }); 
