@@ -22,7 +22,7 @@ export const editorCheck: RequestHandler = async (req: Request, res: Response, n
         && !(['admin', 'CLAS editor', 'company editor'].includes(req.user?.role ?? 'unverified'))
         && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
         return res.status(403).json({ 
-        message: "Forbidden: You do not have permission to modify data." 
+        message: "Forbidden: You do not have permission to modify any data." 
         });
     }
     next();
