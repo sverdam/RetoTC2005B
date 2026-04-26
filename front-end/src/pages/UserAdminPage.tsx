@@ -76,6 +76,22 @@ const UserPage: React.FC = () => {
     });
   };
 
+  const formatRole = (role: string) => {
+    switch (role){
+      case "USER":
+        return "USUARIO"
+
+      case "CLAS EDITOR":
+        return "EDITOR CLAS"
+      
+      case "COMPANY EDITOR":
+        return "EDITOR EMPRESA"
+
+      default:
+        return role
+    }
+  }
+
   return (
     <div className="p-4">
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
@@ -225,7 +241,7 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3 text-gray-700 text-center">
-                        {user.role.toUpperCase()}
+                        {formatRole(user.role.toUpperCase())}
                       </td>
 
                       {/*Edit*/}
