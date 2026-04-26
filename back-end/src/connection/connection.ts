@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
+import setup from "./setup";
 import { Company } from "../models/company"; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
@@ -14,6 +15,7 @@ import { Certification } from "../models/certification";
 import { Capacity } from "../models/capacities";
 
 import dotenv from "dotenv";
+import { LandingPage } from "../models/landingPage";
 dotenv.config({ path: "./.env" });
 
 const userID = process.env.DB_USERNAME ?? "unknown";
@@ -40,7 +42,8 @@ const connection = new Sequelize({
         Product,
         Service,
         Certification,
-        Capacity
+        Capacity,
+        LandingPage
     ] 
 }); 
 
@@ -49,6 +52,7 @@ async function connectionDB() {
     await connection.authenticate(); // authenticate verifies the connection
     console.log("Conexión exitosa a la base de datos.");
     await connection.sync({ alter: true });
+    await setup();
   } catch (e) {
     console.log("Error al conectar con la base de datos:", e);
   }
