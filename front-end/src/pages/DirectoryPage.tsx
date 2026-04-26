@@ -74,7 +74,7 @@ const DirectoryPage: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col gap-10 items-center mx-2">
+        <div className="flex flex-col gap-10 items-center m-10">
             <h1 className="font-medium text-3xl"> Directorio CLAS</h1>
             <div className="w-full flex gap-4 justify-center">
                 <div className="flex  gap-2 p-2 items-center rounded-full border border-gray-300 bg-gray-100">
