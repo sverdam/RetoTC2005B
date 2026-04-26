@@ -23,6 +23,13 @@ interface CompanyAttributes{
   description: string; 
   tier: number; 
   memberType: MemberType;
+  
+  website: string;
+  slogan: string;
+  employees: number;
+  pieces: number;
+  space: number;
+  capacity: Text;
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
@@ -74,6 +81,25 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @Column 
    tier!: number; 
+
+   @Column
+   website?: string;
+
+   @Column
+   slogan?: string;
+   
+   @Column
+   employees?: number;
+
+   
+   @Column
+   pieces?: number;
+   
+   @Column
+   space?: number;
+
+   @Column
+   capacity?: Text;
   
    @Column({
       type: DataType.ENUM(...Object.values(MemberType)),
