@@ -3,7 +3,7 @@ import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, Foreig
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
-enum UserRole {
+export enum UserRole {
   ADMIN = 'admin',
   EDITORMASTER = 'CLAS editor',
   EDITORCOMPANY = 'company editor',
