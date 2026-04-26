@@ -7,8 +7,11 @@ import {
   updateFilter,
   restoreFilter
 } from '../controllers/filterController';
+import { unverifiedCheck } from '../middlewares/authMiddleware';
 
 const filterRouter: Router = Router();
+
+filterRouter.use(unverifiedCheck);
 
 filterRouter.get('/', getAllFilters);
 

@@ -5,20 +5,31 @@ import { Location } from "../models/location";
 import { Contact } from "../models/contact";
 import { TextModule } from "../models/textModule";
 import { FileModule, FileType } from "../models/fileModule";
+import { Certification } from "../models/certification";
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
-const addLogoToCompany = async (company: Company | null) => {
+const addFilesToCompany = async (company: Company | null) => {
 
     if (company == null) return company;
 
     const logoModule: FileModule | null = await FileModule.findOne({
-            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt"] },
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"
+            ] },
             where: { companyId: company.id, type: 'logo' },
             plain: true      
         });
 
-    const result = {...company.dataValues, logo: logoModule?.dataValues};
+    const pdfModule: FileModule | null = await FileModule.findOne({
+            attributes: { exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"
+            ] },
+            where: { companyId: company.id, type: 'document' },
+            plain: true      
+        });
+
+    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule?.dataValues};
 
     return result;
 }
@@ -34,6 +45,15 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
         }); 
     } 
     
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'  && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true"){
+        return res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to register a company.", 
+        payload: null, 
+        }); 
+    }
+
     // Save Company in the database 
     const company = { ...req.body }; 
     Company.create(company) 
@@ -57,7 +77,9 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
 export const getAllCompanies: RequestHandler = async (req:Request, res:Response)=>{ 
     try { 
         const companies:Array<Company> = await Company.findAll({
-            include: [
+            include: 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :
+            [
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -73,18 +95,27 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                 {
                     model: TextModule,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
-                }
+                },
+                {
+                    model: FileModule,
+                    attributes: {  exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"] }
+                },
+                {
+                    model: Certification,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
             ]
         }); 
 
         //companies.map(company => addLogoToCompany);
-        const logoPromises = companies.map(async (item) => {
-            return await addLogoToCompany(item);
+        const filePromises = companies.map(async (item) => {
+            return await addFilesToCompany(item);
         });
 
-        const companiesWithLogos = await Promise.all(logoPromises);
+        const companiesWithFiles = await Promise.all(filePromises);
 
-        return res.status(200).json(companiesWithLogos); 
+        return res.status(200).json(companiesWithFiles); 
     } catch (error) { 
         return res.status(500).json({ 
         "message":"Error getting companies",  
@@ -100,7 +131,8 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
     const id = Number(req.params.id)
     try { 
         const company:Company | null = await Company.findByPk(id, {
-            include: [ 
+            include: 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :[ 
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -116,13 +148,22 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                 {
                     model: TextModule,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
-                }
+                },
+                {
+                    model: FileModule,
+                    attributes: {  exclude: ["company", "createdAt", "updatedAt", "deletedAt",
+                                    "storedName", "originalName", "path", "mimeType", "size", "position"] }
+                },
+                {
+                    model: Certification,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
             ]
         }); 
 
-        const companyWithLogo = await addLogoToCompany(company);
+        const companyWithFiles = await addFilesToCompany(company);
 
-        return res.status(200).json(companyWithLogo); 
+        return res.status(200).json(companyWithFiles); 
     } 
     catch (error) { 
         return res.status(500).json({ 
@@ -143,7 +184,18 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
         message: "Content can not be empty.", 
         payload: null, 
         }); 
-    } 
+    }
+    
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'          // if not part of CLAS
+        && req.user?.companyId !== Number(req.params.id) // nor is it part of the company
+    ){
+        return res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to register a company.", 
+        payload: null, 
+        }); 
+    }
 
     // Save Company in the database 
     Company.update({ ...req.body }, { where: { id: req.params.id } }) 
@@ -174,6 +226,17 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
 // Delete a Company with the specified id in the request 
 
 export const deleteCompany: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'){
+        res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to delete a company.", 
+        payload: null, 
+        }); 
+        return;
+    }
+    
     const id = Number(req.params.id);
     try { 
         await Company.destroy({ where: { id } }); 
@@ -189,6 +252,16 @@ export const deleteCompany: RequestHandler = async (req: Request, res: Response)
 // Restore a Company
 
 export const restoreCompany: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    //Validate credentials
+    if (req.user?.companyMemberType !== 'Admin'){
+        res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to restore a company.", 
+        payload: null, 
+        }); 
+        return;
+    }
+    
     const id = Number(req.params.id);
     try { 
         await Company.restore({ where: { id } }); 

@@ -57,7 +57,9 @@ export const createUser = async (data: NewUserInput): Promise<User> => {
 
 export const updateUser = async (id: number, data: NewUserInput): Promise<User> => {
     try {
-        const res = await api.patch<User>(`/user/password/${id}`, data);
+        const res = data.password === "" ? 
+            await api.patch<User>(`/user/${id}`, data) : 
+            await api.patch<User>(`/user/password/${id}`, data);
 
         return res.data;
     } catch (error){

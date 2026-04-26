@@ -3,14 +3,17 @@ import type { Filter, Category } from "clas-types";
 import { useState, useEffect, useMemo } from "react";
 import { getAllFilters } from "../api/FilterAPI";
 import { getAllCategories } from "../api/CategoryAPI";
+import { useNavigate } from "react-router";
 
 
 interface Props{
     isOpen: boolean;
     onClose: () => void;
+    selectFilter: Filter[];
+    setSelectFilter: (filters: Filter[] ) => void;
 }
 
-const FilterModal: React.FC<Props> = ({ isOpen, onClose }) => {
+const FilterModal: React.FC<Props> = ({ isOpen, onClose, selectFilter, setSelectFilter }) => {
 
     {/* Todos los filtros que vienen desde el backend */}
     const [filters, setFilters] = useState<Filter[]>([]);
@@ -21,8 +24,11 @@ const FilterModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
     useEffect(() => {
         getAllFilters().then((data: Filter[]) => setFilters(data));
+        if (isOpen) {
+            setSelected(selectFilter);
+        }
         
-    }, []);
+    }, [isOpen, selectFilter]);
 
     useEffect(() => {
         getAllCategories().then((data:Category[]) => setCategories(data))
@@ -35,6 +41,7 @@ const FilterModal: React.FC<Props> = ({ isOpen, onClose }) => {
             setSelected([...selected, tag]);
         }
     };
+
 
     const groupedFilters = useMemo(() => {
         return filters.reduce<Record<number, Filter[]>>((acc, filter) => {
@@ -79,7 +86,14 @@ const FilterModal: React.FC<Props> = ({ isOpen, onClose }) => {
                             </div>
                         ))}
                     </div>
-                    <button className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                    <button 
+                    onClick={() =>{
+                        setSelectFilter(selected);
+                        onClose();
+                        
+                    }}
+
+                    className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                         Filtrar
                     </button>
                 </DialogPanel>

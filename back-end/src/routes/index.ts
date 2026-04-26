@@ -8,11 +8,12 @@ import filterRoutes from './filterRoutes';
 import textModuleRoutes from './textModuleRoutes';
 import authRoutes from './authRoutes';
 import fileModuleRoutes from './fileModuleRoutes';
-import { tokenAuthorization } from '../middlewares/authMiddleware';
+import certificationRouter from './certificationRoutes';
+import { tokenAuthorization, adminCheck } from '../middlewares/authMiddleware';
 
 const apiRouter:Router = Router();  
 
-apiRouter.use(tokenAuthorization);
+apiRouter.use(authRoutes); // Auth routes and middleware
 
 apiRouter.use('/company', companyRoutes);  
 apiRouter.use('/user', userRoutes);  
@@ -21,9 +22,8 @@ apiRouter.use('/contact', contactRoutes);
 apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 apiRouter.use('/textModule', textModuleRoutes);
-apiRouter.use('/fileModule', fileModuleRoutes)
-
-apiRouter.use('/auth', authRoutes);
+apiRouter.use('/fileModule', fileModuleRoutes);
+apiRouter.use('/certifications', certificationRouter);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
 res.send('Hello World!')  

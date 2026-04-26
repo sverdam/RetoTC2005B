@@ -7,6 +7,11 @@ declare module "clas-types" {
     export enum MemberType {
         AFFILIATE = 'Afiliado',
         ASSOCIATE = 'Asociado',
+        ADMIN = 'Admin',
+    }
+
+    interface Certification {
+        name: string;
     }
 
     export interface Company {
@@ -15,8 +20,15 @@ declare module "clas-types" {
         description: string;
         tier: number;
         logo: FileModule;
+        catalogo: FileModule;
         memberType: MemberType;
         location: Location;
+        contact: Contact[];
+        user: User[];
+        textModules: TextModule[]; 
+        fileModules: FileModule[];
+        certifications: Certification[];
+        filters: Filter[];
     }
 
     export enum ContactType {
@@ -28,7 +40,6 @@ declare module "clas-types" {
         id: number; 
         type: ContactType; 
         contactInfo: string;
-        companyId: number; 
     }
 
     export enum FileType {
@@ -39,14 +50,7 @@ declare module "clas-types" {
 
     export interface FileModule{
         id: number;
-        companyId: number;
-        position: number;
         type: FileType;
-        storedName: string | null;
-        originalName: string | null;
-        path: string | null;
-        mimeType: string | null;
-        size: number | null;
     }
 
     interface Filter{ 
@@ -60,22 +64,17 @@ declare module "clas-types" {
         id: number; 
         address: string;
         link: string;
-        companyId: number;
     }
 
     interface TextModule{ 
         id: number; 
-        title: string; 
         text: Text; 
-        tier: number;
-        companyId: number;
     } 
 
-    export const UserRole = {
-        ADMIN: 'admin',
-        USER: 'user',
-    } as const;
-    export type UserRole = typeof Color[keyof typeof UserRole]
+    enum UserRole {
+        ADMIN = 'admin',
+        USER = 'user',
+    }
 
     export interface User{ 
         id: number; 
@@ -99,4 +98,17 @@ declare module "clas-types" {
         id: number,
         name: string
     }
+
+    interface LoginUser{
+        email: string,
+        password: string
+    }
+    
+    interface UserProfile {
+        id: string;
+        email: string;
+        companyId: number;
+        companyMemberType: string;
+        role: string;
+    }   
 }
