@@ -28,6 +28,31 @@ export const editorCheck: RequestHandler = async (req: Request, res: Response, n
     next();
 }
 
+export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    let allowed = true;
+    
+    if (req.user?.role !== 'admin' 
+        || (process.env.ALLOW_ALL_REQUESTS ?? "true") === "true"
+        || req.method === 'GET'){
+        return next();
+    }
+
+    if (req.path.startsWith("/user")){
+        allowed = false;
+    }
+    else if (req.path.startsWith("/company"))
+    {
+        if (req.method !== 'PATCH') 
+            allowed = false;
+    }
+
+    if (!allowed){
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have permission to modify this data." 
+        });
+    }
+    next();
+}
 
 
 export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {

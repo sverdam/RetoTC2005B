@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
 import { Router } from 'express';
-import { loginAuthentication, tokenAuthorization, editorCheck, getProfile, logout } from '../middlewares/authMiddleware';
+import { loginAuthentication, tokenAuthorization, editorCheck, getProfile, logout, adminCheck } from '../middlewares/authMiddleware';
 
 const authRouter: Router = Router();
 
@@ -9,7 +9,9 @@ const authRouter: Router = Router();
 authRouter.use(tokenAuthorization);
 
 // Check editor requierements and blocks unauthorized modifications requests 
-authRouter.use(editorCheck);         
+authRouter.use(editorCheck); 
+
+authRouter.use(adminCheck);
 
 authRouter.get('/auth/test', tokenAuthorization, (req: Request, res: Response) => 
     {
