@@ -10,8 +10,10 @@ import { TextModule } from "../models/textModule";
 import { Service } from "../models/services";
 import { FileModule } from "../models/fileModule";
 import { Product } from "../models/product";
-import dotenv from "dotenv";
 import { Certification } from "../models/certification";
+import { Capacity } from "../models/capacities";
+
+import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 
 const userID = process.env.DB_USERNAME ?? "unknown";
@@ -37,7 +39,8 @@ const connection = new Sequelize({
         FileModule,
         Product,
         Service,
-        Certification
+        Certification,
+        Capacity
     ] 
 }); 
 
