@@ -111,7 +111,6 @@ declare module "clas-types" {
         id: string;
         email: string;
         companyId: number;
-        companyMemberType: string;
         role: string;
     }   
 }
