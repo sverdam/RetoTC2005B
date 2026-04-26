@@ -1,3 +1,4 @@
+import path from "path";
 import { Sequelize } from "sequelize-typescript";
 import { Company } from "../models/company"; 
 import { User } from "../models/user";
@@ -10,7 +11,8 @@ import { TextModule } from "../models/textModule";
 import { FileModule } from "../models/fileModule";
 import dotenv from "dotenv";
 import { Certification } from "../models/certification";
-dotenv.config({ path: "./.env" });
+
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 
 const userID = process.env.DB_USERNAME ?? "unknown";
 const userPassword = process.env.DB_PASSWORD ?? "unknown";

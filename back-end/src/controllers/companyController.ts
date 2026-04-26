@@ -2,10 +2,11 @@ import { RequestHandler, Request, Response } from "express";
 import { Company } from "../models/company"; 
 import { User } from "../models/user";
 import { Location } from "../models/location";
-import { Contact } from "../models/contact";
+import { Contact, ContactType } from "../models/contact";
 import { TextModule } from "../models/textModule";
 import { FileModule, FileType } from "../models/fileModule";
 import { Certification } from "../models/certification";
+
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
@@ -35,34 +36,74 @@ const addFilesToCompany = async (company: Company | null) => {
 }
 
 //Create new company 
-export const createCompany: RequestHandler = (req: Request, res: Response) => { 
-    //Validate request 
+export const createCompany: RequestHandler = async (req: Request, res: Response) => { 
     if (!req.body) { 
-        return res.status(400).json({ 
-        status: "error", 
-        message: "Content can not be empty", 
-        payload: null, 
-        }); 
+        return res.status(400).json({ status: "error", message: "Content can not be empty" }); 
     } 
     
-    // Save Company in the database 
-    const company = { ...req.body }; 
-    Company.create(company) 
-        .then((data: Company | null) => { 
-        res.status(200).json({ 
+    try {
+        // 1. Crear la Empresa
+        const newCompany = await Company.create({
+            name: req.body.name,
+            description: req.body.description,
+            tier: req.body.tier,
+            memberType: req.body.memberType
+        });
+
+        // 2. Guardar el Logo en FileModule (si existe)
+        if (req.file) {
+            await FileModule.create({
+                companyId: newCompany.id,
+                type: FileType.LOGO,
+                originalName: req.file.originalname,
+                storedName: req.file.filename,
+                path: req.file.path,
+                mimeType: req.file.mimetype,
+                size: req.file.size,
+                position: 0
+            });
+        }
+
+        // 3. Guardar la Ubicación (Location)
+        if (req.body.address) {
+            await Location.create({
+                address: req.body.address,
+                mapLink: req.body.mapLink || "",
+                companyId: newCompany.id
+            });
+        }
+
+        // 4. Guardar los Contactos (Email y Teléfono)
+        if (req.body.contactEmail) {
+            await Contact.create({
+                type: ContactType.EMAIL,
+                contactInfo: req.body.contactEmail,
+                companyId: newCompany.id
+            });
+        }
+        if (req.body.contactPhone) {
+            await Contact.create({
+                type: ContactType.PHONE,
+                contactInfo: req.body.contactPhone,
+                companyId: newCompany.id
+            });
+        }
+
+        return res.status(200).json({ 
             status: "success", 
-            message: "Company successfully created", 
-            payload: data, 
-        }); 
-        }) 
-        .catch((err) => { 
-        res.status(500).json({ 
+            message: "Company, Logo, Location and Contacts created!", 
+            payload: newCompany 
+        });
+
+    } catch (err: any) { 
+        console.error("createCompany error:", err);
+        return res.status(500).json({ 
             status: "error", 
-            message: "Something happened creating a company. " + err.message, 
-            payload: null, 
+            message: "Error: " + err.message,
+            stack: err.stack
         }); 
-        }); 
-}; 
+    } 
+};
 
 // Get all companies 
 export const getAllCompanies: RequestHandler = async (req:Request, res:Response)=>{ 
@@ -104,7 +145,7 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
 
         const companiesWithFiles = await Promise.all(filePromises);
 
-        return res.status(200).json(companiesWithFiles); 
+        return res.status(200).json({ payload: companiesWithFiles });
     } catch (error) { 
         return res.status(500).json({ 
         "message":"Error getting companies",  

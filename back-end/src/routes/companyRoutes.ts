@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { upload } from '../middlewares/multer';
 import { 
     createCompany,  
     deleteCompany,  
@@ -14,7 +15,7 @@ companyRouter.get('/', getAllCompanies);
 
 companyRouter.get('/:id', getCompanyById);  
 
-companyRouter.post('/', createCompany);  
+companyRouter.post('/', upload.single('logo'), createCompany);
 
 companyRouter.patch('/:id', updateCompany);  
 

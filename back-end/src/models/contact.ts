@@ -3,7 +3,7 @@ import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, Foreig
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
-enum ContactType {
+export enum ContactType {
   EMAIL = 'email',
   PHONE = 'phone',
 }
@@ -11,7 +11,7 @@ enum ContactType {
 interface ContactAttributes{ 
   id: number; 
   type: ContactType; 
-  position: string;
+  position?: string;
   contactInfo: string;
   companyId: number; 
 } 

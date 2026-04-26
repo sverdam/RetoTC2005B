@@ -1,6 +1,6 @@
 import {Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import type { User } from "clas-types";
+import type { User } from "../types/types";
 
 interface Props{
     user: User | null;

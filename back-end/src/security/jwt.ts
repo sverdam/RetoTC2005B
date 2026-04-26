@@ -1,9 +1,10 @@
 
+import path from "path";
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
 import { User } from '../models/user';
 
 import dotenv from "dotenv";
-dotenv.config({ path: "back-end/.env" });
+dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 
 const SECRET_KEY = process.env.SECRET_KEY ?? "unknown";
 
