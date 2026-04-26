@@ -22,7 +22,7 @@ interface CapacirtCreationAttributes extends Optional<CapacityAttribute, 'id'>{}
   timestamps: true
 }) 
 
-export class Service extends Model<CapacityAttribute, CapacirtCreationAttributes>{
+export class Capacity extends Model<CapacityAttribute, CapacirtCreationAttributes>{
     
     @Column
     type!: CapacityType;
