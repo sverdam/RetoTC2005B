@@ -7,6 +7,7 @@ import { Category } from "../models/category";
 import { Filter } from "../models/filter";
 import { CompanyFilter } from "../models/companyFilter";
 import { TextModule } from "../models/textModule";
+import { Service } from "../models/services";
 import { FileModule } from "../models/fileModule";
 import { Product } from "../models/product";
 import dotenv from "dotenv";
@@ -34,7 +35,11 @@ const connection = new Sequelize({
         CompanyFilter,
         TextModule,
         FileModule,
+<<<<<<< HEAD
         Product,
+=======
+        Service,
+>>>>>>> 0cb9a3a2f5ce6110c578551ddc4495334377158b
         Certification
     ] 
 }); 

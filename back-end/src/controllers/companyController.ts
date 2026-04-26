@@ -5,6 +5,7 @@ import { Location } from "../models/location";
 import { Contact } from "../models/contact";
 import { TextModule } from "../models/textModule";
 import { FileModule, FileType } from "../models/fileModule";
+import { Service } from "../models/services";
 import { Certification } from "../models/certification";
 
 
@@ -93,6 +94,10 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                                     "storedName", "originalName", "path", "mimeType", "size", "position"] }
                 },
                 {
+                    model: Service,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
+                {
                     model: Certification,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
@@ -144,6 +149,10 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                     model: FileModule,
                     attributes: {  exclude: ["company", "createdAt", "updatedAt", "deletedAt",
                                     "storedName", "originalName", "path", "mimeType", "size", "position"] }
+                },
+                {
+                    model: Service,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
                 {
                     model: Certification,

@@ -8,6 +8,7 @@ import { Filter } from "./filter";
 import { TextModule } from "./textModule"
 import { CompanyFilter } from "./companyFilter";
 import { FileModule } from './fileModule';
+import { Service } from './services';
 import { Certification } from './certification';
 
 enum MemberType {
@@ -106,6 +107,9 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @HasMany(() => FileModule, {onDelete: 'CASCADE'})
    declare fileModules?: FileModule[];
+
+   @HasMany(() => Service, {onDelete: 'CASCADE'})
+   declare services?: Service[];
 
    @HasMany(() => Certification, {onDelete: 'CASCADE'})
    declare certifications?: Certification[];
