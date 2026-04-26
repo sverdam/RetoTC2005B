@@ -11,7 +11,6 @@ export interface UserPayload extends JwtPayload {
   id: string;
   email: string;
   companyId: number;
-  companyMemberType: string;
   role: string;
 }
 
@@ -19,14 +18,13 @@ export const unverifiedUser: UserPayload = {
     id: "-1",
     email: 'unknown',
     companyId: -1,
-    companyMemberType: 'none',
     role: 'unverified'
 }
 
 export function createToken(user: User)
 {
     const token = jwt.sign(
-        { id: user.id, email: user.email, comapnyId: user.companyId, companyMemberType: user.company?.memberType,role: user.role }, 
+        { id: user.id, email: user.email, companyId: user.companyId, role: user.role }, 
         SECRET_KEY, 
         { expiresIn: '2 hours' });
     return token;
