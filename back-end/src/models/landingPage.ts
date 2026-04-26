@@ -21,13 +21,13 @@ interface LandingPageCreationAttributes extends Optional<LandingPageAttribute, '
 export class LandingPage extends Model<LandingPageAttribute, LandingPageCreationAttributes>{
     
     @Column 
-    bannerText!: Text;
+    bannerText!: string;
     
     @Column
-    mainText!: Text;
+    mainText!: string;
 
     @Column
-    aboutUsText!: Text;
+    aboutUsText!: string;
 
     @CreatedAt 
     @Column 
