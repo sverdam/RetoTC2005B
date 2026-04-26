@@ -27,6 +27,13 @@ export const updateLandingPage: RequestHandler = (req: Request, res: Response) =
         });
     }
 
+    if (!(['admin', 'CLAS editor'].includes(req.user?.role ?? 'unverified'))
+        && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have permission to modify any data." 
+        });
+    }
+
     LandingPage.update({ ...req.body }, { where: { ...{ isActive: true } } })
         .then((isUpdated) => {
             if (isUpdated) {
