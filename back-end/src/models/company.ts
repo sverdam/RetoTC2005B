@@ -51,7 +51,8 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Contact.destroy({ where: { companyId: id } });
      await TextModule.destroy({ where: { companyId: id } });
      await FileModule.destroy({ where: { companyId: id } });
-     await Certification.destroy({ where: { companyId: id } })
+     await Certification.destroy({ where: { companyId: id } });
+     await Service.destroy({where: { companyId: id } })
    }
 
    @AfterRestore
@@ -62,7 +63,8 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
      await Location.restore({ where: { companyId: id } });
      await Contact.restore({ where: { companyId: id } });
      await TextModule.restore({ where: { companyId: id } });
-     await Certification.restore({ where: {companyId: id} });
+     await Certification.restore({ where: { companyId: id} });
+     await Service.restore({where: { companyId: id }})
      //await FileModule.restore({ where: { companyId: id } });
    }
 
@@ -90,7 +92,6 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    
    @Column
    employees?: number;
-
    
    @Column
    pieces?: number;
