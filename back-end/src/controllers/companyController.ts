@@ -70,7 +70,8 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
     try { 
         const companies:Array<Company> = await Company.findAll({
             include: 
-            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [
+                { attributes: { exclude: ["website", "slogan", "pieces", "space", "capacity"] }} ] :
             [
                 {
                     model: User,
@@ -128,7 +129,8 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
     try { 
         const company:Company | null = await Company.findByPk(id, {
             include: 
-            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :[ 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [
+                { attributes: { exclude: ["website", "slogan", "pieces", "space", "capacity"] }} ] :[ 
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
