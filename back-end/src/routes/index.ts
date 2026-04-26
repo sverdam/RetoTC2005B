@@ -12,6 +12,7 @@ import productRoutes from './productRoutes';
 import serviceRouter from './serviceRoutes';
 import certificationRouter from './certificationRoutes';
 import capacityRouter from './capacitiyRoutes';
+import landingPageRouter from './landingPageRoutes';
 
 const apiRouter:Router = Router();  
 
@@ -29,6 +30,7 @@ apiRouter.use('/product', productRoutes);
 apiRouter.use('/service', serviceRouter)
 apiRouter.use('/certification', certificationRouter);
 apiRouter.use('/capacity', capacityRouter);
+apiRouter.use('/landing', landingPageRouter);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
 res.send('Hello World!')  
