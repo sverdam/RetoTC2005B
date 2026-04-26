@@ -12,7 +12,7 @@ import { Service } from './services';
 import { Certification } from './certification';
 import { Capacity } from './capacities';
 
-enum MemberType {
+export enum MemberType {
   AFFILIATE = 'Affiliate',
   ASSOCIATE = 'Associate',
   ADMIN = 'Admin',
@@ -30,7 +30,7 @@ interface CompanyAttributes{
   employees: number;
   pieces: number;
   space: number;
-  capacity: Text;
+  capacity: string;
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
