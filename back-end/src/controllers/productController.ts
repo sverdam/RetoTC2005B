@@ -80,7 +80,7 @@ export const getProductByCompany: RequestHandler = async (req: Request, res: Res
         const companyId = Number(req.params.id);
         
         const products: Array<Product> = await Product.findAll({
-            attributes: { exclude: ["fileModuleId"] },
+            //attributes: { exclude: ["fileModuleId"] },
             include: [{ model: FileModule, attributes: ["path"], where: {companyId: companyId}
              }],
         });
