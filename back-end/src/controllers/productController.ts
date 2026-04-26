@@ -41,7 +41,7 @@ export const createProduct: RequestHandler = (req: Request, res: Response) => {
 export const getAllProducts: RequestHandler = async (req: Request, res: Response) => {
     try {
         const products: Array<Product> = await Product.findAll({
-            attributes: { exclude: ["fileModuleId"] },
+            //attributes: { exclude: ["fileModuleId"] },
             include: [{ model: FileModule, attributes: ["path", "companyId"]}],
         });
 
@@ -61,7 +61,7 @@ export const getProductById: RequestHandler = async (req: Request, res: Response
 
     try {
         const product: Product | null = await Product.findByPk(id, {
-            attributes: { exclude: ["fileModuleId"] },
+            //attributes: { exclude: ["fileModuleId"] },
             include: [{ model: FileModule, attributes: ["path", "companyId"]}],
         });
 
