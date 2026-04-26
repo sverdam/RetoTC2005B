@@ -100,7 +100,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    space?: number;
 
    @Column
-   capacity?: Text;
+   capacity?: string;
   
    @Column({
       type: DataType.ENUM(...Object.values(MemberType)),
