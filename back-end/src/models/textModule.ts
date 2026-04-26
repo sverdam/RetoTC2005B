@@ -2,27 +2,27 @@ import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, Foreig
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
-interface TextModuleAtributes{ 
+interface TextModuleAttributes{ 
   id: number; 
   title: string; 
-  text: Text; 
+  text: string; 
   tier: number;
   companyId: number;
 } 
 
-interface TextModuleCreationAttributes extends Optional<TextModuleAtributes, 'id'>{} 
+interface TextModuleCreationAttributes extends Optional<TextModuleAttributes, 'id'>{} 
 
 @Table ({ 
   tableName: "textModules",
   paranoid: true,
   timestamps: true
 }) 
-export class TextModule extends Model<TextModuleAtributes, TextModuleCreationAttributes>{ 
+export class TextModule extends Model<TextModuleAttributes, TextModuleCreationAttributes>{ 
 
     @Column
     title!: string;
 
-    @Column(DataType.TEXT)
+    @Column({type: DataType.TEXT})
     text!: string;
 
     @Column
