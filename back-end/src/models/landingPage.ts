@@ -1,11 +1,17 @@
 import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, ForeignKey, BelongsTo, PrimaryKey, AllowNull, BeforeCreate } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize';
+import { Col } from 'sequelize/lib/utils';
 
 export interface LandingPageAttribute{  
   id: number;
-  bannerText: Text;
-  mainText: Text;
-  aboutUsText: Text;
+  bannerHeader: string;
+  bannerText: string;
+  mainText: string;
+  visionText: string;
+  missionText: string;
+  communityText: string;
+  aboutUsText: string;
+  contactText: string;
   //ubicacion: string;
   //newsletter: string;
 } 
@@ -21,13 +27,28 @@ interface LandingPageCreationAttributes extends Optional<LandingPageAttribute, '
 export class LandingPage extends Model<LandingPageAttribute, LandingPageCreationAttributes>{
     
     @Column 
+    bannerHeader!: string;
+
+    @Column 
     bannerText!: string;
     
-    @Column
+    @Column(DataType.TEXT)
     mainText!: string;
+
+    @Column(DataType.TEXT)
+    visionText!: string;
+    
+    @Column(DataType.TEXT)
+    missionText!: string;
+    
+    @Column(DataType.TEXT)
+    communityText!: string;
 
     @Column
     aboutUsText!: string;
+
+    @Column
+    contactText!: string;
 
     @CreatedAt 
     @Column 
