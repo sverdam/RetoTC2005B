@@ -41,12 +41,12 @@ const LoginPage: React.FC = () => {
     // }, [])
 
     return(
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 m-10">
             <div className=" flex flex-col justify-end rounded-lg  h-screen bg-gradient-to-t from-clas to-clas-claro">
                 <h4 className="px-10 font-semibold text-white text-left text-lg">Puedes facilmente</h4>
                 <h1 className="px-10 py-10 font-bold text-white text-left text-2xl">Acceder a información sobre empresas líderes en la industria automotriz</h1>
             </div>
-            <div className="flex flex-col items-start  justify-center rounded-lg">
+            <div className="pl-20 flex flex-col items-start  justify-center rounded-lg">
                 <img src="..\src\assets\CLAS-Logotipo-03.jpeg" className="p-10 w-40"/>
                 <h1 className="px-10 pt-5 text-clas-negro font-bold text-3xl text-left">Inicia Sesión</h1>
                 <p className="px-10 pt-2 pb-5 text-clas-negro/70 text-lg text-left">Accede al directorio, boletín de noticias y más</p>
