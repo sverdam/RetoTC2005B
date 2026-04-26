@@ -8,6 +8,7 @@ import { FileModule, FileType } from "../models/fileModule";
 import { Service } from "../models/services";
 import { Certification } from "../models/certification";
 import { Capacity } from "../models/capacities";
+import { Product } from "../models/product";
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
@@ -31,7 +32,14 @@ const addFilesToCompany = async (company: Company | null) => {
             plain: true      
         });
 
-    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule?.dataValues};
+    
+    const productsArray: Array<Product> = await Product.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            include: [{ model: FileModule, attributes: [], where: {companyId: company.id}
+                }],
+        });
+
+    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule?.dataValues, products: productsArray};
 
     return result;
 }
