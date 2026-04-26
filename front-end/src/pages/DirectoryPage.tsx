@@ -15,7 +15,6 @@ const unverifiedUser : UserProfile = {
     id: "-1",
     email: 'unknown',
     companyId: -1,
-    companyMemberType: 'none',
     role: 'unverified'
 }
 
@@ -100,7 +99,7 @@ const DirectoryPage: React.FC = () => {
             </div>
             {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
-                {(userProfile.companyMemberType === "Admin" && userProfile.role === 'admin') ? 
+                {(userProfile.role === 'admin') ? 
                 <NewDirectoryCardButton /> : <></> }
                 {filteredCompanies.map((company) => (
                     <DirectoryCard key={company.id} company={company} />
