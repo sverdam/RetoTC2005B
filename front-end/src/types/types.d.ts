@@ -7,6 +7,11 @@ declare module "clas-types" {
     export enum MemberType {
         AFFILIATE = 'Afiliado',
         ASSOCIATE = 'Asociado',
+        ADMIN = 'Admin',
+    }
+
+    interface Certification {
+        name: string;
     }
 
     export interface Company {
@@ -14,9 +19,16 @@ declare module "clas-types" {
         name: string;
         description: string;
         tier: number;
-        logo: Blob;
+        logo: FileModule;
+        catalogo: FileModule;
         memberType: MemberType;
-        location: Location;
+        locations: Location;
+        contacts: Contact[];
+        user: User[];
+        textModules: TextModule[]; 
+        fileModules: FileModule[];
+        certifications: Certification[];
+        filters: Filter[];
     }
 
     export enum ContactType {
@@ -28,7 +40,7 @@ declare module "clas-types" {
         id: number; 
         type: ContactType; 
         contactInfo: string;
-        companyId: number; 
+        position: string;
     }
 
     export enum FileType {
@@ -39,49 +51,66 @@ declare module "clas-types" {
 
     export interface FileModule{
         id: number;
-        companyId: number;
-        position: number;
         type: FileType;
-        storedName: string | null;
-        originalName: string | null;
-        path: string | null;
-        mimeType: string | null;
-        size: number | null;
     }
 
     interface Filter{ 
         id: number; 
         name: string; 
         tier: number;
-        categoryId: number;
+        category: Category;
     } 
     
     interface Location{ 
         id: number; 
         address: string;
-        link: string;
-        companyId: number;
+        mapLink: string;
     }
 
     interface TextModule{ 
         id: number; 
-        title: string; 
         text: Text; 
-        tier: number;
-        companyId: number;
     } 
 
     enum UserRole {
         ADMIN = 'admin',
-        USER = 'user',
+        EDITORMASTER = 'CLAS editor',
+        EDITORCOMPANY = 'company editor',
+        USER = 'user'
     }
 
-    interface User{ 
+    export interface User{ 
         id: number; 
         name: string; 
         email: string; 
         password: string; 
         role: UserRole;
         companyId: number;
+        company?: CompanyLite
     } 
+
+    export interface NewUserInput{
+        name: string; 
+        email: string; 
+        password: string; 
+        role: UserRole;
+        companyId: number;
+    }
+
+    interface CompanyLite{
+        id: number,
+        name: string
+    }
+
+    interface LoginUser{
+        email: string,
+        password: string
+    }
+    
+    interface UserProfile {
+        id: string;
+        email: string;
+        companyId: number;
+        role: string;
+    }   
 }

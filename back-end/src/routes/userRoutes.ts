@@ -8,8 +8,11 @@ import {
   updatePassword,
   restoreUser
 } from '../controllers/userController';
+import { unverifiedCheck } from '../middlewares/authMiddleware';
 
 const userRouter: Router = Router();
+
+userRouter.use(unverifiedCheck);
 
 userRouter.get('/', getAllUsers);
 

@@ -4,12 +4,68 @@ import { verifyPassword } from "../security/hashing";
 import { createToken, decodeToken, unverifiedUser } from "../security/jwt";
 import { Company } from "../models/company";
 
+// Middleware that blocks accesss to users that are no logged in
+export const unverifiedCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    if (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true"){
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have access to this data." 
+        });
+    }
+    next();
+}
+
+export const editorCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    const editorMethods = ['POST', 'DELETE', 'PATCH', 'PUT'];
+
+    if (editorMethods.includes(req.method) 
+        // && req.user?.role !== 'admin' 
+        && !(['admin', 'CLAS editor', 'company editor'].includes(req.user?.role ?? 'unverified'))
+        && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have permission to modify any data." 
+        });
+    }
+    next();
+}
+
+export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    let allowed = true;
+    
+    if (req.user?.role !== 'admin' 
+        || (process.env.ALLOW_ALL_REQUESTS ?? "true") === "true"
+        || req.method === 'GET'){
+        return next();
+    }
+
+    if (req.path.startsWith("/user")){
+        allowed = false;
+    }
+    else if (req.path.startsWith("/company"))
+    {
+        if (req.method !== 'PATCH') 
+            allowed = false;
+    }
+
+    if (!allowed){
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have permission to modify this data." 
+        });
+    }
+    next();
+}
+
 
 export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 
   // Grab token from the authorization header
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  //const authHeader = req.headers['authorization'];
+  //const token = authHeader && authHeader.split(' ')[1];
+  let token = req.cookies.token;
+
+  if (!token && (process.env.ALLOW_JWT_IN_HEADER ?? "true") === 'true'){
+    const authHeader = req.headers['authorization'];
+    token = authHeader && authHeader.split(' ')[1];
+  }
 
   // If request doesnt have token
   if (!token) {
@@ -34,6 +90,34 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
 };
 
 
+export const getProfile: RequestHandler = async (req: Request, res: Response) => {
+    const token = req.cookies.token; // Look ma, no manual headers!
+    
+    console.log("GET PROFILE");
+    console.log(req.user);
+    
+    return res.status(200).json({ 
+        status: 'success',
+        messege: token ? 'Valid Token' : 'Invalid token',
+        payload: req.user 
+    });
+}
+
+export const logout: RequestHandler = async (req: Request, res:Response) => {
+  
+    const node_env_var = process.env.NODE_ENV ?? 'dev'
+    
+    // Clears the specified cookie
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: node_env_var === 'production', // Use true in prod (HTTPS)
+        sameSite: node_env_var === 'production' ? 'none' : 'lax',
+        path: '/'
+    });
+
+  return res.status(200).json({ message: 'Logged out successfully' });
+}
+
 export const loginAuthentication: RequestHandler = async (req: Request, res: Response) => {
 
     console.log(req.body);
@@ -42,7 +126,7 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
         where: {
             email: req.body.email
         },
-        include: [{ model: Company, attributes: ["id", "name", "memberType"] }]
+        include: [{ model: Company, attributes: ["id", "name"] }]
     });
 
     if (user) {
@@ -52,24 +136,21 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
                 if (result){  
                     
                     const jwt = createToken(user);
-                    
-                    const responsePayload = { 
-                        token: jwt, 
-                        userInfo: {
-                            username: user.name,
-                            companyId: user.companyId,
-                            isAdmin: user.role === 'admin',
-                            companyRole: user.company?.memberType
-                        }
-                    };
+
+                    const node_env_var = process.env.NODE_ENV ?? 'dev'
 
                     console.log();
-
-                    return res.status(200).json({
-                        status: "success",
-                        message: "User verified",
-                        payload: responsePayload,
+                    res.cookie('token', jwt, {
+                        httpOnly: true, 
+                        secure: node_env_var === 'production', // Use true in prod (HTTPS)
+                        sameSite: node_env_var === 'production' ? 'none' : 'lax',
+                        maxAge: 7200000  // 2 hours
                     });
+                    
+                    res.status(200).json({
+                        status: "success",
+                        message: "Logged in successfully"
+                    })
                 }else{
                     return res.status(401).json({
                         status: "fail",

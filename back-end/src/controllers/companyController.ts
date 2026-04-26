@@ -44,7 +44,7 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
         payload: null, 
         }); 
     } 
-    
+
     // Save Company in the database 
     const company = { ...req.body }; 
     Company.create(company) 
@@ -68,7 +68,9 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
 export const getAllCompanies: RequestHandler = async (req:Request, res:Response)=>{ 
     try { 
         const companies:Array<Company> = await Company.findAll({
-            include: [
+            include: 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :
+            [
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -120,7 +122,8 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
     const id = Number(req.params.id)
     try { 
         const company:Company | null = await Company.findByPk(id, {
-            include: [ 
+            include: 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :[ 
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -172,7 +175,21 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
         message: "Content can not be empty.", 
         payload: null, 
         }); 
-    } 
+    }
+    
+    //Validate credentials
+    if  (  req.user?.role !== 'admin'
+        && req.user?.role !== 'CLAS editor'
+        && !(req.user?.role === 'company editor' && req.user?.companyId === Number(req.params.id))  // nor is it part of the company
+        && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true"  
+        
+    ){
+        return res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to modify a company.", 
+        payload: null, 
+        }); 
+    }
 
     // Save Company in the database 
     Company.update({ ...req.body }, { where: { id: req.params.id } }) 
@@ -203,6 +220,7 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
 // Delete a Company with the specified id in the request 
 
 export const deleteCompany: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    
     const id = Number(req.params.id);
     try { 
         await Company.destroy({ where: { id } }); 

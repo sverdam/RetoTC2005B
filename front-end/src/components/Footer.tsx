@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
                                 className="border-none outline-none"
                             >
                             </input>
-                            <button className="bg-clas rounded-lg py-1 px-2 text-white"> {/* TODO: Hacer que este botón funcione */}
+                            <button className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas"> {/* TODO: Hacer que este botón funcione */}
                                 Suscribirse
                             </button>
                         </div>
