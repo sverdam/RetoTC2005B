@@ -126,7 +126,7 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                     model: Filter,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt", "tier", "CompanyFilter"] }
                 }
-            ]
+            ]//E
         }); 
 
         //companies.map(company => addLogoToCompany);
