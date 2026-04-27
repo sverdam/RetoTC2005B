@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import type { LoginUser } from "clas-types";
-import { getProfile, login } from "../api/LoginAPI";
+import { getProfile, login } from "../api/LoginAPI";import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
+4
+// import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 
 const emptyForm : LoginUser = {
     email: "",
@@ -41,40 +43,47 @@ const LoginPage: React.FC = () => {
     // }, [])
 
     return(
-        <div className="h-screen grid grid-cols-2 gap-2 bg-gradient-to-b from-clas from-0% via-clas-claro via-15% to-white">
+        <div className="h-screen grid grid-cols-2 gap-2 bg-[radial-gradient(circle,_rgba(59,130,246,0.45)_0%,_rgba(59,130,246,0.18)_25%,_white_65%)]">
             <div className="m-20 flex flex-col justify-center rounded-lg bg-transparent">
-                <h4 className="px-10 font-semibold text-clas-negro text-left text-lg">Puedes facilmente</h4>
+                <h4 className="px-10 font-semibold text-clas-negro text-left text-lg animate:bounce">Puedes facilmente</h4>
                 <h1 className="px-10 py-10 font-bold text-clas-negro text-left text-2xl">Acceder a información sobre empresas líderes en la industria automotriz</h1>
             </div>
-            <div className="m-20 pl-10 flex flex-col items-start  justify-center rounded-lg bg-gray-200 rounded-xl shadow-xl">
-                <img src="..\src\assets\CLAS-Logo.png" className="p-10 w-40"/>
-                <h1 className="px-10 pt-5 text-clas-negro font-bold text-3xl text-left">Inicia Sesión</h1>
-                <p className="px-10 pt-2 pb-5 text-clas-negro/70 text-lg text-left">Accede al directorio, boletín de noticias y más</p>
+            <div className="m-20 px-10 flex flex-col items-center justify-center rounded-lg bg-white rounded-xl shadow-xl shadow-clas/50">
+                <img src="..\src\assets\CLAS-Logo.png" className="p-10 w-50"/>
+                <h1 className="px-10 pt-5 text-clas-negro font-bold text-3xl text-left">¡Bienvenido!</h1>
+                <p className="px-10 pt-2 pb-5 text-clas-negro/70 text-lg text-left">Inicia sesión para continuar</p>
                 {/* Formulario */}
                 <form action="/login" method="post" onSubmit={handleSubmit}>
                     <div className="flex flex-col items-start px-10">
                         <label className="font-semibold text-lg pb-2">Correo</label>
-                        <input 
-                        type="text" 
-                        placeholder="Tu correo" 
-                        value={form.email}
-                        onChange={(e) => handleChange("email", e.target.value)}
-                        className="border border-clas-gris rounded-lg px-2 py-1 text-clas-negro/80 w-md">
-                        </input>
+                        <div className="flex items-center gap-2 border border-clas-gris rounded-lg px-2 py-1 text-clas-negro/80 w-md">
+                            <EnvelopeIcon className="text-clas-gris w-5 h-5"/>
+                            <input 
+                            type="text" 
+                            placeholder="Tu correo" 
+                            value={form.email}
+                            onChange={(e) => handleChange("email", e.target.value)}
+                            className="w-full outline-none">
+                            </input>
+                        </div>
+                        
                     </div>
                     <div className="flex flex-col items-start px-10 py-5">
                         <label className="font-semibold text-lg pb-2">Contraseña</label>
-                        <input 
+                        <div className="flex items-center gap-2 border border-clas-gris rounded-lg px-2 py-1 text-clas-negro/80 w-md">
+                            <LockClosedIcon className="text-clas-gris w-5 h-5"/>
+                            <input 
                             type="password" placeholder="contraseña" 
                             value={form.password}
                             onChange={(e) => handleChange("password", e.target.value)}
-                            className="border border-clas-gris rounded-lg px-2 py-1 text-clas-negro/80 w-md">
-
-                        </input>
+                            className="w-full outline-none">
+                            </input>
+                        </div>
+                        
                     </div>
                     <button type="submit" 
                     className="w-md bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">Entrar</button>
-                    {failAttempt ? <div className="text-red-500 p-2">
+                    {failAttempt ? <div className="text-red-700 p-2">
                         <p>Contraseña o usuario incorrecto</p>
                     </div> : <></>}
                 </form>
