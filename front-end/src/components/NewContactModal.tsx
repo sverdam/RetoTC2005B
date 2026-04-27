@@ -29,6 +29,20 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose }) => {
                         </div>
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
+                                Tipo de Contacto
+                            </label>
+                            <select 
+                                className="w-full border-2 border-clas-gris rounded-lg p-2">
+                                <option>
+                                    Correo electrónico
+                                </option>
+                                <option>
+                                    Número de teléfono
+                                </option>
+                            </select>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <label className="font-semibold text-clas-negro">
                                 Contacto
                             </label>
                             <input type="text" 

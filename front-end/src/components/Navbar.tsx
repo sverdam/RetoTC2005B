@@ -17,7 +17,6 @@ const unverifiedUser : UserProfile = {
     id: "-1",
     email: 'unknown',
     companyId: -1,
-    companyMemberType: 'none',
     role: 'unverified'
 }
 
@@ -67,7 +66,7 @@ const Navbar: React.FC = () => {
                     Directorio
                   </NavLink>
                 </li>
-                {(userProfile.companyMemberType === "Admin" && userProfile.role === 'admin') ? 
+                {(userProfile.role === 'admin') ? 
                 <li>
                   <NavLink
                     to="/usuarios"

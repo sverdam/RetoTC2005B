@@ -11,7 +11,6 @@ const unverifiedUser : UserProfile = {
     id: "-1",
     email: 'unknown',
     companyId: -1,
-    companyMemberType: 'none',
     role: 'unverified'
 }
 
@@ -46,7 +45,9 @@ const CompanyPage: React.FC = () => {
     !company ? navigate(`/error`) : null
     return(
         <div className="flex flex-col gap-5 items-center p-5 bg-white rounded-lg">
-            {(userProfile.role === "admin" && (userProfile.companyMemberType === "Admin" || userProfile.companyId === company?.id)) ?
+            {(userProfile.role === "admin" 
+            || userProfile.role === "CLAS editor"
+            || (userProfile.role === "company editor" && userProfile.companyId === company?.id)) ?
             <div className="flex w-full justify-end">
                 <Button text="Editar" to="editar"/>
             </div> : <></>

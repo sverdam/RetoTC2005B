@@ -8,8 +8,11 @@ import filterRoutes from './filterRoutes';
 import textModuleRoutes from './textModuleRoutes';
 import authRoutes from './authRoutes';
 import fileModuleRoutes from './fileModuleRoutes';
+import productRoutes from './productRoutes';
+import serviceRouter from './serviceRoutes';
 import certificationRouter from './certificationRoutes';
-import { tokenAuthorization, adminCheck } from '../middlewares/authMiddleware';
+import capacityRouter from './capacitiyRoutes';
+import landingPageRouter from './landingPageRoutes';
 
 const apiRouter:Router = Router();  
 
@@ -23,7 +26,11 @@ apiRouter.use('/category', categoryRoutes);
 apiRouter.use('/filter', filterRoutes);
 apiRouter.use('/textModule', textModuleRoutes);
 apiRouter.use('/fileModule', fileModuleRoutes);
-apiRouter.use('/certifications', certificationRouter);
+apiRouter.use('/product', productRoutes);
+apiRouter.use('/service', serviceRouter)
+apiRouter.use('/certification', certificationRouter);
+apiRouter.use('/capacity', capacityRouter);
+apiRouter.use('/landing', landingPageRouter);
 
 apiRouter.get('/', (req:Request, res: Response) => {  
 res.send('Hello World!')  

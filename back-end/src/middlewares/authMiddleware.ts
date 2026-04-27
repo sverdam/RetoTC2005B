@@ -14,17 +14,47 @@ export const unverifiedCheck: RequestHandler = async (req: Request, res: Respons
     next();
 }
 
-export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const unsafeMethods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+// Middlware that blocks actions non-get actions from non-editors
+export const editorCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    const editorMethods = ['POST', 'DELETE', 'PATCH', 'PUT'];
 
-    if (unsafeMethods.includes(req.method) && req.user?.role !== 'admin' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
+    if (editorMethods.includes(req.method) 
+        // && req.user?.role !== 'admin' 
+        && !(['admin', 'CLAS editor', 'company editor'].includes(req.user?.role ?? 'unverified'))
+        && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") {
         return res.status(403).json({ 
-        message: "Forbidden: You do not have permission to modify data." 
+        message: "Forbidden: You do not have permission to modify any data." 
         });
     }
     next();
 }
 
+// Middleware that blocks company & user actions for non-admins
+export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+    let allowed = true;
+    
+    if (req.user?.role !== 'admin' 
+        || (process.env.ALLOW_ALL_REQUESTS ?? "true") === "true"
+        || req.method === 'GET'){
+        return next();
+    }
+
+    if (req.path.startsWith("/user")){
+        allowed = false;
+    }
+    else if (req.path.startsWith("/company"))
+    {
+        if (req.method !== 'PATCH') 
+            allowed = false;
+    }
+
+    if (!allowed){
+        return res.status(403).json({ 
+        message: "Forbidden: You do not have permission to modify this data." 
+        });
+    }
+    next();
+}
 
 
 export const tokenAuthorization: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -32,7 +62,12 @@ export const tokenAuthorization: RequestHandler = async (req: Request, res: Resp
   // Grab token from the authorization header
   //const authHeader = req.headers['authorization'];
   //const token = authHeader && authHeader.split(' ')[1];
-  const token = req.cookies.token;
+  let token = req.cookies.token;
+
+  if (!token && (process.env.ALLOW_JWT_IN_HEADER ?? "true") === 'true'){
+    const authHeader = req.headers['authorization'];
+    token = authHeader && authHeader.split(' ')[1];
+  }
 
   // If request doesnt have token
   if (!token) {
@@ -93,7 +128,7 @@ export const loginAuthentication: RequestHandler = async (req: Request, res: Res
         where: {
             email: req.body.email
         },
-        include: [{ model: Company, attributes: ["id", "name", "memberType"] }]
+        include: [{ model: Company, attributes: ["id", "name"] }]
     });
 
     if (user) {

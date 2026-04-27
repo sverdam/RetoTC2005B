@@ -119,7 +119,7 @@ const UserFormPage: React.FC = () => {
                                 </label>
                                 <input
                                     type="password"
-                                    required
+                                    required={!isEditing}
                                     className={inputClass}
                                     placeholder={isEditing ? "Dejar vacío para mantener contraseña actual" : "Contraseña del usuario"}
                                     value={form.password}
@@ -161,7 +161,15 @@ const UserFormPage: React.FC = () => {
                                     >
                                     <option
                                         value="user">
-                                        USER
+                                        USUARIO
+                                    </option>
+                                    <option
+                                        value="company editor">
+                                        EDITOR EMPRESA
+                                    </option>
+                                    <option
+                                        value="CLAS editor">
+                                        EDITOR CLAS
                                     </option>
                                     <option
                                         value="admin">
