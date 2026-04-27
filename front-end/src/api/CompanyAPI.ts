@@ -1,5 +1,5 @@
 import api from ".";
-import { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import type { Company, NewCompanyInput } from "clas-types";
 
 

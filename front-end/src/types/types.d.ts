@@ -145,4 +145,11 @@ declare module "clas-types" {
         products: Product[];
         services: Service[];
     }
+    
+    export interface NewProductInput{
+        name: string;
+        description: string;
+    }
+    
+
 }
