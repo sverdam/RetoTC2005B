@@ -38,12 +38,13 @@ const CompanyPage: React.FC = () => {
         
 
     useEffect(() => {
-        getCompanybyId(companyId).then((companies: Company) => setcompany(companies));
-        //console.log(company?.locations);
+        getCompanybyId(companyId).then((companies: Company) => setcompany(companies)).catch(
+            () => !company ? navigate(`/error`) : null 
+        );
         getProfile().then((profile: UserProfile) => setUserProfile(profile))
     }, [companyId])
 
-    !company ? navigate(`/error`) : null
+   
     return(
         <div className="flex flex-col gap-5 items-center p-5 bg-white rounded-lg">
             {(userProfile.role === "admin" 
