@@ -14,6 +14,7 @@ export const unverifiedCheck: RequestHandler = async (req: Request, res: Respons
     next();
 }
 
+// Middlware that blocks actions non-get actions from non-editors
 export const editorCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     const editorMethods = ['POST', 'DELETE', 'PATCH', 'PUT'];
 
@@ -28,6 +29,7 @@ export const editorCheck: RequestHandler = async (req: Request, res: Response, n
     next();
 }
 
+// Middleware that blocks company & user actions for non-admins
 export const adminCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     let allowed = true;
     

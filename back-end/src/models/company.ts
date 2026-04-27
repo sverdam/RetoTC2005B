@@ -31,6 +31,7 @@ interface CompanyAttributes{
   pieces: number;
   space: number;
   capacity: string;
+  color: string;
 } 
 
 interface CompanyCreationAttributes extends Optional<CompanyAttributes, 'id'>{} 
@@ -102,6 +103,9 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
 
    @Column
    capacity?: string;
+
+   @Column
+   color?: string;
   
    @Column({
       type: DataType.ENUM(...Object.values(MemberType)),
@@ -125,7 +129,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    declare users?: User[];
 
    @HasOne(() => Location, {onDelete: 'CASCADE'})
-   declare locations?: Location;
+   declare location?: Location;
 
    @HasMany(() => Contact, {onDelete: 'CASCADE'})
    declare contacts?: Contact[];

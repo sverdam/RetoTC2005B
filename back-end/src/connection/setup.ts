@@ -34,7 +34,8 @@ const createClasCompany = async () => {
         employees: 0,
         pieces: 0,
         space: 0,
-        capacity: ""
+        capacity: "",
+        color: ""
     })   
 }
 
@@ -47,11 +48,10 @@ const createAdminUser = async () => {
         console.error("No company for admin");
         throw error;
     }
-    const count1 = await User.count() + 10;
-    const count2 = await Company.count() + 10;
+    
     await User.create({
         name: "Default Admin",
-        email: `admin${count1}${count2}@clas.com.mx`,
+        email: `admin@clas.com.mx`,
         // Default password: 111
         password: "$2b$10$KkoksGjekfjuiGfKguXgm.wINA.vu9mH4AviIzzHO6o2ehPBhtjcG",
         role: UserRole.ADMIN,

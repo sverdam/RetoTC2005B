@@ -1,6 +1,5 @@
 import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, ForeignKey, BelongsTo, PrimaryKey, AllowNull, BeforeCreate } from 'sequelize-typescript'; 
 import { Optional } from 'sequelize';
-import { Col } from 'sequelize/lib/utils';
 
 export interface LandingPageAttribute{  
   id: number;
@@ -19,7 +18,7 @@ export interface LandingPageAttribute{
 interface LandingPageCreationAttributes extends Optional<LandingPageAttribute, 'id'>{} 
 
 @Table ({ 
-  tableName: "landingPage",
+  tableName: "landingpage",
   paranoid: true,
   timestamps: true
 }) 
