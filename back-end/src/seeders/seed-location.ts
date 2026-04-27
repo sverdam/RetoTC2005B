@@ -6,31 +6,31 @@ export async function seedLocations() {
       id: 1,
       address: "Blvd. Ford y Carretera 26, Hermosillo, Sonora, México",
       mapLink: "https://maps.google.com/?q=Ford+Hermosillo+Sonora",
-      companyId: 1
+      companyId: 2
     },
     {
       id: 2,
       address: "Parque Industrial Hermosillo Norte, Hermosillo, Sonora, México",
       mapLink: "https://maps.google.com/?q=Martinrea+Hermosillo+Sonora",
-      companyId: 2
+      companyId: 3
     },
     {
       id: 3,
       address: "Blvd. Solidaridad 1200, Hermosillo, Sonora, México",
       mapLink: "https://maps.google.com/?q=Beyond+Movilidad+Hermosillo",
-      companyId: 3
+      companyId: 4
     },
     {
       id: 4,
       address: "Parque Industrial Nogales, Nogales, Sonora, México",
       mapLink: "https://maps.google.com/?q=Lear+Nogales+Sonora",
-      companyId: 4
+      companyId: 5
     },
     {
       id: 5,
       address: "Zona Industrial Guaymas, Guaymas, Sonora, México",
       mapLink: "https://maps.google.com/?q=Precision+Vehicle+Logistics+Guaymas",
-      companyId: 5
+      companyId: 6
     }
   ]);
 }

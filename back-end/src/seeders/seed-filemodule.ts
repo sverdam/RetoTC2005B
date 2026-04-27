@@ -14,7 +14,7 @@ export async function seedFiles() {
       path: "/uploads/logos/ford-logo.png",
       mimeType: "image/png",
       size: 148320,
-      companyId: 1
+      companyId: 2
     },
     {
       id: 2,
@@ -25,7 +25,7 @@ export async function seedFiles() {
       path: "/uploads/products/ford-product-1.jpg",
       mimeType: "image/jpeg",
       size: 254881,
-      companyId: 1
+      companyId: 2
     },
     {
       id: 3,
@@ -36,7 +36,7 @@ export async function seedFiles() {
       path: "/uploads/products/ford-product-2.jpg",
       mimeType: "image/jpeg",
       size: 241550,
-      companyId: 1
+      companyId: 2
     },
 
     // =====================================
@@ -51,7 +51,7 @@ export async function seedFiles() {
       path: "/uploads/logos/martinrea-logo.png",
       mimeType: "image/png",
       size: 132845,
-      companyId: 2
+      companyId: 3
     },
     {
       id: 5,
@@ -62,7 +62,7 @@ export async function seedFiles() {
       path: "/uploads/products/martinrea-product-1.jpg",
       mimeType: "image/jpeg",
       size: 219445,
-      companyId: 2
+      companyId: 3
     },
     {
       id: 6,
@@ -73,7 +73,7 @@ export async function seedFiles() {
       path: "/uploads/products/martinrea-product-2.jpg",
       mimeType: "image/jpeg",
       size: 232100,
-      companyId: 2
+      companyId: 3
     },
 
     // =====================================
@@ -88,7 +88,7 @@ export async function seedFiles() {
       path: "/uploads/logos/beyond-logo.png",
       mimeType: "image/png",
       size: 95420,
-      companyId: 3
+      companyId: 4
     },
     {
       id: 8,
@@ -99,7 +99,7 @@ export async function seedFiles() {
       path: "/uploads/products/beyond-product-1.jpg",
       mimeType: "image/jpeg",
       size: 198220,
-      companyId: 3
+      companyId: 4
     },
     {
       id: 9,
@@ -110,7 +110,7 @@ export async function seedFiles() {
       path: "/uploads/products/beyond-product-2.jpg",
       mimeType: "image/jpeg",
       size: 204881,
-      companyId: 3
+      companyId: 4
     },
 
     // =====================================
@@ -125,7 +125,7 @@ export async function seedFiles() {
       path: "/uploads/logos/lear-logo.png",
       mimeType: "image/png",
       size: 121530,
-      companyId: 4
+      companyId: 5
     },
     {
       id: 11,
@@ -136,7 +136,7 @@ export async function seedFiles() {
       path: "/uploads/products/lear-product-1.jpg",
       mimeType: "image/jpeg",
       size: 245000,
-      companyId: 4
+      companyId: 5
     },
     {
       id: 12,
@@ -147,7 +147,7 @@ export async function seedFiles() {
       path: "/uploads/products/lear-product-2.jpg",
       mimeType: "image/jpeg",
       size: 233910,
-      companyId: 4
+      companyId: 5
     },
 
     // =====================================
@@ -162,7 +162,7 @@ export async function seedFiles() {
       path: "/uploads/logos/precision-logo.png",
       mimeType: "image/png",
       size: 110278,
-      companyId: 5
+      companyId: 6
     },
     {
       id: 14,
@@ -173,7 +173,7 @@ export async function seedFiles() {
       path: "/uploads/products/precision-product-1.jpg",
       mimeType: "image/jpeg",
       size: 212004,
-      companyId: 5
+      companyId: 6
     },
     {
       id: 15,
@@ -184,7 +184,7 @@ export async function seedFiles() {
       path: "/uploads/products/precision-product-2.jpg",
       mimeType: "image/jpeg",
       size: 226300,
-      companyId: 5
+      companyId: 6
     }
   ]);
 }
