@@ -29,6 +29,20 @@ declare module "clas-types" {
         fileModules: FileModule[];
         certifications: Certification[];
         filters: Filter[];
+        products: Product[];
+        services: Service[];
+    }
+
+    export interface Product {
+        id: number;
+        name: string;
+        description: string;
+    }
+
+    export interface Service {
+        id: number;
+        name: string;
+        description: string;
     }
 
     export enum ContactType {
