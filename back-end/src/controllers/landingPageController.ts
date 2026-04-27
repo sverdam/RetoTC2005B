@@ -15,7 +15,7 @@ export const getExtraInfo: RequestHandler = async (req: Request, res: Response) 
             });
         }
         
-        const location = adminCompany.locations;
+        const location = adminCompany.location;
 
         return res.status(200).json({
             location: location?.dataValues,
