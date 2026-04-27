@@ -10,9 +10,22 @@ interface Props {
     // onClose: () => void;
     // onEdit: () => void;
 }
+
+  const formatMember = (member: string) => {
+    switch (member){
+      case "Affiliate":
+        return "Afiliado"
+
+      case "Associate":
+        return "Asociado"
+
+      default:
+        return member
+    }
+  }
+
 const DirectoryCard: React.FC<Props> = ({ company, user }) => {
     const navigate = useNavigate();
-    console.log(company.memberType)
     return company.memberType === "Admin" ? <></> : (
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
@@ -23,7 +36,7 @@ const DirectoryCard: React.FC<Props> = ({ company, user }) => {
             />
             <div className="flex gap-2 items-center">
                 <InformationCircleIcon className="h-5 w-5 text-gray-400"/>
-                <h4 className="text-gray-400">{ company.memberType}</h4>
+                <h4 className="text-gray-400">{ formatMember(company.memberType)}</h4>
                 <h4 className="text-gray-400">|</h4>
                 <h4 className="text-gray-400">{company.tier === 0 ? 'OEM' : `Tier ${company.tier}`}</h4>
             </div>
