@@ -38,17 +38,26 @@ const SortIcon = ({ className }: { className?: string }) => (
 const UserPage: React.FC = () => {
 
   const [users, setUsers] = useState<User[]>([]);
+  const [roles, setRoles] = useState<string[]>([])
+
   const [nameQuery, setNameQuery] = useState("");
   const [emailQuery, setEmailQuery] = useState("");
+  const [roleQuery, setRoleQuery] = useState("");
+
   const [companies, setCompanies] = useState<Company[]>([]);
   const [companyId, setCompanyId] = useState<number | null> (null);
+
   const [userToDelete, setUserToDelete] = useState<User | null> (null);
   const [userToView, setUserToView] = useState<User | null> (null);
   const navigate = useNavigate();
   
   
   useEffect(() => {
-    getAllUsers().then((users: User[]) => setUsers(users));
+    getAllUsers().then((users: User[]) => 
+      {
+        setUsers(users)
+        setRoles([... new Set(users.map(user => user.role))])
+      });
     getAllCompanies().then((companies: Company[]) => setCompanies(companies));
  
   }, []);
@@ -58,15 +67,17 @@ const UserPage: React.FC = () => {
     console.log(users);
     const _name= nameQuery.trim().toLowerCase();
     const _email = emailQuery.trim().toLowerCase();
+    const _role = roleQuery.trim().toLowerCase();
 
     return users.filter((u) => {
       const matchesName = _name.length === 0 || u.name.toLowerCase().includes(_name);
       const matchesEmail = _email.length === 0 || u.email.toLowerCase().includes(_email);
       const matchesCompany = companyId === null || u.company?.id === companyId;
-
-      return matchesName && matchesEmail && matchesCompany;
+      const matchesRole = _role.length === 0 || u.role.toLowerCase() === _role;
+      
+      return matchesName && matchesEmail && matchesCompany && matchesRole;
     });
-  }, [emailQuery, nameQuery, companyId, users]);
+  }, [emailQuery, nameQuery, companyId, roleQuery, users]);
 
   const handleDelete = () => {
     if(!userToDelete) return;
@@ -77,18 +88,19 @@ const UserPage: React.FC = () => {
   };
 
   const formatRole = (role: string) => {
+    role = role.toLowerCase();
     switch (role){
-      case "USER":
+      case "user":
         return "USUARIO"
 
-      case "CLAS EDITOR":
+      case "clas editor":
         return "EDITOR CLAS"
       
-      case "COMPANY EDITOR":
+      case "company editor":
         return "EDITOR EMPRESA"
 
       default:
-        return role
+        return role.toUpperCase();
     }
   }
 
@@ -124,6 +136,25 @@ const UserPage: React.FC = () => {
                 {companies.map((com) => (
                   <option key={com.id} value={com.id}>
                     {com.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-clas-negro/70">
+                Rol
+              </label>
+              <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                value={roleQuery ?? ""}
+                onChange={(e) => 
+                  setRoleQuery(e.target.value)
+                }
+              >
+                <option value="">Cualquiera</option>
+                {roles.map((role) => (
+                  <option key={role} value={role}>
+                    {formatRole(role)}
                   </option>
                 ))}
               </select>
