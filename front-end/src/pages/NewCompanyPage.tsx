@@ -1,193 +1,325 @@
-import { PhoneIcon, EnvelopeIcon, MapPinIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import CertificationCard from "../components/CertificationCard";
-import Button from "../components/Button";
+import {
+  PhoneIcon,
+  EnvelopeIcon,
+  MapPinIcon,
+  ArrowUpRightIcon,
+  WrenchIcon,
+  PlusIcon,
+  CheckBadgeIcon
+} from "@heroicons/react/24/outline";
+import PhotoCarousel from "../components/PhotoCarousel";
 
-const NewCompanyPage: React.FC = () => {
-    return(
-        <div className="bg-gray-100">
-            <div className="flex flex-col gap-12 items-center text-clas-negro">
-                <div className="flex flex-col gap-4" >
-                    {/* PROFILE */}
-                    <div className="flex flex-col gap-2 w-full px-10 items-center">
-                        <div>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Ford-Motor-Company-Logo.png" className="h-30 my-4"></img>
-                        </div>
-                        <div className="flex gap-2">
-                            <h1 className="text-2xl">Ford Motor Company</h1>
-                            <div className="bg-white text-sm flex items-center border border-clas-gris px-3 py-1 rounded-2xl">OEM</div>
-                        </div>
-                    </div>
+const images = [
+    "https://u-mercari-images.mercdn.net/photos/m80862755279_1.jpg?1774828834",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQC_OPbbCDWa-3rZ28ONF6A1_38cwXOfiULw&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQIwNYMOqZG-J9N8jeEhZJv9kK8vgukYfCsw&s"
+]
 
-                    {/* MAIN INFO CARDS */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full px-10">
-        
-                        <div className="bg-white border border-clas-gris rounded-xl p-5 sm:p-6 flex items-center">
-                            <div className="flex gap-4 items-center justify-center">
-                                <MapPinIcon className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0"/>
-                                <div className="text-sm sm:text-base text-left flex flex-col">
-                                    <a href="https://maps.app.goo.gl/A3aJ7uP1qeQBAYnF7" className="hover:underline">KM 4.5, Carr. a la Colorada, Parque Industrial, 83299 Hermosillo, Son.</a>
-                                </div>
-                            </div>
-                        </div>
+const Redesign: React.FC = () => {
+  return (
+    <div className="bg-gray-50 min-h-screen flex justify-center">
+      <div className="flex flex-col gap-16 py-10 text-clas-negro max-w-7xl">
 
-                        <div className="bg-white border border-clas-gris rounded-xl p-5 sm:p-6 flex items-center">
-                            <div className="flex gap-4 items-center">
-                                <EnvelopeIcon className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0"/>
-                                <div className="text-sm sm:text-base text-left flex flex-col">
-                                    <a href="mailto:" className="hover:underline"> correo1@ford.com</a>
-                                    <a href="mailto:" className="hover:underline" > correo2@ford.com</a>
-                                </div>
-                            </div>
-                        </div>
+        {/* PROFILE */}
+        <div className="w-full flex flex-col gap-8 px-10">
 
-                        <div className="bg-white border border-clas-gris rounded-xl p-5 sm:p-6 flex items-center">
-                            <div className="flex gap-4 items-center">
-                                <PhoneIcon className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0"/>
-                                <div className="text-sm sm:text-base text-left">
-                                    <p>525125162</p>
-                                    <p>126162611</p>
-                            </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    {/* ABOUT US / TAGS */}
-                    <div className="grid grid-cols-3 gap-4 w-full px-10">
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 col-span-2 text-left flex flex-col gap-2 justify-between">
-                            <h2 className="text-lg">Sobre Ford Motor Company</h2>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ea voluptatibus magni sint, eligendi tempora. Harum blanditiis, vero corrupti molestias nisi animi aliquid exercitationem iste eligendi, necessitatibus impedit quidem quisquam.
-                            </p>
-                            <Button text="Sitio web" to="#"></Button>
-                        
-                        </div>
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 text-left flex flex-col gap-2">
-                            <h2 className="text-lg">Tag Category</h2>
-                            <div className="flex flex-wrap gap-1">
-                                <div className="text-sm border-solid border-1 border-clas-gris px-3 py-1 rounded-2xl">Tag 1</div>
-                                <div className="text-sm border-solid border-1 border-clas-gris px-3 py-1 rounded-2xl">Tag 2</div>
-                                <div className="text-sm border-solid border-1 border-clas-gris px-3 py-1 rounded-2xl">Tag 3</div>
-                            </div>
-
-
-                            <div className="h-[1px] bg-clas-gris w-full my-2"></div>
-
-                            <h2 className="text-lg">Tag Category</h2>
-                            <div className="flex flex-wrap gap-1">
-                                <div className="text-sm border-solid border-1 border-clas-gris px-3 py-1 rounded-2xl">Tag 1</div>
-                                <div className="text-sm border-solid border-1 border-clas-gris px-3 py-1 rounded-2xl">Tag 2</div>
-                                <div className="text-sm border-solid border-1 border-clas-gris px-3 py-1 rounded-2xl">Tag 3</div>
-                            </div>
-                        </div>
+            {/* LOGO */}
+                <div className="group relative">
+                    <div className="relative flex items-center justify-center">
+                    <img
+                        src="https://canadianautomotivefootprintmexico.com/wp-content/uploads/2025/03/martinrea-logo-1024x866.png"
+                        className="h-40 object-contain transition group-hover:scale-102"
+                    />
                     </div>
                 </div>
-                
 
-                {/* PRODUCTS */}
-                <div className="w-full px-10 flex flex-col gap-4 items-center">
-                    <div className="w-full text-left flex justify-between">
-                        <h2 className="text-xl">Productos</h2>
-                        <div className="flex  gap-2 p-2 items-center rounded-full border border-gray-300 bg-gray-100">
-                            <MagnifyingGlassIcon className="h-4 w-4" />
-                            <input className="border-none focus:outline-none w-40 h-4 text-sm" placeholder="Buscar producto..."
-                                type="text"
-                            ></input>
-                        </div>
+            {/* INFO */}
+                <div className="flex flex-col gap-2 items-center">
+
+                    {/* NAME + TAG */}
+                    <div className="flex flex-col lg:flex-row items-center gap-x-4">
+                        <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
+                            Martinrea
+                        </h1>
+
+                        <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
+                            Tier 1
+                        </span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 flex flex-col gap-2 text-left">
-                            <img 
-                            src="https://www.dealerfireblog.com/akinsford/wp-content/uploads/sites/1027/2020/05/Ford-F-150-assembly-line_B_o.jpg"
-                            alt="product"
-                            className="h-34 object-cover rounded-lg"
-                            ></img>
-                            <div className="text-md">Nombre Producto</div>
-                            <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste impedit alias a facere voluptates.</p>
-                        </div>     
 
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 flex flex-col gap-2 text-left">
-                            <img
-                            src="https://cdn.businessday.ng/2022/05/vehicles-.png"
-                            alt="product"
-                            className="h-34 object-cover rounded-lg"
-                            ></img>
-                            <div className="text-md">Nombre Producto</div>
-                            <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste impedit alias a facere voluptates.</p>
-                        </div>   
+                    {/* SUBTEXT */}
+                    <p className="text-md text-gray-500 ">
+                    Fabricación automotriz de clase mundial con enfoque en innovación,
+                    eficiencia y producción a gran escala.
+                    </p>
 
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 flex flex-col gap-2 text-left">
-                            <img 
-                            src="https://gesrepair.com/wp-content/uploads/2018/07/bigstock-206068144.jpg"
-                            alt="product"
-                            className="h-34 object-cover rounded-lg"
-                            ></img>
-                            <div className="text-md">Nombre Producto</div>
-                            <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste impedit alias a facere voluptates.</p>
-                        </div>     
+                    {/* TAGS / METADATA */}
+                    <div className="flex flex-wrap justify-center lg:justify-start gap-2 mt-2">
+
+                    <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
+                        Automotriz
+                    </span>
+
+                    <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
+                        Ensamblaje
+                    </span>
+
+                    <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
+                        Global
+                    </span>
+
                     </div>
-                    <Button text="Ver más" to=""/>
+
                 </div>
 
-                {/* SERVICES */}
-                <div className="w-full px-10 flex flex-col gap-4 items-center">
-                    <div className="w-full text-left flex justify-between">
-                        <h2 className="text-xl">Servicios</h2>
-                        <div className="flex  gap-2 p-2 items-center rounded-full border border-gray-300 bg-gray-100">
-                            <MagnifyingGlassIcon className="h-4 w-4" />
-                            <input className="border-none focus:outline-none w-40 h-4 text-sm" placeholder="Buscar producto..."
-                                type="text"
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-4">
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 flex flex-col gap-2 text-left">
-                            <div className="text-md">Nombre Producto</div>
-                            <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste impedit alias a facere voluptates.</p>
-                        </div>     
-
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 flex flex-col gap-2 text-left">
-                            <div className="text-md">Nombre Producto</div>
-                            <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste impedit alias a facere voluptates.</p>
-                        </div>   
-
-                        <div className="bg-white border-solid border-1 border-clas-gris w-full rounded-xl p-8 flex flex-col gap-2 text-left">
-                            <div className="text-md">Nombre Producto</div>
-                            <p className="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste impedit alias a facere voluptates.</p>
-                        </div>     
-                    </div>
-                    <Button text="Ver más" to=""/>
+            {/* CONTACT */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                <div className="w-full text-left p-4 items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
+                    <MapPinIcon className="w-7 text-clas flex-shrink-0"/>  
+                    <a href="https://share.google/hzuXpl0o1pukzMitQ">Henry Ford 23-Sur, Parque Industrial Dinatech, 83297 Hermosillo, Son. </a>  
+                </div>
+                <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
+                    <EnvelopeIcon className="w-7 text-clas"/>  
+                    <div className="flex flex-col">
+                        <a>Correo</a> 
+                        <a>Correo</a> 
+                    </div> 
+                </div>
+                <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
+                    <PhoneIcon className="w-7 text-clas"/>  
+                     <div className="flex flex-col">
+                        <a>Telefono</a>  
+                        <a>Telefono</a>  
+                     </div>
                 </div>
 
-                {/* CAPACITIES / CERTIFICATIONS */}
-                <div className="grid grid-cols-3 gap-4 w-full px-10">
-                    <div className="col-span-2 text-left flex flex-col gap-2">
-                        <h2 className="text-xl">Capacidades</h2>
-                        <div>
-                            <p>Capacidad X</p>
-                            <p className="text-clas-gris text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat voluptatem repellat beatae consectetur quaerat, nobis corporis.</p>
-                        </div>
-
-                        <div>
-                            <p>Capacidad Y</p>
-                            <p className="text-clas-gris text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat voluptatem repellat beatae consectetur quaerat, nobis corporis.</p>
-                        </div>
-                        
-                    </div>
-
-
-                    <div className="text-left flex flex-col gap-4">
-                        <h2 className="text-xl">Certificaciones</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-2">
-                            <CertificationCard name="ISO 12838" />
-                            <CertificationCard name="ISO 12838" />
-                            <CertificationCard name="ISO 12838" />
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    )
+
+
+        {/* ABOUT / PHOTO CAROUSEL */}
+        <div className="bg-gray-100">
+            <div className="w-full flex flex-col gap-8 px-10 py-4">
+            <div className="mx-auto flex flex-col">
+                <h2 className="text-3xl">Sobre Nosotros</h2>
+            </div>
+            <div className="flex flex-row w-full">
+                <div className="text-left flex flex-col justify-between text-lg basis-[60%]">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos tempore ad optio assumenda, explicabo iure error, hic molestias cum veniam tenetur facilis officiis modi esse maxime ipsam adipisci quisquam atque. Lorem ipsum dolor.
+                    </p>
+                    <div className="group flex gap-2 items-center text-clas w-fit">
+                        <a className="text-sm">Visita nuestro Sitio Web<span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
+                        </a>
+                        <ArrowUpRightIcon className="h-3 group-hover:-translate-y-1 transition-all ease-in-out"/>
+                    </div>
+                </div>
+                <div className="basis-[40%]">
+                    <PhotoCarousel images={images}/>
+                    {/*TO DO: COLAPSAR SI NO HAY IMÁGENES*/}
+                </div>
+            </div>
+
+            </div>
+        </div>
+
+        {/* CATALOG */}
+        <div className="w-full flex flex-col gap-8 px-10">
+            <div className="mx-auto flex flex-col">
+                <h2 className="text-3xl">Nuestro catálogo</h2>
+            </div>
+
+            {/* PRODUCTS */}
+            <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="text-left flex flex-col justify-between">
+                    <h2 className="text-3xl"><span className="text-clas">Productos</span> destacados</h2>
+                    <p>Explora nuestros productos diseñados para ofrecer calidad, confiabilidad y alto desempeño.</p>
+                    <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
+                </div>
+            
+                {/* PRODUCT CARD */}
+                <div>
+                <div className="w-full bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
+                        <img
+                            className="h-40 w-full object-cover"
+                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
+                        />
+
+                        <div className="p-4 flex flex-col gap-1 text-left">
+                            <p className="text-base font-medium leading-tight">
+                            Producto
+                            </p>
+
+                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
+                            Descripción breve de 2 líneas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {/* PRODUCT CARD */}
+                <div>
+                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
+                        <img
+                            className="h-40 w-full object-cover"
+                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
+                        />
+
+                        <div className="p-4 flex flex-col gap-1 text-left">
+                            <p className="text-base font-medium leading-tight">
+                            Producto
+                            </p>
+
+                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
+                            Descripción breve de 2 líneas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* PRODUCT CARD */}
+                <div>
+                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
+                        <img
+                            className="h-40 w-full object-cover"
+                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
+                        />
+
+                        <div className="p-4 flex flex-col gap-1 text-left">
+                            <p className="text-base font-medium leading-tight">
+                            Producto
+                            </p>
+
+                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
+                            Descripción breve de 2 líneas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* SERVICES */}
+            <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* SERVICE CARD */}
+                <div>
+                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
+                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
+                            <WrenchIcon className="h-7 w-7"/>
+                        </div>
+                        <div className="p-4 flex flex-col gap-1 text-left">
+                            <p className="text-base font-medium leading-tight">
+                            Servicio
+                            </p>
+
+                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
+                            Descripción breve de 2 líneas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* SERVICE CARD */}
+                <div>
+                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
+                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
+                            <WrenchIcon className="h-7 w-7"/>
+                        </div>
+                        <div className="p-4 flex flex-col gap-1 text-left">
+                            <p className="text-base font-medium leading-tight">
+                            Servicio
+                            </p>
+
+                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
+                            Descripción breve de 2 líneas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* SERVICE CARD */}
+                <div>
+                <div className="w-full bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
+                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
+                            <WrenchIcon className="h-7 w-7"/>
+                        </div>
+                        <div className="p-4 flex flex-col gap-1 text-left">
+                            <p className="text-base font-medium leading-tight">
+                            Servicio
+                            </p>
+
+                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
+                            Descripción breve de 2 líneas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="text-right items-end flex flex-col justify-between">
+                    <h2 className="text-3xl"><span className="text-clas">Servicios</span> destacados</h2>
+                    <p>Brindamos soluciones eficientes y adaptadas a tus necesidades.</p>
+                    <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
+                </div>
+            </div>
+
+            <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
+                <a className="text-sm">Explora el catálogo completo <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
+</a>
+                <ArrowUpRightIcon className="h-3 group-hover:-translate-y-1 transition-all ease-in-out"/>
+            </div>
+
+        </div>
+
+        {/* CAPACITIES */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 animate-fade-in-up">
+          <h2 className="text-2xl mb-6 text-center">Capacidades</h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            {[1, 2, 3, 4].map((_, i) => (
+              <div
+                key={i}
+                className="text-center space-y-1 transition hover:-translate-y-1"
+              >
+                <div className="text-2xl font-semibold">
+                  500,000+
+                </div>
+                <div className="text-sm text-gray-500">
+                  Producción anual
+                </div>
+              </div>
+            ))}
+
+          </div>
+        </div>
+
+        {/* CERTIFICATIONS */}
+        <div className="animate-fade-in-up">
+          <h2 className="text-2xl mb-6 text-center">Certificaciones</h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 divide-x divide-gray-200">
+
+            {[1, 2, 3, 4].map((_, i) => (
+              <div key={i} className="flex justify-center">
+                <div className="group flex flex-col items-center gap-3 text-center px-6 py-10 transition hover:-translate-y-[2px]">
+
+                  <CheckBadgeIcon className="h-8 text-gray-400 group-hover:text-gray-700 transition group-hover:scale-110" />
+
+                  <div className="text-gray-700 group-hover:text-black transition">
+                    Certificación
+                  </div>
+
+                  <div className="h-[2px] w-0 bg-gray-400 transition-all duration-300 group-hover:w-8 rounded-full"></div>
+
+                </div>
+              </div>
+            ))}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
 };
 
-export default NewCompanyPage;
+export default Redesign;
