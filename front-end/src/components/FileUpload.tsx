@@ -4,9 +4,10 @@ import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 
 interface Props {
     onFileSelect: (file: File) => void;
+    width?: string;
 };
 
-const FileUpload: React.FC<Props> = ({ onFileSelect }) => {
+const FileUpload: React.FC<Props> = ({ onFileSelect, width = "w-full" }) => {
 
     const [fileName, setFileName] = useState< string | null >(null);
 
@@ -19,10 +20,10 @@ const FileUpload: React.FC<Props> = ({ onFileSelect }) => {
     };
 
     return(
-        <div className="w-md">
+        <div className={width}>
             <label
                 htmlFor="fileUpload"
-                className="flex flex-col items-center justify-center w-2xl h-44 border-2 border-dashed border-clas-gris rounded-lg cursor-pointer hover:bg-clas-gris/20 transition"
+                className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-clas-gris rounded-lg cursor-pointer hover:bg-clas-gris/20 transition"
             >
                 <input 
                     id="fileUpload"

@@ -1,11 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import type { Company, UserProfile } from "clas-types";
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import ProductCatalog from "../components/ProductCatalog";
 import CertificationCard from "../components/CertificationCard";
 import Button from "../components/Button";
 import { getProfile } from "../api/LoginAPI";
+import { getCompanybyId } from "../api/CompanyAPI";
 
 const unverifiedUser : UserProfile = {
     id: "-1",
@@ -29,20 +30,21 @@ const Tag: React.FC<TagProps> = ({value}) => {
 const CompanyPage: React.FC = () => {
     {/* TODO: Hacer que se vea la info de la empresa seleccionada desde el directorio */}
     
-    const location = useLocation();
+    const {id} = useParams();
+    const companyId = Number(id)
     const navigate = useNavigate();
     const [company, setcompany] = useState<Company>();
     const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
         
 
     useEffect(() => {
-        const companies = location.state.company as Company
-        setcompany(companies)
-        //console.log(company?.locations);
+        getCompanybyId(companyId).then((companies: Company) => setcompany(companies)).catch(
+            () => !company ? navigate(`/error`) : null 
+        );
         getProfile().then((profile: UserProfile) => setUserProfile(profile))
-    }, [])
+    }, [companyId])
 
-    !company ? navigate(`/error`) : null
+   
     return(
         <div className="flex flex-col gap-5 items-center p-5 bg-white rounded-lg">
             {(userProfile.role === "admin" 
