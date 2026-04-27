@@ -164,7 +164,7 @@ const UserPage: React.FC = () => {
         <div className="px-4 py-4 space-y-3">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-sm font-semibold text-clas-negro">Resultados</h2>
-            <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+            <button className="inline-flex items-center justify-center rounded-md bg-clas px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-clas-claro focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               onClick={() => navigate("/usuarios/nuevo")}>
               NUEVO USUARIO
             </button>
@@ -175,38 +175,42 @@ const UserPage: React.FC = () => {
 
               <thead className="bg-gray-50 text-gray-600">
                 <tr className="border-b border-gray-200">
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    #ID
+                    {/* <span className="flex items-center gap-1">
                       #ID
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Compañia
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      Nombre
-                      <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Nombre
+                      {/* <span className="flex items-center gap-1">
+                        Nombre
+                        <SortIcon className="h-4 w-4 text-gray-400" />
+                      </span> */}
                   </th>
                   
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Correo
+                    {/* <span className="flex items-center gap-1">
                       Correo
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Rol
+                    {/* <span className="flex items-center gap-1">
                       Rol
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Modificar
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Eliminar
                   </th>
                 </tr>
@@ -223,7 +227,7 @@ const UserPage: React.FC = () => {
                   filteredUsers.map((user, index) => (
                     <tr key={user.id} className = "hover:bg-gray-50">
                       <td className="px-3 py-3 font-medium text-gray-900">
-                        {index+1}
+                        {index + 1}
                       </td>
                       
                       <td className="px-3 py-3 text-center text-gray-700">
@@ -231,9 +235,10 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3">
-                        <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
+                        {user.name}
+                        {/* <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
                           {user.name}
-                        </button>
+                        </button> */}
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">
