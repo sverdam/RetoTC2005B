@@ -8,6 +8,7 @@ import CompanyPage from "../pages/CompanyPage";
 import HomePage from "../pages/HomePage";
 import EditCompanyPage from "../pages/EditCompanyPage";
 import LoginPage from "../pages/LoginPage";
+import NewCompanyPage from "../pages/NewCompanyPage";
 
 const router = createBrowserRouter([
     {
@@ -22,7 +23,8 @@ const router = createBrowserRouter([
             { path: 'usuarios/:id', element: <UserFormPage />},
             { path: 'empresa', element: <CompanyPage />},
             { path: 'empresa/editar', element: <EditCompanyPage />},
-            { path: 'login', element: <LoginPage/>}
+            { path: 'login', element: <LoginPage/>},
+            { path: 'newcompany', element: <NewCompanyPage/>}
         ]
     },
 ]);
