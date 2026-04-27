@@ -22,7 +22,7 @@ declare module "clas-types" {
         logo: FileModule;
         catalogo: FileModule;
         memberType: MemberType;
-        locations: Location;
+        location: Location;
         contacts: Contact[];
         user: User[];
         textModules: TextModule[]; 
@@ -126,5 +126,23 @@ declare module "clas-types" {
         email: string;
         companyId: number;
         role: string;
-    }   
+    }  
+    
+    export interface NewCompanyInput{
+        name: string;
+        description: string;
+        tier: number;
+        logo: FileModule;
+        catalogo: FileModule;
+        memberType: MemberType;
+        location: Location;
+        contacts: Contact[];
+        user: User[];
+        textModules: TextModule[]; 
+        fileModules: FileModule[];
+        certifications: Certification[];
+        filters: Filter[];
+        products: Product[];
+        services: Service[];
+    }
 }
