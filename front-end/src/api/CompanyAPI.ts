@@ -27,3 +27,15 @@ export const deleteCompany = async (id: number): Promise<Company> => {
         throw err;
     }
 }
+
+export const getCompanybyId = async(id: number): Promise<Company> => {
+    try{
+        const res = await api.get<Company> (`/company/${id}`)
+        return res.data;    
+    }
+    catch(error){
+        const err = error as AxiosError;
+        console.error("Error getting company: ", err.message);
+        throw err;
+    }
+}
