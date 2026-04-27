@@ -151,5 +151,9 @@ declare module "clas-types" {
         description: string;
     }
     
-
+    export interface NewContactInput{
+        type: ContactType; 
+        contactInfo: string;
+        position: string;
+    }
 }
