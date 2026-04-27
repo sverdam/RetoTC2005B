@@ -22,6 +22,7 @@ interface CompanyAttributes{
   id: number; 
   name: string; 
   description: string; 
+  aboutUs: string;
   tier: number; 
   memberType: MemberType;
   
@@ -82,6 +83,9 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
       type: DataType.STRING 
    }) 
    description?: string; 
+
+   @Column
+   aboutUs?: string;
 
    @Column 
    tier!: number; 

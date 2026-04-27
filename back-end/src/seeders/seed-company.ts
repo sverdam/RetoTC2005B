@@ -7,7 +7,7 @@ export async function seedCompanies() {
       name: "Ford Motor Company",
       description:
         "Operación automotriz en Sonora enfocada en manufactura avanzada, calidad y desarrollo regional.",
-      tier: 1,
+      tier: 0,
       memberType: MemberType.ASSOCIATE,
       website: "https://www.ford.com",
       slogan: "Built for the road ahead",
@@ -37,7 +37,7 @@ export async function seedCompanies() {
       name: "Beyond Movilidad Compartida",
       description:
         "Empresa enfocada en soluciones de movilidad empresarial, transporte y tecnología aplicada.",
-      tier: 1,
+      tier: 0,
       memberType: MemberType.ASSOCIATE,
       website: "https://www.beyondmovilidad.com",
       slogan: "Movilidad inteligente",
@@ -67,7 +67,7 @@ export async function seedCompanies() {
       name: "Precision Vehicle Logistics de México",
       description:
         "Empresa especializada en logística vehicular, manejo de unidades y distribución automotriz.",
-      tier: 1,
+      tier: -1,
       memberType: MemberType.AFFILIATE,
       website: "https://www.precisionlogistics.mx",
       slogan: "Precision in motion",
