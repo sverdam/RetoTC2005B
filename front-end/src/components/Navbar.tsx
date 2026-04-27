@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="bg-white w-full border-b border-gray-200">
-          <div className="w-full px-4 lg:px-6 py-2.5 flex items-center justify-between">
+          <div className="w-full px-10 py-2.5 flex items-center justify-between">
             <NavLink to="/" className="flex items-center">
               <img
                 src="..\src\assets\CLAS-Logotipo-03.jpeg"
