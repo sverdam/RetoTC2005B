@@ -251,7 +251,7 @@ const UserPage: React.FC = () => {
                 {filteredUsers.length === 0 ? (
                   <tr>
                     <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={9}>
-                      No users found.
+                      No se encontraron usuarios.
                     </td>
                   </tr>
                 ) : (
