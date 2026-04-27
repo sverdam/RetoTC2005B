@@ -2,6 +2,35 @@ import { RequestHandler, Request, Response } from "express";
 import { LandingPage } from "../models/landingPage";
 import { Company } from "../models/company";
 
+// Get extra data
+export const getExtraInfo: RequestHandler = async (req: Request, res: Response) => {
+    try {
+        const adminCompany: Company | null = await Company.findOne({
+            where: { memberType: "Admin" }
+        });
+
+        if (adminCompany == null) {
+            return res.status(404).json({
+            message: "Error, extra info does not exist"
+            });
+        }
+        
+        const location = adminCompany.location;
+
+        return res.status(200).json({
+            location: location?.dataValues,
+            pdf: null
+        })
+    } 
+    catch (error) {
+        return res.status(500).json({
+            message: "Error getting extra info",
+            error
+        });
+    }
+}
+
+
 // Get
 export const getLandingPage: RequestHandler = async (req: Request, res: Response) => {
     try {

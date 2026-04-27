@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
     // }, [])
 
     return(
-        <div className="h-screen grid grid-cols-2 gap-2 bg-[radial-gradient(circle,_rgba(59,130,246,0.45)_0%,_rgba(59,130,246,0.18)_25%,_white_65%)]">
+        <div className="min-h-full grid grid-cols-2 gap-2 bg-[radial-gradient(circle,_rgba(59,130,246,0.45)_0%,_rgba(59,130,246,0.18)_25%,_white_65%)]">
             <div className="m-20 flex flex-col justify-center rounded-lg bg-transparent">
                 <h4 className="px-10 font-semibold text-clas-negro text-left text-lg animate:bounce">Puedes facilmente</h4>
                 <h1 className="px-10 py-10 font-bold text-clas-negro text-left text-2xl">Acceder a información sobre empresas líderes en la industria automotriz</h1>

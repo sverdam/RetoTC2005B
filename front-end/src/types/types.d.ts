@@ -22,13 +22,27 @@ declare module "clas-types" {
         logo: FileModule;
         catalogo: FileModule;
         memberType: MemberType;
-        locations: Location;
+        location: Location;
         contacts: Contact[];
         user: User[];
         textModules: TextModule[]; 
         fileModules: FileModule[];
         certifications: Certification[];
         filters: Filter[];
+        products: Product[];
+        services: Service[];
+    }
+
+    export interface Product {
+        id: number;
+        name: string;
+        description: string;
+    }
+
+    export interface Service {
+        id: number;
+        name: string;
+        description: string;
     }
 
     export enum ContactType {
@@ -52,6 +66,12 @@ declare module "clas-types" {
     export interface FileModule{
         id: number;
         type: FileType;
+    }
+
+    export interface FileModuleInput{
+        companyId: number;
+        type: string;
+        position: number;
     }
 
     interface Filter{ 
@@ -112,5 +132,34 @@ declare module "clas-types" {
         email: string;
         companyId: number;
         role: string;
-    }   
+    }  
+    
+    export interface NewCompanyInput{
+        name: string;
+        description: string;
+        tier: number;
+        logo: FileModule;
+        catalogo: FileModule;
+        memberType: MemberType;
+        location: Location;
+        contacts: Contact[];
+        user: User[];
+        textModules: TextModule[]; 
+        fileModules: FileModule[];
+        certifications: Certification[];
+        filters: Filter[];
+        products: Product[];
+        services: Service[];
+    }
+    
+    export interface NewProductInput{
+        name: string;
+        description: string;
+    }
+    
+    export interface NewContactInput{
+        type: ContactType; 
+        contactInfo: string;
+        position: string;
+    }
 }

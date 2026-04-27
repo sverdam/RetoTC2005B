@@ -11,7 +11,7 @@ const App: FC = () => {
         <header className="sticky top-0 z-50">
           <Navbar/>
         </header>
-        <main>
+        <main className="flex-1">
           <Outlet />
         </main>
         <Footer />
