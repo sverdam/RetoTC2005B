@@ -96,7 +96,6 @@ const Redesign: React.FC = () => {
             </div>
         </div>
 
-
         {/* ABOUT / PHOTO CAROUSEL */}
         <div className="bg-gray-100">
             <div className="w-full flex flex-col gap-8 px-10 py-4">
@@ -270,7 +269,7 @@ const Redesign: React.FC = () => {
         </div>
 
         {/* CAPACITIES */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 animate-fade-in-up">
+        <div className="bg-white border border-gray-200 rounded-2xl px-10 animate-fade-in-up">
           <h2 className="text-2xl mb-6 text-center">Capacidades</h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -293,7 +292,7 @@ const Redesign: React.FC = () => {
         </div>
 
         {/* CERTIFICATIONS */}
-        <div className="animate-fade-in-up">
+        <div className="animate-fade-in-up px-10">
           <h2 className="text-2xl mb-6 text-center">Certificaciones</h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 divide-x divide-gray-200">
