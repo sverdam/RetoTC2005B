@@ -6,12 +6,12 @@ import Navbar from './components/Navbar'
 
 const App: FC = () => {
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen flex flex-col w-full">
       <div>
         <header className="sticky top-0 z-50">
           <Navbar/>
         </header>
-        <main>
+        <main className="flex-1">
           <Outlet />
         </main>
         <Footer />
