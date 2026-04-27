@@ -8,12 +8,12 @@ export async function seedCertifications() {
     {
       id: 1,
       name: "ISO 9001",
-      companyId: 1
+      companyId: 2
     },
     {
       id: 2,
       name: "IATF 16949",
-      companyId: 1
+      companyId: 2
     },
 
     // =====================================
@@ -22,12 +22,12 @@ export async function seedCertifications() {
     {
       id: 3,
       name: "ISO 9001",
-      companyId: 2
+      companyId: 3
     },
     {
       id: 4,
       name: "IATF 16949",
-      companyId: 2
+      companyId: 3
     },
 
     // =====================================
@@ -36,12 +36,12 @@ export async function seedCertifications() {
     {
       id: 5,
       name: "ISO 9001",
-      companyId: 3
+      companyId: 4
     },
     {
       id: 6,
       name: "ISO 14001",
-      companyId: 3
+      companyId: 4
     },
 
     // =====================================
@@ -50,12 +50,12 @@ export async function seedCertifications() {
     {
       id: 7,
       name: "ISO 9001",
-      companyId: 4
+      companyId: 5
     },
     {
       id: 8,
       name: "IATF 16949",
-      companyId: 4
+      companyId: 5
     },
 
     // =====================================
@@ -64,12 +64,12 @@ export async function seedCertifications() {
     {
       id: 9,
       name: "ISO 9001",
-      companyId: 5
+      companyId: 6
     },
     {
       id: 10,
       name: "OEA Operador Económico Autorizado",
-      companyId: 5
+      companyId: 6
     }
   ]);
 }

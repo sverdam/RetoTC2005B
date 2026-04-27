@@ -1,3 +1,4 @@
+import connectionDB from "../connection/connection"
 import { seedCategories } from "./seed-category";
 import { seedFilters } from "./seed-filter";
 import { seedCompanies } from "./seed-company";
@@ -14,6 +15,9 @@ import { seedCompanyFilters } from "./seed-companyfilter";
 
 async function runSeeds() {
   try {
+
+    await connectionDB();
+
     await seedCategories();
     await seedFilters();
     await seedCompanies();
