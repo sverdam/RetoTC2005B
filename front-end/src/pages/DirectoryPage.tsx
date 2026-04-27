@@ -65,7 +65,7 @@ const DirectoryPage: React.FC = () => {
     }, []);
 
     const filteredCompanies = useMemo(() => {
-        //console.log(companies);
+        console.log(companies);
         console.log(tier)
         const _name = nameQuery.trim().toLowerCase();
         return companies.filter((p) => {
