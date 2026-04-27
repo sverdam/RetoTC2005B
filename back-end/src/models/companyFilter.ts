@@ -13,7 +13,7 @@ interface CompanyFilterCreationAttributes
 
 
 @Table({
-    tableName: 'companyFilters',
+    tableName: 'companyfilters',
     paranoid: true,
     timestamps: true
 })

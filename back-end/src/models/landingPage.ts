@@ -18,7 +18,7 @@ export interface LandingPageAttribute{
 interface LandingPageCreationAttributes extends Optional<LandingPageAttribute, 'id'>{} 
 
 @Table ({ 
-  tableName: "landingPage",
+  tableName: "landingpage",
   paranoid: true,
   timestamps: true
 }) 

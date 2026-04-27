@@ -13,7 +13,7 @@ interface TextModuleAttributes{
 interface TextModuleCreationAttributes extends Optional<TextModuleAttributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "textModules",
+  tableName: "textmodules",
   paranoid: true,
   timestamps: true
 }) 

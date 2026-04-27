@@ -24,7 +24,7 @@ export interface FileModuleAttributes{  //si se modifica algo aqui, asegurate de
 interface FileModuleCreationAttributes extends Optional<FileModuleAttributes, 'id' | 'originalName' | 'path' | 'storedName' | 'size' | 'mimeType'>{} 
 
 @Table ({ 
-  tableName: "fileModules",
+  tableName: "filemodules",
   //paranoid: true,
   timestamps: true
 }) 
