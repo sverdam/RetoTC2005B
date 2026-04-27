@@ -1,6 +1,7 @@
 import type { Company } from "clas-types";
 import { InformationCircleIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router";
+import { getFileURLById } from "../api/fileModuleAPI";
 
 interface Props {
     company: Company;
@@ -14,7 +15,7 @@ const DirectoryCard: React.FC<Props> = ({ company }) => {
         <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
             {/* Logo */}
             <img 
-                src={!company?.logo ? "../src/assets/logoipsum.png" : `http://localhost:3000/fileModule/files/${company.logo.id}`} // TODO: Arreglar esto!!
+                src={!company?.logo ? "../src/assets/logoipsum.png" : `${getFileURLById(company.logo.id)}`} // TODO: Arreglar esto!!
                 alt={company.name}
                 className="w-full h-25 object-contain"
             />

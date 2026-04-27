@@ -1,5 +1,7 @@
 import api from ".";
 
-export const getFileById = (id: number) => {
-    return `${api.defaults.baseURL}/fileModule/files/${id}`;
+export const getFileURLById = (id: number) => {
+    const url = `${api.defaults.baseURL}fileModule/files/${id}`;
+    console.log(`URL: ${url}`);
+    return url;
 }
