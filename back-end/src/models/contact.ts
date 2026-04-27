@@ -3,7 +3,7 @@ import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, Foreig
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
-enum ContactType {
+export enum ContactType {
   EMAIL = 'email',
   PHONE = 'phone',
 }
@@ -30,6 +30,9 @@ export class Contact extends Model<ContactAttributes, ContactCreationAttributes>
     allowNull: false,
    })
    type!: ContactType;
+
+   @Column 
+   position!: string; 
 
    @Column 
    contactInfo!: string; 

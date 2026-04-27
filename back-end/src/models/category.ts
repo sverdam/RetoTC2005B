@@ -11,7 +11,7 @@ interface CategoryAttributes{
 interface CategoryCreationAttributes extends Optional<CategoryAttributes, 'id'>{} 
 
 @Table ({ 
-  tableName: "category",
+  tableName: "categories",
   paranoid: true,
   timestamps: true
 }) 

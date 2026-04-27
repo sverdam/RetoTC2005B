@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { getLandingPage, updateLandingPage } from '../controllers/landingPageController';
+import { getLandingPage, updateLandingPage, getExtraInfo } from '../controllers/landingPageController';
 
 const landingPageRouter: Router = Router();
 
+landingPageRouter.get('/info', getExtraInfo)
 landingPageRouter.get('/', getLandingPage);
 landingPageRouter.patch('/', updateLandingPage);
 
