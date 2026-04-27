@@ -8,7 +8,7 @@ export enum FileType {
   DOCUMENT = 'document'
 }
 
-export interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de modificarlo en fileModuleController en newData
+export interface FileModuleAttributes{  //si se modifica algo aqui, asegurate de modificarlo en fileModuleController en newData
   id: number;
   companyId: number;
   position: number;
@@ -21,14 +21,14 @@ export interface FileModuleAtributes{  //si se modifica algo aqui, asegurate de 
 
 } 
 
-interface FileModuleCreationAttributes extends Optional<FileModuleAtributes, 'id' | 'originalName' | 'path' | 'storedName' | 'size' | 'mimeType'>{} 
+interface FileModuleCreationAttributes extends Optional<FileModuleAttributes, 'id' | 'originalName' | 'path' | 'storedName' | 'size' | 'mimeType'>{} 
 
 @Table ({ 
-  tableName: "fileModules",
+  tableName: "filemodules",
   //paranoid: true,
   timestamps: true
 }) 
-export class FileModule extends Model<FileModuleAtributes, FileModuleCreationAttributes>{ 
+export class FileModule extends Model<FileModuleAttributes, FileModuleCreationAttributes>{ 
 
     @Column({
       unique: 'CompanyPosition',

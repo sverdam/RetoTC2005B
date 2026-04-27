@@ -34,7 +34,8 @@ const createClasCompany = async () => {
         employees: 0,
         pieces: 0,
         space: 0,
-        capacity: ""
+        capacity: "",
+        color: ""
     })   
 }
 
