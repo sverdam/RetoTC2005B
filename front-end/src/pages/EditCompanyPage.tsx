@@ -1,7 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company } from "clas-types";
+import type { Company, Product, Contact } from "clas-types";
 import { getAllCompanies } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
@@ -13,6 +13,9 @@ import NewCertificationModal from "../components/NewCertificationModal";
 import NewContactModal from "../components/NewContactModal";
 import DeleteCompanyConfirmModal from "../components/DeleteCompanyConfirmModal";
 import { deleteCompany } from "../api/CompanyAPI";
+import ProductModal from "../components/ProductModal";
+import DeleteProductConfirmModal from "../components/DeleteProductConfirmModal";
+import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
 
 interface TagProps {
     value:string;
@@ -29,10 +32,21 @@ const Tag: React.FC<TagProps> = ({value}) => {
 
 const EditCompanyPage: React.FC = () => {
    
-    {/* File Handling */}
-    const handleFileSelect = (file: File) => {
+    {/* Logo Handling */}
+    const handleLogoSelect = (file: File) => {
         console.log(file);
     };
+
+    {/* Product Image Handling */}
+    const handleProductImageSelect = (file: File) => {
+        console.log(file);
+    };
+
+    {/* Catalog Handling */}
+    const handleCatalogSelect = (file: File) => {
+        console.log(file);
+    };
+
     {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
 
@@ -41,6 +55,9 @@ const EditCompanyPage: React.FC = () => {
 
     {/* Contact Modal */}
     const [isContactOpen, setIscontactOpen] = useState(false);
+
+    {/* Product Modal */}
+    const [isProductOpen, setIsProductOpen] = useState(false);
 
     {/* Navigate */}
     const navigate = useNavigate();
@@ -52,36 +69,99 @@ const EditCompanyPage: React.FC = () => {
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [companyToDelete, setCompanyToDelete] = useState<Company | null>(null);
 
+    const [isProductDeleteOpen, setIsProductDeleteOpen] = useState(false);
+    const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+    
+    const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
+    const [contactToDelete, setContactToDelete] = useState<Contact | null>(null);
+
     const handleDelete = () => {
         if(!companyToDelete) return;
         deleteCompany(companyToDelete.id).then(() => {
           setCompanyToDelete(null);
         });
-      };
+    };
+
+    const handleProductDelete = () => {
+        if(!productToDelete) return;
+        //TODO: Agregar API de producto
+        deleteProduct(productToDelete.id).then(() => {
+          setProductToDelete(null);
+        });
+    };
+
+    const handleContactDelete = () => {
+        if(!contactToDelete) return;
+        //TODO: Agregar API de contacto
+        deleteContact(contactToDelete.id).then(() => {
+          setContactToDelete(null);
+        });
+    };
 
     return(
     <div className="flex flex-col items-center justify-center p-5 gap-3 w-full">
         <h1 className="text-xl font-medium text-clas-negro">Editar Empresa</h1>
         {/* Subir Archivo de Logo*/}
-        <div className="flex flex-col items-start p-2 w-2xl">
+        <div className="flex flex-col items-start w-2xl">
             <label className="font-semibold text-clas-negro">Logo</label>
-            <FileUpload onFileSelect={handleFileSelect} />
+            <FileUpload onFileSelect={handleLogoSelect} />
         </div>
-        <h2 className="font-semibold text-3xl text-clas-negro">Nombre de la Empresa Aqui</h2>
+        <div className="flex flex-col gap-2 items-start w-2xl">
+            <label className="font-semibold text-clas-negro">Nombre de la empresa</label>
+            <input 
+                type="text" 
+                placeholder="Nombre..." 
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
+        </div>
+        {/* Tier y MemberType*/}
+        <div className="flex w-2xl justify-between">
+            <div className="flex flex-col gap-2 items-start w-3xs">
+                <label className="font-semibold text-clas-negro">Tier</label>
+                <select  
+                    className="border-2 border-clas-gris rounded-lg p-2 w-3xs">
+                    <option>
+                        OEM
+                    </option>
+                    <option>
+                        Tier 1
+                    </option>
+                    <option>
+                        Tier 2
+                    </option>
+                </select>
+            </div>
+            <div className="flex flex-col gap-2 items-start w-3xs">
+                <label className="font-semibold text-clas-negro">Tipo de Miembro</label>
+                <select  
+                    className="border-2 border-clas-gris rounded-lg p-2 w-3xs">
+                    <option>
+                        Afiliado
+                    </option>
+                    <option>
+                        Asociado
+                    </option>
+                </select>
+            </div>
+        </div>
+        
         {/* Filtros */}
-        <div className="flex gap-2">
-            {/*TODO: Mapeo filtros*/}
-            <Tag value="Tier1" />
-            <Tag value="Diseño e ingeniería" />
-            <Tag value="Maquinaria" />
-            <Tag value="Carroceria" />
-            <Tag value="Interiores" />
-            <button
-                onClick={() => setIsOpen(true)} 
-                className=" w-15 bg-clas rounded-4xl py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
-                +
-            </button>
+        <div className="flex flex-col gap-2 items-start w-2xl">
+            <label className="font-semibold text-clas-negro">Etiquetas</label>
+            <div className="flex flex-wrap gap-2">
+                {/*TODO: Mapeo filtros*/}
+                <Tag value="Tier1" />
+                <Tag value="Diseño e ingeniería" />
+                <Tag value="Maquinaria" />
+                <Tag value="Carroceria" />
+                <Tag value="Interiores" />
+                <button
+                    onClick={() => setIsOpen(true)} 
+                    className=" w-15 bg-clas rounded-4xl py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                    +
+                </button>
+            </div>
         </div>
+        
         {/* Descripcion ejecutiva / eslogan */}
         <div className="flex flex-col gap-2 items-start w-2xl">
             <label className="font-semibold text-clas-negro">Descripción ejecutiva / eslogan</label>
@@ -100,6 +180,22 @@ const EditCompanyPage: React.FC = () => {
                 placeholder="Descripción..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2">
             </input>
+        </div>
+        {/* Sitio Web */}
+        <div className="flex flex-col gap-2 items-start w-2xl">
+            <label className="font-semibold text-clas-negro">Link a sitio Web</label>
+            <input 
+                type="text" 
+                placeholder="Sitio web..." 
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
+        </div>
+        {/* Color de Compania */}
+        <div className="flex flex-col gap-2 items-start w-2xl">
+            <label className="font-semibold text-clas-negro">Color de Compañía</label>
+            <input 
+                type="text" 
+                placeholder="#ffffff" 
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
         </div>
         {/* Ubicacion */}
         <div className="flex flex-col gap-2 items-start w-2xl">
@@ -128,16 +224,104 @@ const EditCompanyPage: React.FC = () => {
             <label className="font-semibold text-clas-negro">
                 Catálogo de Productos / Servicios
             </label>
-            <FileUpload onFileSelect={handleFileSelect} />
+            <FileUpload onFileSelect={handleCatalogSelect} />
         </div>
-        {/* Capacidades */}
+        {/* Productos */}
+        <div className="w-2xl">
+            <div className="flex justify-start">
+                <label className="font-semibold text-clas-negro">
+                Productos
+            </label>
+            </div>
+            
+            <div className="w-full flex justify-end">
+                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                    onClick={() => setIsProductOpen(true)}
+                >
+                    Nuevo Producto
+                    <PlusIcon className="h-4 w-4"/>
+                </button>
+            </div>
+            
+            <div className="rounded-md border-2 border-clas/50">
+                <table className="min-w-full">
+                    <thead className="bg-clas/30">
+                        <tr>
+                            <th className="text-clas-negro">Id</th>
+                            <th className="text-clas-negro">Nombre</th>
+                            <th className="text-clas-negro">Descripción</th>
+                            <th className="text-clas-negro">Editar</th>
+                            <th className="text-clas-negro">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className="text-clas-negro text-center">1</td>
+                            <td className="text-clas-negro text-center">Tornillo</td>
+                            <td className="text-clas-negro text-center">Tornillo de 1/2"</td>
+                            <td className="p-2">
+                                <div className="flex justify-center text-clas">
+                                    <PencilIcon className="h-4 w-4"/>
+                                </div>
+                            </td>
+                            <td className="p-2">
+                                <div className="flex justify-center text-red-400">
+                                    <button
+                                        onClick={() =>
+                                        setProductToDelete(product)
+                                        }
+                                        className="text-red-600 hover:text-red-800"
+                                    >
+                                        <TrashIcon className="h-4 w-4" />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {/* Empleados */}
         <div className="flex flex-col gap-2 items-start w-2xl">
             <label className="font-semibold text-clas-negro">
-                Capacidades
+                Número de empleados
+            </label>
+            <input 
+                type="number" 
+                placeholder="Empleados..." 
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+            </input>
+        </div>
+        {/* Piezas */}
+        <div className="flex flex-col gap-2 items-start w-2xl">
+            <label className="font-semibold text-clas-negro">
+                Capacidad de producción en piezas
+            </label>
+            <input 
+                type="number" 
+                placeholder="Piezas..." 
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+            </input>
+        </div>
+        {/* Espacio */}
+        <div className="flex flex-col gap-2 items-start w-2xl">
+            <label className="font-semibold text-clas-negro">
+                Capacidad de espacio
+            </label>
+            <input 
+                type="number" 
+                placeholder="Espacio..." 
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+            </input>
+        </div>
+        {/* Capacidad */}
+        <div className="flex flex-col gap-2 items-start w-2xl">
+            <label className="font-semibold text-clas-negro">
+                Capacidad
             </label>
             <input 
                 type="text" 
-                placeholder="Capacidades de producción y/o servicio..." 
+                placeholder="Capacidad..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2">
             </input>
         </div>
@@ -199,7 +383,14 @@ const EditCompanyPage: React.FC = () => {
                             </td>
                             <td className="p-2">
                                 <div className="flex justify-center text-red-400">
-                                    <TrashIcon className="h-4 w-4"/>
+                                    <button
+                                        onClick={() =>
+                                        setContactToDelete(contact)
+                                        }
+                                        className="text-red-600 hover:text-red-800"
+                                    >
+                                        <TrashIcon className="h-4 w-4" />
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -235,6 +426,21 @@ const EditCompanyPage: React.FC = () => {
         <NewContactModal 
             isContactOpen={isContactOpen}
             onClose={() => setIscontactOpen(false)}
+        />
+
+        <ProductModal 
+            isProductOpen={isProductOpen}
+            onClose={() => setIsProductOpen(false)}
+        />
+        <DeleteProductConfirmModal 
+            product={productToDelete}
+            onClose={() => setProductToDelete(null)}
+            onConfirm={handleProductDelete}
+        />
+        <DeleteContactConfirmModal 
+            contact={contactToDelete}
+            onClose={() => setContactToDelete(null)}
+            onConfirm={handleContactDelete}
         />
     </div>
    )
