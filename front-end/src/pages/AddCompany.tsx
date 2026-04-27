@@ -58,7 +58,7 @@ const Addcompany = () => {
     try {
       const response = await fetch('http://localhost:3000/company', {
         method: 'POST',
-        body: data, // No enviamos headers de Content-Type, el navegador lo hace solo con FormData
+        body: data,
       });
 
       if (response.ok) {
