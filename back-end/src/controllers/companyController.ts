@@ -9,6 +9,8 @@ import { Service } from "../models/services";
 import { Certification } from "../models/certification";
 import { Capacity } from "../models/capacities";
 import { Product } from "../models/product";
+import { Filter } from "../models/filter";
+import { CompanyFilter } from "../models/companyFilter";
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
@@ -120,6 +122,10 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                     model: Capacity,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
+                {
+                    model: Filter,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt", "tier", "CompanyFilter"] }
+                }
             ]
         }); 
 
@@ -185,6 +191,10 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                     model: Capacity,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
+                {
+                    model: Filter,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt", "tier", "CompanyFilter"] }
+                }
             ]
         }); 
 
