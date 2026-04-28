@@ -21,7 +21,7 @@ const DummyEditFile: React.FC = () =>
         setFileMod({
             file: file,
             type: 'logo',
-            position: 0,
+            position: 1,
             companyId: companyId
         });
     };
