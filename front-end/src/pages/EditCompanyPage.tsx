@@ -274,7 +274,8 @@ const EditCompanyPage: React.FC = () => {
                 type="text" 
                 value={formCompany.slogan}
                 placeholder="Descripción ejecutiva..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("slogan", e.target.value)}></input>
         </div>
         {/* Descripcion larga */}
         <div className="flex flex-col gap-2 items-start w-2xl">
@@ -283,8 +284,10 @@ const EditCompanyPage: React.FC = () => {
             </label>
             <input 
                 type="text" 
+                value={formCompany.description}
                 placeholder="Descripción..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("description", e.target.value)}>
             </input>
         </div>
         {/* Sitio Web */}
@@ -292,16 +295,20 @@ const EditCompanyPage: React.FC = () => {
             <label className="font-semibold text-clas-negro">Link a sitio Web</label>
             <input 
                 type="text" 
+                value={formCompany.website}
                 placeholder="Sitio web..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("website", e.target.value)}></input>
         </div>
         {/* Color de Compania */}
         <div className="flex flex-col gap-2 items-start w-2xl">
             <label className="font-semibold text-clas-negro">Color de Compañía</label>
             <input 
                 type="text" 
+                value={formCompany.color}
                 placeholder="#ffffff" 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("color", e.target.value)}></input>
         </div>
         {/* Ubicacion */}
         <div className="flex flex-col gap-2 items-start w-2xl">
@@ -314,8 +321,10 @@ const EditCompanyPage: React.FC = () => {
             </div>
             <input 
                 type="text" 
+                value={formCompany.location?.mapLink}
                 placeholder="Link de embebido..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("location", e.target.value)}>
             </input>
             {/* Hacer que lo que se obtenga del input del link se muestre en el iframe */}
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15695.29597219136!2d-110.91489855!3d29.170230649999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ce87d095decee9%3A0x856739bc6d718ca5!2sTecnol%C3%B3gico%20de%20Monterrey!5e1!3m2!1ses-419!2smx!4v1776732607196!5m2!1ses-419!2smx"
@@ -387,6 +396,61 @@ const EditCompanyPage: React.FC = () => {
                 </table>
             </div>
         </div>
+        {/* Servicios */}
+        <div className="w-2xl">
+            <div className="flex justify-start">
+                <label className="font-semibold text-clas-negro">
+                Servicios
+            </label>
+            </div>
+            
+            <div className="w-full flex justify-end">
+                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                    onClick={() => setIsProductOpen(true)}
+                >
+                    Nuevo Producto
+                    <PlusIcon className="h-4 w-4"/>
+                </button>
+            </div>
+            
+            <div className="rounded-md border-2 border-clas/50">
+                <table className="min-w-full">
+                    <thead className="bg-clas/30">
+                        <tr>
+                            <th className="text-clas-negro">Id</th>
+                            <th className="text-clas-negro">Nombre</th>
+                            <th className="text-clas-negro">Descripción</th>
+                            <th className="text-clas-negro">Editar</th>
+                            <th className="text-clas-negro">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className="text-clas-negro text-center">1</td>
+                            <td className="text-clas-negro text-center">Tornillo</td>
+                            <td className="text-clas-negro text-center">Tornillo de 1/2"</td>
+                            <td className="p-2">
+                                <div className="flex justify-center text-clas">
+                                    <PencilIcon className="h-4 w-4"/>
+                                </div>
+                            </td>
+                            <td className="p-2">
+                                <div className="flex justify-center text-red-400">
+                                    <button
+                                        onClick={() =>
+                                        setProductToDelete(product)
+                                        }
+                                        className="text-red-600 hover:text-red-800"
+                                    >
+                                        <TrashIcon className="h-4 w-4" />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         {/* Empleados */}
         <div className="flex flex-col gap-2 items-start w-2xl">
             <label className="font-semibold text-clas-negro">
@@ -394,8 +458,10 @@ const EditCompanyPage: React.FC = () => {
             </label>
             <input 
                 type="number" 
+                value={formCompany.employees != null ? formCompany.employees : ""}
                 placeholder="Empleados..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => e.target.value}>
             </input>
         </div>
         {/* Piezas */}
