@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
             </div>
             <div className="m-20 px-10 flex flex-col items-center justify-center rounded-lg bg-white rounded-xl shadow-xl shadow-clas/50">
                 <img src="..\src\assets\CLAS-Logo.png" className="pt-10 w-50"/>
-                <h1 className="px-10 pt-10 text-clas-negro font-bold text-3xl text-left">¡Bienvenido!</h1>
+                <h1 className="px-10 pt-10 text-clas-negro font-bold text-3xl text-left">¡Bienvenido de nuevo!</h1>
                 <p className="px-10 pt-2 pb-5 text-clas-negro/70 text-lg text-left">Inicia sesión para continuar</p>
                 {/* Formulario */}
                 <form action="/login" method="post" onSubmit={handleSubmit}>
