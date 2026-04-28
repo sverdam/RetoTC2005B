@@ -42,7 +42,7 @@ const ProductServiceCard: React.FC<ProductServiceProps> = ({
         )}
 
         <div className="p-4 flex flex-col gap-1 text-left">
-          <p className="text-base font-medium leading-tight">
+          <p className="text-base font-medium leading-tight line-clamp-1">
             {name}
           </p>
 
