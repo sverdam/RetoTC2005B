@@ -40,10 +40,18 @@ const Tag: React.FC<TagProps> = ({value}) => {
 const emptyFormCompany: NewCompanyInput = {
         name: "",
         description: "",
+        aboutUs: "",
         tier: null,
         logo: null,
         catalogo: null,
         memberType: null,
+        website: "",
+        slogan: "",
+        employees: null,
+        pieces: null,
+        space: null,
+        capacity: "",
+        color: "",
         location: null,
         contacts: [],
         user: [],
@@ -211,6 +219,7 @@ const EditCompanyPage: React.FC = () => {
                     </option>
                 </select>
             </div>
+            {userProfile.role === "admin" ?
             <div className="flex flex-col gap-2 items-start w-3xs">
                 <label className="font-semibold text-clas-negro">Tipo de Miembro</label>
                 <select  
@@ -233,6 +242,7 @@ const EditCompanyPage: React.FC = () => {
                     </option>
                 </select>
             </div>
+            : <></>}
         </div>
         
         {/* Filtros */}

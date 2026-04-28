@@ -136,10 +136,18 @@ declare module "clas-types" {
     export interface NewCompanyInput{
         name: string;
         description: string;
+        aboutUs: string;
         tier: number | null;
         logo: FileModule | null;
         catalogo: FileModule | null;
         memberType: MemberType | null;
+        website: string;
+        slogan: string;
+        employees: number | null;
+        pieces: number | null;
+        space: number | null;
+        capacity: string;
+        color: string;
         location: Location | null;
         contacts: Contact[];
         user: User[];
