@@ -68,10 +68,15 @@ declare module "clas-types" {
         type: FileType;
     }
 
+    export interface FileModuleInput{
+        companyId: number;
+        type: string;
+        position: number;
+    }
+
     interface Filter{ 
         id: number; 
         name: string; 
-        tier: number;
         category: Category;
     } 
     

@@ -121,7 +121,11 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                     model: Capacity,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
-            ]
+                {
+                    model: Filter,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt", "tier", "CompanyFilter"] }
+                }
+            ]//E
         }); 
 
         //companies.map(company => addLogoToCompany);
@@ -190,6 +194,10 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                     model: Capacity,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
+                {
+                    model: Filter,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt", "tier", "CompanyFilter"] }
+                }
             ]
         }); 
 
