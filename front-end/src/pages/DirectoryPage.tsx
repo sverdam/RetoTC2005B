@@ -1,6 +1,7 @@
 import {
   PhoneIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
+  FaceFrownIcon
 } from "@heroicons/react/24/outline";
 import { useState, useEffect, useMemo, Profiler } from "react";
 import { getAllCompanies } from "../api/CompanyAPI";
@@ -92,7 +93,7 @@ const DirectoryPage: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-20vh flex flex-col items-center justify-center gap-4">
+            <div className="min-h-20vh m-20 flex flex-col items-center justify-center gap-4">
                 <div className="h-12 w-12 rounded-full border-4 border-clas border-t-transparent animate-spin"></div>
                 <p className="text-clas-gris animate-pulse">Cargando directorio...</p>
             </div>
@@ -137,8 +138,9 @@ const DirectoryPage: React.FC = () => {
                         />
                 ))
                 ) : (
-                    <div className="col-span-4 flex justify-center py-20">
-                        <p className="text-xl font-semibold text-clas">
+                    <div className="col-span-4 flex flex-col justify-center items-center gap-5 py-20">
+                        <FaceFrownIcon className="text-clas h-15 w-15"/>
+                        <p className="text-2xl text-clas">
                             {companies.length === 0
                                 ? "No hay empresas registradas"
                                 : "No se encontraron empresas con esos filtros"}
