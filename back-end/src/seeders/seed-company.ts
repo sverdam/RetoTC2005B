@@ -71,7 +71,7 @@ export async function seedCompanies() {
       name: "Precision Vehicle Logistics de México",
       description:
         "Empresa especializada en logística vehicular, manejo de unidades y distribución automotriz.",
-      tier: -1,
+      tier: 4,
       memberType: MemberType.AFFILIATE,
       website: "https://www.precisionlogistics.mx",
       slogan: "Precision in motion",
