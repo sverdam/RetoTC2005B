@@ -150,10 +150,18 @@ const EditCompanyPage: React.FC = () => {
             setFormCompany ({
                 name: company.name,
                 description: company.description,
+                aboutUs: company.aboutUs,
                 tier: company.tier,
                 logo: company.logo,
                 catalogo: company.catalogo,
                 memberType: company.memberType,
+                website: company.website,
+                slogan: company.slogan,
+                employees: company.employees,
+                pieces: company.pieces,
+                space: company.space,
+                capacity: company.capacity,
+                color: company.color,
                 location: company.location,
                 contacts: company.contacts,
                 user: company.user,
@@ -264,7 +272,7 @@ const EditCompanyPage: React.FC = () => {
             <label className="font-semibold text-clas-negro">Descripción ejecutiva / eslogan</label>
             <input 
                 type="text" 
-
+                value={formCompany.slogan}
                 placeholder="Descripción ejecutiva..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
         </div>

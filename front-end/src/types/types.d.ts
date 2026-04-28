@@ -18,10 +18,18 @@ declare module "clas-types" {
         id: number;
         name: string;
         description: string;
+        aboutUs: string;
         tier: number;
         logo: FileModule;
         catalogo: FileModule;
         memberType: MemberType;
+        website: string;
+        slogan: string;
+        employees: number;
+        pieces: number;
+        space: number;
+        capacity: string;
+        color: string;
         location: Location;
         contacts: Contact[];
         user: User[];
