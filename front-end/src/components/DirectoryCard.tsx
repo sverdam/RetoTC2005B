@@ -53,7 +53,7 @@ const DirectoryCard: React.FC<Props> = ({ company, user }) => {
             </button>
             : <button 
             onClick={() => navigate(`/empresa/${company.id}`)}
-            className="bg-clas rounded-lg py-1 px-2 text-white font-medium text-sm hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+            className="flex gap-2 items-center bg-clas rounded-lg py-1 px-2 text-white font-medium text-sm hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                 Leer más
                 <ArrowRightIcon className="h-4 w-4"/>
             </button>
