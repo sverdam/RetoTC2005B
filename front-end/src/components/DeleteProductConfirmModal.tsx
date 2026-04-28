@@ -1,9 +1,9 @@
-import type { Product } from "clas-types"; // TODO: Agregar Producto a tipos
+import type { NewProductInput, Product } from "clas-types"; // TODO: Agregar Producto a tipos
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
-    product: Product | null;
+    product: NewProductInput | null;
     onClose: () => void;
     onConfirm: () => void;
 }

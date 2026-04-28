@@ -1,11 +1,19 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
+import type { NewContactInput } from "clas-types";
+import { useState } from "react";
 
 interface Props{
     isContactOpen: boolean;
     onClose: () => void;
+    contact: NewContactInput;
+    setContact: (newContact: NewContactInput) => void;
 }
 
-const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose }) => {
+const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, setContact }) => {
+    const [formContact, setFormContact] = useState<NewContactInput>(contact);
+    const handleChange = (field:keyof NewContactInput, value:any) => {
+            setFormContact((prev) => ({...prev, [field]: value}))
+    }
     return(
         <Dialog open={isContactOpen} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro */}
@@ -23,8 +31,11 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose }) => {
                                 Puesto
                             </label>
                             <input type="text" 
+                                required
+                                value={formContact.position}
                                 placeholder="Puesto..." 
-                                className="w-full border-2 border-clas-gris rounded-lg p-2">
+                                className="w-full border-2 border-clas-gris rounded-lg p-2"
+                                onChange={(e) => handleChange("position",e.target.value)}>
                             </input>
                         </div>
                         <div className="flex flex-col gap-1">
@@ -32,11 +43,20 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose }) => {
                                 Tipo de Contacto
                             </label>
                             <select 
-                                className="w-full border-2 border-clas-gris rounded-lg p-2">
-                                <option>
+                                required
+                                value={formContact.type || ""}
+                                className="w-full border-2 border-clas-gris rounded-lg p-2"
+                                onChange={(e) => handleChange("type", e.target.value)}>
+                                <option
+                                    value={""} disabled>
+                                    Selecciona una opción...
+                                </option>
+                                <option
+                                    value={"email"}>
                                     Correo electrónico
                                 </option>
-                                <option>
+                                <option
+                                    value={"phone"}>
                                     Número de teléfono
                                 </option>
                             </select>
@@ -45,17 +65,28 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose }) => {
                             <label className="font-semibold text-clas-negro">
                                 Contacto
                             </label>
-                            <input type="text" 
+                            <input 
+                                required
+                                value={formContact.contactInfo}
+                                type="text" 
                                 placeholder="Teléfono o correo" 
-                                className="w-full border-2 border-clas-gris rounded-lg p-2">
+                                className="w-full border-2 border-clas-gris rounded-lg p-2"
+                                onChange={(e) => handleChange("contactInfo", e.target.value)}>
                             </input>
                         </div>
                     </div>
                     <div className="flex gap-3">
-                        <button className="bg-white rounded-lg py-1 px-2 border-2 border-red-400 text-red-400 hover:bg-clas-gris/20 focus:ring-2 focus:ring-rojo-600">
+                        <button 
+                            onClick={onClose}
+                            className="bg-white rounded-lg py-1 px-2 border-2 border-red-400 text-red-400 hover:bg-clas-gris/20 focus:ring-2 focus:ring-rojo-600">
                             Cancelar
                         </button>
-                        <button className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                        <button 
+                            onClick={() => {
+                                setContact(formContact);
+                                onClose();
+                            }}
+                            className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                             Agregar
                         </button>
                     </div>
