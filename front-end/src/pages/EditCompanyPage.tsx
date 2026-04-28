@@ -1,7 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company, Product, Contact, NewContactInput, NewCompanyInput } from "clas-types";
+import type { Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile } from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
@@ -15,6 +15,15 @@ import DeleteCompanyConfirmModal from "../components/DeleteCompanyConfirmModal";
 import ProductModal from "../components/ProductModal";
 import DeleteProductConfirmModal from "../components/DeleteProductConfirmModal";
 import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
+import { getProfile } from "../api/LoginAPI";
+
+
+const unverifiedUser : UserProfile = {
+    id: "-1",
+    email: 'unknown',
+    companyId: -1,
+    role: 'unverified'
+}
 
 interface TagProps {
     value:string;
@@ -49,30 +58,25 @@ const emptyFormCompany: NewCompanyInput = {
 
 const EditCompanyPage: React.FC = () => {
 
-    {/* Navigate */}
     const navigate = useNavigate();
     const location = useLocation();
-    {/* access id parameter from current URL*/}
     const { id } = useParams<{ id: string }>();
-    console.log(id)
     const isEditing = id !==undefined;
-    console.log(isEditing)
     const [formCompany, setFormCompany] = useState<NewCompanyInput>(emptyFormCompany)
+    const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
+    
    
-        {/* Filter Modal  */}
+    {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
-
+    const [selectedFilter, setSelectedFilter] = useState<Filter[]>([]);
     {/* Certification Modal */}
     const [isCertificationOpen, setIsCertificationOpen] = useState(false);
-
     {/* Contact Modal */}
     const [isContactOpen, setIscontactOpen] = useState(false);
-
     {/* Product Modal */}
     const [isProductOpen, setIsProductOpen] = useState(false);
 
     {/* Obtain data */}
-
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [companyToDelete, setCompanyToDelete] = useState<Company | null>(null);
 
@@ -88,8 +92,10 @@ const EditCompanyPage: React.FC = () => {
         console.log(file);
     };
 
-
-    const handleChange = (field:keyof NewCompanyInput, value: string | number ) => {
+    const handleFilter = (newFilters: Filter[]) => {
+        handleChange("filters", newFilters)
+    }
+    const handleChange = (field:keyof NewCompanyInput, value: any) => {
         setFormCompany((prev) => ({...prev, [field]: value}));
     }
 
@@ -126,6 +132,7 @@ const EditCompanyPage: React.FC = () => {
         });
     };
 
+
     useEffect(()=>{
        
         if(isEditing){
@@ -152,6 +159,8 @@ const EditCompanyPage: React.FC = () => {
                 getCompanybyId(Number(id)).then(data => setFormCompany(data))
              }
             }
+
+        getProfile().then((profile: UserProfile) => setUserProfile(profile))
         },[])
 
 
@@ -166,6 +175,7 @@ const EditCompanyPage: React.FC = () => {
         <div className="flex flex-col gap-2 items-start w-2xl">
             <label className="font-semibold text-clas-negro">Nombre de la empresa</label>
             <input 
+                required
                 type="text" 
                 placeholder="Nombre..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"
@@ -244,6 +254,7 @@ const EditCompanyPage: React.FC = () => {
             <label className="font-semibold text-clas-negro">Descripción ejecutiva / eslogan</label>
             <input 
                 type="text" 
+
                 placeholder="Descripción ejecutiva..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
         </div>
@@ -488,6 +499,8 @@ const EditCompanyPage: React.FC = () => {
         <FilterModal 
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
+                selectFilter={formCompany.filters}
+                setSelectFilter={handleFilter}
         />
         <DeleteCompanyConfirmModal 
             company={companyToDelete}
