@@ -35,7 +35,8 @@ const createClasCompany = async () => {
         pieces: 0,
         space: 0,
         capacity: "",
-        color: ""
+        color: "#2c419a",
+        aboutUs:"CLAS"
     })   
 }
 

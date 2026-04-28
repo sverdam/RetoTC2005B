@@ -4,19 +4,19 @@ import type { NewProductInput} from "clas-types";
 import { useState } from "react";
 
 interface Props{
-    isProductOpen: boolean;
+    isServiceOpen: boolean;
     onClose: () => void;
-    product: NewProductInput;
-    setProduct: (newProduct: NewProductInput) => void;
+    service: NewProductInput;
+    setService: (newService: NewProductInput) => void;
 
 }
 
-const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setProduct}) => {
+const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose , service, setService}) => {
     
-    const [formProduct, setFormProduct] = useState<NewProductInput>(product);
+    const [formService, setFormService] = useState<NewProductInput>(service);
 
     const handleChange = (field:keyof NewProductInput, value:any) => {
-        setFormProduct((prev) => ({...prev, [field]: value}))
+        setFormService((prev) => ({...prev, [field]: value}))
     }
 
     {/* Product Image Handling */}
@@ -24,7 +24,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
         console.log(file);
     };
     return(
-        <Dialog open={isProductOpen} onClose={onClose} className="relative z-50">
+        <Dialog open={isServiceOpen} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro */}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
 
@@ -32,7 +32,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
             <div className="fixed inset-0 flex items-center justify-center p-4">
                 <DialogPanel className="w-full max-w-sm rounded-lg bg-white shadow-xl p-6 space-y-4">
                     <DialogTitle className="text-xl font-semibold text-clas-negro">
-                        Nuevo Producto
+                        Nuevo Servicio
                     </DialogTitle>
                     <div className="flex flex-col gap-3">
                         <div className="flex flex-col gap-1">
@@ -41,7 +41,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                             </label>
                             <input type="text" 
                                 required
-                                value={formProduct.name}
+                                value={formService.name}
                                 placeholder="Nombre del producto..." 
                                 className="w-full border-2 border-clas-gris rounded-lg p-2"
                                 onChange={(e) => handleChange("name", e.target.value)}>
@@ -53,7 +53,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                             </label>
                             <input type="text" 
                                 required
-                                value={formProduct.description}
+                                value={formService.description}
                                 placeholder="Descripción del producto..." 
                                 className="w-full border-2 border-clas-gris rounded-lg p-2"
                                 onChange={(e) => handleChange("description", e.target.value)}>
@@ -61,7 +61,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                         </div>
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
-                                Imagen del producto
+                                Imagen del servicio
                             </label>
                             <FileUpload onFileSelect={handleProductImageSelect} />
                         </div>
@@ -75,7 +75,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                         </button>
                         <button 
                         onClick={() => {
-                            setProduct(formProduct)
+                            setService(formService)
                             onClose();
                         }}
                         className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
@@ -89,4 +89,4 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
     )
 };
 
-export default ProductModal;
+export default ServiceModal;

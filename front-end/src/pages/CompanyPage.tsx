@@ -51,7 +51,7 @@ const CompanyPage: React.FC = () => {
             || userProfile.role === "CLAS editor"
             || (userProfile.role === "company editor" && userProfile.companyId === company?.id)) ?
             <div className="flex w-full justify-end">
-                <Button text="Editar" to="editar"/>
+                <Button text="Editar" to="editar" comp={company} />
             </div> : <></>
             }
             <img src={!company?.logo ? "../src/assets/logoipsum.png" : `http://localhost:3000/fileModule/files/${company.logo.id}`} className="w-75"/>
@@ -76,10 +76,10 @@ const CompanyPage: React.FC = () => {
                 <p className="text-left text-clas-negro">{String(company?.textModules?.find(t => t.id === 2)?.text)} {/*Aquí va un text_module */}</p>
                 : <></>}
                 <div className="flex flex-col gap-2 items-center">
-                    {!company?.locations ? 
+                    {!company?.location ? 
                     <></>:
                     <iframe
-                        src={company.locations.mapLink}
+                        src={company.location.mapLink}
                         title="Location"
                         className="rounded-xl"
                     >

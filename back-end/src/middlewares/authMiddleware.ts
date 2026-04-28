@@ -18,6 +18,10 @@ export const unverifiedCheck: RequestHandler = async (req: Request, res: Respons
 export const editorCheck: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     const editorMethods = ['POST', 'DELETE', 'PATCH', 'PUT'];
 
+    if (req.path.startsWith("/auth")){
+        return next();
+    }
+
     if (editorMethods.includes(req.method) 
         // && req.user?.role !== 'admin' 
         && !(['admin', 'CLAS editor', 'company editor'].includes(req.user?.role ?? 'unverified'))

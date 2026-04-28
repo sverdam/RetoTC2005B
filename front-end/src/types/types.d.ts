@@ -1,4 +1,16 @@
 declare module "clas-types" {
+    
+    export interface LandingPage {
+        banneHeader: string;
+        bannerText: string;
+        mainText: string;
+        visionText: string;
+        missionText: string;
+        communityText: string;
+        aboutUsText: string;
+        contactText: string;
+    }
+    
     export interface Category {
         id: number;
         name: string;
@@ -18,10 +30,18 @@ declare module "clas-types" {
         id: number;
         name: string;
         description: string;
+        aboutUs: string;
         tier: number;
         logo: FileModule;
         catalogo: FileModule;
         memberType: MemberType;
+        website: string;
+        slogan: string;
+        employees: number;
+        pieces: number;
+        space: number;
+        capacity: string;
+        color: string;
         location: Location;
         contacts: Contact[];
         user: User[];
@@ -134,13 +154,22 @@ declare module "clas-types" {
     }  
     
     export interface NewCompanyInput{
+        id: number | null;
         name: string;
         description: string;
-        tier: number;
-        logo: FileModule;
-        catalogo: FileModule;
-        memberType: MemberType;
-        location: Location;
+        aboutUs: string;
+        tier: number | null;
+        logo: FileModule | null;
+        catalogo: FileModule | null;
+        memberType: MemberType | null;
+        website: string;
+        slogan: string;
+        employees: number | null;
+        pieces: number | null;
+        space: number | null;
+        capacity: string;
+        color: string;
+        location: Location | null;
         contacts: Contact[];
         user: User[];
         textModules: TextModule[]; 
@@ -157,8 +186,12 @@ declare module "clas-types" {
     }
     
     export interface NewContactInput{
-        type: ContactType; 
+        type: ContactType | null; 
         contactInfo: string;
         position: string;
+    }
+
+    export interface NewCertificationInput{
+        name:string;
     }
 }
