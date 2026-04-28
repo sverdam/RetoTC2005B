@@ -5,9 +5,18 @@ import {
   ArrowUpRightIcon,
   WrenchIcon,
   PlusIcon,
-  CheckBadgeIcon
+  CheckBadgeIcon,
+  InformationCircleIcon,
+  ShoppingBagIcon,
+  ShoppingCartIcon,
+  BoltIcon,
+  ChatBubbleLeftEllipsisIcon,
+  ChatBubbleLeftIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
+  ChatBubbleOvalLeftIcon
 } from "@heroicons/react/24/outline";
 import PhotoCarousel from "../components/PhotoCarousel";
+import CertificationCard from "../components/CertificationCard";
 
 const images = [
     "https://u-mercari-images.mercdn.net/photos/m80862755279_1.jpg?1774828834",
@@ -18,10 +27,10 @@ const images = [
 const Redesign: React.FC = () => {
   return (
     <div className="bg-gray-50 min-h-screen flex justify-center">
-      <div className="flex flex-col gap-16 py-10 text-clas-negro max-w-7xl">
+      <div className="flex flex-col gap-20 py-10 text-clas-negro max-w-7xl ">
 
         {/* PROFILE */}
-        <div className="w-full flex flex-col gap-8 px-10">
+        <div className="hero-intro w-full flex flex-col gap-8 px-14">
 
             {/* LOGO */}
                 <div className="group relative">
@@ -71,6 +80,90 @@ const Redesign: React.FC = () => {
                     </div>
 
                 </div>
+        </div>
+
+        {/* ABOUT / PHOTO CAROUSEL */}
+            <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+                {/* SECTION DIVIDER */}
+                <div className="mx-auto flex items-center justify-center gap-4">
+                    <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
+                    {/* SECTION ICON */}
+                        <InformationCircleIcon className="text-clas h-8 w-8" />
+                    {/* SECTION TITLE */}
+                    <h2 className="text-2xl">
+                        Sobre Nosotros
+                    </h2>
+                    {/* Right line */}
+                    <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
+                </div>
+
+                <div className="flex flex-row w-full gap-8">
+                    <div className="text-left flex flex-col justify-between text-lg basis-[60%]">
+                        <p>
+                        Martinrea International se especializa en el diseño y fabricación de estructuras ligeras y sistemas de propulsión para la industria automotriz. Su enfoque está en la innovación, la eficiencia y la mejora continua para contribuir al futuro de la movilidad.
+
+                        </p>
+                        <div className="flex flex-row justify-around">
+                            <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                                <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                                <PlusIcon className="h-6 text-clas"/>
+                                950
+                                </div>
+                                <div className="text-lg text-gray-500">
+                                Empleados
+                                </div>
+                            </div>
+
+                            <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                                <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                                <PlusIcon className="h-6 text-clas"/>
+                                26000 m2
+                                </div>
+                                <div className="text-lg text-gray-500">
+                                Capacidad de planta
+                                </div>
+                            </div>
+
+                            <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                                <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                                <PlusIcon className="h-6 text-clas"/>
+                                74000
+                                </div>
+                                <div className="text-lg text-gray-500">
+                                Piezas / año
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="group flex gap-2 items-center text-clas w-fit">
+                            <a className="text-md">Visita nuestro Sitio Web<span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
+                            </a>
+                            <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
+                        </div>
+                    </div>
+                    <div className="basis-[40%]">
+                        <PhotoCarousel images={images}/>
+                        {/*TO DO: COLAPSAR SI NO HAY IMÁGENES*/}
+                    </div>
+                </div>
+
+            </div>
+
+
+        {/* CONTACT US */}
+        <div  className="animate-fade-up w-full flex flex-col gap-8 px-14">
+            {/* SECTION DIVIDER */}
+                <div className="mx-auto flex items-center justify-center gap-4">
+                    <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
+                    {/* SECTION ICON */}
+                        <ChatBubbleOvalLeftIcon className="text-clas h-8 w-8" />
+                    {/* SECTION TITLE */}
+                    <h2 className="text-2xl">
+                        Contáctanos
+                    </h2>
+                    {/* Right line */}
+                    <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
+                </div>
 
             {/* CONTACT */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -96,75 +189,26 @@ const Redesign: React.FC = () => {
             </div>
         </div>
 
-        {/* ABOUT / PHOTO CAROUSEL */}
-        <div>
-            <div className="w-full flex flex-col gap-8 px-10 py-20">
-            <div className="mx-auto flex flex-col">
-                <h2 className="text-3xl">Sobre Nosotros</h2>
-            </div>
-            <div className="flex flex-row w-full gap-4">
-                <div className="text-left flex flex-col justify-between text-lg basis-[60%]">
-                    <p>
-                    Martinrea International se especializa en el diseño y fabricación de estructuras ligeras y sistemas de propulsión para la industria automotriz. Su enfoque está en la innovación, la eficiencia y la mejora continua para contribuir al futuro de la movilidad.
-
-                    </p>
-                    <div className="flex flex-row justify-between">
-                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                            <PlusIcon className="h-6"/>
-                            950
-                            </div>
-                            <div className="text-lg text-gray-500">
-                            Empleados
-                            </div>
-                        </div>
-
-                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                            <PlusIcon className="h-6"/>
-                            26000 m2
-                            </div>
-                            <div className="text-lg text-gray-500">
-                            Capacidad de planta
-                            </div>
-                        </div>
-
-                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                            <PlusIcon className="h-6"/>
-                            74000
-                            </div>
-                            <div className="text-lg text-gray-500">
-                            Piezas / año
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="group flex gap-2 items-center text-clas w-fit">
-                        <a className="text-sm">Visita nuestro Sitio Web<span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
-                        </a>
-                        <ArrowUpRightIcon className="h-3 group-hover:-translate-y-1 transition-all ease-in-out"/>
-                    </div>
-                </div>
-                <div className="basis-[40%]">
-                    <PhotoCarousel images={images}/>
-                    {/*TO DO: COLAPSAR SI NO HAY IMÁGENES*/}
-                </div>
-            </div>
-
-            </div>
-        </div>
-
+        
         {/* CATALOG */}
-        <div className="w-full flex flex-col gap-8 px-10">
-            <div className="mx-auto flex flex-col">
-                <h2 className="text-3xl">Nuestro catálogo</h2>
-            </div>
+        <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+            {/* SECTION DIVIDER */}
+                <div className="mx-auto flex items-center justify-center gap-4">
+                    <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
+                    {/* SECTION ICON */}
+                        <ShoppingCartIcon className="text-clas h-8 w-8" />
+                    {/* SECTION TITLE */}
+                    <h2 className="text-2xl">
+                        Catálogo
+                    </h2>
+                    {/* Right line */}
+                    <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
+                </div>
 
             {/* PRODUCTS */}
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="text-left flex flex-col justify-between">
-                    <h2 className="text-3xl"><span className="text-clas">Productos</span> destacados</h2>
+                    <h2 className="text-2xl"><span className="text-clas">Productos</span> destacados</h2>
                     <p>Explora nuestros productos diseñados para ofrecer calidad, confiabilidad y alto desempeño.</p>
                     <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
@@ -287,65 +331,63 @@ const Redesign: React.FC = () => {
                 </div>
 
                 <div className="text-right items-end flex flex-col justify-between">
-                    <h2 className="text-3xl"><span className="text-clas">Servicios</span> destacados</h2>
+                    <h2 className="text-2xl"><span className="text-clas">Servicios</span> destacados</h2>
                     <p>Brindamos soluciones eficientes y adaptadas a tus necesidades.</p>
                     <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
             </div>
 
             <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
-                <a className="text-sm">Explora el catálogo completo <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
+                <a className="text-md">Explora el catálogo completo <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
 </a>
-                <ArrowUpRightIcon className="h-3 group-hover:-translate-y-1 transition-all ease-in-out"/>
+                <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
             </div>
 
         </div>
 
+
         {/* CAPACITIES */}
-        <div className="bg-white border border-gray-200 rounded-2xl px-10 animate-fade-in-up">
-          <h2 className="text-2xl mb-6 text-center">Capacidades</h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-            {[1, 2, 3, 4].map((_, i) => (
-              <div
-                key={i}
-                className="text-center space-y-1 transition hover:-translate-y-1"
-              >
-                <div className="text-2xl font-semibold">
-                  500,000+
+        <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+            <div className="bg-linear-to-tr from-clas to-clas-claro rounded-xl text-white p-10 flex flex-col gap-8">
+                {/* SECTION DIVIDER */}
+                <div className="mx-auto flex items-center justify-center gap-4">
+                    <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
+                    {/* SECTION ICON */}
+                        <BoltIcon className="h-8 w-8" />
+                    {/* SECTION TITLE */}
+                    <h2 className="text-2xl">
+                        Capacidades
+                    </h2>
+                    {/* Right line */}
+                    <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
                 </div>
-                <div className="text-sm text-gray-500">
-                  Producción anual
+                <div>
+                    <p className="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis voluptate iure cum dolorum repellat consectetur est libero obcaecati tempora nisi suscipit unde reprehenderit minima autem, aut atque officiis aliquid accusantium.</p>
                 </div>
-              </div>
-            ))}
-
-          </div>
+            
+            </div>
         </div>
 
         {/* CERTIFICATIONS */}
-        <div className="animate-fade-in-up px-10">
-          <h2 className="text-2xl mb-6 text-center">Certificaciones</h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 divide-x divide-gray-200">
-
-            {[1, 2, 3, 4].map((_, i) => (
-              <div key={i} className="flex justify-center">
-                <div className="group flex flex-col items-center gap-3 text-center px-6 py-10 transition hover:-translate-y-[2px]">
-
-                  <CheckBadgeIcon className="h-8 text-gray-400 group-hover:text-gray-700 transition group-hover:scale-110" />
-
-                  <div className="text-gray-700 group-hover:text-black transition">
-                    Certificación
-                  </div>
-
-                  <div className="h-[2px] w-0 bg-gray-400 transition-all duration-300 group-hover:w-8 rounded-full"></div>
-
+        <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+          {/* SECTION DIVIDER */}
+                <div className="mx-auto flex items-center justify-center gap-4">
+                    <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
+                    {/* SECTION ICON */}
+                        <CheckBadgeIcon className="text-clas h-8 w-8" />
+                    {/* SECTION TITLE */}
+                    <h2 className="text-2xl">
+                        Certificaciones
+                    </h2>
+                    {/* Right line */}
+                    <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
                 </div>
-              </div>
-            ))}
 
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <CertificationCard name=""/>
+            <CertificationCard name=""/>
+            <CertificationCard name=""/>
+            <CertificationCard name=""/>
           </div>
         </div>
 
