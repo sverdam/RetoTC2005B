@@ -122,7 +122,7 @@ const LoginPage: React.FC = () => {
                         
                     </div>
                     <button type="submit" 
-                    className="w-md bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">Entrar</button>
+                    className="w-md bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">Iniciar Sesión</button>
                     {failAttempt ? <div className="text-red-700 p-2">
                         <p>Contraseña o usuario incorrecto</p>
                     </div> : <></>}
