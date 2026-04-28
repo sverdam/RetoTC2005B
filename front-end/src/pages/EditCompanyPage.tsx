@@ -1,7 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput } from "clas-types";
+import { type Company, type Product, type Contact, type NewContactInput, type NewCompanyInput, type Filter, type UserProfile, type NewProductInput, type NewCertificationInput, type Service } from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
@@ -13,7 +13,7 @@ import NewCertificationModal from "../components/NewCertificationModal";
 import NewContactModal from "../components/NewContactModal";
 import DeleteCompanyConfirmModal from "../components/DeleteCompanyConfirmModal";
 import ProductModal from "../components/ProductModal";
-import DeleteProductConfirmModal from "../components/DeleteProductConfirmModal";
+import DeleteProductServiceConfirmModal from "../components/DeleteProductConfirmModal";
 import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
 import { getProfile } from "../api/LoginAPI";
 import ServiceModal from "../components/ServiceModal";
@@ -80,6 +80,7 @@ const emptyFormContact: NewContactInput = {
         position: ""
 }
 
+
 const EditCompanyPage: React.FC = () => {
 
     const navigate = useNavigate();
@@ -104,12 +105,14 @@ const EditCompanyPage: React.FC = () => {
 
     {/* Obtain data */}
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const [companyToDelete, setCompanyToDelete] = useState<NewCompanyInput | null>(null);
+    const [companyToDelete, setCompanyToDelete] = useState<Company | NewCompanyInput | null>(null);
 
     const [isProductDeleteOpen, setIsProductDeleteOpen] = useState(false);
-    const [productToDelete, setProductToDelete] = useState<Product | null>(null);
-
+    const [productToDelete, setProductToDelete] = useState<Product | NewProductInput | null>(null);
     const [productsToDelete, setProductsToDelete] = useState<Number[]>([])
+
+    const [serviceToDelete, setServiceToDelete] = useState<Service | NewProductInput | null>(null);
+    const [servicesToDelete, setServicesToDelete] = useState<Number[]>([])
     
     const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
     const [contactToDelete, setContactToDelete] = useState<Contact | null>(null);
@@ -164,6 +167,10 @@ const EditCompanyPage: React.FC = () => {
         handleChange("products", formCompany.products.filter(p => p.id != productToDelete.id));
         setProductToDelete(null);
     };
+
+    const handleServiceDelete = () => {
+        
+    }
 
     const handleContactDelete = () => {
         if(!contactToDelete) return;
@@ -476,7 +483,7 @@ const EditCompanyPage: React.FC = () => {
                                 <div className="flex justify-center text-red-400">
                                     <button
                                         onClick={() =>
-                                        setProductToDelete(product)
+                                        setProductToDelete(s)
                                         }
                                         className="text-red-600 hover:text-red-800"
                                     >
@@ -704,11 +711,16 @@ const EditCompanyPage: React.FC = () => {
             setService={handleService}
 
         />
-        <DeleteProductConfirmModal 
+        <DeleteProductServiceConfirmModal 
             product={productToDelete}
-            onClose={() => setProductToDelete(null)}
-            onConfirm={handleProductDelete}
+            service={serviceToDelete}
+            onClose={() => {
+                setProductToDelete(null)
+                setServiceToDelete(null)
+             }}
+            onConfirm={productToDelete != null ? handleProductDelete : handleServiceDelete}
         />
+
         <DeleteContactConfirmModal 
             contact={contactToDelete}
             onClose={() => setContactToDelete(null)}

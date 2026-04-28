@@ -1,14 +1,15 @@
-import type { NewProductInput, Product } from "clas-types"; // TODO: Agregar Producto a tipos
+import type { NewProductInput } from "clas-types"; // TODO: Agregar Producto a tipos
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
     product: NewProductInput | null;
+    service: NewProductInput | null;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const DeleteProductConfirmModal: React.FC<Props> = ({ product, onClose, onConfirm}) => {
+const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, onClose, onConfirm}) => {
     return(
         <Dialog open={product !== null} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro*/}
@@ -39,8 +40,11 @@ const DeleteProductConfirmModal: React.FC<Props> = ({ product, onClose, onConfir
                             className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
                             Cancelar
                         </button>
-                        <button onClick={onConfirm}
-                            className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-70">
+                        <button onClick={() => {
+                            onConfirm();
+                            
+                        }}
+                            className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700">
                             Eliminar
                         </button>
                     </div>
@@ -50,4 +54,4 @@ const DeleteProductConfirmModal: React.FC<Props> = ({ product, onClose, onConfir
     )
 };
 
-export default DeleteProductConfirmModal;
+export default DeleteProductServiceConfirmModal;
