@@ -370,10 +370,11 @@ const EditCompanyPage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-clas-negro text-center">1</td>
-                            <td className="text-clas-negro text-center">Tornillo</td>
-                            <td className="text-clas-negro text-center">Tornillo de 1/2"</td>
+                        {formCompany.products.map((p) => {
+                        return <tr>
+                            <td className="text-clas-negro text-center">{p.id}</td>
+                            <td className="text-clas-negro text-center">{p.name}</td>
+                            <td className="text-clas-negro text-center">{p.description}</td>
                             <td className="p-2">
                                 <div className="flex justify-center text-clas">
                                     <PencilIcon className="h-4 w-4"/>
@@ -392,6 +393,7 @@ const EditCompanyPage: React.FC = () => {
                                 </div>
                             </td>
                         </tr>
+                        })}
                     </tbody>
                 </table>
             </div>
@@ -408,7 +410,7 @@ const EditCompanyPage: React.FC = () => {
                 <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
                     onClick={() => setIsProductOpen(true)}
                 >
-                    Nuevo Producto
+                    Nuevo Servicio
                     <PlusIcon className="h-4 w-4"/>
                 </button>
             </div>
@@ -425,10 +427,11 @@ const EditCompanyPage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-clas-negro text-center">1</td>
-                            <td className="text-clas-negro text-center">Tornillo</td>
-                            <td className="text-clas-negro text-center">Tornillo de 1/2"</td>
+                        {formCompany.services.map((s) => {
+                        return <tr>
+                            <td className="text-clas-negro text-center">{s.id}</td>
+                            <td className="text-clas-negro text-center">{s.name}</td>
+                            <td className="text-clas-negro text-center">{s.description}</td>
                             <td className="p-2">
                                 <div className="flex justify-center text-clas">
                                     <PencilIcon className="h-4 w-4"/>
@@ -447,6 +450,7 @@ const EditCompanyPage: React.FC = () => {
                                 </div>
                             </td>
                         </tr>
+                        })}
                     </tbody>
                 </table>
             </div>
@@ -471,8 +475,10 @@ const EditCompanyPage: React.FC = () => {
             </label>
             <input 
                 type="number" 
+                value={formCompany.pieces != null ? formCompany.pieces : "" }
                 placeholder="Piezas..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("pieces", e.target.value)}>
             </input>
         </div>
         {/* Espacio */}
@@ -482,8 +488,10 @@ const EditCompanyPage: React.FC = () => {
             </label>
             <input 
                 type="number" 
+                value={formCompany.space != null ? formCompany.space : ""}
                 placeholder="Espacio..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("space", e.target.value)}>
             </input>
         </div>
         {/* Capacidad */}
@@ -493,33 +501,67 @@ const EditCompanyPage: React.FC = () => {
             </label>
             <input 
                 type="text" 
+                value={formCompany.capacity}
                 placeholder="Capacidad..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2">
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleChange("capacity", e.target.value)}>
             </input>
         </div>
         {/* Certificaciones */}
-        <div className="flex flex-col gap-2 items-start">
-            <label className="font-semibold text-clas-negro">
+        
+        <div className="w-2xl">
+            <div className="flex justify-start">
+                <label className="font-semibold text-clas-negro">
                 Certificaciones
             </label>
-            {/* TODO: MAPEO DE CERTIFICACIONES */}
-            <div className="flex flex-wrap gap-5">
-                <CertificationCard name="IATF 16949" />
-                <CertificationCard name="ISO 14001" />
-                <CertificationCard name="ISO 45001" />
-                <CertificationCard name="C-TPAT / OEA" />
-                <div className=" flex flex-col flex-wrap justify-center items-center rounded-lg border border-clas bg-clas w-30 h-30 p-2">
-                    {/* Hacer Modal de agregar certificaciones y hacer que funcione el boton de agregar */}
-                    <button className="hover:bg-clas-claro"
-                        onClick={() => setIsCertificationOpen(true)}
-                    >
-                        <div className="rounded-full w-7 h-7 border border-white m-1">
-                            <PlusIcon className="text-white p-1"/>
-                        </div>
-                    </button>
-                </div>
+            </div>
+            
+            <div className="w-full flex justify-end">
+                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                    onClick={() => setIsProductOpen(true)} // checar
+                >
+                    Nueva Certificación
+                    <PlusIcon className="h-4 w-4"/>
+                </button>
+            </div>
+            
+            <div className="rounded-md border-2 border-clas/50">
+                <table className="min-w-full">
+                    <thead className="bg-clas/30">
+                        <tr>
+                            <th className="text-clas-negro">Nombre</th>
+                            <th className="text-clas-negro">Editar</th>
+                            <th className="text-clas-negro">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {formCompany.certifications.map((c) => {
+                         return <tr>
+                            <td className="text-clas-negro text-center">{c.name}</td>
+                            <td className="p-2">
+                                <div className="flex justify-center text-clas">
+                                    <PencilIcon className="h-4 w-4"/>
+                                </div>
+                            </td>
+                            <td className="p-2">
+                                <div className="flex justify-center text-red-400">
+                                    <button
+                                        onClick={() =>
+                                        setProductToDelete(product)
+                                        }
+                                        className="text-red-600 hover:text-red-800"
+                                    >
+                                        <TrashIcon className="h-4 w-4" />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        })}
+                    </tbody>
+                </table>
             </div>
         </div>
+        
         {/* Contactos */}
         <div className="w-2xl">
             <label className="font-semibold text-clas-negro">
@@ -545,9 +587,10 @@ const EditCompanyPage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-clas-negro text-center">Ventas</td>
-                            <td className="text-clas-negro text-center">ventas@ford.com</td>
+                        {formCompany.contacts.map((c) => {
+                        return <tr>
+                            <td className="text-clas-negro text-center">{c.position}</td>
+                            <td className="text-clas-negro text-center">{c.contactInfo}</td>
                             <td className="p-2">
                                 <div className="flex justify-center text-clas">
                                     <PencilIcon className="h-4 w-4"/>
@@ -566,6 +609,7 @@ const EditCompanyPage: React.FC = () => {
                                 </div>
                             </td>
                         </tr>
+                        })}
                     </tbody>
                 </table>
             </div>
