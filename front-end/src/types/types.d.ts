@@ -57,6 +57,7 @@ declare module "clas-types" {
         id: number;
         name: string;
         description: string;
+        fileModuleId: number;
     }
 
     export interface Service {

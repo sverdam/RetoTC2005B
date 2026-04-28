@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import type { Company, UserProfile } from "clas-types";
+import type { Company, Contact, UserProfile } from "clas-types";
 import ProductCatalog from "../components/ProductCatalog";
 import Button from "../components/Button";
 import { getProfile } from "../api/LoginAPI";
@@ -24,9 +24,9 @@ import {
 } from "@heroicons/react/24/outline";
 import PhotoCarousel from "../components/PhotoCarousel";
 import CertificationCard from "../components/CertificationCard";
-import { getFileURLById } from "../api/fileModuleAPI";
+import { getFileURLById, getGallery } from "../api/fileModuleAPI";
 
-const images = [
+const images : string[] = [
     "https://u-mercari-images.mercdn.net/photos/m80862755279_1.jpg?1774828834",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQC_OPbbCDWa-3rZ28ONF6A1_38cwXOfiULw&s",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQIwNYMOqZG-J9N8jeEhZJv9kK8vgukYfCsw&s"
@@ -58,6 +58,12 @@ const CompanyPage: React.FC = () => {
     const companyId = Number(id)
     const navigate = useNavigate();
     const [company, setcompany] = useState<Company>();
+
+    const [gallery, setGallery] = useState<string[]>([]);
+
+    const [contactNumbers, setContactNumbers] = useState<Contact[]>([]);
+    const [contactEmails, setContactEmails] = useState<Contact[]>([]);
+
     const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
         
 
@@ -65,9 +71,17 @@ const CompanyPage: React.FC = () => {
         getCompanybyId(companyId).then((companies: Company) => setcompany(companies)).catch(
             () => !company ? navigate(`/error`) : null 
         );
+
+        getGallery(companyId).then((result: string[]) => setGallery(result));
+
         getProfile().then((profile: UserProfile) => setUserProfile(profile))
     }, [companyId])
 
+    useMemo(() => {
+        if (company == null) return;
+        setContactNumbers(company.contacts.filter(contact  =>  contact.type === "phone"));
+        setContactEmails(company.contacts.filter(contact   =>  contact.type === "email"));
+    }, [company])
    
     return(
     <div className="bg-gray-50 min-h-screen flex justify-center">
@@ -103,8 +117,7 @@ const CompanyPage: React.FC = () => {
 
                     {/* SUBTEXT */}
                     <p className="text-md text-gray-500 ">
-                    Fabricación automotriz de clase mundial con enfoque en innovación,
-                    eficiencia y producción a gran escala.
+                    {company?.slogan}
                     </p>
 
                     {/* TAGS / METADATA */}
@@ -138,7 +151,7 @@ const CompanyPage: React.FC = () => {
                 </div>
 
                 <div className="flex flex-row w-full gap-8">
-                    <div className="text-left flex flex-col justify-between text-lg basis-[60%]">
+                    <div className={`text-left flex flex-col justify-between text-lg basis-[${gallery.length === 0 ? 100 : 60}%]`}>
                         <p>
                         {company?.description}
                         
@@ -147,7 +160,7 @@ const CompanyPage: React.FC = () => {
                             <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
                                 <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
                                 <PlusIcon className="h-6 text-clas"/>
-                                950
+                                {company?.employees}
                                 </div>
                                 <div className="text-lg text-gray-500">
                                 Empleados
@@ -157,7 +170,7 @@ const CompanyPage: React.FC = () => {
                             <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
                                 <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
                                 <PlusIcon className="h-6 text-clas"/>
-                                26000 m2
+                                {company?.space} m2
                                 </div>
                                 <div className="text-lg text-gray-500">
                                 Capacidad de planta
@@ -167,7 +180,7 @@ const CompanyPage: React.FC = () => {
                             <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
                                 <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
                                 <PlusIcon className="h-6 text-clas"/>
-                                74000
+                                {company?.pieces}
                                 </div>
                                 <div className="text-lg text-gray-500">
                                 Piezas / año
@@ -175,16 +188,23 @@ const CompanyPage: React.FC = () => {
                             </div>
 
                         </div>
-                        <div className="group flex gap-2 items-center text-clas w-fit">
-                            <a className="text-md">Visita nuestro Sitio Web<span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
+                        
+                        {company?.website ? (<div className="group flex gap-2 items-center text-clas w-fit">
+                            <a className="text-md" href={company?.website}>Visita nuestro Sitio Web
+                                <span className="block max-w-0 group-hover:max-w-full 
+                                transition-all duration-300 h-[1px] bg-clas rounded-full">
+                                </span>
                             </a>
                             <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
-                        </div>
+                        </div>) : <></>}
                     </div>
-                    <div className="basis-[40%]">
-                        <PhotoCarousel images={images}/>
-                        {/*TO DO: COLAPSAR SI NO HAY IMÁGENES*/}
-                    </div>
+                    {
+                        gallery.length === 0 ? <></> :
+                        <div className="basis-[40%]">
+                            <PhotoCarousel images={gallery}/>
+                        </div> 
+                    }
+                    
                 </div>
 
             </div>
@@ -209,20 +229,18 @@ const CompanyPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div className="w-full text-left p-4 items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <MapPinIcon className="w-7 text-clas flex-shrink-0"/>  
-                    <a href="https://maps.app.goo.gl/y4V7jCetxMjZNJW98">Henry Ford 23-Sur, Parque Industrial Dinatech, 83297 Hermosillo, Son. </a>  
+                    <a href={company?.location.mapLink}>{company?.location.address}</a>  
                 </div>
                 <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <EnvelopeIcon className="w-7 text-clas"/>  
                     <div className="flex flex-col">
-                        <a>Correo</a> 
-                        <a>Correo</a> 
+                        {contactEmails.map(c => <a>{c.contactInfo}</a>)}
                     </div> 
                 </div>
                 <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <PhoneIcon className="w-7 text-clas"/>  
                      <div className="flex flex-col">
-                        <a>Telefono</a>  
-                        <a>Telefono</a>  
+                        {contactNumbers.map(c => <a>{`${c.contactInfo}`}</a>)}
                      </div>
                 </div>
 
@@ -252,71 +270,35 @@ const CompanyPage: React.FC = () => {
                     <p>Explora nuestros productos diseñados para ofrecer calidad, confiabilidad y alto desempeño.</p>
                     <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
-            
-                {/* PRODUCT CARD */}
+                
+                {company?.products.length === 0 ? <></> : 
+                company?.products.map(product => 
                 <div>
                 <div className="w-full bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
                         <img
                             className="h-40 w-full object-cover"
-                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
+                            src={getFileURLById(product.fileModuleId)}
                         />
 
                         <div className="p-4 flex flex-col gap-1 text-left">
                             <p className="text-base font-medium leading-tight">
-                            Producto
+                            {product.name}
                             </p>
 
                             <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
+                            {product.description}
                             </p>
                         </div>
                     </div>
                 </div>
-                {/* PRODUCT CARD */}
-                <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <img
-                            className="h-40 w-full object-cover"
-                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
-                        />
-
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Producto
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* PRODUCT CARD */}
-                <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <img
-                            className="h-40 w-full object-cover"
-                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
-                        />
-
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Producto
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                )}
 
             </div>
 
             {/* SERVICES */}
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* SERVICE CARD */}
+                {company?.services.length === 0? <></> : 
+                company?.services.map(service => 
                 <div>
                 <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
                         <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
@@ -324,51 +306,17 @@ const CompanyPage: React.FC = () => {
                         </div>
                         <div className="p-4 flex flex-col gap-1 text-left">
                             <p className="text-base font-medium leading-tight">
-                            Servicio
+                            {service.name}
                             </p>
 
                             <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
+                            {service.description}
                             </p>
                         </div>
                     </div>
                 </div>
+                )}
 
-                {/* SERVICE CARD */}
-                <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
-                            <WrenchIcon className="h-7 w-7"/>
-                        </div>
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Servicio
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* SERVICE CARD */}
-                <div>
-                <div className="w-full bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
-                            <WrenchIcon className="h-7 w-7"/>
-                        </div>
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Servicio
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="text-right items-end flex flex-col justify-between">
                     <h2 className="text-2xl"><span className="text-clas">Servicios</span> destacados</h2>
@@ -376,12 +324,15 @@ const CompanyPage: React.FC = () => {
                     <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
             </div>
-
+            
+            {company === undefined ? <></> : ( !company.catalogo ? <></> :
             <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
-                <a className="text-md">Explora el catálogo completo <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
+                <a className="text-md" href={getFileURLById(company.catalogo.id)}>Explora el catálogo completo 
+                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
                 </a>
                 <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
-            </div>
+            </div>) }
+            
 
         </div>
 
@@ -402,7 +353,7 @@ const CompanyPage: React.FC = () => {
                     <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
                 </div>
                 <div>
-                    <p className="text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis voluptate iure cum dolorum repellat consectetur est libero obcaecati tempora nisi suscipit unde reprehenderit minima autem, aut atque officiis aliquid accusantium.</p>
+                    <p className="text-lg">{company?.capacity}</p>
                 </div>
             
             </div>
@@ -423,11 +374,10 @@ const CompanyPage: React.FC = () => {
                     <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
                 </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <CertificationCard name=""/>
-            <CertificationCard name=""/>
-            <CertificationCard name=""/>
-            <CertificationCard name=""/>
+          <div className={`grid sm:grid-cols-2 lg:grid-cols-4 gap-4`}>
+            {company?.certifications.length === 0 ? <></> : 
+            company?.certifications.map(c => 
+            <CertificationCard name={c.name}/>)}
           </div>
         </div>
 

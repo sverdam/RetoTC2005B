@@ -8,6 +8,20 @@ export const getFileURLById = (id: number) => {
     return url;
 }
 
+
+export const getGallery = async (companyId: number) => {
+    try {
+        const res = await api.get<FileModule[]>(`/fileModule/company/${companyId}/type/image`);
+        const links = res.data.map(fileModule => getFileURLById(fileModule.id))
+        return links;
+
+    } catch( error ){
+        const err = error as AxiosError;
+        console.error("Error getting logos: ", err.message);
+        throw err;
+    }
+}
+
 export const getLogos = async () => {
     try {
         const res = await api.get<FileModule[]>("/fileModule/type/logo");
