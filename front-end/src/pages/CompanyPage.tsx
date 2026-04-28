@@ -60,6 +60,7 @@ const CompanyPage: React.FC = () => {
     const [company, setcompany] = useState<Company>();
 
     const [gallery, setGallery] = useState<string[]>([]);
+    const [catalog, setCatalog] = useState<string>("");
 
     const [contactNumbers, setContactNumbers] = useState<Contact[]>([]);
     const [contactEmails, setContactEmails] = useState<Contact[]>([]);
@@ -81,6 +82,11 @@ const CompanyPage: React.FC = () => {
         if (company == null) return;
         setContactNumbers(company.contacts.filter(contact  =>  contact.type === "phone"));
         setContactEmails(company.contacts.filter(contact   =>  contact.type === "email"));
+        if (company.catalog){
+            setCatalog(getFileURLById(company.catalog.id))
+        }else{
+            setCatalog("");
+        }
     }, [company])
    
     return(
@@ -325,13 +331,13 @@ const CompanyPage: React.FC = () => {
                 </div>
             </div>
             
-            {company === undefined ? <></> : ( !company.catalogo ? <></> :
+            {catalog === "" ? <></> :
             <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
-                <a className="text-md" href={getFileURLById(company.catalogo.id)}>Explora el catálogo completo 
+                <a className="text-md" href={catalog}>Explora el catálogo completo 
                     <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
                 </a>
                 <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
-            </div>) }
+            </div> }
             
 
         </div>
