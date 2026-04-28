@@ -177,4 +177,8 @@ declare module "clas-types" {
         contactInfo: string;
         position: string;
     }
+
+    export interface NewCertificationInput{
+        name:string;
+    }
 }

@@ -1,7 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput } from "clas-types";
+import type { Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput } from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
@@ -69,6 +69,10 @@ const emptyFormProduct: NewProductInput = {
     description: ""
 }
 
+const emptyFormCertification: NewCertificationInput = {
+    name: ""
+}
+
 const EditCompanyPage: React.FC = () => {
 
     const navigate = useNavigate();
@@ -107,8 +111,11 @@ const EditCompanyPage: React.FC = () => {
         console.log(file);
     };
 
+    const handleCertification = (newCertification: NewCertificationInput) => {
+        handleChange("certifications", [...formCompany.certifications, newCertification])
+    }
     const handleService = (newService: NewProductInput) => {
-        handleChange("services", [...formCompany.services,newService])
+        handleChange("services", [...formCompany.services, newService])
     }
     const handleProduct = (newProduct: NewProductInput) => {
         handleChange("products", [...formCompany.products, newProduct])
@@ -531,7 +538,7 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsProductOpen(true)} // checar
+                    onClick={() => setIsCertificationOpen(true)} // checar
                 >
                     Nueva Certificación
                     <PlusIcon className="h-4 w-4"/>
@@ -652,6 +659,8 @@ const EditCompanyPage: React.FC = () => {
         <NewCertificationModal 
             isCertificationOpen={isCertificationOpen}
             onClose={() => setIsCertificationOpen(false)}
+            certification={emptyFormCertification}
+            setCertification={handleCertification}
         />
 
         <NewContactModal 
@@ -666,7 +675,7 @@ const EditCompanyPage: React.FC = () => {
             setProduct={handleProduct}
         />
 
-        <ServiceModal
+        <ServiceModal //utilizado
             isServiceOpen={isServiceOpen}
             onClose={() => setIsServiceOpen(false)}
             service={emptyFormProduct}

@@ -1,11 +1,19 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
+import type { NewCertificationInput } from "clas-types";
+import { useState } from "react";
 
 interface Props{
     isCertificationOpen: boolean;
     onClose: () => void;
+    certification: NewCertificationInput;
+    setCertification: (newCertification: NewCertificationInput) => void;
 }
 
-const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose }) => {
+const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, certification, setCertification }) => {
+    const [newCertification, setNewCertification] = useState<NewCertificationInput>(certification);
+
+    
+
     return(
         <Dialog open={isCertificationOpen} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro */}
@@ -23,16 +31,26 @@ const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose }
                                 Certificación
                             </label>
                             <input type="text" 
+                                required
+                                value={newCertification.name}
                                 placeholder="Nombre de la certificación..." 
-                                className="w-full border-2 border-clas-gris rounded-lg p-2">
+                                className="w-full border-2 border-clas-gris rounded-lg p-2"
+                                onChange={(e) => setNewCertification({...newCertification, ["name"]: e.target.value})}>
                             </input>
                         </div>
                     </div>
                     <div className="flex gap-3">
-                        <button className="bg-white rounded-lg py-1 px-2 border-2 border-red-400 text-red-400 hover:bg-clas-gris/20 focus:ring-2 focus:ring-rojo-600">
+                        <button 
+                            onClick={() => onClose()}
+                            className="bg-white rounded-lg py-1 px-2 border-2 border-red-400 text-red-400 hover:bg-clas-gris/20 focus:ring-2 focus:ring-rojo-600">
                             Cancelar
                         </button>
-                        <button className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                        <button 
+                            onClick={() => {
+                                setCertification(newCertification);
+                                onClose();
+                            }}
+                            className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                             Agregar
                         </button>
                     </div>
