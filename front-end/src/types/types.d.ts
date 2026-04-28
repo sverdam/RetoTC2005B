@@ -131,11 +131,11 @@ declare module "clas-types" {
     export interface NewCompanyInput{
         name: string;
         description: string;
-        tier: number;
-        logo: FileModule;
-        catalogo: FileModule;
-        memberType: MemberType;
-        location: Location;
+        tier: number | null;
+        logo: FileModule | null;
+        catalogo: FileModule | null;
+        memberType: MemberType | null;
+        location: Location | null;
         contacts: Contact[];
         user: User[];
         textModules: TextModule[]; 
