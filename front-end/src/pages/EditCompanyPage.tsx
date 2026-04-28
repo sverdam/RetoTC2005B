@@ -707,7 +707,7 @@ const EditCompanyPage: React.FC = () => {
         <DeleteProductConfirmModal 
             product={productToDelete}
             onClose={() => setProductToDelete(null)}
-            onConfirm={() => {handleProductDelete}}
+            onConfirm={handleProductDelete}
         />
         <DeleteContactConfirmModal 
             contact={contactToDelete}
