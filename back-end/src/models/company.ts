@@ -84,7 +84,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    }) 
    description?: string; 
 
-   @Column
+   @Column({type: DataType.TEXT})
    aboutUs?: string;
 
    @Column 
