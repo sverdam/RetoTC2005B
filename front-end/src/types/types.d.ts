@@ -33,7 +33,7 @@ declare module "clas-types" {
         aboutUs: string;
         tier: number;
         logo: FileModule;
-        catalogo: FileModule;
+        catalog: FileModule;
         memberType: MemberType;
         website: string;
         slogan: string;
