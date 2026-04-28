@@ -55,7 +55,7 @@ const LoginPage: React.FC = () => {
                 </div>
                 <div className="mx-10 my-5 flex flex-col">
                     <div className="flex gap-3 items-center">
-                        <div className="flex justify-center items-center bg-clas-claro h-10 w-10 rounded-full">
+                        <div className="flex justify-center items-center bg-gradient-to-r from-clas to-clas-claro h-10 w-10 rounded-full">
                             <UsersIcon className="text-white h-7 w-7"/>
                         </div>
                         <div className="flex flex-col">
@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
                 </div>
                 <div className="mx-10 my-5 flex flex-col">
                     <div className="flex gap-3 items-center">
-                        <div className="flex justify-center items-center bg-clas-claro h-10 w-10 rounded-full">
+                        <div className="flex justify-center items-center bg-gradient-to-r from-clas to-clas-claro h-10 w-10 rounded-full">
                             <NewspaperIcon className="text-white h-7 w-7"/>
                         </div>
                         <div className="flex flex-col">
@@ -77,7 +77,7 @@ const LoginPage: React.FC = () => {
                 </div>
                 <div className="mx-10 my-5 flex flex-col">
                     <div className="flex gap-3 items-center">
-                        <div className="flex justify-center items-center bg-clas-claro h-10 w-10 rounded-full">
+                        <div className="flex justify-center items-center bg-gradient-to-r from-clas to-clas-claro h-10 w-10 rounded-full">
                             <CalendarIcon className="text-white h-7 w-7"/>
                         </div>
                         <div className="flex flex-col">
