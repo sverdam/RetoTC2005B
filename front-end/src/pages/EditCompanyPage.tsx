@@ -156,9 +156,7 @@ const EditCompanyPage: React.FC = () => {
     const handleProductDelete = () => {
         if(!productToDelete) return;
         //TODO: Agregar API de producto
-        deleteProduct(productToDelete.id).then(() => {
-          setProductToDelete(null);
-        });
+        formCompany.products.map
     };
 
     const handleContactDelete = () => {
@@ -370,8 +368,9 @@ const EditCompanyPage: React.FC = () => {
             </label>
             <FileUpload onFileSelect={handleCatalogSelect} />
         </div>
-        {/* Productos */}
-        <div className="w-2xl">
+
+        {isEditing ? 
+        <><div className="w-2xl">
             <div className="flex justify-start">
                 <label className="font-semibold text-clas-negro">
                 Productos
@@ -427,7 +426,7 @@ const EditCompanyPage: React.FC = () => {
                 </table>
             </div>
         </div>
-        {/* Servicios */}
+
         <div className="w-2xl">
             <div className="flex justify-start">
                 <label className="font-semibold text-clas-negro">
@@ -484,6 +483,9 @@ const EditCompanyPage: React.FC = () => {
                 </table>
             </div>
         </div>
+        </>
+        : 
+        <></>}
         {/* Empleados */}
         <div className="flex flex-col gap-2 items-start w-2xl">
             <label className="font-semibold text-clas-negro">
@@ -537,8 +539,8 @@ const EditCompanyPage: React.FC = () => {
             </input>
         </div>
         {/* Certificaciones */}
-        
-        <div className="w-2xl">
+        {isEditing ? 
+        <><div className="w-2xl">
             <div className="flex justify-start">
                 <label className="font-semibold text-clas-negro">
                 Certificaciones
@@ -591,7 +593,7 @@ const EditCompanyPage: React.FC = () => {
             </div>
         </div>
         
-        {/* Contactos */}
+       
         <div className="w-2xl">
             <label className="font-semibold text-clas-negro">
                 Contactos
@@ -642,7 +644,8 @@ const EditCompanyPage: React.FC = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> </>
+        : <></>}
         <div className="m-5 flex w-2xl gap-3 justify-end">
             <button className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1 hover:bg-clas-negro/20">Cancelar</button>
             <button className="bg-red-400 text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
