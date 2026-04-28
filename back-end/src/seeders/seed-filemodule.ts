@@ -13,13 +13,19 @@ export async function seedFiles() {
     },
     {
       id: 2,
-      position: 1,
+      position: 101,
       type: FileType.PRODUCT,
       companyId: 2
     },
     {
       id: 3,
-      position: 2,
+      position: 102,
+      type: FileType.PRODUCT,
+      companyId: 2
+    },
+    {
+      id: 255,
+      position: 103,
       type: FileType.PRODUCT,
       companyId: 2
     },
@@ -45,6 +51,12 @@ export async function seedFiles() {
       type: FileType.PRODUCT,
       companyId: 3
     },
+    {
+      id: 256,
+      position: 103,
+      type: FileType.PRODUCT,
+      companyId: 3
+    },
 
     // =====================================
     // Company 3 - Beyond
@@ -64,6 +76,12 @@ export async function seedFiles() {
     {
       id: 9,
       position: 102,
+      type: FileType.PRODUCT,
+      companyId: 4
+    },
+    {
+      id: 257,
+      position: 103,
       type: FileType.PRODUCT,
       companyId: 4
     },
@@ -89,6 +107,12 @@ export async function seedFiles() {
       type: FileType.PRODUCT,
       companyId: 5
     },
+    {
+      id: 258,
+      position: 103,
+      type: FileType.PRODUCT,
+      companyId: 5
+    },
 
     // =====================================
     // Company 5 - Precision
@@ -97,18 +121,6 @@ export async function seedFiles() {
       id: 13,
       position: 0,
       type: FileType.LOGO,
-      companyId: 6
-    },
-    {
-      id: 14,
-      position: 101,
-      type: FileType.PRODUCT,
-      companyId: 6
-    },
-    {
-      id: 15,
-      position: 102,
-      type: FileType.PRODUCT,
       companyId: 6
     }
   ]);
