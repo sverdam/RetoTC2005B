@@ -77,7 +77,7 @@ const UserFormPage: React.FC = () => {
                         {isEditing ? <PencilSquareIcon className="h-4 w-4 text-blue-700" />
                             : <PlusIcon className="h-4 w-4 text-blue-700" />}
                         <p className="text-sm font-semibold text-blue-900">
-                            {isEditing ? "Edit User" : "New User"}
+                            {isEditing ? "Editar Usuario" : "Nuevo usuario"}
                         </p>
                     </div>
                     {/* Body */}
@@ -191,8 +191,8 @@ const UserFormPage: React.FC = () => {
                                 Cancelar
                         </button>
                         <button className="inline-flex items-center gap-2 rounded-md
-                        bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm
-                        hover:bg-blue-700 focus: outline-none focus:ring-2 focus:ring-blue-500/30">
+                        bg-clas px-4 py-2 text-sm font-medium text-white shadow-sm 
+                        hover:bg-clas-claro focus: outline-none focus:ring-2 focus:ring-blue-500/30">
                             {isEditing ? <><PencilSquareIcon className="h-4 w-4" />Guardar Cambios</>: <><PlusIcon className="h-4 w-4" />Guardar Usuario</>}
                         </button>
                     </div>

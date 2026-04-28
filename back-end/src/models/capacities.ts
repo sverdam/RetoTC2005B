@@ -2,7 +2,7 @@ import { Table, Model, Column, CreatedAt, UpdatedAt, DeletedAt, DataType, Foreig
 import { Optional } from 'sequelize'; 
 import { Company } from "../models/company";
 
-enum CapacityType {
+export enum CapacityType {
   MATERIAL = 'material',
   PROCESS = 'process',
 }
@@ -14,7 +14,7 @@ export interface CapacityAttribute{
   description: string;
 } 
 
-interface CapacirtCreationAttributes extends Optional<CapacityAttribute, 'id'>{} 
+interface CapacityCreationAttributes extends Optional<CapacityAttribute, 'id'>{} 
 
 @Table ({ 
   tableName: "capacities",
@@ -22,7 +22,7 @@ interface CapacirtCreationAttributes extends Optional<CapacityAttribute, 'id'>{}
   timestamps: true
 }) 
 
-export class Capacity extends Model<CapacityAttribute, CapacirtCreationAttributes>{
+export class Capacity extends Model<CapacityAttribute, CapacityCreationAttributes>{
     
     @Column
     type!: CapacityType;

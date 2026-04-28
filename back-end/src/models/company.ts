@@ -129,7 +129,7 @@ export class Company extends Model<CompanyAttributes, CompanyCreationAttributes>
    declare users?: User[];
 
    @HasOne(() => Location, {onDelete: 'CASCADE'})
-   declare locations?: Location;
+   declare location?: Location;
 
    @HasMany(() => Contact, {onDelete: 'CASCADE'})
    declare contacts?: Contact[];
