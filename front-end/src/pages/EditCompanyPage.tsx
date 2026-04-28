@@ -1,7 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile } from "clas-types";
+import type { Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput } from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
@@ -63,6 +63,10 @@ const emptyFormCompany: NewCompanyInput = {
         services: []
 }
 
+const emptyFormProduct: NewProductInput = {
+    name: "",
+    description: ""
+}
 
 const EditCompanyPage: React.FC = () => {
 
@@ -100,6 +104,9 @@ const EditCompanyPage: React.FC = () => {
         console.log(file);
     };
 
+    const handleProduct = (newProduct: NewProductInput) => {
+        handleChange("products", [...formCompany.products, newProduct])
+    }
     const handleFilter = (newFilters: Filter[]) => {
         handleChange("filters", newFilters)
     }
@@ -384,7 +391,7 @@ const EditCompanyPage: React.FC = () => {
                                 <div className="flex justify-center text-red-400">
                                     <button
                                         onClick={() =>
-                                        setProductToDelete(product)
+                                        setProductToDelete(p)
                                         }
                                         className="text-red-600 hover:text-red-800"
                                     >
@@ -624,7 +631,7 @@ const EditCompanyPage: React.FC = () => {
             <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">Aplicar Cambios</button>
         </div>
         
-        <FilterModal 
+        <FilterModal //utilizado
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
                 selectFilter={formCompany.filters}
@@ -649,6 +656,8 @@ const EditCompanyPage: React.FC = () => {
         <ProductModal 
             isProductOpen={isProductOpen}
             onClose={() => setIsProductOpen(false)}
+            product={emptyFormProduct}
+            setProduct={handleProduct}
         />
         <DeleteProductConfirmModal 
             product={productToDelete}

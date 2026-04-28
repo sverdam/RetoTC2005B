@@ -1,13 +1,24 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
 import FileUpload from "./FileUpload";
+import type { NewProductInput} from "clas-types";
+import { useState } from "react";
 
 interface Props{
     isProductOpen: boolean;
     onClose: () => void;
+    product: NewProductInput;
+    setProduct: (newProduct: NewProductInput) => void;
+
 }
 
-const ProductModal: React.FC<Props> = ({ isProductOpen, onClose }) => {
+const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setProduct}) => {
     
+    const [formProduct, setFormProduct] = useState<NewProductInput>(product);
+
+    const handleChange = (field:keyof NewProductInput, value:any) => {
+        setFormProduct((prev) => ({...prev, [field]: value}))
+    }
+
     {/* Product Image Handling */}
     const handleProductImageSelect = (file: File) => {
         console.log(file);
@@ -29,8 +40,11 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose }) => {
                                 Nombre
                             </label>
                             <input type="text" 
+                                required
+                                value={formProduct.name}
                                 placeholder="Nombre del producto..." 
-                                className="w-full border-2 border-clas-gris rounded-lg p-2">
+                                className="w-full border-2 border-clas-gris rounded-lg p-2"
+                                onChange={(e) => handleChange("name", e.target.value)}>
                             </input>
                         </div>
                         <div className="flex flex-col gap-1">
@@ -38,8 +52,11 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose }) => {
                                 Descripción
                             </label>
                             <input type="text" 
+                                required
+                                value={formProduct.description}
                                 placeholder="Descripción del producto..." 
-                                className="w-full border-2 border-clas-gris rounded-lg p-2">
+                                className="w-full border-2 border-clas-gris rounded-lg p-2"
+                                onChange={(e) => handleChange("description", e.target.value)}>
                             </input>
                         </div>
                         <div className="flex flex-col gap-1">
@@ -51,10 +68,17 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose }) => {
                         
                     </div>
                     <div className="flex gap-3">
-                        <button className="bg-white rounded-lg py-1 px-2 border-2 border-red-400 text-red-400 hover:bg-clas-gris/20 focus:ring-2 focus:ring-rojo-600">
+                        <button 
+                        onClick={() => onClose()}
+                        className="bg-white rounded-lg py-1 px-2 border-2 border-red-400 text-red-400 hover:bg-clas-gris/20 focus:ring-2 focus:ring-rojo-600">
                             Cancelar
                         </button>
-                        <button className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                        <button 
+                        onClick={() => {
+                            setProduct(formProduct)
+                            onClose();
+                        }}
+                        className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                             Agregar Producto
                         </button>
                     </div>
