@@ -47,7 +47,7 @@ const DirectoryCard: React.FC<Props> = ({ company, user }) => {
 
             {user.role === "unverified"
             ? <button 
-            onClick={() => navigate(`/`)}
+            onClick={() => navigate(`/membresia`)}
             className=" flex gap-2 items-center bg-transparent rounded-lg py-1 px-2 text-clas font-medium text-sm hover:text-clas-claro focus:ring-2 focus:ring-clas">
                 Unirse a CLAS
                 <ArrowRightIcon className="h-4 w-4"/>
