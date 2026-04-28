@@ -1,9 +1,9 @@
-import type { Company } from "clas-types";
+import type { Company, NewCompanyInput } from "clas-types";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
-    company: Company | null;
+    company: NewCompanyInput | null;
     onClose: () => void;
     onConfirm: () => void;
 }
