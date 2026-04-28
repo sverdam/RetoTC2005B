@@ -154,6 +154,7 @@ declare module "clas-types" {
     }  
     
     export interface NewCompanyInput{
+        id: number | null;
         name: string;
         description: string;
         aboutUs: string;
