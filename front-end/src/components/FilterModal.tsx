@@ -60,7 +60,7 @@ const FilterModal: React.FC<Props> = ({ isOpen, onClose, selectFilter, setSelect
 
             {/* Panel Centrado */}
             <div className="fixed inset-0 flex items-center justify-center p-4">
-                <DialogPanel className="w-full max-w-sm rounded-lg bg-white shadow-xl p-6 space-y-4">
+                <DialogPanel className="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-lg bg-white shadow-xl p-6 space-y-4">
                     <DialogTitle className="text-xl font-semibold text-clas-negro">
                         Filtros
                     </DialogTitle>

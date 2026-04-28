@@ -94,10 +94,16 @@ const CompanyPage: React.FC = () => {
     return(
     <div className="bg-gray-50 min-h-screen flex justify-center">
       <div className="flex flex-col gap-20 py-10 text-clas-negro max-w-7xl ">
-
         {/* PROFILE */}
         <div className="hero-intro w-full flex flex-col gap-8 px-14">
-
+            {/* EDIT BUTTON */}
+            {(userProfile.role === "admin" 
+                || userProfile.role === "CLAS editor"
+                || (userProfile.role === "company editor" && userProfile.companyId === company?.id)) ?
+               <div className="flex w-full justify-end">
+                   <Button text="Editar" to="editar" comp={company} />
+               </div> : <></>
+            }
             {/* LOGO */}
                 <div className="group relative">
                     <div className="relative flex items-center justify-center">
