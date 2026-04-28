@@ -39,7 +39,7 @@ const Redesign: React.FC = () => {
                     {/* NAME + TAG */}
                     <div className="flex flex-col lg:flex-row items-center gap-x-4">
                         <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-                            Martinrea
+                            Martinrea International
                         </h1>
 
                         <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
@@ -76,7 +76,7 @@ const Redesign: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div className="w-full text-left p-4 items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <MapPinIcon className="w-7 text-clas flex-shrink-0"/>  
-                    <a href="https://share.google/hzuXpl0o1pukzMitQ">Henry Ford 23-Sur, Parque Industrial Dinatech, 83297 Hermosillo, Son. </a>  
+                    <a href="https://maps.app.goo.gl/y4V7jCetxMjZNJW98">Henry Ford 23-Sur, Parque Industrial Dinatech, 83297 Hermosillo, Son. </a>  
                 </div>
                 <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <EnvelopeIcon className="w-7 text-clas"/>  
@@ -98,15 +98,58 @@ const Redesign: React.FC = () => {
 
         {/* ABOUT / PHOTO CAROUSEL */}
         <div className="bg-gray-100">
-            <div className="w-full flex flex-col gap-8 px-10 py-4">
+            <div className="w-full flex flex-col gap-8 px-10 py-20">
             <div className="mx-auto flex flex-col">
                 <h2 className="text-3xl">Sobre Nosotros</h2>
             </div>
-            <div className="flex flex-row w-full">
-                <div className="text-left flex flex-col justify-between text-lg basis-[60%]">
+            <div className="flex flex-row w-full gap-4">
+                <div className="text-left flex flex-col justify-between text-lg basis-[60%] bg-blue-100">
                     <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos tempore ad optio assumenda, explicabo iure error, hic molestias cum veniam tenetur facilis officiis modi esse maxime ipsam adipisci quisquam atque. Lorem ipsum dolor.
+                    Martinrea International se especializa en el diseño y fabricación de estructuras ligeras y sistemas de propulsión para la industria automotriz. Su enfoque está en la innovación, la eficiencia y la mejora continua para contribuir al futuro de la movilidad.
+
                     </p>
+                    <div className="flex flex-row justify-between">
+                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                            <PlusIcon className="h-6"/>
+                            950
+                            </div>
+                            <div className="text-lg text-gray-500">
+                            Empleados
+                            </div>
+                        </div>
+
+                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                            <PlusIcon className="h-6"/>
+                            950
+                            </div>
+                            <div className="text-lg text-gray-500">
+                            Empleados
+                            </div>
+                        </div>
+
+                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                            <PlusIcon className="h-6"/>
+                            98000 m2
+                            </div>
+                            <div className="text-lg text-gray-500">
+                            Capacidad de planta
+                            </div>
+                        </div>
+
+                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                            <PlusIcon className="h-6"/>
+                            950
+                            </div>
+                            <div className="text-lg text-gray-500">
+                            Empleados
+                            </div>
+                        </div>
+
+                    </div>
                     <div className="group flex gap-2 items-center text-clas w-fit">
                         <a className="text-sm">Visita nuestro Sitio Web<span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
                         </a>
