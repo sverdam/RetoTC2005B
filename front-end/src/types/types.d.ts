@@ -155,6 +155,7 @@ declare module "clas-types" {
     }  
     
     export interface NewCompanyInput{
+        id: number | null;
         name: string;
         description: string;
         aboutUs: string;
@@ -186,8 +187,12 @@ declare module "clas-types" {
     }
     
     export interface NewContactInput{
-        type: ContactType; 
+        type: ContactType | null; 
         contactInfo: string;
         position: string;
+    }
+
+    export interface NewCertificationInput{
+        name:string;
     }
 }
