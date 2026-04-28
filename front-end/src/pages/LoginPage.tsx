@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
                 <div className="mx-10 my-5 flex flex-col">
                     <div className="flex gap-3 items-center">
                         <div className="flex justify-center items-center bg-clas-claro h-10 w-10 rounded-full">
-                            <UsersIcon className="text-white h-8 w-8"/>
+                            <UsersIcon className="text-white h-7 w-7"/>
                         </div>
                         <div className="flex flex-col">
                             <h2 className="font-semibold text-clas-negro text-left text-lg">Directorio</h2>
@@ -67,7 +67,7 @@ const LoginPage: React.FC = () => {
                 <div className="mx-10 my-5 flex flex-col">
                     <div className="flex gap-3 items-center">
                         <div className="flex justify-center items-center bg-clas-claro h-10 w-10 rounded-full">
-                            <NewspaperIcon className="text-white h-8 w-8"/>
+                            <NewspaperIcon className="text-white h-7 w-7"/>
                         </div>
                         <div className="flex flex-col">
                             <h2 className="font-semibold text-clas-negro text-left text-lg">Boletín de noticias</h2>
@@ -78,7 +78,7 @@ const LoginPage: React.FC = () => {
                 <div className="mx-10 my-5 flex flex-col">
                     <div className="flex gap-3 items-center">
                         <div className="flex justify-center items-center bg-clas-claro h-10 w-10 rounded-full">
-                            <CalendarIcon className="text-white h-8 w-8"/>
+                            <CalendarIcon className="text-white h-7 w-7"/>
                         </div>
                         <div className="flex flex-col">
                             <h2 className="font-semibold text-clas-negro text-left text-lg">Eventos y oportunidades</h2>
@@ -100,7 +100,7 @@ const LoginPage: React.FC = () => {
                             <EnvelopeIcon className="text-clas-gris w-5 h-5"/>
                             <input 
                             type="text" 
-                            placeholder="Tu correo" 
+                            placeholder="Correo" 
                             value={form.email}
                             onChange={(e) => handleChange("email", e.target.value)}
                             className="w-full outline-none">
@@ -113,7 +113,7 @@ const LoginPage: React.FC = () => {
                         <div className="flex items-center gap-2 border border-clas-gris rounded-lg px-2 py-1 text-clas-negro/80 w-md">
                             <LockClosedIcon className="text-clas-gris w-5 h-5"/>
                             <input 
-                            type="password" placeholder="contraseña" 
+                            type="password" placeholder="Contraseña" 
                             value={form.password}
                             onChange={(e) => handleChange("password", e.target.value)}
                             className="w-full outline-none">
