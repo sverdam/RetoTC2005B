@@ -8,6 +8,23 @@ export const getFileURLById = (id: number) => {
     return url;
 }
 
+export const getLogos = async () => {
+    try {
+        const res = await api.get<FileModule[]>("/fileModule/type/logo");
+        const links = res.data.map(fileModule => 
+            {
+                return {src: getFileURLById(fileModule.id), alt: fileModule.type};
+            }
+        )
+        return links;
+
+    } catch( error ){
+        const err = error as AxiosError;
+        console.error("Error getting logos: ", err.message);
+        throw err;
+    }
+}
+
 export const createFileModule = async (info: FileModuleInput, file: File) => {
     const formData = new FormData();
 
@@ -26,7 +43,7 @@ export const createFileModule = async (info: FileModuleInput, file: File) => {
         return res.data;
     } catch(error){
         const err = error as AxiosError;
-        console.error("Error creating company: ", err.message);
+        console.error("Error creating file: ", err.message);
         throw err;
     }
 }
