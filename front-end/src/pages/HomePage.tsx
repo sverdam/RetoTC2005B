@@ -7,7 +7,9 @@ import soluciones_industriales from "../assets/LogoLoop_Logos/soluciones_industr
 import suppliers_city from "../assets/LogoLoop_Logos/suppliers_city.png"
 import Button from "../components/Button";
 import heroImage from "../assets/hero.jpeg"
+import type { LandingPage } from "clas-types";
 import { useEffect, useState } from "react";
+import { getLandingPage } from "../api/LandingPageApi";
 import { getLogos } from "../api/fileModuleAPI";
 
 const companyLogos = [
@@ -26,7 +28,14 @@ interface LogoInterface {
 
 const HomePage: React.FC = () => {
 
+    const [info, setInfo] = useState<LandingPage | null>(null);
     const [dbLogos, setDbLogos] = useState<LogoInterface[]>(companyLogos);
+    
+    useEffect(() => {
+        getLandingPage().then((result) => {
+            setInfo(result);
+        });
+    }, []);
 
     useEffect(() => {
         getLogos().then(
@@ -41,10 +50,10 @@ const HomePage: React.FC = () => {
                 <img src={heroImage} alt="landing background" className="w-full h-[720px] object-cover absolute z-0" ></img>
                 <div className="relative z-10 max-w-2xl px-10 text-left text-white">
                     <h1 className="text-5xl font-bold mb-4">
-                    Impulsando el futuro automotriz de Sonora
+                    {info ? info.banneHeader : "Impulsando el futuro automotriz de Sonora"}
                     </h1>
                     <p className="mb-6 text-lg">
-                    Colaboración que impulsa la innovación, competitividad y el crecimiento sostenible del sector automotriz sonorense.
+                    {info ? info.bannerText : "Colaboración que impulsa la innovación, competitividad y el crecimiento sostenible del sector automotriz sonorense."}
                     </p>
                     <Button text="Conoce nuestro directorio" to="/directorio" />
                 </div>
@@ -78,7 +87,7 @@ const HomePage: React.FC = () => {
                     </h1>
 
                     <p className="text-lg text-gray-700 leading-relaxed">
-                    Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora.
+                    {info ? info.mainText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
                     </p>
                 </div>
                 </div>
@@ -87,21 +96,21 @@ const HomePage: React.FC = () => {
                 <div>
                     <h2 className="text-xl font-medium">🌟 Visión</h2>
                     <p className="text-lg text-gray-700">
-                    Posicionar a Sonora como el principal clúster automotriz de México, destacado por su innovación, sostenibilidad y calidad.
+                    {info ? info.visionText : "Posicionar a Sonora como el principal clúster automotriz de México, destacado por su innovación, sostenibilidad y calidad."}
                     </p>
                 </div>
 
                 <div>
                     <h2 className="text-xl font-medium">⚙️ Misión</h2>
                     <p className="text-lg text-gray-700">
-                    Ser el motor que fortalece la competitividad del sector, fomentando colaboración y desarrollo continuo.
+                    {info ? info.missionText : "Ser el motor que fortalece la competitividad del sector, fomentando colaboración y desarrollo continuo."}
                     </p>
                 </div>
 
                 <div>
                     <h2 className="text-xl font-medium">🤝 Comunidad</h2>
                     <p className="text-lg text-gray-700">
-                    La fuerza de CLAS está en su gente: industria, academia y gobierno trabajando juntos para convertir el crecimiento individual en éxito compartido.
+                    {info ? info.communityText : "La fuerza de CLAS está en su gente: industria, academia y gobierno trabajando juntos para convertir el crecimiento individual en éxito compartido."}
                     </p>
                 </div>
                 </div>
@@ -128,7 +137,7 @@ const HomePage: React.FC = () => {
                         Conoce al equipo CLAS
                         </h1>
                         <p className="text-lg text-gray-700 leading-relaxed">
-                        Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora.
+                        {info ? info.aboutUsText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
                         </p>
                     </div>
                 </div>
@@ -248,7 +257,7 @@ const HomePage: React.FC = () => {
                         Acércate a CLAS
                         </h1>
                         <p className="text-lg text-gray-700 leading-relaxed">
-                       ¿Te interesa formar parte del Cluster Automotriz de Sonora? Acércate a nosotros para obtener más información.
+                        {info ? info.contactText : "¿Te interesa formar parte del Cluster Automotriz de Sonora? Acércate a nosotros para obtener más información."}
                         </p>
                     </div>
                 </div>

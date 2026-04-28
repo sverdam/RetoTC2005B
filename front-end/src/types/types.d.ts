@@ -1,4 +1,16 @@
 declare module "clas-types" {
+    
+    export interface LandingPage {
+        banneHeader: string;
+        bannerText: string;
+        mainText: string;
+        visionText: string;
+        missionText: string;
+        communityText: string;
+        aboutUsText: string;
+        contactText: string;
+    }
+    
     export interface Category {
         id: number;
         name: string;
