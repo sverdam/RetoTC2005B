@@ -73,6 +73,12 @@ const emptyFormCertification: NewCertificationInput = {
     name: ""
 }
 
+const emptyFormContact: NewContactInput = {
+        type: null,
+        contactInfo: "",
+        position: ""
+}
+
 const EditCompanyPage: React.FC = () => {
 
     const navigate = useNavigate();
@@ -111,6 +117,9 @@ const EditCompanyPage: React.FC = () => {
         console.log(file);
     };
 
+    const handleContact = (newContact: NewContactInput) => {
+        handleChange("contacts", [...formCompany.contacts, newContact])
+    }
     const handleCertification = (newCertification: NewCertificationInput) => {
         handleChange("certifications", [...formCompany.certifications, newCertification])
     }
@@ -656,7 +665,7 @@ const EditCompanyPage: React.FC = () => {
             onConfirm={handleDelete}
         />
         
-        <NewCertificationModal 
+        <NewCertificationModal //utilizado
             isCertificationOpen={isCertificationOpen}
             onClose={() => setIsCertificationOpen(false)}
             certification={emptyFormCertification}
@@ -666,6 +675,8 @@ const EditCompanyPage: React.FC = () => {
         <NewContactModal 
             isContactOpen={isContactOpen}
             onClose={() => setIscontactOpen(false)}
+            contact={emptyFormContact}
+            setContact={handleContact}
         />
 
         <ProductModal //utilizado

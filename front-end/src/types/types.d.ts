@@ -173,7 +173,7 @@ declare module "clas-types" {
     }
     
     export interface NewContactInput{
-        type: ContactType; 
+        type: ContactType | null; 
         contactInfo: string;
         position: string;
     }
