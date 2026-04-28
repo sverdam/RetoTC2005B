@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate} from "react-router-dom";
 import Button from "./Button";
 import { logout, getProfile } from "../api/LoginAPI";
 import { useEffect, useState } from "react";
@@ -22,6 +22,7 @@ const unverifiedUser : UserProfile = {
 
 const Navbar: React.FC = () => {
     
+    const navigate = useNavigate();
     const location = useLocation();
     const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
 
@@ -30,14 +31,17 @@ const Navbar: React.FC = () => {
     }, [location.pathname])
 
     const clickLogout = () => {
-      logout().finally(
-        () => getProfile().then(result => setUserProfile(result))
-      )
+      logout().finally(() => {
+        getProfile().then(result => {
+          setUserProfile(result);
+        navigate("/");
+      });
+      });
     }
 
     return (
         <nav className="bg-white w-full border-b border-gray-200">
-          <div className="w-full px-4 lg:px-6 py-2.5 flex items-center justify-between">
+          <div className="w-full px-10 py-2.5 flex items-center justify-between">
             <NavLink to="/" className="flex items-center">
               <img
                 src="..\src\assets\CLAS-Logotipo-03.jpeg"
@@ -72,7 +76,7 @@ const Navbar: React.FC = () => {
                     to="/usuarios"
                     className={navLinkClass}
                   >
-                    Administracion de usuarios
+                    Administración de Usuarios
                   </NavLink>
                 </li> : <></>}
                 <li>{

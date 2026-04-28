@@ -14,7 +14,7 @@ export async function seedFiles() {
     {
       id: 2,
       position: 2,
-      type: FileType.IMAGE,
+      type: FileType.PRODUCT,
       companyId: 2
     },
     {

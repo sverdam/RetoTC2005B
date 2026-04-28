@@ -48,12 +48,13 @@ const DirectoryCard: React.FC<Props> = ({ company, user }) => {
             {user.role === "unverified"
             ? <button 
             onClick={() => navigate(`/`)}
-            className="bg-clas rounded-lg py-1 px-2 text-white font-medium text-sm hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+            className=" flex gap-2 items-center bg-transparent rounded-lg py-1 px-2 text-clas font-medium text-sm hover:text-clas-claro focus:ring-2 focus:ring-clas">
                 Unirse a CLAS
+                <ArrowRightIcon className="h-4 w-4"/>
             </button>
             : <button 
             onClick={() => navigate(`/empresa/${company.id}`)}
-            className="bg-clas rounded-lg py-1 px-2 text-white font-medium text-sm hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+            className="flex gap-2 items-center bg-transparent rounded-lg py-1 px-2 text-clas font-medium text-sm hover:text-clas-claro focus:ring-2 focus:ring-clas">
                 Leer más
                 <ArrowRightIcon className="h-4 w-4"/>
             </button>
