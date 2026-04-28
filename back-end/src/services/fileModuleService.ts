@@ -85,6 +85,7 @@ export const ConstructFinalPath = (type: string, storedName: string) =>{
     if (type === 'image'){finalPath = `files/images/${storedName}`;}
     else if(type === 'logo'){finalPath = `files/logos/${storedName}`;}
     else if(type === 'document'){finalPath = `files/documents/${storedName}`;}
+    else if(type === 'product'){finalPath = `files/products/${storedName}`;}
 
     else {throw new Error(`Invalid file type: ${type}`);}
     return finalPath;
