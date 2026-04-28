@@ -31,6 +31,8 @@ const DirectoryPage: React.FC = () => {
     
     const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
     
+    const [loading, setLoading] = useState(true);
+
     const Tag: React.FC<TagProps> = ({value, tagTier}) => {
         const isActive = tier.includes(tagTier);
 
@@ -60,8 +62,12 @@ const DirectoryPage: React.FC = () => {
 
     
     useEffect(() => {
-        getAllCompanies().then((companies: Company[]) => setCompanies(companies));
-        getProfile().then((profile: UserProfile) => setUserProfile(profile))
+        setLoading(true);
+        getAllCompanies()
+            .then((companies: Company[]) => setCompanies(companies))
+            .finally(() => setLoading(false));
+        getProfile().
+            then((profile: UserProfile) => setUserProfile(profile))
     }, []);
 
     const filteredCompanies = useMemo(() => {
@@ -84,6 +90,14 @@ const DirectoryPage: React.FC = () => {
 
     }
 
+    if (loading) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+                <div className="h-12 w-12 rounded-full border-4 border-clas border-t-transparent animate-spin"></div>
+                <p className="text-clas-gris animate-pulse">Cargando directorio...</p>
+            </div>
+        )
+    }
     return (
         <div className="flex flex-col gap-10 items-center p-10 min-h-screen">
             <h1 className="font-medium text-3xl"> Directorio CLAS</h1>
