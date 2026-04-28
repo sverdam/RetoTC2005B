@@ -6,7 +6,7 @@ import type { UserProfile } from "clas-types";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) => {
   return [
-    "block py-2 text-sm font-medium transition-colors",
+    "block text-xs sm:text-sm font-medium transition-colors",
     isActive
       ? "text-clas-negro"
       : "text-gray-500 hover:text-clas",
@@ -41,18 +41,18 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="bg-white w-full border-b border-gray-200">
-          <div className="w-full px-10 py-2.5 flex items-center justify-between">
+          <div className="w-full px-14 py-2.5 flex items-center justify-between">
             <NavLink to="/" className="flex items-center">
               <img
                 src="..\src\assets\CLAS-Logotipo-03.jpeg"
                 alt="Logo"
-                className="mr-3 w-12"
+                className="mr-3 w-12 flex-shrink-0"
               />
             </NavLink>
 
 
             <div className="flex items-center w-auto">
-              <ul className="flex flex-row items-center font-medium space-x-8">
+              <ul className="flex flex-row items-center font-medium gap-4 sm:gap-8">
                 <li>
                   <NavLink
                     to="/"
