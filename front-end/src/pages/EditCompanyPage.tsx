@@ -284,15 +284,19 @@ const EditCompanyPage: React.FC = () => {
     } 
 
     return(
-    <div className="flex flex-col items-center justify-center p-5 gap-3 w-full">
+    <div className="flex flex-col items-center justify-center p-5 gap-5 w-full">
         <form onSubmit={handleSubmit}>
-        <h1 className="text-xl font-medium text-clas-negro"> {isEditing ? "Editar Empresa" : "Crear Empresa" }</h1>
+        <h1 className="text-2xl font-medium text-clas-negro"> {isEditing ? "Editar Página de Empresa" : "Crear Página de Empresa" }</h1>
         {/* Subir Archivo de Logo*/}
-        <div className="flex flex-col items-start w-2xl">
-            <label className="font-semibold text-clas-negro">Logo</label>
+        <div className="flex flex-col items-start w-2xl mt-5">
+            <div className="flex items-center gap-3">
+                <label className="font-semibold text-clas-negro">Logo</label>
+                <InformationCircleIcon className="text-gray-500 h-5"/>
+                <p className="text-gray-500">Imagen en formato .png sin fondo</p>
+            </div>
             <FileUpload onFileSelect={handleLogoSelect} />
         </div>
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-3 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">Nombre de la empresa</label>
             <input 
                 required
@@ -304,7 +308,7 @@ const EditCompanyPage: React.FC = () => {
             </input>
         </div>
         {/* Tier y MemberType*/}
-        <div className="flex w-2xl justify-between">
+        <div className="mt-5 flex w-2xl justify-between">
             <div className="flex flex-col gap-2 items-start w-3xs">
                 <label className="font-semibold text-clas-negro">Tier</label>
                 <select  
@@ -358,7 +362,7 @@ const EditCompanyPage: React.FC = () => {
         </div>
         
         {/* Filtros */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">Etiquetas</label>
             <div className="flex flex-wrap gap-2">
                 {/*TODO: Mapeo filtros*/}
@@ -366,14 +370,18 @@ const EditCompanyPage: React.FC = () => {
                 <button
                     onClick={() => setIsOpen(true)} 
                     className=" w-15 bg-clas rounded-4xl py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
-                    +
+                    Editar
                 </button>
             </div>
         </div>
         
         {/* Descripcion ejecutiva / eslogan */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
-            <label className="font-semibold text-clas-negro">Descripción ejecutiva / eslogan</label>
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
+            <div className="flex items-center gap-3">
+                <label className="font-semibold text-clas-negro">Descripción breve</label>
+                <InformationCircleIcon className="text-clas-gris h-5"/>
+                <p className="text-clas-gris">20-30 palabras</p>
+            </div>
             <input 
                 type="text" 
                 value={formCompany.slogan}
@@ -382,20 +390,23 @@ const EditCompanyPage: React.FC = () => {
                 onChange={(e) => handleChange("slogan", e.target.value)}></input>
         </div>
         {/* Descripcion larga */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
-            <label className="font-semibold text-clas-negro">
-                Descripción
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
+            <div className="flex items-center gap-3">
+                <label className="font-semibold text-clas-negro">
+                Sobre tu empresa
             </label>
-            <input 
-                type="text" 
+                <InformationCircleIcon className="text-clas-gris h-5"/>
+                <p className="text-clas-gris">60-80 palabras</p>
+            </div>
+            <textarea  
                 value={formCompany.description}
-                placeholder="Descripción..." 
+                placeholder="Describe a tu empresa" 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"
                 onChange={(e) => handleChange("description", e.target.value)}>
-            </input>
+            </textarea>
         </div>
         {/* Sitio Web */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">Link a sitio Web</label>
             <input 
                 type="text" 
@@ -405,7 +416,7 @@ const EditCompanyPage: React.FC = () => {
                 onChange={(e) => handleChange("website", e.target.value)}></input>
         </div>
         {/* Color de Compania */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">Color de Compañía</label>
             <input 
                 type="text" 
@@ -415,7 +426,7 @@ const EditCompanyPage: React.FC = () => {
                 onChange={(e) => handleChange("color", e.target.value)}></input>
         </div>
         {/* Ubicacion */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <div className="flex gap-2 items-center">
                 <label className="font-semibold text-clas-negro">
                     Ubicación
@@ -439,10 +450,14 @@ const EditCompanyPage: React.FC = () => {
             </iframe>
         </div>
         {/* Catalogo */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
-            <label className="font-semibold text-clas-negro">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
+            <div className="flex items-center gap-3">
+                <label className="font-semibold text-clas-negro">
                 Catálogo de Productos / Servicios
             </label>
+                <InformationCircleIcon className="text-clas-gris h-5"/>
+                <p className="text-clas-gris">Archivo en formato .pdf</p>
+            </div>
             <FileUpload onFileSelect={handleCatalogSelect} />
         </div>
 
@@ -462,49 +477,77 @@ const EditCompanyPage: React.FC = () => {
                     <PlusIcon className="h-4 w-4"/>
                 </button>
             </div>
-            
-            <div className="rounded-md border-2 border-clas/50">
-                <table className="min-w-full">
-                    <thead className="bg-clas/30">
+        
+            <div className="overflow-hidden w-2xl rounded-2xl border border-clas bg-white shadow-lg shadow-slate-200/50">
+                <table className="min-w-full text-sm">
+                    
+                    <thead className="bg-clas-claro/10 border-b border-slate-200">
                         <tr>
-                            <th className="text-clas-negro">Id</th>
-                            <th className="text-clas-negro">Nombre</th>
-                            <th className="text-clas-negro">Descripción</th>
-                            <th className="text-clas-negro">Editar</th>
-                            <th className="text-clas-negro">Eliminar</th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                ID
+                            </th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                Nombre
+                            </th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                Descripción
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Editar
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Eliminar
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <tbody className="divide-y divide-slate-100">
                         {formCompany.products.map((p) => {
-                        return <tr>
-                            <td className="text-clas-negro text-center">{p.id}</td>
-                            <td className="text-clas-negro text-center">{p.name}</td>
-                            <td className="text-clas-negro text-center">{p.description}</td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-clas">
-                                    <PencilIcon className="h-4 w-4"/>
-                                </div>
-                            </td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-red-400">
-                                    <button
-                                        onClick={() =>
-                                        setProductToDelete(p)
-                                        }
-                                        className="text-red-600 hover:text-red-800"
-                                    >
-                                        <TrashIcon className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                            return (
+                                <tr
+                                    key={p.id}
+                                    className="transition hover:bg-slate-50"
+                                >
+                                    <td className="px-6 py-4">
+                                        <span className="px-3 py-1 text-xs font-semibold text-clas">
+                                            #{p.id}
+                                        </span>
+                                    </td>
+
+                                    <td className="px-6 py-4 font-medium text-slate-800">
+                                        {p.name}
+                                    </td>
+
+                                    <td className="px-6 py-4 text-slate-600">
+                                        {p.description}
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button>
+                                                <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button
+                                                onClick={() => setProductToDelete(p)}
+                                            >
+                                                <TrashIcon className="text-red-500 hover:text-red-700 h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
                         })}
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div className="w-2xl">
+        <div className="w-2xl mt-5">
             <div className="flex justify-start">
                 <label className="font-semibold text-clas-negro">
                 Servicios
@@ -512,7 +555,7 @@ const EditCompanyPage: React.FC = () => {
             </div>
             
             <div className="w-full flex justify-end">
-                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
                     onClick={() => setIsServiceOpen(true)}
                 >
                     Nuevo Servicio
@@ -520,41 +563,69 @@ const EditCompanyPage: React.FC = () => {
                 </button>
             </div>
             
-            <div className="rounded-md border-2 border-clas/50">
-                <table className="min-w-full">
-                    <thead className="bg-clas/30">
+            <div className="overflow-hidden w-2xl rounded-2xl border border-clas bg-white shadow-lg shadow-slate-200/50">
+                <table className="min-w-full text-sm">
+                    
+                    <thead className="bg-clas-claro/10 border-b border-slate-200">
                         <tr>
-                            <th className="text-clas-negro">Id</th>
-                            <th className="text-clas-negro">Nombre</th>
-                            <th className="text-clas-negro">Descripción</th>
-                            <th className="text-clas-negro">Editar</th>
-                            <th className="text-clas-negro">Eliminar</th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                ID
+                            </th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                Nombre
+                            </th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                Descripción
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Editar
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Eliminar
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <tbody className="divide-y divide-slate-100">
                         {formCompany.services.map((s) => {
-                        return <tr>
-                            <td className="text-clas-negro text-center">{s.id}</td>
-                            <td className="text-clas-negro text-center">{s.name}</td>
-                            <td className="text-clas-negro text-center">{s.description}</td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-clas">
-                                    <PencilIcon className="h-4 w-4"/>
-                                </div>
-                            </td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-red-400">
-                                    <button
-                                        onClick={() =>
-                                        setProductToDelete(product)
-                                        }
-                                        className="text-red-600 hover:text-red-800"
-                                    >
-                                        <TrashIcon className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                            return (
+                                <tr
+                                    key={s.id}
+                                    className="transition hover:bg-slate-50"
+                                >
+                                    <td className="px-6 py-4">
+                                        <span className="px-3 py-1 text-xs font-semibold text-clas">
+                                            #{s.id}
+                                        </span>
+                                    </td>
+
+                                    <td className="px-6 py-4 font-medium text-slate-800">
+                                        {s.name}
+                                    </td>
+
+                                    <td className="px-6 py-4 text-slate-600">
+                                        {s.description}
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button>
+                                                <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button
+                                                onClick={() => setServiceToDelete(s)}
+                                            >
+                                                <TrashIcon className="text-red-500 hover:text-red-700 h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
                         })}
                     </tbody>
                 </table>
@@ -564,7 +635,7 @@ const EditCompanyPage: React.FC = () => {
         : 
         <></>}
         {/* Empleados */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">
                 Número de empleados
             </label>
@@ -577,7 +648,7 @@ const EditCompanyPage: React.FC = () => {
             </input>
         </div>
         {/* Piezas */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">
                 Capacidad de producción en piezas
             </label>
@@ -590,7 +661,7 @@ const EditCompanyPage: React.FC = () => {
             </input>
         </div>
         {/* Espacio */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">
                 Capacidad de espacio
             </label>
@@ -603,21 +674,21 @@ const EditCompanyPage: React.FC = () => {
             </input>
         </div>
         {/* Capacidad */}
-        <div className="flex flex-col gap-2 items-start w-2xl">
+        <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">
                 Capacidad
             </label>
             <input 
                 type="text" 
                 value={formCompany.capacity}
-                placeholder="Capacidad..." 
+                placeholder="Describe las capacidades de tu empresa" 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"
                 onChange={(e) => handleChange("capacity", e.target.value)}>
             </input>
         </div>
         {/* Certificaciones */}
         {isEditing ? 
-        <><div className="w-2xl">
+        <><div className="w-2xl mt-5">
             <div className="flex justify-start">
                 <label className="font-semibold text-clas-negro">
                 Certificaciones
@@ -625,7 +696,7 @@ const EditCompanyPage: React.FC = () => {
             </div>
             
             <div className="w-full flex justify-end">
-                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
                     onClick={() => setIsCertificationOpen(true)} // checar
                 >
                     Nueva Certificación
@@ -633,37 +704,52 @@ const EditCompanyPage: React.FC = () => {
                 </button>
             </div>
             
-            <div className="rounded-md border-2 border-clas/50">
-                <table className="min-w-full">
-                    <thead className="bg-clas/30">
+            <div className="overflow-hidden w-2xl rounded-2xl border border-clas bg-white shadow-lg shadow-slate-200/50">
+                <table className="min-w-full text-sm">
+                    
+                    <thead className="bg-clas-claro/10 border-b border-slate-200">
                         <tr>
-                            <th className="text-clas-negro">Nombre</th>
-                            <th className="text-clas-negro">Editar</th>
-                            <th className="text-clas-negro">Eliminar</th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                Nombre
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Editar
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Eliminar
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <tbody className="divide-y divide-slate-100">
                         {formCompany.certifications.map((c) => {
-                         return <tr>
-                            <td className="text-clas-negro text-center">{c.name}</td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-clas">
-                                    <PencilIcon className="h-4 w-4"/>
-                                </div>
-                            </td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-red-400">
-                                    <button
-                                        onClick={() =>
-                                        setProductToDelete(c)
-                                        }
-                                        className="text-red-600 hover:text-red-800"
-                                    >
-                                        <TrashIcon className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                            return (
+                                <tr
+                                    className="transition hover:bg-slate-50"
+                                >
+                                    <td className="px-6 py-4 font-medium text-slate-800">
+                                        {c.name}
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button>
+                                                <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button
+                                                onClick={() => setCertificationToDelete(c)}
+                                            >
+                                                <TrashIcon className="text-red-500 hover:text-red-700 h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
                         })}
                     </tbody>
                 </table>
@@ -671,12 +757,14 @@ const EditCompanyPage: React.FC = () => {
         </div>
         
        
-        <div className="w-2xl">
-            <label className="font-semibold text-clas-negro">
-                Contactos
-            </label>
+        <div className="w-2xl mt-5">
+            <div className="flex justify-start">
+                <label className="font-semibold text-clas-negro">
+                    Contactos
+                </label>
+            </div>
             <div className="w-full flex justify-end">
-                <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
+                <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
                     onClick={() => setIscontactOpen(true)}
                 >
                     Nuevo Contacto
@@ -684,46 +772,65 @@ const EditCompanyPage: React.FC = () => {
                 </button>
             </div>
             
-            <div className="rounded-md border-2 border-clas/50">
-                <table className="min-w-full">
-                    <thead className="bg-clas/30">
+            <div className="overflow-hidden w-2xl rounded-2xl border border-clas bg-white shadow-lg shadow-slate-200/50">
+                <table className="min-w-full text-sm">
+                    
+                    <thead className="bg-clas-claro/10 border-b border-slate-200">
                         <tr>
-                            <th className="text-clas-negro">Puesto</th>
-                            <th className="text-clas-negro">Contacto</th>
-                            <th className="text-clas-negro">Editar</th>
-                            <th className="text-clas-negro">Eliminar</th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                Puesto
+                            </th>
+                            <th className="px-6 py-4 text-left font-semibold tracking-wide text-slate-700">
+                                Contacto
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Editar
+                            </th>
+                            <th className="px-6 py-4 text-center font-semibold tracking-wide text-slate-700">
+                                Eliminar
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <tbody className="divide-y divide-slate-100">
                         {formCompany.contacts.map((c) => {
-                        return <tr>
-                            <td className="text-clas-negro text-center">{c.position}</td>
-                            <td className="text-clas-negro text-center">{c.contactInfo}</td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-clas">
-                                    <PencilIcon className="h-4 w-4"/>
-                                </div>
-                            </td>
-                            <td className="p-2">
-                                <div className="flex justify-center text-red-400">
-                                    <button
-                                        onClick={() =>
-                                        setContactToDelete(c)
-                                        }
-                                        className="text-red-600 hover:text-red-800"
-                                    >
-                                        <TrashIcon className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                            return (
+                                <tr
+                                    className="transition hover:bg-slate-50"
+                                >
+                                    <td className="px-6 py-4 font-medium text-slate-800">
+                                        {c.position}
+                                    </td>
+                                    <td className="px-6 py-4 font-medium text-slate-800">
+                                        {c.contactInfo}
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button>
+                                                <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-center">
+                                            <button
+                                                onClick={() => setContactToDelete(c)}
+                                            >
+                                                <TrashIcon className="text-red-500 hover:text-red-700 h-5 w-5"/>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
                         })}
                     </tbody>
                 </table>
             </div>
         </div> </>
         : <></>}
-        <div className="m-5 flex w-2xl gap-3 justify-end">
+        <div className="mt-5 flex w-2xl gap-3 justify-end">
             <button className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1 hover:bg-clas-negro/20">Cancelar</button>
             {isEditing ? 
             <button className="bg-red-400 text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
