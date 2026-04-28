@@ -38,17 +38,26 @@ const SortIcon = ({ className }: { className?: string }) => (
 const UserPage: React.FC = () => {
 
   const [users, setUsers] = useState<User[]>([]);
+  const [roles, setRoles] = useState<string[]>([])
+
   const [nameQuery, setNameQuery] = useState("");
   const [emailQuery, setEmailQuery] = useState("");
+  const [roleQuery, setRoleQuery] = useState("");
+
   const [companies, setCompanies] = useState<Company[]>([]);
   const [companyId, setCompanyId] = useState<number | null> (null);
+
   const [userToDelete, setUserToDelete] = useState<User | null> (null);
   const [userToView, setUserToView] = useState<User | null> (null);
   const navigate = useNavigate();
   
   
   useEffect(() => {
-    getAllUsers().then((users: User[]) => setUsers(users));
+    getAllUsers().then((users: User[]) => 
+      {
+        setUsers(users)
+        setRoles([... new Set(users.map(user => user.role))])
+      });
     getAllCompanies().then((companies: Company[]) => setCompanies(companies));
  
   }, []);
@@ -58,15 +67,17 @@ const UserPage: React.FC = () => {
     console.log(users);
     const _name= nameQuery.trim().toLowerCase();
     const _email = emailQuery.trim().toLowerCase();
+    const _role = roleQuery.trim().toLowerCase();
 
     return users.filter((u) => {
       const matchesName = _name.length === 0 || u.name.toLowerCase().includes(_name);
       const matchesEmail = _email.length === 0 || u.email.toLowerCase().includes(_email);
       const matchesCompany = companyId === null || u.company?.id === companyId;
-
-      return matchesName && matchesEmail && matchesCompany;
+      const matchesRole = _role.length === 0 || u.role.toLowerCase() === _role;
+      
+      return matchesName && matchesEmail && matchesCompany && matchesRole;
     });
-  }, [emailQuery, nameQuery, companyId, users]);
+  }, [emailQuery, nameQuery, companyId, roleQuery, users]);
 
   const handleDelete = () => {
     if(!userToDelete) return;
@@ -77,18 +88,19 @@ const UserPage: React.FC = () => {
   };
 
   const formatRole = (role: string) => {
+    role = role.toLowerCase();
     switch (role){
-      case "USER":
+      case "user":
         return "USUARIO"
 
-      case "CLAS EDITOR":
+      case "clas editor":
         return "EDITOR CLAS"
       
-      case "COMPANY EDITOR":
+      case "company editor":
         return "EDITOR EMPRESA"
 
       default:
-        return role
+        return role.toUpperCase();
     }
   }
 
@@ -129,6 +141,25 @@ const UserPage: React.FC = () => {
               </select>
             </div>
 
+            <div>
+              <label className="block text-xs font-medium text-clas-negro/70">
+                Rol
+              </label>
+              <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                value={roleQuery ?? ""}
+                onChange={(e) => 
+                  setRoleQuery(e.target.value)
+                }
+              >
+                <option value="">Cualquiera</option>
+                {roles.map((role) => (
+                  <option key={role} value={role}>
+                    {formatRole(role)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
 
             <div>
               <label className="block text-xs font-medium text-gray-600">
@@ -164,7 +195,7 @@ const UserPage: React.FC = () => {
         <div className="px-4 py-4 space-y-3">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-sm font-semibold text-clas-negro">Resultados</h2>
-            <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+            <button className="inline-flex items-center justify-center rounded-md bg-clas px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-clas-claro focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               onClick={() => navigate("/usuarios/nuevo")}>
               NUEVO USUARIO
             </button>
@@ -175,38 +206,42 @@ const UserPage: React.FC = () => {
 
               <thead className="bg-gray-50 text-gray-600">
                 <tr className="border-b border-gray-200">
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    #ID
+                    {/* <span className="flex items-center gap-1">
                       #ID
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Compañia
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      Nombre
-                      <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Nombre
+                      {/* <span className="flex items-center gap-1">
+                        Nombre
+                        <SortIcon className="h-4 w-4 text-gray-400" />
+                      </span> */}
                   </th>
                   
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Correo
+                    {/* <span className="flex items-center gap-1">
                       Correo
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Rol
+                    {/* <span className="flex items-center gap-1">
                       Rol
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Modificar
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Eliminar
                   </th>
                 </tr>
@@ -216,14 +251,14 @@ const UserPage: React.FC = () => {
                 {filteredUsers.length === 0 ? (
                   <tr>
                     <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={9}>
-                      No users found.
+                      No se encontraron usuarios.
                     </td>
                   </tr>
                 ) : (
                   filteredUsers.map((user, index) => (
                     <tr key={user.id} className = "hover:bg-gray-50">
                       <td className="px-3 py-3 font-medium text-gray-900">
-                        {index+1}
+                        {index + 1}
                       </td>
                       
                       <td className="px-3 py-3 text-center text-gray-700">
@@ -231,9 +266,10 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3">
-                        <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
+                        {user.name}
+                        {/* <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
                           {user.name}
-                        </button>
+                        </button> */}
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">

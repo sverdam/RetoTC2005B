@@ -77,7 +77,6 @@ declare module "clas-types" {
     interface Filter{ 
         id: number; 
         name: string; 
-        tier: number;
         category: Category;
     } 
     
