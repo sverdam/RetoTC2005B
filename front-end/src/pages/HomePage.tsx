@@ -7,6 +7,8 @@ import soluciones_industriales from "../assets/LogoLoop_Logos/soluciones_industr
 import suppliers_city from "../assets/LogoLoop_Logos/suppliers_city.png"
 import Button from "../components/Button";
 import heroImage from "../assets/hero.jpeg"
+import { useEffect, useState } from "react";
+import { getLogos } from "../api/fileModuleAPI";
 
 const companyLogos = [
   { src: ford, alt: "Ford"},
@@ -17,7 +19,21 @@ const companyLogos = [
   { src: suppliers_city, alt: "Suppliers City"},
 ];
 
+interface LogoInterface {
+    src: string,
+    alt: string
+}
+
 const HomePage: React.FC = () => {
+
+    const [dbLogos, setDbLogos] = useState<LogoInterface[]>(companyLogos);
+
+    useEffect(() => {
+        getLogos().then(
+            result => setDbLogos(result)
+        )
+    }, [])
+
     return (
         <div className="flex flex-col gap-20 items-center">
 
@@ -35,7 +51,7 @@ const HomePage: React.FC = () => {
             </div>
 
             <LogoLoop
-                logos={companyLogos}
+                logos={dbLogos}
                 speed={100}
                 direction="left"
                 logoHeight={34}
