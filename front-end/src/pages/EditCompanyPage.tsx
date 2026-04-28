@@ -108,6 +108,8 @@ const EditCompanyPage: React.FC = () => {
 
     const [isProductDeleteOpen, setIsProductDeleteOpen] = useState(false);
     const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+
+    const [productsToDelete, setProductsToDelete] = useState<Number[]>([])
     
     const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
     const [contactToDelete, setContactToDelete] = useState<Contact | null>(null);
@@ -151,13 +153,16 @@ const EditCompanyPage: React.FC = () => {
         if(!companyToDelete) return;
         deleteCompany(Number(companyToDelete.id)).then(() => {
           setCompanyToDelete(null);
+          navigate('/directorio');
         });
     };
 
     const handleProductDelete = () => {
         if(!productToDelete) return;
         //TODO: Agregar API de producto
-        formCompany.products.map
+        setProductsToDelete((prev) =>[...prev, productToDelete.id]);
+        handleChange("products", formCompany.products.filter(p => p.id != productToDelete.id));
+        setProductToDelete(null);
     };
 
     const handleContactDelete = () => {
@@ -167,7 +172,8 @@ const EditCompanyPage: React.FC = () => {
           setContactToDelete(null);
         });
     };
-
+    
+    
 
     useEffect(()=>{
        
@@ -664,7 +670,7 @@ const EditCompanyPage: React.FC = () => {
                 selectFilter={formCompany.filters}
                 setSelectFilter={handleFilter}
         />
-        <DeleteCompanyConfirmModal 
+        <DeleteCompanyConfirmModal //utilizado
             company={companyToDelete}
             onClose={() => setCompanyToDelete(null)}
             onConfirm={handleDelete}
@@ -701,7 +707,7 @@ const EditCompanyPage: React.FC = () => {
         <DeleteProductConfirmModal 
             product={productToDelete}
             onClose={() => setProductToDelete(null)}
-            onConfirm={handleProductDelete}
+            onConfirm={() => {handleProductDelete}}
         />
         <DeleteContactConfirmModal 
             contact={contactToDelete}
