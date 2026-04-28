@@ -16,6 +16,7 @@ import ProductModal from "../components/ProductModal";
 import DeleteProductConfirmModal from "../components/DeleteProductConfirmModal";
 import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
 import { getProfile } from "../api/LoginAPI";
+import ServiceModal from "../components/ServiceModal";
 
 
 const unverifiedUser : UserProfile = {
@@ -88,6 +89,8 @@ const EditCompanyPage: React.FC = () => {
     {/* Product Modal */}
     const [isProductOpen, setIsProductOpen] = useState(false);
 
+    const [isServiceOpen, setIsServiceOpen] = useState(false);
+
     {/* Obtain data */}
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [companyToDelete, setCompanyToDelete] = useState<Company | null>(null);
@@ -104,6 +107,9 @@ const EditCompanyPage: React.FC = () => {
         console.log(file);
     };
 
+    const handleService = (newService: NewProductInput) => {
+        handleChange("services", [...formCompany.services,newService])
+    }
     const handleProduct = (newProduct: NewProductInput) => {
         handleChange("products", [...formCompany.products, newProduct])
     }
@@ -415,7 +421,7 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsProductOpen(true)}
+                    onClick={() => setIsServiceOpen(true)}
                 >
                     Nuevo Servicio
                     <PlusIcon className="h-4 w-4"/>
@@ -554,7 +560,7 @@ const EditCompanyPage: React.FC = () => {
                                 <div className="flex justify-center text-red-400">
                                     <button
                                         onClick={() =>
-                                        setProductToDelete(product)
+                                        setProductToDelete(c)
                                         }
                                         className="text-red-600 hover:text-red-800"
                                     >
@@ -607,7 +613,7 @@ const EditCompanyPage: React.FC = () => {
                                 <div className="flex justify-center text-red-400">
                                     <button
                                         onClick={() =>
-                                        setContactToDelete(contact)
+                                        setContactToDelete(c)
                                         }
                                         className="text-red-600 hover:text-red-800"
                                     >
@@ -653,11 +659,19 @@ const EditCompanyPage: React.FC = () => {
             onClose={() => setIscontactOpen(false)}
         />
 
-        <ProductModal 
+        <ProductModal //utilizado
             isProductOpen={isProductOpen}
             onClose={() => setIsProductOpen(false)}
             product={emptyFormProduct}
             setProduct={handleProduct}
+        />
+
+        <ServiceModal
+            isServiceOpen={isServiceOpen}
+            onClose={() => setIsServiceOpen(false)}
+            service={emptyFormProduct}
+            setService={handleService}
+
         />
         <DeleteProductConfirmModal 
             product={productToDelete}
