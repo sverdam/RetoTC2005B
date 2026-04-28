@@ -27,7 +27,7 @@ interface Props {
 const DirectoryCard: React.FC<Props> = ({ company, user }) => {
     const navigate = useNavigate();
     return company.memberType === "Admin" ? <></> : (
-        <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
+        <div className="p-5 border border-gray-200 rounded-lg flex flex-col gap-3 items-start shadow-lg">
             {/* Logo */}
             <img 
                 src={!company?.logo ? "../src/assets/logoipsum.png" : `${getFileURLById(company.logo.id)}`} // TODO: Arreglar esto!!
