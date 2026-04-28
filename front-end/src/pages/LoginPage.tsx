@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
                         <h1 className="pl-10 font-bold text-clas-negro text-left text-4xl animate:bounce">impulsa</h1>
                         <h1 className="px-2 font-bold text-clas text-left text-4xl animate:bounce">decisiones</h1>
                     </div>
-                    <p className="pl-10 pt-5 font-medium text-clas-negro text-left text-2xl animate:bounce">Accede al directorio, noticias, eventos clave de las empresas líderes en la industria automotriz</p>
+                    <p className="pl-10 pt-5 font-medium text-clas-negro text-left text-2xl animate:bounce">Accede al directorio, noticias y eventos clave de las empresas líderes en la industria automotriz</p>
                 </div>
                 <div className="mx-10 my-5 flex flex-col">
                     <div className="flex gap-3 items-center">
