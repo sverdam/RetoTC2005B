@@ -30,10 +30,18 @@ declare module "clas-types" {
         id: number;
         name: string;
         description: string;
+        aboutUs: string;
         tier: number;
         logo: FileModule;
         catalogo: FileModule;
         memberType: MemberType;
+        website: string;
+        slogan: string;
+        employees: number;
+        pieces: number;
+        space: number;
+        capacity: string;
+        color: string;
         location: Location;
         contacts: Contact[];
         user: User[];
@@ -148,10 +156,18 @@ declare module "clas-types" {
     export interface NewCompanyInput{
         name: string;
         description: string;
+        aboutUs: string;
         tier: number | null;
         logo: FileModule | null;
         catalogo: FileModule | null;
         memberType: MemberType | null;
+        website: string;
+        slogan: string;
+        employees: number | null;
+        pieces: number | null;
+        space: number | null;
+        capacity: string;
+        color: string;
         location: Location | null;
         contacts: Contact[];
         user: User[];

@@ -10,6 +10,7 @@ import heroImage from "../assets/hero.jpeg"
 import type { LandingPage } from "clas-types";
 import { useEffect, useState } from "react";
 import { getLandingPage } from "../api/LandingPageApi";
+import { getLogos } from "../api/fileModuleAPI";
 
 const companyLogos = [
   { src: ford, alt: "Ford"},
@@ -20,15 +21,27 @@ const companyLogos = [
   { src: suppliers_city, alt: "Suppliers City"},
 ];
 
+interface LogoInterface {
+    src: string,
+    alt: string
+}
+
 const HomePage: React.FC = () => {
 
     const [info, setInfo] = useState<LandingPage | null>(null);
+    const [dbLogos, setDbLogos] = useState<LogoInterface[]>(companyLogos);
     
     useEffect(() => {
         getLandingPage().then((result) => {
             setInfo(result);
         });
     }, []);
+
+    useEffect(() => {
+        getLogos().then(
+            result => setDbLogos(result)
+        )
+    }, [])
 
     return (
         <div className="flex flex-col gap-20 items-center">
@@ -47,7 +60,7 @@ const HomePage: React.FC = () => {
             </div>
 
             <LogoLoop
-                logos={companyLogos}
+                logos={dbLogos}
                 speed={100}
                 direction="left"
                 logoHeight={34}
