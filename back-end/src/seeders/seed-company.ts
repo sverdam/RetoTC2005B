@@ -28,8 +28,8 @@ export async function seedCompanies() {
       website: "https://www.martinrea.com",
       slogan: "Making people’s lives better",
       employees: 950,
-      pieces: 78000,
-      space: 98000,
+      pieces: 74000,
+      space: 26000,
       capacity: "Estampado, ensamble y estructuras",
       color: "#1D4F91",
       aboutUs:"Martinrea International se especializa en el diseño y fabricación de estructuras ligeras y sistemas de propulsión para la industria automotriz. Su enfoque está en la innovación, la eficiencia y la mejora continua para contribuir al futuro de la movilidad."
