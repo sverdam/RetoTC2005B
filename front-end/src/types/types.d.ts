@@ -160,8 +160,8 @@ declare module "clas-types" {
         description: string;
         aboutUs: string;
         tier: number | null;
-        logo: FileModule | null;
-        catalogo: FileModule | null;
+        logo: FileBundleInput | null;
+        catalog: FileBundleInput | null;
         memberType: MemberType | null;
         website: string;
         slogan: string;
@@ -194,5 +194,12 @@ declare module "clas-types" {
 
     export interface NewCertificationInput{
         name:string;
+    }
+    
+    interface FileBundleInput{
+        file: File, // <- Actual file
+        type: 'logo' | 'document' | 'product' | 'image', 
+        position: number,
+        companyId: number
     }
 }

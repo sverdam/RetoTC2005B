@@ -1,7 +1,10 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput } from "clas-types";
+import type { Company, Product, Contact, NewContactInput, NewCompanyInput, 
+    Filter, UserProfile, NewProductInput, NewCertificationInput,
+    FileBundleInput
+} from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
@@ -17,6 +20,7 @@ import DeleteProductConfirmModal from "../components/DeleteProductConfirmModal";
 import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
 import { getProfile } from "../api/LoginAPI";
 import ServiceModal from "../components/ServiceModal";
+import { createFileModule } from "../api/fileModuleAPI";
 
 
 const unverifiedUser : UserProfile = {
@@ -45,7 +49,7 @@ const emptyFormCompany: NewCompanyInput = {
         aboutUs: "",
         tier: null,
         logo: null,
-        catalogo: null,
+        catalog: null,
         memberType: null,
         website: "",
         slogan: "",
@@ -117,7 +121,14 @@ const EditCompanyPage: React.FC = () => {
 
     {/* Logo Handling */}
     const handleLogoSelect = (file: File) => {
-        console.log(file);
+        const logoBoundle : FileBundleInput = {
+            file: file,
+            type: 'logo',
+            position: 0,
+            companyId: -1
+        }
+
+        handleChange('logo', logoBoundle);
     };
 
     const handleContact = (newContact: NewContactInput) => {
@@ -146,7 +157,14 @@ const EditCompanyPage: React.FC = () => {
 
     {/* Catalog Handling */}
     const handleCatalogSelect = (file: File) => {
-        console.log(file);
+        const logoBoundle : FileBundleInput = {
+            file: file,
+            type: 'document',
+            position: 0,
+            companyId: -1
+        }
+
+        handleChange('catalog', logoBoundle);
     };
 
     const handleDelete = () => {
@@ -186,8 +204,8 @@ const EditCompanyPage: React.FC = () => {
                 description: company.description,
                 aboutUs: company.aboutUs,
                 tier: company.tier,
-                logo: company.logo,
-                catalogo: company.catalogo,
+                logo: null,
+                catalog: company.catalog,
                 memberType: company.memberType,
                 website: company.website,
                 slogan: company.slogan,
@@ -206,16 +224,68 @@ const EditCompanyPage: React.FC = () => {
                 products: company.products,
                 services: company.services
             })}else{
-                getCompanybyId(Number(id)).then(data => setFormCompany(data))
+                getCompanybyId(Number(id)).then(data => 
+                    setFormCompany({
+                id: data.id,
+                name: data.name,
+                description: data.description,
+                aboutUs: data.aboutUs,
+                tier: data.tier,
+                logo: null,
+                catalog: data.catalog,
+                memberType: data.memberType,
+                website: data.website,
+                slogan: data.slogan,
+                employees: data.employees,
+                pieces: data.pieces,
+                space: data.space,
+                capacity: data.capacity,
+                color: data.color,
+                location: data.location,
+                contacts: data.contacts,
+                user: data.user,
+                textModules: data.textModules, 
+                fileModules: data.fileModules,
+                certifications: data.certifications,
+                filters: data.filters,
+                products: data.products,
+                services: data.services
+            })
+                )
              }
             }
 
         getProfile().then((profile: UserProfile) => setUserProfile(profile))
         },[])
+    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        // Create company
+        // Create other table's rows
+        
+        const companyId = 0; // get id of somehow
+        
+        if (formCompany.logo){
+            createFileModule({
+                type: formCompany.logo.type, 
+                position: formCompany.logo.position, 
+                companyId: companyId
+            }, formCompany.logo.file);
+        }
 
+        if (formCompany.catalog){
+            createFileModule({
+                type: formCompany.catalog.type, 
+                position: formCompany.catalog.position, 
+                companyId: companyId
+            }, formCompany.catalog.file);
+        }
+    } 
 
     return(
     <div className="flex flex-col items-center justify-center p-5 gap-3 w-full">
+        <form onSubmit={handleSubmit}>
         <h1 className="text-xl font-medium text-clas-negro"> {isEditing ? "Editar Empresa" : "Crear Empresa" }</h1>
         {/* Subir Archivo de Logo*/}
         <div className="flex flex-col items-start w-2xl">
@@ -661,8 +731,9 @@ const EditCompanyPage: React.FC = () => {
             >
                 Eliminar Empresa
             </button> : <></>}
-            <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">Aplicar Cambios</button>
+            <button type="submit" className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">Aplicar Cambios</button>
         </div>
+        </form>
         
         <FilterModal //utilizado
                 isOpen={isOpen}
