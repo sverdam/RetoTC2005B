@@ -97,13 +97,13 @@ const Redesign: React.FC = () => {
         </div>
 
         {/* ABOUT / PHOTO CAROUSEL */}
-        <div className="bg-gray-100">
+        <div>
             <div className="w-full flex flex-col gap-8 px-10 py-20">
             <div className="mx-auto flex flex-col">
                 <h2 className="text-3xl">Sobre Nosotros</h2>
             </div>
             <div className="flex flex-row w-full gap-4">
-                <div className="text-left flex flex-col justify-between text-lg basis-[60%] bg-blue-100">
+                <div className="text-left flex flex-col justify-between text-lg basis-[60%]">
                     <p>
                     Martinrea International se especializa en el diseño y fabricación de estructuras ligeras y sistemas de propulsión para la industria automotriz. Su enfoque está en la innovación, la eficiencia y la mejora continua para contribuir al futuro de la movilidad.
 
@@ -122,17 +122,7 @@ const Redesign: React.FC = () => {
                         <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
                             <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
                             <PlusIcon className="h-6"/>
-                            950
-                            </div>
-                            <div className="text-lg text-gray-500">
-                            Empleados
-                            </div>
-                        </div>
-
-                        <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                            <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                            <PlusIcon className="h-6"/>
-                            98000 m2
+                            26000 m2
                             </div>
                             <div className="text-lg text-gray-500">
                             Capacidad de planta
@@ -142,10 +132,10 @@ const Redesign: React.FC = () => {
                         <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
                             <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
                             <PlusIcon className="h-6"/>
-                            950
+                            74000
                             </div>
                             <div className="text-lg text-gray-500">
-                            Empleados
+                            Piezas / año
                             </div>
                         </div>
 
