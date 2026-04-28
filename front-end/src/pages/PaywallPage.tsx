@@ -25,7 +25,7 @@ const PaywallPage: React.FC = () => {
     return(
         <div className="flex flex-col bg-clas-gris/10 pb-10 items-center">
             <div className="w-screen flex flex-col items-center justify-center gap-5 bg-[radial-gradient(circle,_rgba(59,130,246,0.45)_0%,_rgba(59,130,246,0.18)_25%,_white_65%)]">
-                <div className="mt-5 flex justify-center items-center bg-clas-claro rounded-full">
+                <div className="mt-5 flex justify-center items-center bg-clas rounded-full">
                     <h2 className="p-2 text-white text-md text-center">
                         Únete a CLAS
                     </h2>
