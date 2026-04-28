@@ -27,7 +27,6 @@ const router = createBrowserRouter([
             { path: 'empresa/:id/editar', element: <EditCompanyPage />},
             { path: 'empresa/editar', element: <EditCompanyPage />},
             { path: 'login', element: <LoginPage/>},
-            { path: 'newcompany', element: <NewCompanyPage/>},
             { path: 'membresia', element: <PaywallPage />},
             { path: 'dummy', element: <DummyEditFile/>}
         ]
