@@ -27,7 +27,7 @@ interface Props {
 const DirectoryCard: React.FC<Props> = ({ company, user }) => {
     const navigate = useNavigate();
     return company.memberType === "Admin" ? <></> : (
-        <div className="p-2 border border-gray-200 rounded-lg flex flex-col gap-3 items-start">
+        <div className="p-5 border border-gray-200 rounded-lg flex flex-col gap-3 items-start shadow-lg">
             {/* Logo */}
             <img 
                 src={!company?.logo ? "../src/assets/logoipsum.png" : `${getFileURLById(company.logo.id)}`} // TODO: Arreglar esto!!
@@ -47,7 +47,7 @@ const DirectoryCard: React.FC<Props> = ({ company, user }) => {
 
             {user.role === "unverified"
             ? <button 
-            onClick={() => navigate(`/`)}
+            onClick={() => navigate(`/membresia`)}
             className=" flex gap-2 items-center bg-transparent rounded-lg py-1 px-2 text-clas font-medium text-sm hover:text-clas-claro focus:ring-2 focus:ring-clas">
                 Unirse a CLAS
                 <ArrowRightIcon className="h-4 w-4"/>

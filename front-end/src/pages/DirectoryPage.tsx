@@ -10,6 +10,7 @@ import DirectoryCard from "../components/DirectoryCard";
 import FilterModal from "../components/FilterModal";
 import NewDirectoryCardButton from "../components/NewDirectoryCardButton";
 import { getProfile } from "../api/LoginAPI";
+import { useNavigate } from "react-router";
 
 
 const unverifiedUser : UserProfile = {
@@ -24,6 +25,8 @@ interface TagProps {
     tagTier: number;
 }
 const DirectoryPage: React.FC = () => {
+    const navigate = useNavigate();
+
     const [companies, setCompanies] = useState<Company[]>([]);
     const [nameQuery, setNameQuery] = useState("");
     const [tier, setTier] = useState<number[]>([])
@@ -125,7 +128,7 @@ const DirectoryPage: React.FC = () => {
             </div>
             {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
-                {(userProfile.role === 'admin') ? 
+                {(userProfile.role === 'admin' && filteredCompanies.length > 1) ? 
                     <NewDirectoryCardButton /> 
                     : <></> 
                 }
@@ -145,6 +148,15 @@ const DirectoryPage: React.FC = () => {
                                 ? "No hay empresas registradas"
                                 : "No se encontraron empresas con esos filtros"}
                         </p>
+                        {(userProfile.role === 'admin' ?
+                            <button 
+                                className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas"
+                                onClick={() => navigate("/empresa/editar")}
+                            >
+                                Crear página de empresa
+                            </button>
+                            : <></>
+                        )}
                     </div>
                 )}
             </div>
