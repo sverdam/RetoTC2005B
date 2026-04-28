@@ -92,14 +92,14 @@ const DirectoryPage: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+            <div className="min-h-20vh flex flex-col items-center justify-center gap-4">
                 <div className="h-12 w-12 rounded-full border-4 border-clas border-t-transparent animate-spin"></div>
                 <p className="text-clas-gris animate-pulse">Cargando directorio...</p>
             </div>
         )
     }
     return (
-        <div className="flex flex-col gap-10 items-center m-10">
+        <div className="flex flex-col gap-10 items-center m-10 min-h-screen">
             <h1 className="font-medium text-3xl"> Directorio CLAS</h1>
             <div className="w-full flex gap-4 justify-center">
                 <div className="flex gap-2 p-2 items-center rounded-full border border-gray-300 bg-gray-100">
@@ -125,10 +125,26 @@ const DirectoryPage: React.FC = () => {
             {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
                 {(userProfile.role === 'admin') ? 
-                <NewDirectoryCardButton /> : <></> }
-                {filteredCompanies.map((company) => (
-                    <DirectoryCard key={company.id} company={company} user={userProfile} />
-                ))}
+                    <NewDirectoryCardButton /> 
+                    : <></> 
+                }
+                {filteredCompanies.length > 0 ? (
+                    filteredCompanies.map((company) => (
+                        <DirectoryCard 
+                            key={company.id} 
+                            company={company} 
+                            user={userProfile} 
+                        />
+                ))
+                ) : (
+                    <div className="col-span-4 flex justify-center py-20">
+                        <p className="text-xl font-semibold text-clas">
+                            {companies.length === 0
+                                ? "No hay empresas registradas"
+                                : "No se encontraron empresas con esos filtros"}
+                        </p>
+                    </div>
+                )}
             </div>
             <FilterModal 
                 isOpen={isOpen}
