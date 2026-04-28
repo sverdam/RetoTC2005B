@@ -33,7 +33,7 @@ declare module "clas-types" {
         aboutUs: string;
         tier: number;
         logo: FileModule;
-        catalogo: FileModule;
+        catalog: FileModule;
         memberType: MemberType;
         website: string;
         slogan: string;
@@ -57,6 +57,7 @@ declare module "clas-types" {
         id: number;
         name: string;
         description: string;
+        fileModuleId: number;
     }
 
     export interface Service {
@@ -159,8 +160,8 @@ declare module "clas-types" {
         description: string;
         aboutUs: string;
         tier: number | null;
-        logo: FileModule | null;
-        catalogo: FileModule | null;
+        logo: FileBundleInput | null;
+        catalog: FileBundleInput | null;
         memberType: MemberType | null;
         website: string;
         slogan: string;
@@ -193,5 +194,12 @@ declare module "clas-types" {
 
     export interface NewCertificationInput{
         name:string;
+    }
+    
+    interface FileBundleInput{
+        file: File, // <- Actual file
+        type: 'logo' | 'document' | 'product' | 'image', 
+        position: number,
+        companyId: number
     }
 }

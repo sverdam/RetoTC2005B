@@ -20,24 +20,38 @@ export async function seedProducts() {
         "Imagen representativa de procesos de manufactura y ensamble final.",
       fileModuleId: 3
     },
+    {
+      id: 3,
+      name: "Programa de Calidad Ford",
+      description:
+        "Procesos internos enfocados en precisión, seguridad y mejora continua.",
+      fileModuleId: 255
+    },
 
     // =====================================
     // Company 2 - Martinrea
     // fileModuleId: 5,6
     // =====================================
     {
-      id: 3,
+      id: 4,
       name: "Componente Estructural Metálico",
       description:
         "Pieza automotriz fabricada con acero de alta resistencia.",
       fileModuleId: 5
     },
     {
-      id: 4,
+      id: 5,
       name: "Subensamble Soldado",
       description:
         "Conjunto estructural integrado mediante procesos robotizados.",
       fileModuleId: 6
+    },
+    {
+      id: 6,
+      name: "Solución de Ingeniería Estructural",
+      description:
+        "Desarrollo y validación de piezas metálicas para plataformas automotrices.",
+      fileModuleId: 256
     },
 
     // =====================================
@@ -45,18 +59,25 @@ export async function seedProducts() {
     // fileModuleId: 8,9
     // =====================================
     {
-      id: 5,
+      id: 7,
       name: "Transporte Empresarial",
       description:
         "Servicio especializado de movilidad para personal industrial.",
       fileModuleId: 8
     },
     {
-      id: 6,
+      id: 8,
       name: "Monitoreo de Flotilla",
       description:
         "Herramientas de seguimiento y optimización operativa.",
       fileModuleId: 9
+    },
+    {
+      id: 9,
+      name: "App de Movilidad Corporativa",
+      description:
+        "Plataforma digital para reservaciones y control de rutas.",
+      fileModuleId: 257
     },
 
     // =====================================
@@ -64,37 +85,25 @@ export async function seedProducts() {
     // fileModuleId: 11,12
     // =====================================
     {
-      id: 7,
+      id: 10,
       name: "Arnés Eléctrico",
       description:
         "Sistema de cableado automotriz de alta confiabilidad.",
       fileModuleId: 11
     },
     {
-      id: 8,
+      id: 11,
       name: "Interior Automotriz",
       description:
         "Componentes interiores con enfoque ergonómico y estético.",
       fileModuleId: 12
     },
-
-    // =====================================
-    // Company 5 - Precision
-    // fileModuleId: 14,15
-    // =====================================
     {
-      id: 9,
-      name: "Patio Vehicular",
+      id: 12,
+      name: "Sistema Integrado de Asiento",
       description:
-        "Infraestructura para resguardo y control de unidades.",
-      fileModuleId: 14
-    },
-    {
-      id: 10,
-      name: "Distribución Nacional",
-      description:
-        "Operación logística para traslado de vehículos terminados.",
-      fileModuleId: 15
+        "Módulo interior diseñado para confort y durabilidad.",
+      fileModuleId: 258
     }
   ]);
 }

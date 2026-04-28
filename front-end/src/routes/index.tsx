@@ -10,6 +10,7 @@ import EditCompanyPage from "../pages/EditCompanyPage";
 import NewCompanyPage from "../pages/NewCompanyPage";
 import LoginPage from "../pages/LoginPage";
 import PaywallPage from "../pages/PaywallPage";
+import DummyEditFile from "../pages/DummyEditFile";
 
 const router = createBrowserRouter([
     {
@@ -26,8 +27,8 @@ const router = createBrowserRouter([
             { path: 'empresa/:id/editar', element: <EditCompanyPage />},
             { path: 'empresa/editar', element: <EditCompanyPage />},
             { path: 'login', element: <LoginPage/>},
-            { path: 'newcompany', element: <NewCompanyPage/>},
-            { path: 'membresia', element: <PaywallPage />}
+            { path: 'membresia', element: <PaywallPage />},
+            { path: 'dummy', element: <DummyEditFile/>}
         ]
     },
 ]);

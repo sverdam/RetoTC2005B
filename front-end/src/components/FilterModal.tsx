@@ -60,7 +60,7 @@ const FilterModal: React.FC<Props> = ({ isOpen, onClose, selectFilter, setSelect
 
             {/* Panel Centrado */}
             <div className="fixed inset-0 flex items-center justify-center p-4">
-                <DialogPanel className="w-full max-w-sm rounded-lg bg-white shadow-xl p-6 space-y-4">
+                <DialogPanel className="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-lg bg-white shadow-xl p-6 space-y-4">
                     <DialogTitle className="text-xl font-semibold text-clas-negro">
                         Filtros
                     </DialogTitle>
@@ -86,16 +86,28 @@ const FilterModal: React.FC<Props> = ({ isOpen, onClose, selectFilter, setSelect
                             </div>
                         ))}
                     </div>
-                    <button 
-                    onClick={() =>{
-                        setSelectFilter(selected);
-                        onClose();
-                        
-                    }}
+                    <div className="flex gap-3">
+                        <button 
+                        onClick={() =>{
+                            onClose();
+                                
+                        }}
 
-                    className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
-                        Filtrar
-                    </button>
+                        className="bg-white border-2 border-red-500 rounded-lg py-1 px-2 text-red-500 hover:bg-clas-gris/40 focus:ring-2 focus:ring-red-600">
+                            Cancelar
+                        </button>
+                        <button 
+                        onClick={() =>{
+                            setSelectFilter(selected);
+                            onClose();
+                                
+                        }}
+
+                        className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                            Filtrar
+                        </button>
+                    </div>
+                    
                 </DialogPanel>
             </div>
         </Dialog>

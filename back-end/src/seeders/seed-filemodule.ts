@@ -7,20 +7,26 @@ export async function seedFiles() {
     // =====================================
     {
       id: 1,
-      position: 1,
+      position: 0,
       type: FileType.LOGO,
       companyId: 2
     },
     {
       id: 2,
-      position: 2,
+      position: 101,
       type: FileType.PRODUCT,
       companyId: 2
     },
     {
       id: 3,
-      position: 3,
-      type: FileType.IMAGE,
+      position: 102,
+      type: FileType.PRODUCT,
+      companyId: 2
+    },
+    {
+      id: 255,
+      position: 103,
+      type: FileType.PRODUCT,
       companyId: 2
     },
 
@@ -29,20 +35,26 @@ export async function seedFiles() {
     // =====================================
     {
       id: 4,
-      position: 1,
+      position: 0,
       type: FileType.LOGO,
       companyId: 3
     },
     {
       id: 5,
-      position: 2,
-      type: FileType.IMAGE,
+      position: 101,
+      type: FileType.PRODUCT,
       companyId: 3
     },
     {
       id: 6,
-      position: 3,
-      type: FileType.IMAGE,
+      position: 102,
+      type: FileType.PRODUCT,
+      companyId: 3
+    },
+    {
+      id: 256,
+      position: 103,
+      type: FileType.PRODUCT,
       companyId: 3
     },
 
@@ -51,20 +63,26 @@ export async function seedFiles() {
     // =====================================
     {
       id: 7,
-      position: 1,
+      position: 0,
       type: FileType.LOGO,
       companyId: 4
     },
     {
       id: 8,
-      position: 2,
-      type: FileType.IMAGE,
+      position: 101,
+      type: FileType.PRODUCT,
       companyId: 4
     },
     {
       id: 9,
-      position: 3,
-      type: FileType.IMAGE,
+      position: 102,
+      type: FileType.PRODUCT,
+      companyId: 4
+    },
+    {
+      id: 257,
+      position: 103,
+      type: FileType.PRODUCT,
       companyId: 4
     },
 
@@ -73,20 +91,26 @@ export async function seedFiles() {
     // =====================================
     {
       id: 10,
-      position: 1,
+      position: 0,
       type: FileType.LOGO,
       companyId: 5
     },
     {
       id: 11,
-      position: 2,
-      type: FileType.IMAGE,
+      position: 101,
+      type: FileType.PRODUCT,
       companyId: 5
     },
     {
       id: 12,
-      position: 3,
-      type: FileType.IMAGE,
+      position: 102,
+      type: FileType.PRODUCT,
+      companyId: 5
+    },
+    {
+      id: 258,
+      position: 103,
+      type: FileType.PRODUCT,
       companyId: 5
     },
 
@@ -95,20 +119,8 @@ export async function seedFiles() {
     // =====================================
     {
       id: 13,
-      position: 1,
+      position: 0,
       type: FileType.LOGO,
-      companyId: 6
-    },
-    {
-      id: 14,
-      position: 2,
-      type: FileType.IMAGE,
-      companyId: 6
-    },
-    {
-      id: 15,
-      position: 3,
-      type: FileType.IMAGE,
       companyId: 6
     }
   ]);

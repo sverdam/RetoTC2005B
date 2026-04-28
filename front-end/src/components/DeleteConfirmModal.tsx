@@ -40,9 +40,7 @@ const DeleteConfirmModal: React.FC<Props> = ({
                                 className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
                                 Cancelar
                             </button>
-                            <button onClick={() => {
-                                onConfirm
-                                onClose}}
+                            <button onClick={onConfirm}
                                 className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-70">
                                 Eliminar
                             </button>

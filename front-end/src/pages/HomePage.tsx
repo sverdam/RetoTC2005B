@@ -11,6 +11,7 @@ import type { LandingPage } from "clas-types";
 import { useEffect, useState } from "react";
 import { getLandingPage } from "../api/LandingPageApi";
 import { getLogos } from "../api/fileModuleAPI";
+import ProfileCard from "../components/ProfileCard";
 
 const companyLogos = [
   { src: ford, alt: "Ford"},
@@ -47,10 +48,10 @@ const HomePage: React.FC = () => {
         <div className="flex flex-col gap-20 items-center">
 
             <div className="relative h-[720px] w-full flex items-center">
-                <img src={heroImage} alt="landing background" className="w-full h-[720px] object-cover absolute z-0" ></img>
-                <div className="relative z-10 max-w-2xl px-10 text-left text-white">
-                    <h1 className="text-5xl font-bold mb-4">
-                    {info ? info.banneHeader : "Impulsando el futuro automotriz de Sonora"}
+                <img src={heroImage} alt="hero image" className="w-full h-[720px] object-cover absolute z-0" ></img>
+                <div className="animate-fade-up relative z-10 max-w-2xl px-14 text-left text-white">
+                    <h1 className="text-5xl font-medium mb-4">
+                    Impulsando el futuro automotriz de Sonora
                     </h1>
                     <p className="mb-6 text-lg">
                     {info ? info.bannerText : "Colaboración que impulsa la innovación, competitividad y el crecimiento sostenible del sector automotriz sonorense."}
@@ -73,7 +74,7 @@ const HomePage: React.FC = () => {
             />
 
             {/* About Us Section */}
-           <div className="w-full flex gap-10 text-left text-clas-negro px-10">
+           <div className="animate-fade-up w-full flex gap-10 text-left text-clas-negro px-14">
 
             <div className="basis-[60%]">
                 <div className="flex flex-col gap-4">
@@ -127,127 +128,29 @@ const HomePage: React.FC = () => {
             </div>
 
             {/*Our Team section*/}
-            <div className="w-full px-10">
+            <div className="animate-fade-up w-full bg-gray-50 py-20 px-14">
                 <div className="flex flex-col gap-4">
                     <div>
-                        <p className="text-clas font-medium mb-2">
-                        Nuestro equipo
-                        </p>
                         <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
-                        Conoce al equipo CLAS
+                        Conoce al equipo <span className="text-clas">CLAS</span>
                         </h1>
                         <p className="text-lg text-gray-700 leading-relaxed">
                         {info ? info.aboutUsText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
                         </p>
                     </div>
-                </div>
 
-                {/*Profile Cards*/}
-                <div className="flex flex-row justify-between">
-                    <div className="w-68 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 flex flex-col items-center text-center"> 
-                    {/* Profile Image */}
-                    <div className="w-34 h-34">
-                        <img
-                        src="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-8fa2f20.png/:/cr=t:14.81%25,l:5.78%25,w:84.75%25,h:51.43%25/rs=w:730,h:730,cg:true,m"
-                        alt="JC"
-                        className="w-full h-full object-cover rounded-xl"
-                        />
-                    </div>
-
-                    {/* Profile Info */}
-                    <h3 className="text-clas-negro font-medium text-lg">
-                        Juan Carlos Campoy Ramos
-                    </h3>
-                    <h4 className="text-clas text-sm font-medium mb-1">
-                        Presidente
-                    </h4>
-                    <p className="text-gray-500 text-sm mb-3">
-                        New Concept Technology
-                    </p>
-                    <a href="mailto:presidencia@clas.com.mx" className="text-clas text-sm font-medium hover:underline">
-                        presidencia@clas.com.mx
-                    </a>
-                    </div>
-
-                    <div className="w-68 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 flex flex-col items-center text-center">     
-                    {/* Profile Image */}
-                    <div className="w-34 h-34">
-                        <img
-                        src="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Imagen%20de%20WhatsApp%202025-07-09%20a%20las%2013.07.50_b.jpg/:/cr=t:0%25,l:15.14%25,w:66.81%25,h:70.43%25/rs=w:730,h:730,cg:true,m"
-                        alt="MM"
-                        className="w-full h-full object-cover rounded-xl"
-                        />
-                    </div>
-
-                    {/* Profile Info */}
-                    <h3 className="text-clas-negro font-medium text-lg">
-                        Mario Alberto Montiel Guzmán
-                    </h3>
-                    <h4 className="text-clas text-sm font-medium mb-1">
-                        Vicepresidente
-                    </h4>
-                    <p className="text-gray-500 text-sm mb-3">
-                        Vicepresidente
-                    </p>
-                    <a href="mailto:vicepresidencia@clas.com.mx" className="text-clas text-sm font-medium hover:underline">
-                        vicepresidencia@clas.com.mx
-                    </a>
-                    </div>
-
-                    <div className="w-68 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 flex flex-col items-center text-center"> 
-                    {/* Profile Image */}
-                    <div className="w-34 h-34">
-                        <img
-                        src="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Diego%20Cacho.jpg/:/cr=t:2.17%25,l:0%25,w:100%25,h:71.41%25/rs=w:365,h:365,cg:true/qt=q:14"
-                        alt="DC"
-                        className="w-full h-full object-cover rounded-xl"
-                        />
-                    </div>
-
-                    {/* Profile Info */}
-                    <h3 className="text-clas-negro font-medium text-lg">
-                        Diego Cacho Campillo
-                    </h3>
-                    <h4 className="text-clas text-sm font-medium mb-1">
-                        Tesorero
-                    </h4>
-                    <p className="text-gray-500 text-sm mb-3">
-                        Grupo Industrial ESD
-                    </p>
-                    <a href="mailto:tesoreria@clas.com.mx" className="text-clas text-sm font-medium hover:underline">
-                        tesoreria@clas.com.mx
-                    </a>
-                    </div>
-
-                    <div className="w-68 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 flex flex-col items-center text-center"> 
-                    {/* Profile Image */}
-                    <div className="w-34 h-34">
-                        <img
-                        src="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-074403d.png/:/cr=t:0%25,l:15.07%25,w:48.08%25,h:32.04%25/rs=w:365,h:365,cg:true,m/qt=q:14"
-                        alt="MB"
-                        className="w-full h-full object-cover rounded-xl"
-                        />
-                    </div>
-
-                    {/* Profile Info */}
-                    <h3 className="text-clas-negro font-medium text-lg">
-                        Margarita Bejarano Celaya
-                    </h3>
-                    <h4 className="text-clas text-sm font-medium mb-1">
-                        Directora
-                    </h4>
-                    <p className="text-gray-500 text-sm mb-3">
-                        CLAS
-                    </p>
-                    <a href="mailto:direccion@clas.com.mx" className="text-clas text-sm font-medium hover:underline">
-                        direccion@clas.com.mx
-                    </a>
+                    {/*Profile Cards*/}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-between">
+                        <ProfileCard name="Juan Carlos Campoy Ramos" position="Presidente" company="New Concept Technology" mail="presidencia@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-8fa2f20.png/:/cr=t:14.81%25,l:5.78%25,w:84.75%25,h:51.43%25/rs=w:730,h:730,cg:true,m"/>
+                        <ProfileCard name="Mario Alberto Montiel Guzmán" position="Vicepresidente" company="Schnellecke Logistics México" mail="vicepresidencia@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Imagen%20de%20WhatsApp%202025-07-09%20a%20las%2013.07.50_b.jpg/:/cr=t:0%25,l:15.14%25,w:66.81%25,h:70.43%25/rs=w:730,h:730,cg:true,m"/>
+                        <ProfileCard name="Diego Cacho Campillo" position="Tesorero" company="Grupo Industrial ESD" mail="tesoreria@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Diego%20Cacho.jpg/:/cr=t:2.17%25,l:0%25,w:100%25,h:71.41%25/rs=w:365,h:365,cg:true/qt=q:14"/>
+                        <ProfileCard name="Margarita Bejarano Celaya" position="Directora" company="CLAS" mail="direccion@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-074403d.png/:/cr=t:0%25,l:15.07%25,w:48.08%25,h:32.04%25/rs=w:365,h:365,cg:true,m/qt=q:14"/>
                     </div>
                 </div>
             </div>
 
             {/*TO DO: Add contact details to Contact and Location section*/}
-            <div className="w-full flex flex-col gap-6 px-10">
+            <div className="animate-fade-up w-full flex flex-col gap-6 px-14">
                 <div className="flex flex-col gap-4">
                     <div>
                         <p className="text-clas font-medium mb-2">
@@ -263,17 +166,19 @@ const HomePage: React.FC = () => {
                 </div>
 
                 {/*CONTACTS*/}
-                <div className="w-full justify-center flex flex-row gap-10">
+                <div className="animate-fade-up w-full justify-center grid grid-cols-1 sm:grid-cols-3 sm:px-30 gap-10">
                     <div> 
                         <a href="https://maps.app.goo.gl/ux6pGm7EbhTyhdr86" className="text-gray-500 text-md hover:underline">
                             Obrero Mundial 10, 83210 Hermosillo, Sonora, Mexico
                         </a>
                     </div>
+
                     <div>
                         <a href="mailto:direccion@clas.com.mx" className="text-gray-500 text-md hover:underline">
                         direccion@clas.com.mx
                     </a>
                     </div>
+
                     <div>
                         <a href="mailto:tesoreria@clas.com.mx" className="text-gray-500 text-md hover:underline">
                         tesoreria@clas.com.mx

@@ -2,6 +2,7 @@ import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
 import FileUpload from "./FileUpload";
 import type { NewProductInput} from "clas-types";
 import { useState } from "react";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
     isProductOpen: boolean;
@@ -63,6 +64,10 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                             <label className="font-semibold text-clas-negro">
                                 Imagen del producto
                             </label>
+                            <div className="flex items-center gap-3 my-2">
+                                <InformationCircleIcon className="text-clas-gris h-5"/>
+                                <p className="text-clas-gris">Imagen en formato .jpg</p>
+                            </div>
                             <FileUpload onFileSelect={handleProductImageSelect} />
                         </div>
                         
