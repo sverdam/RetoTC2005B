@@ -17,6 +17,7 @@ import {
 } from "@heroicons/react/24/outline";
 import PhotoCarousel from "../components/PhotoCarousel";
 import CertificationCard from "../components/CertificationCard";
+import ProductServiceCard from "../components/ProductServiceCard";
 
 const images = [
     "https://u-mercari-images.mercdn.net/photos/m80862755279_1.jpg?1774828834",
@@ -215,119 +216,37 @@ const Redesign: React.FC = () => {
             
                 {/* PRODUCT CARD */}
                 <div>
-                <div className="w-full bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <img
-                            className="h-40 w-full object-cover"
-                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
-                        />
-
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Producto
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
+                    <ProductServiceCard name="Producto" description="Descripción breve de el producto" type="p" image="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"/>
                 </div>
+                
                 {/* PRODUCT CARD */}
                 <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <img
-                            className="h-40 w-full object-cover"
-                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
-                        />
-
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Producto
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
+                    <ProductServiceCard name="Producto" description="Descripción breve de el producto" type="p" image="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"/>
                 </div>
 
                 {/* PRODUCT CARD */}
                 <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <img
-                            className="h-40 w-full object-cover"
-                            src="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"
-                        />
-
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Producto
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
+                    <ProductServiceCard name="Producto" description="Descripción breve de el producto" type="p" image="https://img.lazcdn.com/g/p/bbc5df909767213b8a507c620800d6ef.jpg_720x720q80.jpg"/>
                 </div>
 
             </div>
 
             {/* SERVICES */}
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
+                
                 {/* SERVICE CARD */}
                 <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
-                            <WrenchIcon className="h-7 w-7"/>
-                        </div>
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Servicio
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
+                    <ProductServiceCard name="Servicio" description="Descripción breve de el servicio" type="s"/>
                 </div>
 
                 {/* SERVICE CARD */}
                 <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
-                            <WrenchIcon className="h-7 w-7"/>
-                        </div>
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Servicio
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
+                    <ProductServiceCard name="Servicio" description="Descripción breve de el servicio" type="s"/>
                 </div>
 
                 {/* SERVICE CARD */}
                 <div>
-                <div className="w-full bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
-                            <WrenchIcon className="h-7 w-7"/>
-                        </div>
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            Servicio
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            Descripción breve de 2 líneas
-                            </p>
-                        </div>
-                    </div>
+                    <ProductServiceCard name="Servicio" description="Descripción breve de el servicio" type="s"/>
                 </div>
 
                 <div className="text-right items-end flex flex-col justify-between">
@@ -339,7 +258,7 @@ const Redesign: React.FC = () => {
 
             <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
                 <a className="text-md">Explora el catálogo completo <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
-</a>
+                </a>
                 <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
             </div>
 
@@ -384,10 +303,10 @@ const Redesign: React.FC = () => {
                 </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <CertificationCard name=""/>
-            <CertificationCard name=""/>
-            <CertificationCard name=""/>
-            <CertificationCard name=""/>
+            <CertificationCard name="a"/>
+            <CertificationCard name="b"/>
+            <CertificationCard name="c"/>
+            <CertificationCard name="d"/>
           </div>
         </div>
 
