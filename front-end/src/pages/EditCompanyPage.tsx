@@ -1,8 +1,8 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company, Product, Contact } from "clas-types";
-import { getAllCompanies } from "../api/CompanyAPI";
+import type { Company, Product, Contact, NewContactInput, NewCompanyInput } from "clas-types";
+import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
 import ProductCatalog from "../components/ProductCatalog";
@@ -12,7 +12,6 @@ import FilterModal from "../components/FilterModal";
 import NewCertificationModal from "../components/NewCertificationModal";
 import NewContactModal from "../components/NewContactModal";
 import DeleteCompanyConfirmModal from "../components/DeleteCompanyConfirmModal";
-import { deleteCompany } from "../api/CompanyAPI";
 import ProductModal from "../components/ProductModal";
 import DeleteProductConfirmModal from "../components/DeleteProductConfirmModal";
 import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
@@ -29,25 +28,38 @@ const Tag: React.FC<TagProps> = ({value}) => {
     )
 };
 
+const emptyFormCompany: NewCompanyInput = {
+        name: "",
+        description: "",
+        tier: null,
+        logo: null,
+        catalogo: null,
+        memberType: null,
+        location: null,
+        contacts: [],
+        user: [],
+        textModules: [], 
+        fileModules: [],
+        certifications: [],
+        filters: [],
+        products: [],
+        services: []
+}
+
 
 const EditCompanyPage: React.FC = () => {
+
+    {/* Navigate */}
+    const navigate = useNavigate();
+    const location = useLocation();
+    {/* access id parameter from current URL*/}
+    const { id } = useParams<{ id: string }>();
+    console.log(id)
+    const isEditing = id !==undefined;
+    console.log(isEditing)
+    const [formCompany, setFormCompany] = useState<NewCompanyInput>(emptyFormCompany)
    
-    {/* Logo Handling */}
-    const handleLogoSelect = (file: File) => {
-        console.log(file);
-    };
-
-    {/* Product Image Handling */}
-    const handleProductImageSelect = (file: File) => {
-        console.log(file);
-    };
-
-    {/* Catalog Handling */}
-    const handleCatalogSelect = (file: File) => {
-        console.log(file);
-    };
-
-    {/* Filter Modal  */}
+        {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
 
     {/* Certification Modal */}
@@ -59,11 +71,6 @@ const EditCompanyPage: React.FC = () => {
     {/* Product Modal */}
     const [isProductOpen, setIsProductOpen] = useState(false);
 
-    {/* Navigate */}
-    const navigate = useNavigate();
-    {/* access id parameter from current URL*/}
-    const { id } = useParams<{ id: string }>();
-
     {/* Obtain data */}
 
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -74,6 +81,27 @@ const EditCompanyPage: React.FC = () => {
     
     const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
     const [contactToDelete, setContactToDelete] = useState<Contact | null>(null);
+
+
+    {/* Logo Handling */}
+    const handleLogoSelect = (file: File) => {
+        console.log(file);
+    };
+
+
+    const handleChange = (field:keyof NewCompanyInput, value: string | number ) => {
+        setFormCompany((prev) => ({...prev, [field]: value}));
+    }
+
+    {/* Product Image Handling */}
+    const handleProductImageSelect = (file: File) => {
+        console.log(file);
+    };
+
+    {/* Catalog Handling */}
+    const handleCatalogSelect = (file: File) => {
+        console.log(file);
+    };
 
     const handleDelete = () => {
         if(!companyToDelete) return;
@@ -98,9 +126,38 @@ const EditCompanyPage: React.FC = () => {
         });
     };
 
+    useEffect(()=>{
+       
+        if(isEditing){
+            if(location.state?.company){
+            const company = location.state.company as Company;
+            console.log(company)
+            setFormCompany ({
+                name: company.name,
+                description: company.description,
+                tier: company.tier,
+                logo: company.logo,
+                catalogo: company.catalogo,
+                memberType: company.memberType,
+                location: company.location,
+                contacts: company.contacts,
+                user: company.user,
+                textModules: company.textModules, 
+                fileModules: company.fileModules,
+                certifications: company.certifications,
+                filters: company.filters,
+                products: company.products,
+                services: company.services
+            })}else{
+                getCompanybyId(Number(id)).then(data => setFormCompany(data))
+             }
+            }
+        },[])
+
+
     return(
     <div className="flex flex-col items-center justify-center p-5 gap-3 w-full">
-        <h1 className="text-xl font-medium text-clas-negro">Editar Empresa</h1>
+        <h1 className="text-xl font-medium text-clas-negro"> {isEditing ? "Editar Empresa" : "Crear Empresa" }</h1>
         {/* Subir Archivo de Logo*/}
         <div className="flex flex-col items-start w-2xl">
             <label className="font-semibold text-clas-negro">Logo</label>
@@ -111,21 +168,35 @@ const EditCompanyPage: React.FC = () => {
             <input 
                 type="text" 
                 placeholder="Nombre..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2"></input>
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                value = {formCompany.name}
+                onChange={(e) => handleChange("name", e.target.value || "")}>    
+            </input>
         </div>
         {/* Tier y MemberType*/}
         <div className="flex w-2xl justify-between">
             <div className="flex flex-col gap-2 items-start w-3xs">
                 <label className="font-semibold text-clas-negro">Tier</label>
                 <select  
-                    className="border-2 border-clas-gris rounded-lg p-2 w-3xs">
-                    <option>
+                    className="border-2 border-clas-gris rounded-lg p-2 w-3xs"
+                    required
+                    value={formCompany.tier != null ? formCompany.tier:10}
+                    onChange={(e) => handleChange("tier", e.target.value)}
+                    >
+                    <option
+                        value={10} disabled>
+                        Selecciona un tier..
+                    </option>
+                    <option 
+                        value={0}>
                         OEM
                     </option>
-                    <option>
+                    <option
+                        value={1}>
                         Tier 1
                     </option>
-                    <option>
+                    <option
+                        value={2}>
                         Tier 2
                     </option>
                 </select>
@@ -133,11 +204,21 @@ const EditCompanyPage: React.FC = () => {
             <div className="flex flex-col gap-2 items-start w-3xs">
                 <label className="font-semibold text-clas-negro">Tipo de Miembro</label>
                 <select  
-                    className="border-2 border-clas-gris rounded-lg p-2 w-3xs">
-                    <option>
+                    className="border-2 border-clas-gris rounded-lg p-2 w-3xs"
+                    required
+                    value={formCompany.memberType != null ? formCompany.memberType : ""}
+                    onChange={ (e) => handleChange("memberType", e.target.value)}
+                >
+                    <option
+                        value={""} disabled>
+                        Selecciona un tipo...
+                    </option>
+                    <option
+                    value={"Affiliate"}>
                         Afiliado
                     </option>
-                    <option>
+                    <option
+                    value={"Associate"}>
                         Asociado
                     </option>
                 </select>
@@ -149,11 +230,7 @@ const EditCompanyPage: React.FC = () => {
             <label className="font-semibold text-clas-negro">Etiquetas</label>
             <div className="flex flex-wrap gap-2">
                 {/*TODO: Mapeo filtros*/}
-                <Tag value="Tier1" />
-                <Tag value="Diseño e ingeniería" />
-                <Tag value="Maquinaria" />
-                <Tag value="Carroceria" />
-                <Tag value="Interiores" />
+                {formCompany.filters?.map( e => <Tag value={e.name}/>)}
                 <button
                     onClick={() => setIsOpen(true)} 
                     className=" w-15 bg-clas rounded-4xl py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
