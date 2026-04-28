@@ -7,8 +7,9 @@ import UserFormPage from "../pages/UserFormPage";
 import CompanyPage from "../pages/CompanyPage";
 import HomePage from "../pages/HomePage";
 import EditCompanyPage from "../pages/EditCompanyPage";
-import LoginPage from "../pages/LoginPage";
 import NewCompanyPage from "../pages/NewCompanyPage";
+import LoginPage from "../pages/LoginPage";
+import PaywallPage from "../pages/PaywallPage";
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
             { path: 'empresa/:id/editar', element: <EditCompanyPage />},
             { path: 'empresa/editar', element: <EditCompanyPage />},
             { path: 'login', element: <LoginPage/>},
-            { path: 'newcompany', element: <NewCompanyPage/>}
+            { path: 'newcompany', element: <NewCompanyPage/>},
+            { path: 'membresia', element: <PaywallPage />}
         ]
     },
 ]);
