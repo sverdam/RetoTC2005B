@@ -33,7 +33,7 @@ declare module "clas-types" {
         aboutUs: string;
         tier: number;
         logo: FileModule;
-        catalogo: FileModule;
+        catalog: FileModule;
         memberType: MemberType;
         website: string;
         slogan: string;
@@ -155,6 +155,7 @@ declare module "clas-types" {
     }  
     
     export interface NewCompanyInput{
+        id: number | null;
         name: string;
         description: string;
         aboutUs: string;
@@ -186,8 +187,12 @@ declare module "clas-types" {
     }
     
     export interface NewContactInput{
-        type: ContactType; 
+        type: ContactType | null; 
         contactInfo: string;
         position: string;
+    }
+
+    export interface NewCertificationInput{
+        name:string;
     }
 }
