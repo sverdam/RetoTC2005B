@@ -39,6 +39,7 @@ const Tag: React.FC<TagProps> = ({value}) => {
 };
 
 const emptyFormCompany: NewCompanyInput = {
+        id: null,
         name: "",
         description: "",
         aboutUs: "",
@@ -103,7 +104,7 @@ const EditCompanyPage: React.FC = () => {
 
     {/* Obtain data */}
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const [companyToDelete, setCompanyToDelete] = useState<Company | null>(null);
+    const [companyToDelete, setCompanyToDelete] = useState<NewCompanyInput | null>(null);
 
     const [isProductDeleteOpen, setIsProductDeleteOpen] = useState(false);
     const [productToDelete, setProductToDelete] = useState<Product | null>(null);
@@ -148,7 +149,7 @@ const EditCompanyPage: React.FC = () => {
 
     const handleDelete = () => {
         if(!companyToDelete) return;
-        deleteCompany(companyToDelete.id).then(() => {
+        deleteCompany(Number(companyToDelete.id)).then(() => {
           setCompanyToDelete(null);
         });
     };
@@ -173,8 +174,8 @@ const EditCompanyPage: React.FC = () => {
         if(isEditing){
             if(location.state?.company){
             const company = location.state.company as Company;
-            console.log(company)
             setFormCompany ({
+                id: company.id,
                 name: company.name,
                 description: company.description,
                 aboutUs: company.aboutUs,
@@ -648,11 +649,12 @@ const EditCompanyPage: React.FC = () => {
         : <></>}
         <div className="m-5 flex w-2xl gap-3 justify-end">
             <button className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1 hover:bg-clas-negro/20">Cancelar</button>
+            {isEditing ? 
             <button className="bg-red-400 text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
-                onClick={()=> setCompanyToDelete(company)}
+                onClick={()=> setCompanyToDelete(formCompany)}
             >
                 Eliminar Empresa
-            </button>
+            </button> : <></>}
             <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">Aplicar Cambios</button>
         </div>
         
@@ -675,7 +677,7 @@ const EditCompanyPage: React.FC = () => {
             setCertification={handleCertification}
         />
 
-        <NewContactModal 
+        <NewContactModal //utilizado
             isContactOpen={isContactOpen}
             onClose={() => setIscontactOpen(false)}
             contact={emptyFormContact}
