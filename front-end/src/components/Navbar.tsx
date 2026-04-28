@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
                     to="/usuarios"
                     className={navLinkClass}
                   >
-                    Administracion de usuarios
+                    Administración de Usuarios
                   </NavLink>
                 </li> : <></>}
                 <li>{
