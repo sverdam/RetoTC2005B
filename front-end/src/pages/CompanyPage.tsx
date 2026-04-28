@@ -25,6 +25,8 @@ import {
 import PhotoCarousel from "../components/PhotoCarousel";
 import CertificationCard from "../components/CertificationCard";
 import { getFileURLById, getGallery } from "../api/fileModuleAPI";
+import ProductServiceCard from "../components/ProductServiceCard";
+import { Description } from "@headlessui/react";
 
 const images : string[] = [
     "https://u-mercari-images.mercdn.net/photos/m80862755279_1.jpg?1774828834",
@@ -96,7 +98,7 @@ const CompanyPage: React.FC = () => {
                     <img
                         src={company?.logo ? getFileURLById(company.logo.id) : ''}
                         alt={'logo'}
-                        className="h-40 object-contain transition group-hover:scale-102"
+                        className="text-sm text-clas-gris h-40 object-contain transition group-hover:scale-102"
                     />
                     </div>
                 </div>
@@ -273,24 +275,9 @@ const CompanyPage: React.FC = () => {
                 
                 {company?.products.length === 0 ? <></> : 
                 company?.products.map(product => 
-                <div>
-                <div className="w-full bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <img
-                            className="h-40 w-full object-cover"
-                            src={getFileURLById(product.fileModuleId)}
-                        />
-
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            {product.name}
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            {product.description}
-                            </p>
-                        </div>
+                    <div>
+                        <ProductServiceCard name={product.name} description={product.description} type="p" image={getFileURLById(product.fileModuleId)}/>
                     </div>
-                </div>
                 )}
 
             </div>
@@ -299,22 +286,9 @@ const CompanyPage: React.FC = () => {
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {company?.services.length === 0? <></> : 
                 company?.services.map(service => 
-                <div>
-                <div className="w-full  bg-white rounded-xl overflow-hidden shadow transition hover:shadow-md hover:-translate-y-1">
-                        <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex flex-col items-center justify-center">
-                            <WrenchIcon className="h-7 w-7"/>
-                        </div>
-                        <div className="p-4 flex flex-col gap-1 text-left">
-                            <p className="text-base font-medium leading-tight">
-                            {service.name}
-                            </p>
-
-                            <p className="text-sm text-gray-500 leading-snug line-clamp-2">
-                            {service.description}
-                            </p>
-                        </div>
+                    <div>
+                        <ProductServiceCard name={service.name} description={service.description} type="s"/>
                     </div>
-                </div>
                 )}
 
 
