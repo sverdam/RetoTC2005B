@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { upload } from '../middlewares/multer';
 import {
   createProduct,
   deleteProduct,
@@ -18,7 +19,7 @@ productRouter.get('/', getAllProducts);
 
 productRouter.get('/:id', getProductById);
 
-productRouter.post('/withFile', createProductWithFileModule);
+productRouter.post('/withFile',  upload.single("file"), createProductWithFileModule);
 
 productRouter.post('/', createProduct);
 

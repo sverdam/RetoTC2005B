@@ -11,25 +11,26 @@ import { error } from "node:console";
 export const createProductWithFileModule: RequestHandler = async (req: Request, res: Response) => {
     try{
 
-        req.body.type = 'product';
 
-        if (!req.body.companyId || !req.body.position || !req.body.type) {
+        if (!req.body.companyId || !req.body.position) {
             return res.status(400).json({
                 status: "error",
-                message: "companyId, position and type are required.",
+                message: "companyId and position are required.",
                 payload: null,
             });
         }
+
             
         const existingFileModule = await CheckPosBody(
             Number(req.body.companyId),
             Number(req.body.position)
         )
-    
+        
+
         //agregar datos del archivo generado
         const newData = await BuildFileDataForCreate(
             {
-                companyId: req.body, 
+                companyId: req.body.companyId, 
                 position: req.body.position, 
                 type: FileType.PRODUCT,
                 storedName: null,
@@ -40,6 +41,7 @@ export const createProductWithFileModule: RequestHandler = async (req: Request, 
             },
             req.file
         )
+        
         
         const result = await CreateOrReplaceFileModule(existingFileModule, newData);
         
@@ -54,16 +56,29 @@ export const createProductWithFileModule: RequestHandler = async (req: Request, 
                     description: req.body.description
                 }
                 
+                console.log(`X] TEST`);
+                console.log(`5] Before`);
+                console.log(newFileModule.id);
+
                 Product.create(product)
                     .then((data: Product | null) => {
-                        res.status(200).json({
+                        
+                        console.log(`X] TEST`);
+                        console.log(`6] Created`);
+
+                        return res.status(200).json({
                             status: "success",
                             message: "Product successfully created",
                             payload: data,
                         });
                     })
                     .catch((err) => {
-                        res.status(500).json({
+                        
+                        console.log(`X] TEST`);
+                        console.log(`6] Failed ${err.message}`);
+
+                        return res.status(500).json(
+                        {
                             status: "error",
                             message: "Something happened creating a product. " + err.message,
                             payload: null,
@@ -72,26 +87,18 @@ export const createProductWithFileModule: RequestHandler = async (req: Request, 
             }
             catch(err: any)
             {
+                console.log("ERROR CREATING FILE!");
                 console.warn("Aborting product creation, destroying file.");
                 const existingFileModule: FileModule | null = await FileModule.findByPk(newFileModule.id)
                 if (existingFileModule !== null){
                     const result = await DeleteFile(existingFileModule)
                 }
+                throw error;
             }
         }
         else{
             throw error;
         }
-
-        return res.status(result.action === "created" ? 201: 200).json({
-            status: "success",
-            message:
-                result.action === "created"
-                ? "File Module successfully created"
-                : "File Module successfully updated",
-            payload: result.data
-    
-        })
     
         }catch (err: any){
             return res.status(500).json({
