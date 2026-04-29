@@ -65,16 +65,6 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose , service, setSe
                                 onChange={(e) => handleChange("description", e.target.value)}>
                             </input>
                         </div>
-                        <div className="flex flex-col gap-1">
-                            <label className="font-semibold text-clas-negro">
-                                Imagen del servicio
-                            </label>
-                            <div className="flex items-center gap-3 my-2">
-                                <InformationCircleIcon className="text-clas-gris h-5"/>
-                                <p className="text-clas-gris">Imagen en formato .jpg sin fondo</p>
-                            </div>
-                            <FileUpload onFileSelect={handleProductImageSelect} />
-                        </div>
                         
                     </div>
                     <div className="flex gap-3">
