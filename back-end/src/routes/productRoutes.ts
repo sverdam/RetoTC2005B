@@ -5,7 +5,8 @@ import {
   getAllProducts,
   getProductById,
   getProductByCompany,
-  updateProduct
+  updateProduct,
+  createProductWithFileModule
 } from '../controllers/productController';
 import { unverifiedCheck } from '../middlewares/authMiddleware';
 
@@ -16,6 +17,8 @@ productRouter.use(unverifiedCheck);
 productRouter.get('/', getAllProducts);
 
 productRouter.get('/:id', getProductById);
+
+productRouter.post('/withFile', createProductWithFileModule);
 
 productRouter.post('/', createProduct);
 
