@@ -1,8 +1,6 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
-import FileUpload from "./FileUpload";
 import type { NewProductInput, Service} from "clas-types";
 import { useEffect, useState } from "react";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
     isServiceOpen: boolean;

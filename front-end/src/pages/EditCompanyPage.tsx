@@ -4,7 +4,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput, Certification} from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
-import ProductCatalog from "../components/ProductCatalog";
 import FileUpload from "../components/FileUpload";
 import FilterModal from "../components/FilterModal";
 import NewCertificationModal from "../components/NewCertificationModal";
