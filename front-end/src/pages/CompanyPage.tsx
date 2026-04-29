@@ -237,7 +237,7 @@ const CompanyPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div className="w-full text-left p-4 items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <MapPinIcon className="w-7 text-clas flex-shrink-0"/>  
-                    <a href={company?.location.mapLink}>{company?.location.address}</a>  
+                    <a href={company?.location?.mapLink}>{company?.location?.address}</a>  
                 </div>
                 <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <EnvelopeIcon className="w-7 text-clas"/>  
@@ -257,6 +257,7 @@ const CompanyPage: React.FC = () => {
 
         
         {/* CATALOG */}
+        {(company?.products.length === 0 && company?.services.length === 0) ? <></> : 
         <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
             {/* SECTION DIVIDER */}
                 <div className="mx-auto flex items-center justify-center gap-4">
@@ -272,6 +273,7 @@ const CompanyPage: React.FC = () => {
                 </div>
 
             {/* PRODUCTS */}
+            {company?.products.length === 0 ? <></> : 
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="text-left flex flex-col justify-between">
                     <h2 className="text-2xl"><span className="text-clas">Productos</span> destacados</h2>
@@ -286,12 +288,13 @@ const CompanyPage: React.FC = () => {
                     </div>
                 )}
 
-            </div>
+            </div>}
+            
 
             {/* SERVICES */}
+            {company?.services.length === 0 ?  <></> : 
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {company?.services.length === 0? <></> : 
-                company?.services.map(service => 
+                {company?.services.map(service => 
                     <div>
                         <ProductServiceCard name={service.name} description={service.description} type="s"/>
                     </div>
@@ -303,7 +306,8 @@ const CompanyPage: React.FC = () => {
                     <p>Brindamos soluciones eficientes y adaptadas a tus necesidades.</p>
                     <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
-            </div>
+            </div>}
+            
             
             {catalog === "" ? <></> :
             <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
@@ -314,10 +318,13 @@ const CompanyPage: React.FC = () => {
             </div> }
             
 
-        </div>
+        </div>}
+        
 
 
         {/* CAPACITIES */}
+        {company?.capacity === undefined || company?.capacity === null || company.capacity.length === 0 ? 
+        <></> : 
         <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
             <div className="bg-linear-to-tr from-clas to-clas-claro rounded-xl text-white p-10 flex flex-col gap-8">
                 {/* SECTION DIVIDER */}
@@ -338,9 +345,12 @@ const CompanyPage: React.FC = () => {
             
             </div>
         </div>
+        }
+        
 
         {/* CERTIFICATIONS */}
-        <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+        {company?.certifications.length === 0 ? <></> : 
+         <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
           {/* SECTION DIVIDER */}
                 <div className="mx-auto flex items-center justify-center gap-4">
                     <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
@@ -355,11 +365,10 @@ const CompanyPage: React.FC = () => {
                 </div>
 
           <div className={`grid sm:grid-cols-2 lg:grid-cols-4 gap-4`}>
-            {company?.certifications.length === 0 ? <></> : 
-            company?.certifications.map(c => 
-            <CertificationCard name={c.name}/>)}
+            {company?.certifications.map(c => <CertificationCard name={c.name}/>)}
           </div>
-        </div>
+        </div>}
+       
 
       </div>
     </div>
