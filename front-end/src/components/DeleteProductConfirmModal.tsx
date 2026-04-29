@@ -1,17 +1,18 @@
-import type { NewProductInput } from "clas-types"; // TODO: Agregar Producto a tipos
+import type { NewProductInput, Product, Service } from "clas-types"; // TODO: Agregar Producto a tipos
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
+
 interface Props{
-    product: NewProductInput | null;
-    service: NewProductInput | null;
+    product: Product | NewProductInput | null;
+    service: Service | NewProductInput | null;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, onClose, onConfirm}) => {
+const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, onClose, onConfirm}) => {
     return(
-        <Dialog open={product !== null} onClose={onClose} className="relative z-50">
+        <Dialog open={(product || service)!== null } onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro*/}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
 
@@ -24,12 +25,12 @@ const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, onClose, o
                         </div>
                         <div>
                             <DialogTitle className="text-sm font-semibold text-gray-900">
-                                Eliminar Producto
+                                {product != null ? "Eliminar Producto" : "Eliminar Servicio"}
                             </DialogTitle>
                             <p className="mt-1 text-sm text-gray-600">
                                 ¿Estás seguro de que quieres borrar {" "}
                                 <span className="font-medium text-gray-900">
-                                    {product?.name}
+                                    {product?.name || service?.name}
                                 </span>?
                                 Esta acción no se puede deshacer.
                             </p>

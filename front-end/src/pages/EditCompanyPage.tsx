@@ -67,6 +67,7 @@ const emptyFormCompany: NewCompanyInput = {
 }
 
 const emptyFormProduct: NewProductInput = {
+    id: "",
     name: "",
     description: ""
 }
@@ -141,6 +142,7 @@ const EditCompanyPage: React.FC = () => {
         handleChange("services", [...formCompany.services, newService])
     }
     const handleProduct = (newProduct: NewProductInput) => {
+        newProduct.id = `temp- ${crypto.randomUUID()}`;
         handleChange("products", [...formCompany.products, newProduct])
     }
     const handleFilter = (newFilters: Filter[]) => {
@@ -178,14 +180,23 @@ const EditCompanyPage: React.FC = () => {
     const handleProductDelete = () => {
         if(!productToDelete) return;
         //TODO: Agregar API de producto
-        setProductsToDelete((prev) =>[...prev, productToDelete.id]);
+        const isRealProduct = typeof productToDelete.id === 'number' || 
+                         (typeof productToDelete.id === 'string' && !productToDelete.id.startsWith('temp-'));
+        if(isRealProduct){
+            console.log(productsToDelete, productToDelete.id)
+            setProductsToDelete((prev) => [...prev, productToDelete.id]);
+
+        }
+
         handleChange("products", formCompany.products.filter(p => p.id != productToDelete.id));
         setProductToDelete(null);
+        console.log(productsToDelete);
+        
     };
 
     const handleServiceDelete = () => {
         
-    }
+    }   
 
     const handleContactDelete = () => {
         if(!contactToDelete) return;
@@ -208,8 +219,8 @@ const EditCompanyPage: React.FC = () => {
                 description: company.description,
                 aboutUs: company.aboutUs,
                 tier: company.tier,
-                logo: null,
-                catalog: company.catalog,
+                logo: null, // jalar bien el file
+                catalog: company.catalog, //jalar bien el file
                 memberType: company.memberType,
                 website: company.website,
                 slogan: company.slogan,

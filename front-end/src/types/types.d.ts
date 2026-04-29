@@ -81,12 +81,16 @@ declare module "clas-types" {
     export enum FileType {
         LOGO = 'logo',
         IMAGE = 'image',
-        DOCUMENT = 'document'
+        DOCUMENT = 'document',
+        PRODUCT = 'product'
     }
 
     export interface FileModule{
         id: number;
+        file: File;
         type: FileType;
+        position: number;
+        companyId: number;
     }
 
     export interface FileModuleInput{
@@ -182,6 +186,7 @@ declare module "clas-types" {
     }
     
     export interface NewProductInput{
+        id: any;
         name: string;
         description: string;
     }
