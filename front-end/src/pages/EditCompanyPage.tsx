@@ -1,12 +1,10 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput, Certification} from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
-import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
 import ProductCatalog from "../components/ProductCatalog";
-import CertificationCard from "../components/CertificationCard";
 import FileUpload from "../components/FileUpload";
 import FilterModal from "../components/FilterModal";
 import NewCertificationModal from "../components/NewCertificationModal";
@@ -18,7 +16,6 @@ import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
 import { getProfile } from "../api/LoginAPI";
 import ServiceModal from "../components/ServiceModal";
 import { createFileModule } from "../api/fileModuleAPI";
-import { deleteContact } from "../api/ContactAPI";
 import DeleteCertificationConfirmModal from "../components/DeleteCertificationConfirmModal";
 
 
@@ -100,7 +97,6 @@ const EditCompanyPage: React.FC = () => {
    
     {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedFilter, setSelectedFilter] = useState<Filter[]>([]);
     {/* Certification Modal */}
     const [isCertificationOpen, setIsCertificationOpen] = useState(false);
     {/* Contact Modal */}
@@ -111,10 +107,8 @@ const EditCompanyPage: React.FC = () => {
     const [isServiceOpen, setIsServiceOpen] = useState(false);
 
     {/* Obtain data */}
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     const [companyToDelete, setCompanyToDelete] = useState<Company | NewCompanyInput | null>(null);
 
-    const [isProductDeleteOpen, setIsProductDeleteOpen] = useState(false);
     const [productToDelete, setProductToDelete] = useState<Product | NewProductInput | null>(null);
     const [productsToDelete, setProductsToDelete] = useState<Number[]>([])
     const [currentProduct, setCurrentProduct] = useState(emptyFormProduct);
@@ -123,7 +117,6 @@ const EditCompanyPage: React.FC = () => {
     const [servicesToDelete, setServicesToDelete] = useState<Number[]>([])
     const [currentService, setCurrentService] = useState(emptyFormProduct);
     
-    const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
     const [contactToDelete, setContactToDelete] = useState<NewContactInput | Contact | null>(null);
     const [contactsToDelete, setContactsToDelete] = useState<Number[]> ([]) 
     const [currentContact, setCurrentContact] = useState(emptyFormContact);
@@ -151,7 +144,7 @@ const EditCompanyPage: React.FC = () => {
     }
 
     const handleOpenEdit = (productToEdit: Product) => {
-        console.log("Intentando editar producto:", productToEdit);
+        
         setCurrentProduct(productToEdit);
         setIsProductOpen(true);
     }
@@ -609,11 +602,7 @@ const EditCompanyPage: React.FC = () => {
             <div className="w-full flex justify-end">
                 <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
                     type="button"
-                    onClick={() => {
-                        console.log("CLICK EN NUEVO PRODUCTO")
-                        setIsProductOpen(true);
-
-                    }}
+                    onClick={handleOpenCreate}
                 >
                     Nuevo Producto
                     <PlusIcon className="h-4 w-4"/>
@@ -988,19 +977,20 @@ const EditCompanyPage: React.FC = () => {
         </div>
         </form>
         
-        <FilterModal //utilizado
+        <FilterModal 
                 isOpen={isOpen}
+                isEditing={true}
                 onClose={() => setIsOpen(false)}
                 selectFilter={formCompany.filters}
                 setSelectFilter={handleFilter}
         />
-        <DeleteCompanyConfirmModal //utilizado
+        <DeleteCompanyConfirmModal 
             company={companyToDelete}
             onClose={() => setCompanyToDelete(null)}
             onConfirm={handleDelete}
         />
         
-        <NewCertificationModal //utilizado
+        <NewCertificationModal 
             isCertificationOpen={isCertificationOpen}
             onClose={() => {
                 setIsCertificationOpen(false)
@@ -1009,7 +999,7 @@ const EditCompanyPage: React.FC = () => {
             setCertification={handleCertification}
         />
 
-        <NewContactModal //utilizado
+        <NewContactModal
             isContactOpen={isContactOpen}
             onClose={() => {
                 setIscontactOpen(false)
@@ -1038,7 +1028,7 @@ const EditCompanyPage: React.FC = () => {
             setService={handleService}
 
         />
-        <DeleteProductServiceConfirmModal //utilizado
+        <DeleteProductServiceConfirmModal
             product={productToDelete}
             service={serviceToDelete}
             onClose={() => {
@@ -1048,12 +1038,12 @@ const EditCompanyPage: React.FC = () => {
             onConfirm={productToDelete != null ? handleProductDelete : handleServiceDelete}
         />
 
-        <DeleteContactConfirmModal //utilizado
+        <DeleteContactConfirmModal 
             contact={contactToDelete}
             onClose={() => setContactToDelete(null)}
             onConfirm={handleContactDelete}
         />
-        <DeleteCertificationConfirmModal
+        <DeleteCertificationConfirmModal 
             certification={certificationToDelete}
             onClose={() => setCertificationToDelete(null)}
             onConfirm={handleCertificationDelete}
