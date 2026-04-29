@@ -1,10 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { type Company, type Product, type Contact, type NewContactInput, type NewCompanyInput, 
-    type Filter, type UserProfile, type NewProductInput, type NewCertificationInput, type Service,type
-    FileBundleInput
-} from "clas-types";
+import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput} from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
