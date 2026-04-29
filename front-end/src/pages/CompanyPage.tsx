@@ -28,12 +28,6 @@ import { getFileURLById, getGallery } from "../api/fileModuleAPI";
 import ProductServiceCard from "../components/ProductServiceCard";
 import { Description } from "@headlessui/react";
 
-const images : string[] = [
-    "https://u-mercari-images.mercdn.net/photos/m80862755279_1.jpg?1774828834",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQC_OPbbCDWa-3rZ28ONF6A1_38cwXOfiULw&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQIwNYMOqZG-J9N8jeEhZJv9kK8vgukYfCsw&s"
-]
-
 const unverifiedUser : UserProfile = {
     id: "-1",
     email: 'unknown',
