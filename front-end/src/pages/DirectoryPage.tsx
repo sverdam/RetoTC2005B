@@ -105,10 +105,10 @@ const DirectoryPage: React.FC = () => {
     return (
         <div className="flex flex-col gap-10 items-center p-10 min-h-screen">
             <h1 className="font-medium text-3xl"> Directorio CLAS</h1>
-            <div className="w-full flex gap-4 justify-center">
+            <div className="w-full flex flex-wrap gap-4 justify-center">
                 <div className="flex gap-2 p-2 items-center rounded-full border border-gray-300 bg-gray-100">
                     <MagnifyingGlassIcon className="h-4 w-4" />
-                    <input className="border-none focus:outline-none w-120" placeholder="Buscar por nombre..."
+                    <input className="border-none focus:outline-none w-90 sm:w-120" placeholder="Buscar por nombre, producto o servicio..."
                         type="text"
                         value={nameQuery}
                         onChange={(e) =>
@@ -116,18 +116,22 @@ const DirectoryPage: React.FC = () => {
                     ></input>
                 </div>
                 {/*{userProfile.role !== 'unverified' ? <>*/}
-                <Tag value="Tier 1" tagTier={Number(1)} />
-                <Tag value="Tier 2" tagTier={Number(2)}/>
-                <Tag value="OEM" tagTier={Number(0)}/>
-                <button
-                    onClick={() => setIsOpen(true)} 
-                    className=" w-20 bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
-                    Filtros
-                </button>
+                <div className="flex gap-2">
+                    <Tag value="Tier 1" tagTier={Number(1)} />
+                    <Tag value="Tier 2" tagTier={Number(2)}/>
+                    <Tag value="OEM" tagTier={Number(0)}/>
+                    <button
+                        onClick={() => setIsOpen(true)} 
+                        className=" w-20 bg-clas rounded-full py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas-claro">
+                        Filtros
+                    </button>
+                </div>
+                
             
             </div>
+            
             {/*grid de cards*/}
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {(userProfile.role === 'admin' && filteredCompanies.length > 0) ? 
                     <NewDirectoryCardButton /> 
                     : <></> 
