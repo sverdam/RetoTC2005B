@@ -14,7 +14,7 @@ export const deleteProduct = async (id: number): Promise<void> => {
 }
 
 
-export const createProductWithFile = async (info: ProductBundleInput) => {
+export const createProductAutomaticFile = async (info: ProductBundleInput) => {
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(info)) {
