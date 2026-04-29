@@ -121,6 +121,7 @@ const EditCompanyPage: React.FC = () => {
 
     const [serviceToDelete, setServiceToDelete] = useState<Service | NewProductInput | null>(null);
     const [servicesToDelete, setServicesToDelete] = useState<Number[]>([])
+    const [currentService, setCurrentService] = useState(emptyFormProduct);
 
     
     
@@ -155,6 +156,16 @@ const EditCompanyPage: React.FC = () => {
         setIsProductOpen(true);
     }
 
+    const handleOpenCreateService = () => {
+        setCurrentService(emptyFormProduct);
+        setIsServiceOpen(true);
+    }
+
+    const handleOpenEditService = (serviceToEdit: Service) => {
+        setCurrentService(serviceToEdit);
+        setIsServiceOpen(true);
+    }
+
     const handleContact = (newContact: NewContactInput) => {
         newContact.id = `temp-${crypto.randomUUID()}`;
         handleChange("contacts", [...formCompany.contacts, newContact])
@@ -164,8 +175,15 @@ const EditCompanyPage: React.FC = () => {
         handleChange("certifications", [...formCompany.certifications, newCertification])
     }
     const handleService = (newService: NewProductInput) => {
+        const exists = formCompany.services.some(s => s.id === newService.id);
+        if(exists){
+            const updatedList = formCompany.services.map( s =>
+                s.id === newService.id ? newService : s
+            )
+            handleChange("services", updatedList);
+        } else {
         newService.id = `temp-${crypto.randomUUID()}`;
-        handleChange("services", [...formCompany.services, newService])
+        handleChange("services", [...formCompany.services, newService])}
     }
     const handleProduct = (newProduct: NewProductInput | Product) => {
         const exists = formCompany.products.some(p => p.id === newProduct.id);
@@ -638,7 +656,7 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsServiceOpen(true)}
+                    onClick={handleOpenCreateService}
                 >
                     Nuevo Servicio
                     <PlusIcon className="h-4 w-4"/>
@@ -691,7 +709,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEditService(s)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -962,8 +981,11 @@ const EditCompanyPage: React.FC = () => {
 
         <ServiceModal //utilizado
             isServiceOpen={isServiceOpen}
-            onClose={() => setIsServiceOpen(false)}
-            service={emptyFormProduct}
+            onClose={() => {
+                setIsServiceOpen(false);
+                setCurrentService(emptyFormProduct);
+            }}
+            service={currentService}
             setService={handleService}
 
         />
