@@ -508,8 +508,8 @@ const EditCompanyPage: React.FC = () => {
         <div className="flex flex-col gap-2 items-start w-2xl mt-5">
             <div className="flex items-center gap-3">
                 <label className="font-semibold text-clas-negro">Descripción breve</label>
-                <InformationCircleIcon className="text-clas-gris h-5"/>
-                <p className="text-clas-gris">20-30 palabras</p>
+                <InformationCircleIcon className="text-gray-500 h-5"/>
+                <p className="text-gray-500">20-30 palabras</p>
             </div>
             <input 
                 type="text" 
@@ -524,8 +524,8 @@ const EditCompanyPage: React.FC = () => {
                 <label className="font-semibold text-clas-negro">
                 Sobre tu empresa
             </label>
-                <InformationCircleIcon className="text-clas-gris h-5"/>
-                <p className="text-clas-gris">60-80 palabras</p>
+                <InformationCircleIcon className="text-gray-500 h-5"/>
+                <p className="text-gray-500">60-80 palabras</p>
             </div>
             <textarea  
                 value={formCompany.description}
@@ -561,7 +561,8 @@ const EditCompanyPage: React.FC = () => {
                     Ubicación
                 </label>
                 {/* TODO: Agregar info de como obtener el link de embebido */}
-                <InformationCircleIcon className="text-clas-negro h-5 w-5"/>
+                <InformationCircleIcon className="text-gray-500 h-5 w-5"/>
+                <p className="text-gray-500">Link de embebido</p>
             </div>
             <input 
                 type="text" 
@@ -584,8 +585,8 @@ const EditCompanyPage: React.FC = () => {
                 <label className="font-semibold text-clas-negro">
                 Catálogo de Productos / Servicios
             </label>
-                <InformationCircleIcon className="text-clas-gris h-5"/>
-                <p className="text-clas-gris">Archivo en formato .pdf</p>
+                <InformationCircleIcon className="text-gray-500 h-5"/>
+                <p className="text-gray-500">Archivo en formato .pdf</p>
             </div>
             <FileUpload onFileSelect={handleCatalogSelect} />
         </div>
