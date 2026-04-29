@@ -1,19 +1,27 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
-import type { NewContactInput } from "clas-types";
-import { useState } from "react";
+import type { NewContactInput, Contact } from "clas-types";
+import { useEffect, useState } from "react";
 
 interface Props{
     isContactOpen: boolean;
     onClose: () => void;
-    contact: NewContactInput;
-    setContact: (newContact: NewContactInput) => void;
+    contact: NewContactInput | Contact;
+    setContact: (newContact: any) => void;
 }
 
 const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, setContact }) => {
-    const [formContact, setFormContact] = useState<NewContactInput>(contact);
+    const [formContact, setFormContact] = useState<NewContactInput | Contact>(contact);
     const handleChange = (field:keyof NewContactInput, value:any) => {
             setFormContact((prev) => ({...prev, [field]: value}))
     }
+
+    const isEditing = 'id' in contact && contact.id;
+    
+    useEffect(() => {
+        setFormContact(contact)
+    }, [contact])
+
+
     return(
         <Dialog open={isContactOpen} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro */}
@@ -23,7 +31,7 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
             <div className="fixed inset-0 flex items-center justify-center p-4">
                 <DialogPanel className="w-full max-w-sm rounded-lg bg-white shadow-xl p-6 space-y-4">
                     <DialogTitle className="text-xl font-semibold text-clas-negro">
-                        Nuevo Contacto
+                        {isEditing ? "Editar Contacto" : "Nuevo Contacto" }
                     </DialogTitle>
                     <div className="flex flex-col gap-3">
                         <div className="flex flex-col gap-1">
@@ -87,7 +95,7 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
                                 onClose();
                             }}
                             className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
-                            Agregar
+                            {isEditing ? "Guardar Cambios" : "Agregar Contacto"}
                         </button>
                     </div>
                     

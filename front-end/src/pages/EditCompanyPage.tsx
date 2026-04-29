@@ -122,15 +122,15 @@ const EditCompanyPage: React.FC = () => {
     const [serviceToDelete, setServiceToDelete] = useState<Service | NewProductInput | null>(null);
     const [servicesToDelete, setServicesToDelete] = useState<Number[]>([])
     const [currentService, setCurrentService] = useState(emptyFormProduct);
-
-    
     
     const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
     const [contactToDelete, setContactToDelete] = useState<NewContactInput | Contact | null>(null);
     const [contactsToDelete, setContactsToDelete] = useState<Number[]> ([]) 
+    const [currentContact, setCurrentContact] = useState(emptyFormContact);
 
     const [certificationToDelete, setCertificationToDelete] = useState<NewCertificationInput | Certification | null>(null);
     const [certificationsToDelete, setCertificationsToDelete] = useState<Number[]>([]);
+    const [currentCertification, setCurrentCertification] = useState(emptyFormCertification);
 
 
     {/* Logo Handling */}
@@ -166,15 +166,57 @@ const EditCompanyPage: React.FC = () => {
         setIsServiceOpen(true);
     }
 
-    const handleContact = (newContact: NewContactInput) => {
+    const handleOpenCreateContact = () => {
+        setCurrentContact(emptyFormContact);
+        setIscontactOpen(true);
+    }
+
+    const handleOpenEditContact = (contactToEdit: Contact) => {
+        setCurrentContact(contactToEdit);
+        setIscontactOpen(true);
+    }
+
+    const handleOpenCreateCertification = () => {
+        setCurrentCertification(emptyFormCertification);
+        setIsCertificationOpen(true);
+    }
+
+    const handleOpenEditCertification = (certificationToEdit: Certification) => {
+        setCurrentCertification(certificationToEdit);
+        setIsCertificationOpen(true);
+    }
+
+    const handleContact = (newContact: NewContactInput | Contact) => {
+        const exists = formCompany.contacts.some( c => c.id === newContact.id);
+
+        if(exists){
+            const updatedList = formCompany.contacts.map( c => 
+                c.id === newContact.id ? newContact : c
+            )
+            handleChange("contacts", updatedList);
+        }else{
         newContact.id = `temp-${crypto.randomUUID()}`;
-        handleChange("contacts", [...formCompany.contacts, newContact])
+        handleChange("contacts", [...formCompany.contacts, newContact])}
+
+        setIscontactOpen(false);
     }
-    const handleCertification = (newCertification: NewCertificationInput) => {
+
+    const handleCertification = (newCertification: NewCertificationInput | Certification) => {
+        const exists = formCompany.certifications.some( c => c.id === newCertification.id);
+
+        if(exists){
+            const updatedList = formCompany.certifications.map( c => 
+                c.id === newCertification.id ? newCertification : c
+            )
+            handleChange("certifications", updatedList);
+        } else {
         newCertification.id = `temp-${crypto.randomUUID()}`;
-        handleChange("certifications", [...formCompany.certifications, newCertification])
+        handleChange("certifications", [...formCompany.certifications, newCertification])}
+        setIsCertificationOpen(false)
     }
-    const handleService = (newService: NewProductInput) => {
+
+
+    const handleService = (newService: NewProductInput | Service) => {
         const exists = formCompany.services.some(s => s.id === newService.id);
         if(exists){
             const updatedList = formCompany.services.map( s =>
@@ -184,6 +226,7 @@ const EditCompanyPage: React.FC = () => {
         } else {
         newService.id = `temp-${crypto.randomUUID()}`;
         handleChange("services", [...formCompany.services, newService])}
+        setIsServiceOpen(false);
     }
     const handleProduct = (newProduct: NewProductInput | Product) => {
         const exists = formCompany.products.some(p => p.id === newProduct.id);
@@ -798,7 +841,7 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsCertificationOpen(true)} // checar
+                    onClick={handleOpenCreateCertification} 
                 >
                     Nueva Certificación
                     <PlusIcon className="h-4 w-4"/>
@@ -834,7 +877,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEditCertification(c)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -866,7 +910,7 @@ const EditCompanyPage: React.FC = () => {
             </div>
             <div className="w-full flex justify-end">
                 <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIscontactOpen(true)}
+                    onClick={handleOpenCreateContact}
                 >
                     Nuevo Contacto
                     <PlusIcon className="h-4 w-4"/>
@@ -908,7 +952,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEditContact(c)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -957,15 +1002,19 @@ const EditCompanyPage: React.FC = () => {
         
         <NewCertificationModal //utilizado
             isCertificationOpen={isCertificationOpen}
-            onClose={() => setIsCertificationOpen(false)}
-            certification={emptyFormCertification}
+            onClose={() => {
+                setIsCertificationOpen(false)
+                setCurrentCertification(emptyFormCertification)}}
+            certification={currentCertification}
             setCertification={handleCertification}
         />
 
         <NewContactModal //utilizado
             isContactOpen={isContactOpen}
-            onClose={() => setIscontactOpen(false)}
-            contact={emptyFormContact}
+            onClose={() => {
+                setIscontactOpen(false)
+                setCurrentContact(emptyFormContact)}}
+            contact={currentContact}
             setContact={handleContact}
         />
 
