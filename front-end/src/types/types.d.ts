@@ -204,6 +204,14 @@ declare module "clas-types" {
         name:string;
     }
     
+    export interface ProductBundleInput{
+        file: File,
+        position: number,
+        companyId: number,
+        name: string,
+        description: string
+    }
+
     export interface FileBundleInput{
         file: File, // <- Actual file
         type: 'logo' | 'document' | 'product' | 'image', 
