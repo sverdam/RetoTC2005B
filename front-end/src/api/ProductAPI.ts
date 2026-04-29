@@ -1,6 +1,6 @@
 import api from ".";
 import { Axios, AxiosError } from "axios";
-import type { NewProductInput, Product } from "clas-types";
+import type { NewProductInput, Product, ProductBundleInput } from "clas-types";
 
 export const deleteProduct = async (id: number): Promise<void> => {
     try{
@@ -12,6 +12,29 @@ export const deleteProduct = async (id: number): Promise<void> => {
         throw err;
     }
 }
+
+
+export const createProductAutomaticFile = async (info: ProductBundleInput) => {
+    const formData = new FormData();
+
+    for (const [key, value] of Object.entries(info)) {
+        formData.append(key, value);
+    }
+
+    try{
+        const res = await api.post<Product>("/product/withFile", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+        return res.data;
+    } catch(error){
+        const err = error as AxiosError;
+        console.error("Error creating file: ", err.message);
+        throw err;
+    }
+}
+
 
 export const createProduct = async (data:NewProductInput): Promise<Product> => {
     try{
