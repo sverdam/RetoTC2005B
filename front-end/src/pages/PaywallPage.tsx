@@ -40,9 +40,12 @@ const PaywallPage: React.FC = () => {
                     <p className="px-10 pt-5 text-clas-negro/70 text-md text-center">
                         Forma parte de Clúster Automotriz de Sonora y accede a oportunidades que llevan a tu empresa más lejos.
                     </p>
-                    <button className=" m-5 flex gap-2 bg-clas rounded-lg p-2 text-white items-center justify-center">
-                        <PaperAirplaneIcon className="h-5"/>
-                        Solicita información
+                    <button className=" m-5 flex gap-2 bg-clas hover:bg-clas-claro rounded-lg p-2 text-white items-center justify-center">
+                        <a className="flex gap-2 items-center" href="mailto:direccion@clas.com.mx">
+                            <PaperAirplaneIcon className="h-5"/>
+                            Solicita información
+                        </a>
+                        
                     </button>
                 </div>
             </div>
@@ -66,8 +69,10 @@ const PaywallPage: React.FC = () => {
                             Conoce cómo CLAS puede ayudarte a crecer, conectar y ser parte de la cadena de valor de la industria automotriz.
                         </p>
                         <button className=" w-full flex gap-2 bg-white rounded-lg p-2 text-clas items-center justify-center">
-                            Solicita información
-                            <ArrowRightIcon className="h-5"/>
+                            <a href="mailto:direccion@clas.com.mx" className="flex items-center">
+                                Solicita información
+                                <ArrowRightIcon className="h-5"/>
+                            </a>
                         </button>
                     </div>
                     <div className="flex items-center justify-center pl-5">
