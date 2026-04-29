@@ -139,6 +139,7 @@ const EditCompanyPage: React.FC = () => {
         handleChange("certifications", [...formCompany.certifications, newCertification])
     }
     const handleService = (newService: NewProductInput) => {
+        newService.id = `temp- ${crypto.randomUUID()}`;
         handleChange("services", [...formCompany.services, newService])
     }
     const handleProduct = (newProduct: NewProductInput) => {
@@ -180,10 +181,9 @@ const EditCompanyPage: React.FC = () => {
     const handleProductDelete = () => {
         if(!productToDelete) return;
         //TODO: Agregar API de producto
-        const isRealProduct = typeof productToDelete.id === 'number' || 
+        const isReal = typeof productToDelete.id === 'number' || 
                          (typeof productToDelete.id === 'string' && !productToDelete.id.startsWith('temp-'));
-        if(isRealProduct){
-            console.log(productsToDelete, productToDelete.id)
+        if(isReal){
             setProductsToDelete((prev) => [...prev, productToDelete.id]);
 
         }
@@ -195,7 +195,16 @@ const EditCompanyPage: React.FC = () => {
     };
 
     const handleServiceDelete = () => {
+        if(!serviceToDelete) return;
+
+        const isReal= typeof serviceToDelete.id === 'number' || 
+                         (typeof serviceToDelete.id === 'string' && !serviceToDelete.id.startsWith('temp-'));
         
+        if(isReal){
+            setServicesToDelete((prev) => [...prev, serviceToDelete.id])
+        }
+        handleChange("services", formCompany.services.filter(s => s.id != serviceToDelete.id))
+        setServiceToDelete(null);
     }   
 
     const handleContactDelete = () => {
