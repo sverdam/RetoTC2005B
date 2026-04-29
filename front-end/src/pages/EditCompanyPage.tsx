@@ -18,6 +18,7 @@ import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
 import { getProfile } from "../api/LoginAPI";
 import ServiceModal from "../components/ServiceModal";
 import { createFileModule } from "../api/fileModuleAPI";
+import { deleteContact } from "../api/ContactAPI";
 
 
 const unverifiedUser : UserProfile = {
@@ -133,9 +134,11 @@ const EditCompanyPage: React.FC = () => {
     };
 
     const handleContact = (newContact: NewContactInput) => {
+        newContact.id = `temp- ${crypto.randomUUID()}`;
         handleChange("contacts", [...formCompany.contacts, newContact])
     }
     const handleCertification = (newCertification: NewCertificationInput) => {
+        newCertification.id = `temp- ${crypto.randomUUID()}`;
         handleChange("certifications", [...formCompany.certifications, newCertification])
     }
     const handleService = (newService: NewProductInput) => {
@@ -210,6 +213,7 @@ const EditCompanyPage: React.FC = () => {
     const handleContactDelete = () => {
         if(!contactToDelete) return;
         //TODO: Agregar API de contacto
+        const isReal = 
         deleteContact(contactToDelete.id).then(() => {
           setContactToDelete(null);
         });

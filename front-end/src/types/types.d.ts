@@ -192,12 +192,14 @@ declare module "clas-types" {
     }
     
     export interface NewContactInput{
+        id: any;
         type: ContactType | null; 
         contactInfo: string;
         position: string;
     }
 
     export interface NewCertificationInput{
+        id: any;
         name:string;
     }
     
