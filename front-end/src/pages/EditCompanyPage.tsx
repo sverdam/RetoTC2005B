@@ -74,10 +74,12 @@ const emptyFormProduct: NewProductInput = {
 }
 
 const emptyFormCertification: NewCertificationInput = {
+    id: "",
     name: ""
 }
 
 const emptyFormContact: NewContactInput = {
+        id: "",
         type: null,
         contactInfo: "",
         position: ""
@@ -116,9 +118,12 @@ const EditCompanyPage: React.FC = () => {
 
     const [serviceToDelete, setServiceToDelete] = useState<Service | NewProductInput | null>(null);
     const [servicesToDelete, setServicesToDelete] = useState<Number[]>([])
+
+    
     
     const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
-    const [contactToDelete, setContactToDelete] = useState<Contact | null>(null);
+    const [contactToDelete, setContactToDelete] = useState<NewContactInput | Contact | null>(null);
+    const [contactsToDelete, setContactsToDelete] = useState<Number[]> ([]) 
 
 
     {/* Logo Handling */}
@@ -213,10 +218,13 @@ const EditCompanyPage: React.FC = () => {
     const handleContactDelete = () => {
         if(!contactToDelete) return;
         //TODO: Agregar API de contacto
-        const isReal = 
-        deleteContact(contactToDelete.id).then(() => {
-          setContactToDelete(null);
-        });
+        const isReal= typeof contactToDelete.id === 'number' || 
+                         (typeof contactToDelete.id === 'string' && !contactToDelete.id.startsWith('temp-'));
+        if (isReal) {
+            setContactsToDelete((prev) => [...prev, contactToDelete.id])
+        }
+        handleChange("contacts", formCompany.contacts.filter(c => c.id != contactToDelete.id))
+        setContactToDelete(null);
     };
     
     
@@ -910,7 +918,7 @@ const EditCompanyPage: React.FC = () => {
             setService={handleService}
 
         />
-        <DeleteProductServiceConfirmModal 
+        <DeleteProductServiceConfirmModal //utilizado
             product={productToDelete}
             service={serviceToDelete}
             onClose={() => {
