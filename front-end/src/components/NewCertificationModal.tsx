@@ -1,19 +1,21 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
-import type { NewCertificationInput } from "clas-types";
-import { useState } from "react";
+import type { NewCertificationInput, Certification } from "clas-types";
+import { useEffect, useState } from "react";
 
 interface Props{
     isCertificationOpen: boolean;
     onClose: () => void;
-    certification: NewCertificationInput;
-    setCertification: (newCertification: NewCertificationInput) => void;
+    certification: NewCertificationInput | Certification;
+    setCertification: (newCertification: any) => void;
 }
 
 const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, certification, setCertification }) => {
-    const [newCertification, setNewCertification] = useState<NewCertificationInput>(certification);
-
+    const [newCertification, setNewCertification] = useState<NewCertificationInput | Certification>(certification);
+    const isEditing = 'id' in certification && certification.id;
     
-
+    useEffect(() => {
+        setNewCertification(certification);
+    },[certification])
     return(
         <Dialog open={isCertificationOpen} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro */}
@@ -23,7 +25,7 @@ const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, 
             <div className="fixed inset-0 flex items-center justify-center p-4">
                 <DialogPanel className="w-full max-w-sm rounded-lg bg-white shadow-xl p-6 space-y-4">
                     <DialogTitle className="text-xl font-semibold text-clas-negro">
-                        Nueva Certificación
+                        {isEditing ? "Editar Certificación" : "Nueva Certificación"}
                     </DialogTitle>
                     <div className="flex flex-col gap-3">
                         <div className="flex flex-col gap-1">
@@ -51,7 +53,7 @@ const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, 
                                 onClose();
                             }}
                             className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
-                            Agregar
+                            {isEditing ? "Guardar Cambios" : "Agregar Certificación"}
                         </button>
                     </div>
                     
