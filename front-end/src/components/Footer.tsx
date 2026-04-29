@@ -42,8 +42,8 @@ const Footer: React.FC = () => {
                     {/* Second Column: Contact US */}
                     <div className="flex flex-col gap-4 items-start">
                         <h4 className="text-clas-gris font-semibold text-left">CONTÁCTANOS</h4>
-                        <p className="text-clas-gris font-normal text-left">direccion@clas.com.mx</p>
-                        <p className="text-clas-gris font-normal text-left">tesoreria@clas.com.mx</p>
+                        <a href="mailto:direccion@clas.com.mx" className="text-clas-gris font-normal text-left">direccion@clas.com.mx</a>
+                        <a href="mailto:tesoreria@clas.com.mx" className="text-clas-gris font-normal text-left">tesoreria@clas.com.mx</a>
                         <p className="text-clas-gris font-normal text-left">Obrero Mundial 10, 83210 Hermosillo, Sonora, México</p>
                     </div>
                     {/* Third Column: Subscribe to Newsletter */}
