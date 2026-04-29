@@ -4,6 +4,7 @@ import { ArrowLeftIcon, PlusIcon, PencilSquareIcon } from "@heroicons/react/24/o
 import type { Company, User, NewUserInput, UserRole } from "clas-types";
 import { getAllCompanies } from '../api/CompanyAPI';
 import { createUser, getUserById, updateUser } from '../api/UserAPI';
+import type { AxiosError } from 'axios';
 
 
 const inputClass =
@@ -28,6 +29,7 @@ const UserFormPage: React.FC = () => {
 
     const [ companies, setCompanies ] = useState<Company[]>([]);
     const [ form, setForm] = useState<NewUserInput>(emptyForm);
+    const [ error, setError ] = useState<string>("");
 
     useEffect(() => {
         getAllCompanies().then(setCompanies);
@@ -55,9 +57,15 @@ const UserFormPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (isEditing){
-            updateUser(Number(id), form).then(() => navigate("/usuarios"));
+            updateUser(Number(id), form).then(() => navigate("/usuarios")).catch
+            (
+                (error: AxiosError) => setError(`Algo paso modificando el usuario: ${error.message}`)
+            )
         } else {
-            createUser(form).then(() => navigate("/usuarios"));
+            createUser(form).then(() => navigate("/usuarios")).catch
+            (
+                (error: AxiosError) => setError(`Algo paso creando el usuario: ${error.message}`)
+            );;
         }
     };
 
@@ -180,6 +188,12 @@ const UserFormPage: React.FC = () => {
                             </div>
                         </div>
                     </div>
+
+                    {error.length > 0 ? <div className="text-red-700 p-2">
+                        <p>{error}</p>
+                    </div> : <></>}
+                    
+
                     {/* Footer */}
                     <div className="flex justify-end gap-2 border-t border-gray-200 px-6 py-4">
                         <button
