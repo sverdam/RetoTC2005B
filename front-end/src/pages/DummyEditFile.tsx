@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useParams } from "react-router";
 import FileUpload from "../components/FileUpload";
 import { createFileModule } from "../api/fileModuleAPI";
 
@@ -12,8 +13,9 @@ interface FileCompoundInput{
 
 const DummyEditFile: React.FC = () => 
 {
+    const {id} = useParams();
+    const companyId = Number(id)
     const [fileMod, setFileMod] = useState<FileCompoundInput | null>(null);
-    const companyId = 2;
 
     {/* Logo Handling */}
     const handleLogoSelect = (file: File) => {
@@ -21,7 +23,7 @@ const DummyEditFile: React.FC = () =>
         setFileMod({
             file: file,
             type: 'logo',
-            position: 1,
+            position: 0,
             companyId: companyId
         });
     };
