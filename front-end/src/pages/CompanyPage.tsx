@@ -160,10 +160,13 @@ const CompanyPage: React.FC = () => {
 
                 <div className="flex flex-col w-full gap-4">
                     <div className="flex flex-row gap-4">
-                        <div className={`flex flex-col basis-[${gallery.length === 0 ? 100 : 60}%]`}>
+                        <div className={`flex w-full h-full justify-between flex-col basis-[${gallery.length === 0 ? 100 : 60}%]`}>
+                            {/* ABOUT US TEXT */}
                             <p className="text-lg text-left">
                             {company?.aboutUs}
                             </p>
+
+                            {/* STATS */}
                             <div className="grid-cols-1 py-4 sm:flex sm:flex-row justify-around">
                                 <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
                                     <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
@@ -197,6 +200,8 @@ const CompanyPage: React.FC = () => {
 
                             </div>
                         </div>
+
+                        {/* PHOTO CAROUSEL / GALLERY */}
                         {
                             gallery.length === 0 ? <></> :
                             <div className="basis-[40%]">
@@ -205,6 +210,7 @@ const CompanyPage: React.FC = () => {
                         }
                     </div>
                     
+                    {/* WEBSITE LINK */}
                     {company?.website ? (<div className="group flex gap-2 items-center text-clas w-fit">
                             <a className="text-md" href={company?.website}>Visita nuestro Sitio Web
                                 <span className="block max-w-0 group-hover:max-w-full 
