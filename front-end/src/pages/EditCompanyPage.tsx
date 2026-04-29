@@ -1,7 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput} from "clas-types";
+import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput, Certification} from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
 import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
@@ -19,6 +19,8 @@ import { getProfile } from "../api/LoginAPI";
 import ServiceModal from "../components/ServiceModal";
 import { createFileModule } from "../api/fileModuleAPI";
 import { deleteContact } from "../api/ContactAPI";
+import DeleteCertificationConfirmModal from "../components/DeleteCertificationConfirmModal";
+
 
 
 const unverifiedUser : UserProfile = {
@@ -115,6 +117,7 @@ const EditCompanyPage: React.FC = () => {
     const [isProductDeleteOpen, setIsProductDeleteOpen] = useState(false);
     const [productToDelete, setProductToDelete] = useState<Product | NewProductInput | null>(null);
     const [productsToDelete, setProductsToDelete] = useState<Number[]>([])
+    const [currentProduct, setCurrentProduct] = useState(emptyFormProduct);
 
     const [serviceToDelete, setServiceToDelete] = useState<Service | NewProductInput | null>(null);
     const [servicesToDelete, setServicesToDelete] = useState<Number[]>([])
@@ -124,6 +127,9 @@ const EditCompanyPage: React.FC = () => {
     const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
     const [contactToDelete, setContactToDelete] = useState<NewContactInput | Contact | null>(null);
     const [contactsToDelete, setContactsToDelete] = useState<Number[]> ([]) 
+
+    const [certificationToDelete, setCertificationToDelete] = useState<NewCertificationInput | Certification | null>(null);
+    const [certificationsToDelete, setCertificationsToDelete] = useState<Number[]>([]);
 
 
     {/* Logo Handling */}
@@ -138,6 +144,16 @@ const EditCompanyPage: React.FC = () => {
         handleChange('logo', logoBoundle);
     };
 
+    const handleOpenCreate = () => {
+        setCurrentProduct(emptyFormProduct);
+        setIsProductOpen(true);
+    }
+
+    const handleOpenEdit = (productToEdit: Product) => {
+        setCurrentProduct(productToEdit);
+        setIsProductOpen(true)
+    }
+
     const handleContact = (newContact: NewContactInput) => {
         newContact.id = `temp- ${crypto.randomUUID()}`;
         handleChange("contacts", [...formCompany.contacts, newContact])
@@ -151,8 +167,17 @@ const EditCompanyPage: React.FC = () => {
         handleChange("services", [...formCompany.services, newService])
     }
     const handleProduct = (newProduct: NewProductInput) => {
-        newProduct.id = `temp- ${crypto.randomUUID()}`;
-        handleChange("products", [...formCompany.products, newProduct])
+        const exists = formCompany.products.some(p => p.id === newProduct.id);
+
+        if(exists) {
+            const updatedList = formCompany.products.map(p =>
+                p.id === newProduct.id ? newProduct : p
+            )
+            handleChange("products", updatedList);
+        } else {
+            newProduct.id = `temp- ${crypto.randomUUID()}`;
+            handleChange("products", [...formCompany.products, newProduct])
+        }
     }
     const handleFilter = (newFilters: Filter[]) => {
         handleChange("filters", newFilters)
@@ -226,8 +251,18 @@ const EditCompanyPage: React.FC = () => {
         handleChange("contacts", formCompany.contacts.filter(c => c.id != contactToDelete.id))
         setContactToDelete(null);
     };
-    
-    
+
+    const handleCertificationDelete = () => {
+        if(!certificationToDelete) return;
+        //TODO: Agregar API de contacto
+        const isReal= typeof certificationToDelete.id === 'number' || 
+                         (typeof certificationToDelete.id === 'string' && !certificationToDelete.id.startsWith('temp-'));
+        if (isReal) {
+            setCertificationsToDelete((prev) => [...prev, certificationToDelete.id])
+        }
+        handleChange("certifications", formCompany.certifications.filter(c => c.id != certificationToDelete.id))
+        setCertificationToDelete(null);
+    }
 
     useEffect(()=>{
        
@@ -507,7 +542,7 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsProductOpen(true)}
+                    onClick={handleOpenCreate}
                 >
                     Nuevo Producto
                     <PlusIcon className="h-4 w-4"/>
@@ -560,7 +595,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEdit(p)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -906,8 +942,11 @@ const EditCompanyPage: React.FC = () => {
 
         <ProductModal //utilizado
             isProductOpen={isProductOpen}
-            onClose={() => setIsProductOpen(false)}
-            product={emptyFormProduct}
+            onClose={() => {
+                setIsProductOpen(false);
+                setCurrentProduct(emptyFormProduct);
+            }}
+            product={currentProduct}
             setProduct={handleProduct}
         />
 
@@ -928,11 +967,17 @@ const EditCompanyPage: React.FC = () => {
             onConfirm={productToDelete != null ? handleProductDelete : handleServiceDelete}
         />
 
-        <DeleteContactConfirmModal 
+        <DeleteContactConfirmModal //utilizado
             contact={contactToDelete}
             onClose={() => setContactToDelete(null)}
             onConfirm={handleContactDelete}
         />
+        <DeleteCertificationConfirmModal
+            certification={certificationToDelete}
+            onClose={() => setCertificationToDelete(null)}
+            onConfirm={handleCertificationDelete}
+        />
+
     </div>
    )
 };

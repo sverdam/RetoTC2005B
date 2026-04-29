@@ -22,7 +22,8 @@ declare module "clas-types" {
         ADMIN = 'Admin',
     }
 
-    interface Certification {
+    export interface Certification {
+        id: Number;
         name: string;
     }
 
@@ -203,7 +204,7 @@ declare module "clas-types" {
         name:string;
     }
     
-    interface FileBundleInput{
+    export interface FileBundleInput{
         file: File, // <- Actual file
         type: 'logo' | 'document' | 'product' | 'image', 
         position: number,
