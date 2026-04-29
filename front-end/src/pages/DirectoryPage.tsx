@@ -128,7 +128,7 @@ const DirectoryPage: React.FC = () => {
             </div>
             {/*grid de cards*/}
             <div className="grid grid-cols-4 gap-4">
-                {(userProfile.role === 'admin' && filteredCompanies.length > 1) ? 
+                {(userProfile.role === 'admin' && filteredCompanies.length > 0) ? 
                     <NewDirectoryCardButton /> 
                     : <></> 
                 }
