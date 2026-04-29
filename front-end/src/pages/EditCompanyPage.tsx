@@ -150,23 +150,24 @@ const EditCompanyPage: React.FC = () => {
     }
 
     const handleOpenEdit = (productToEdit: Product) => {
+        console.log("Intentando editar producto:", productToEdit);
         setCurrentProduct(productToEdit);
-        setIsProductOpen(true)
+        setIsProductOpen(true);
     }
 
     const handleContact = (newContact: NewContactInput) => {
-        newContact.id = `temp- ${crypto.randomUUID()}`;
+        newContact.id = `temp-${crypto.randomUUID()}`;
         handleChange("contacts", [...formCompany.contacts, newContact])
     }
     const handleCertification = (newCertification: NewCertificationInput) => {
-        newCertification.id = `temp- ${crypto.randomUUID()}`;
+        newCertification.id = `temp-${crypto.randomUUID()}`;
         handleChange("certifications", [...formCompany.certifications, newCertification])
     }
     const handleService = (newService: NewProductInput) => {
-        newService.id = `temp- ${crypto.randomUUID()}`;
+        newService.id = `temp-${crypto.randomUUID()}`;
         handleChange("services", [...formCompany.services, newService])
     }
-    const handleProduct = (newProduct: NewProductInput) => {
+    const handleProduct = (newProduct: NewProductInput | Product) => {
         const exists = formCompany.products.some(p => p.id === newProduct.id);
 
         if(exists) {
@@ -175,9 +176,13 @@ const EditCompanyPage: React.FC = () => {
             )
             handleChange("products", updatedList);
         } else {
-            newProduct.id = `temp- ${crypto.randomUUID()}`;
-            handleChange("products", [...formCompany.products, newProduct])
+            const productWithId = { 
+            ...newProduct, 
+            id: `temp-${crypto.randomUUID()}` 
+        };
+            handleChange("products", [...formCompany.products, productWithId]);
         }
+        setIsProductOpen(false)
     }
     const handleFilter = (newFilters: Filter[]) => {
         handleChange("filters", newFilters)
@@ -542,7 +547,12 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={handleOpenCreate}
+                    type="button"
+                    onClick={() => {
+                        console.log("CLICK EN NUEVO PRODUCTO")
+                        setIsProductOpen(true);
+
+                    }}
                 >
                     Nuevo Producto
                     <PlusIcon className="h-4 w-4"/>
@@ -716,7 +726,7 @@ const EditCompanyPage: React.FC = () => {
                 value={formCompany.employees != null ? formCompany.employees : ""}
                 placeholder="Empleados..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"
-                onChange={(e) => e.target.value}>
+                onChange={(e) => handleChange("employees", e.target.value)}>
             </input>
         </div>
         {/* Piezas */}

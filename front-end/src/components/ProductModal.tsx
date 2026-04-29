@@ -1,29 +1,34 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
 import FileUpload from "./FileUpload";
-import type { NewProductInput} from "clas-types";
-import { useState } from "react";
+import type { NewProductInput, Product} from "clas-types";
+import { useEffect, useState } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
     isProductOpen: boolean;
     onClose: () => void;
-    product: NewProductInput;
-    setProduct: (newProduct: NewProductInput) => void;
+    product: NewProductInput | Product;
+    setProduct: (newProduct: any) => void;
 
 }
 
 const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setProduct}) => {
     
-    const [formProduct, setFormProduct] = useState<NewProductInput>(product);
+    const [formProduct, setFormProduct] = useState<NewProductInput | Product>(product);
 
     const handleChange = (field:keyof NewProductInput, value:any) => {
         setFormProduct((prev) => ({...prev, [field]: value}))
     }
-
     {/* Product Image Handling */}
     const handleProductImageSelect = (file: File) => {
         console.log(file);
     };
+
+    const isEditing = 'id' in product && product.id;
+
+    useEffect(() => {
+        setFormProduct(product);
+    }, [product])
     return(
         <Dialog open={isProductOpen} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro */}
@@ -33,7 +38,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
             <div className="fixed inset-0 flex items-center justify-center p-4">
                 <DialogPanel className="w-full max-w-sm rounded-lg bg-white shadow-xl p-6 space-y-4">
                     <DialogTitle className="text-xl font-semibold text-clas-negro">
-                        Nuevo Producto
+                        {isEditing ? "Editar Producto" : "Nuevo Producto"}
                     </DialogTitle>
                     <div className="flex flex-col gap-3">
                         <div className="flex flex-col gap-1">
@@ -84,14 +89,13 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                             onClose();
                         }}
                         className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
-                            Agregar Producto
+                            {isEditing ? "Guardar Cambios" : "Agregar Producto"}
                         </button>
                     </div>
                     
                 </DialogPanel>
             </div>
         </Dialog>
-    )
-};
+)};
 
 export default ProductModal;
