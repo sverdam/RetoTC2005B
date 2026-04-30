@@ -635,10 +635,12 @@ const EditCompanyPage: React.FC = () => {
                 <FileUpload id="logo-upload" onFileSelect={handleLogoSelect} />
             </div>
             <div className="flex flex-col gap-3 items-start w-2xl mt-5">
-                <label className="font-semibold text-clas-negro">
-                    Nombre de la empresa
-                    {errors.name && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
-                </label>
+                <div className="flex gap-2 items-center justify-start text-left">
+                    <label className="font-semibold text-clas-negro">
+                        Nombre de la empresa
+                    </label>
+                    {errors.name && <p className="text-[#cf384c] text-sm font-normal">* Campo obligatorio</p>}
+                </div>
                 <input
                     required
                     type="text"
@@ -651,10 +653,13 @@ const EditCompanyPage: React.FC = () => {
             {/* Tier y MemberType*/}
             <div className="mt-5 flex w-2xl justify-between">
                 <div className="flex flex-col gap-2 items-start w-3xs">
-                    <label className="font-semibold text-clas-negro">
-                        Tier
-                        {errors.tier && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
-                    </label>
+                    <div className="flex gap-2 items-center justify-start text-left">
+                        <label className="font-semibold text-clas-negro">
+                            Tier
+                        </label>
+                        {errors.tier && <p className="text-[#cf384c] text-sm font-normal">* Campo obligatorio</p>}
+                    </div>
+                    
                     <select
                         className="border-2 border-clas-gris rounded-lg p-2 w-3xs"
                         required
@@ -681,10 +686,13 @@ const EditCompanyPage: React.FC = () => {
                 </div>
                 {userProfile.role === "admin" ?
                     <div className="flex flex-col gap-2 items-start w-3xs">
-                        <label className="font-semibold text-clas-negro">
-                            Tipo de Miembro
-                            {errors.member && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
-                        </label>
+                        <div className="flex gap-2 items-center justify-start text-left">
+                            <label className="font-semibold text-clas-negro w-full">
+                                Tipo de Miembro
+                            </label>
+                            {errors.member && <p className="text-[#cf384c] text-sm font-normal">* Campo obligatorio</p>}
+
+                        </div>
                         <select
                             className="border-2 border-clas-gris rounded-lg p-2 w-3xs"
                             required
@@ -1189,7 +1197,7 @@ const EditCompanyPage: React.FC = () => {
                     onClick={() => navigate(-1)}
                     className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1 hover:bg-clas-negro/20">Cancelar</button>
                 {isEditing ?
-                    <button className="bg-red-400 text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
+                    <button className="bg-[#cf384c] text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
                         onClick={() => setCompanyToDelete(formCompany)}
                     >
                         Eliminar Empresa
