@@ -759,9 +759,6 @@ const EditCompanyPage: React.FC = () => {
                 <label className="font-semibold text-clas-negro">
                     Ubicación
                 </label>
-                {/* TODO: Agregar info de como obtener el link de embebido */}
-                <InformationCircleIcon className="text-gray-500 h-5 w-5"/>
-                <p className="text-gray-500">Link de embebido</p>
             </div>
             <input 
                 type="text" 
