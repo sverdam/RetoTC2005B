@@ -723,10 +723,10 @@ const EditCompanyPage: React.FC = () => {
                 <p className="text-gray-500">60-80 palabras</p>
             </div>
             <textarea  
-                value={formCompany.description}
+                value={formCompany.aboutUs}
                 placeholder="Describe a tu empresa" 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"
-                onChange={(e) => handleChange("description", e.target.value)}>
+                onChange={(e) => handleChange("aboutUs", e.target.value)}>
             </textarea>
         </div>
         {/* Sitio Web */}

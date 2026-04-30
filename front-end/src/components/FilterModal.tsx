@@ -1,25 +1,25 @@
-import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react"
 import type { Filter, Category } from "clas-types";
 import { useState, useEffect, useMemo } from "react";
 import { getAllFilters } from "../api/FilterAPI";
 import { getAllCategories } from "../api/CategoryAPI";
 
 
-interface Props{
+interface Props {
     isOpen: boolean;
     isEditing: boolean
     onClose: () => void;
     selectFilter: Filter[];
-    setSelectFilter: (filters: Filter[] ) => void;
+    setSelectFilter: (filters: Filter[]) => void;
 }
 
 const FilterModal: React.FC<Props> = ({ isOpen, isEditing, onClose, selectFilter, setSelectFilter }) => {
 
-    {/* Todos los filtros que vienen desde el backend */}
+    {/* Todos los filtros que vienen desde el backend */ }
     const [filters, setFilters] = useState<Filter[]>([]);
-    {/* Los filtros seleccionados por el usuario */}
+    {/* Los filtros seleccionados por el usuario */ }
     const [selected, setSelected] = useState<Filter[]>([]);
-    {/* Las categorias que vienen de backend */}
+    {/* Las categorias que vienen de backend */ }
     const [categories, setCategories] = useState<Category[]>([]);
 
     useEffect(() => {
@@ -27,15 +27,15 @@ const FilterModal: React.FC<Props> = ({ isOpen, isEditing, onClose, selectFilter
         if (isOpen) {
             setSelected(selectFilter);
         }
-        
+
     }, [isOpen, selectFilter]);
 
     useEffect(() => {
-        getAllCategories().then((data:Category[]) => setCategories(data))
+        getAllCategories().then((data: Category[]) => setCategories(data))
     }, []);
 
     const toogleTag = (tag: Filter) => {
-        if(selected.some((t) => t.id === tag.id)) {
+        if (selected.some((t) => t.id === tag.id)) {
             setSelected(selected.filter((t) => t.id !== tag.id));
         } else {
             setSelected([...selected, tag]);
@@ -51,9 +51,9 @@ const FilterModal: React.FC<Props> = ({ isOpen, isEditing, onClose, selectFilter
             acc[filter.category.id].push(filter);
             return acc;
         }, {});
-    },[filters]);
+    }, [filters]);
 
-    return(
+    return (
         <Dialog open={isOpen} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro */}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
@@ -72,8 +72,8 @@ const FilterModal: React.FC<Props> = ({ isOpen, isEditing, onClose, selectFilter
                                 <div>
                                     {groupedFilters[category.id]?.map(filter => {
                                         const isSelected = selected.some((f) => f.id === filter.id);
-                                        
-                                        return(
+
+                                        return (
                                             <button key={filter.id}
                                                 onClick={() => toogleTag(filter)}
                                                 className={` m-2 px-4 py-2 rounded-full border transition 
@@ -87,27 +87,27 @@ const FilterModal: React.FC<Props> = ({ isOpen, isEditing, onClose, selectFilter
                         ))}
                     </div>
                     <div className="flex gap-3">
-                        <button 
-                        onClick={() =>{
-                            onClose();
-                                
-                        }}
+                        <button
+                            onClick={() => {
+                                onClose();
 
-                        className="bg-white border-2 border-red-500 rounded-lg py-1 px-2 text-red-500 hover:bg-clas-gris/40 focus:ring-2 focus:ring-red-600">
+                            }}
+
+                            className="bg-white border-2 border-red-500 rounded-lg py-1 px-2 text-red-500 hover:bg-clas-gris/40 focus:ring-2 focus:ring-red-600">
                             Cancelar
                         </button>
-                        <button 
-                        onClick={() =>{
-                            setSelectFilter(selected);
-                            onClose();
-                                
-                        }}
+                        <button
+                            onClick={() => {
+                                setSelectFilter(selected);
+                                onClose();
 
-                        className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
+                            }}
+
+                            className="bg-clas rounded-lg py-1 px-2 text-white hover:bg-clas-claro focus:ring-2 focus:ring-clas">
                             {isEditing ? "Guardar Cambios" : "Filtrar"}
                         </button>
                     </div>
-                    
+
                 </DialogPanel>
             </div>
         </Dialog>

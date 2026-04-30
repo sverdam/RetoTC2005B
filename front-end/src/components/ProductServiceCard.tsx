@@ -35,13 +35,13 @@ const ProductServiceCard: React.FC<ProductServiceProps> = ({
 
         {type === "s" && (
           <div style={{
-              background: color
-                  ? `linear-gradient(
+            background: color
+              ? `linear-gradient(
                       to right,
                       ${color},
                       ${color}CC
                   )`
-                  : "linear-gradient(to right, var(--clas), var(--clas-claro))"
+              : "linear-gradient(to right, var(--clas), var(--clas-claro))"
           }} className="h-20 w-full text-white flex items-center justify-center">
             {Icon ? (
               <Icon className="h-7 w-7" />

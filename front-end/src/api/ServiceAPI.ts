@@ -1,10 +1,10 @@
 import api from ".";
-import { Axios, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import type { NewProductInput, Service } from "clas-types";
 
 export const deleteService = async (id: number): Promise<void> => {
-    try{
-        await api.delete<Service> (`/service/${id}`)
+    try {
+        await api.delete<Service>(`/service/${id}`)
     }
     catch (error) {
         const err = error as AxiosError;
@@ -13,20 +13,20 @@ export const deleteService = async (id: number): Promise<void> => {
     }
 }
 
-export const createService = async (data:NewProductInput): Promise<Service> => {
-    const {id, ...pro} = data;
-    try{
+export const createService = async (data: NewProductInput): Promise<Service> => {
+    const { id, ...pro } = data;
+    try {
         const res = await api.post<Service>("/service", pro);
         return res.data;
-    } catch(error){
+    } catch (error) {
         const err = error as AxiosError;
         console.error("Error creating service: ", err.message);
         throw err;
     }
 }
 
-export const updateService = async (id: number, data:NewProductInput): Promise<Service> => {
-    try{
+export const updateService = async (id: number, data: NewProductInput): Promise<Service> => {
+    try {
         const res = await api.patch<Service>(`/service/${id}`, data);
         return res.data;
     } catch (error) {

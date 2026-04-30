@@ -15,7 +15,7 @@ export const getGallery = async (companyId: number) => {
         const links = res.data.map(fileModule => getFileURLById(fileModule.id))
         return links;
 
-    } catch( error ){
+    } catch (error) {
         const err = error as AxiosError;
         console.error("Error getting logos: ", err.message);
         throw err;
@@ -25,14 +25,13 @@ export const getGallery = async (companyId: number) => {
 export const getLogos = async () => {
     try {
         const res = await api.get<FileModule[]>("/fileModule/type/logo");
-        const links = res.data.map(fileModule => 
-            {
-                return {src: getFileURLById(fileModule.id), alt: fileModule.type};
-            }
+        const links = res.data.map(fileModule => {
+            return { src: getFileURLById(fileModule.id), alt: fileModule.type };
+        }
         )
         return links;
 
-    } catch( error ){
+    } catch (error) {
         const err = error as AxiosError;
         console.error("Error getting logos: ", err.message);
         throw err;
@@ -47,15 +46,15 @@ export const createFileModule = async (info: FileModuleInput, file: File) => {
     }
 
     formData.append('file', file);
-    
-    try{
+
+    try {
         const res = await api.post<FileModule>("/fileModule", formData, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data'
             }
-          });
+        });
         return res.data;
-    } catch(error){
+    } catch (error) {
         const err = error as AxiosError;
         console.error("Error creating file: ", err.message);
         throw err;

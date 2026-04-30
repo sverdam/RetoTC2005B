@@ -2,14 +2,14 @@ import type { Company, NewCompanyInput } from "clas-types";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-interface Props{
+interface Props {
     company: NewCompanyInput | null | Company;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const DeleteCompanyConfirmModal: React.FC<Props> = ({ company, onClose, onConfirm}) => {
-    return(
+const DeleteCompanyConfirmModal: React.FC<Props> = ({ company, onClose, onConfirm }) => {
+    return (
         <Dialog open={company !== null} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro*/}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />

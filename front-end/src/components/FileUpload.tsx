@@ -1,5 +1,5 @@
 // sophhh
-import {useState} from "react";
+import { useState } from "react";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 const FileUpload: React.FC<Props> = ({ id, onFileSelect, width = "w-full", required = false }) => {
 
-    const [fileName, setFileName] = useState< string | null >(null);
+    const [fileName, setFileName] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -21,13 +21,13 @@ const FileUpload: React.FC<Props> = ({ id, onFileSelect, width = "w-full", requi
         }
     };
 
-    return(
+    return (
         <div className={width}>
             <label
                 htmlFor={id}
                 className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-clas-gris rounded-lg cursor-pointer hover:bg-clas-gris/20 transition"
             >
-                <input 
+                <input
                     id={id}
                     type="file"
                     className="hidden"
@@ -36,7 +36,7 @@ const FileUpload: React.FC<Props> = ({ id, onFileSelect, width = "w-full", requi
                 />
                 <div className="flex flex-col items-center gap-2">
                     <div>
-                        <DocumentArrowUpIcon className="h-7 w-7 text-clas-gris"/>
+                        <DocumentArrowUpIcon className="h-7 w-7 text-clas-gris" />
                     </div>
                     <span className="text-clas-negro font-medium">
                         {fileName ? fileName : "Sube tu archivo"}
@@ -49,6 +49,6 @@ const FileUpload: React.FC<Props> = ({ id, onFileSelect, width = "w-full", requi
             </label>
         </div>
     )
-}   
+}
 
 export default FileUpload;

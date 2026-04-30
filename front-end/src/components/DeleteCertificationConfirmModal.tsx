@@ -1,15 +1,15 @@
-import type { Certification, NewCertificationInput} from "clas-types";
+import type { Certification, NewCertificationInput } from "clas-types";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-interface Props{
+interface Props {
     certification: NewCertificationInput | Certification | null;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const DeleteCertificationConfirmModal: React.FC<Props> = ({ certification, onClose, onConfirm}) => {
-    return(
+const DeleteCertificationConfirmModal: React.FC<Props> = ({ certification, onClose, onConfirm }) => {
+    return (
         <Dialog open={certification !== null} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro*/}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
