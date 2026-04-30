@@ -765,25 +765,18 @@ const EditCompanyPage: React.FC = () => {
             </div>
             <input 
                 type="text" 
-                value={formCompany.location?.mapLink}
-                placeholder="Link de embebido..." 
-                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
-                onChange={(e) => handleLocation("mapLink", e.target.value)}>
-            </input>
-            <input 
-                type="text" 
                 value={formCompany.location?.address}
-                placeholder="Link de embebido..." 
+                placeholder="Escribe la dirección..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"
                 onChange={(e) => handleLocation("address", e.target.value)}>
             </input>
-            {/* Hacer que lo que se obtenga del input del link se muestre en el iframe */}
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15695.29597219136!2d-110.91489855!3d29.170230649999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ce87d095decee9%3A0x856739bc6d718ca5!2sTecnol%C3%B3gico%20de%20Monterrey!5e1!3m2!1ses-419!2smx!4v1776732607196!5m2!1ses-419!2smx"
-            className="rounded-lg"
-            width="672"
-            height="450"
-            >
-            </iframe>
+            <input 
+                type="text" 
+                value={formCompany.location?.mapLink}
+                placeholder="Link de Google Maps..." 
+                className="w-2xl border-2 border-clas-gris rounded-lg p-2"
+                onChange={(e) => handleLocation("mapLink", e.target.value)}>
+            </input>
         </div>
         {/* Catalogo */}
         <div className="flex flex-col gap-2 items-start w-2xl mt-5">
