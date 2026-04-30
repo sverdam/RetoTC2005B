@@ -7,8 +7,7 @@ import type { Contact, NewContactInput } from "clas-types";
 export const createContact = async (data: NewContactInput): Promise<Contact> => {
     const {id, ...pro} = data;
     try {
-        console.log("Contact: ");
-        console.log(pro)
+
         const res = await api.post<Contact>("/contact", pro);
         return res.data;
     } catch(error) {

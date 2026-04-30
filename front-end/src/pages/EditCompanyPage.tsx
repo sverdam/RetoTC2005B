@@ -21,6 +21,7 @@ import { createContact, deleteContact, updateContact } from "../api/ContactAPI";
 import { createCertification, deleteCertification, updateCertification } from "../api/CertificationAPI";
 import { createService, deleteService, updateService } from "../api/ServiceAPI";
 import { createLocation, updateLocation } from "../api/LocationAPI";
+import { createCompanyFilter, deleteCompanyFilter, getCompanyFilters } from "../api/CompanyFilterAPI";
 
 
 
@@ -522,6 +523,20 @@ const EditCompanyPage: React.FC = () => {
             }),
             ...certificationsToDelete.map(c => deleteCertification(c))
         ])
+
+            //Filtros
+            const currentFilters = await getCompanyFilters(companyId);
+            const currentFilterIds: number[] = currentFilters.map((f:any) => f.filterId);
+
+            const newFilterIds : number[] = formCompany.filters.map((f) => f.id);
+
+            const toCreate = newFilterIds.filter(id => !currentFilterIds.includes(id));
+            const toDelete = currentFilterIds.filter(id => !newFilterIds.includes(id));
+
+            await Promise.all([
+                ...toCreate.map(filterId => createCompanyFilter(companyId, filterId)),
+                ...toDelete.map(filterId => deleteCompanyFilter(companyId, filterId)),
+            ])
 
 
             const companyToSubmit:SubmitCompany = {
