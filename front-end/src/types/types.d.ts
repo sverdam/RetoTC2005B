@@ -261,7 +261,7 @@ declare module "clas-types" {
         id: any;
         file: File,
         position: number,
-        companyId: number,
+        companyId: number | null,
         name: string,
         description: string
     }
