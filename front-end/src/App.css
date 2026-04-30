@@ -33,37 +33,3 @@
 .animate-fade-up {
   animation: fadeUp 0.7s ease-out forwards;
 }
-
-
-.hero-intro {
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  opacity: 0;
-  transform: translateY(30px);
-
-  animation:
-    fadeInUp 0.8s ease forwards,
-    removeCenter 0s linear 1.2s forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes removeCenter {
-  to {
-    min-height: auto;
-    display: block;
-  }
-}
