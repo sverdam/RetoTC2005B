@@ -1,5 +1,5 @@
 declare module "clas-types" {
-    
+
     export interface LandingPage {
         banneHeader: string;
         bannerText: string;
@@ -10,12 +10,12 @@ declare module "clas-types" {
         aboutUsText: string;
         contactText: string;
     }
-    
+
     export interface Category {
         id: number;
         name: string;
     }
-    
+
     export enum MemberType {
         AFFILIATE = 'Afiliado',
         ASSOCIATE = 'Asociado',
@@ -47,7 +47,7 @@ declare module "clas-types" {
         location: Location;
         contacts: Contact[];
         user: User[];
-        textModules: TextModule[]; 
+        textModules: TextModule[];
         fileModules: FileModule[];
         certifications: Certification[];
         filters: Filter[];
@@ -56,13 +56,13 @@ declare module "clas-types" {
     }
 
     export interface responseCompany {
-        id: number; 
-        name: string; 
-        description: string; 
+        id: number;
+        name: string;
+        description: string;
         aboutUs: string;
-        tier: number; 
+        tier: number;
         memberType: MemberType;
-  
+
         website: string;
         slogan: string;
         employees: number;
@@ -93,8 +93,8 @@ declare module "clas-types" {
     }
 
     export interface Contact {
-        id: number; 
-        type: ContactType; 
+        id: number;
+        type: ContactType;
         companyId: number;
         contactInfo: string;
         position: string;
@@ -107,7 +107,7 @@ declare module "clas-types" {
         PRODUCT = 'product'
     }
 
-    export interface FileModule{
+    export interface FileModule {
         id: number;
         file: File;
         type: FileType;
@@ -115,36 +115,36 @@ declare module "clas-types" {
         companyId: number;
     }
 
-    export interface FileModuleInput{
+    export interface FileModuleInput {
         companyId: number;
         type: string;
         position: number;
     }
 
-    interface Filter{ 
-        id: number; 
-        name: string; 
+    interface Filter {
+        id: number;
+        name: string;
         category: Category;
-    } 
-    
-    interface Location{ 
-        id: number; 
+    }
+
+    interface Location {
+        id: number;
         address: string;
         mapLink: string;
         companyId: number;
     }
-    
-    export interface NewLocationInput{
+
+    export interface NewLocationInput {
         id: any;
         address: string;
         mapLink: string;
         companyId: number;
     }
 
-    interface TextModule{ 
-        id: number; 
-        text: Text; 
-    } 
+    interface TextModule {
+        id: number;
+        text: Text;
+    }
 
     enum UserRole {
         ADMIN = 'admin',
@@ -153,42 +153,42 @@ declare module "clas-types" {
         USER = 'user'
     }
 
-    export interface User{ 
-        id: number; 
-        name: string; 
-        email: string; 
-        password: string; 
+    export interface User {
+        id: number;
+        name: string;
+        email: string;
+        password: string;
         role: UserRole;
         companyId: number;
         company?: CompanyLite
-    } 
+    }
 
-    export interface NewUserInput{
-        name: string; 
-        email: string; 
-        password: string; 
+    export interface NewUserInput {
+        name: string;
+        email: string;
+        password: string;
         role: UserRole;
         companyId: number;
     }
 
-    interface CompanyLite{
+    interface CompanyLite {
         id: number,
         name: string
     }
 
-    interface LoginUser{
+    interface LoginUser {
         email: string,
         password: string
     }
-    
+
     interface UserProfile {
         id: string;
         email: string;
         companyId: number;
         role: string;
-    }  
-    
-    export interface NewCompanyInput{
+    }
+
+    export interface NewCompanyInput {
         id: number | null;
         name: string;
         description: string;
@@ -207,7 +207,7 @@ declare module "clas-types" {
         location: NewLocationInput | undefined;
         contacts: NewContactInput[];
         user: User[];
-        textModules: TextModule[]; 
+        textModules: TextModule[];
         fileModules: FileModule[];
         certifications: NewCertificationInput[];
         filters: Filter[];
@@ -230,34 +230,34 @@ declare module "clas-types" {
         color: string;
     }
 
-    export interface typeCreateCompany{
+    export interface typeCreateCompany {
         name: string;
         tier: number;
         memberType: MemberType;
     }
-    
-    export interface NewProductInput{
+
+    export interface NewProductInput {
         id: any;
         name: string;
         description: string;
         companyId: number | undefined;
     }
-    
-    export interface NewContactInput{
+
+    export interface NewContactInput {
         id: any;
-        type: ContactType | null; 
+        type: ContactType | null;
         contactInfo: string;
         position: string;
         companyId: number | undefined;
     }
 
-    export interface NewCertificationInput{
+    export interface NewCertificationInput {
         id: any;
-        name:string;
+        name: string;
         companyId: number | undefined;
     }
-    
-    export interface ProductBundleInput{
+
+    export interface ProductBundleInput {
         id: any;
         file: File | undefined,
         position: number,
@@ -266,9 +266,9 @@ declare module "clas-types" {
         description: string
     }
 
-    export interface FileBundleInput{
+    export interface FileBundleInput {
         file: File, // <- Actual file
-        type: 'logo' | 'document' | 'product' | 'image', 
+        type: 'logo' | 'document' | 'product' | 'image',
         position: number,
         companyId: number
     }
