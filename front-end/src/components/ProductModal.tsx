@@ -91,7 +91,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose, product, setPro
                                 <InformationCircleIcon className="text-clas-gris h-5" />
                                 <p className="text-clas-gris">Imagen en formato .jpg</p>
                             </div>
-                            <FileUpload onFileSelect={handleProductImageSelect} width="w-full" required={!isEditing} />
+                            <FileUpload id={"product-image"} onFileSelect={handleProductImageSelect} width="w-full" required={!isEditing}/>
                         </div>
 
                     </div>

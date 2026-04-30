@@ -158,7 +158,7 @@ declare module "clas-types" {
         name: string;
         email: string;
         password: string;
-        role: UserRole;
+        role: 'admin' | 'CLAS editor' | 'company editor' | 'user';
         companyId: number;
         company?: CompanyLite
     }
@@ -167,7 +167,7 @@ declare module "clas-types" {
         name: string;
         email: string;
         password: string;
-        role: UserRole;
+        role: 'admin' | 'CLAS editor' | 'company editor' | 'user';
         companyId: number;
     }
 
