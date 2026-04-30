@@ -428,14 +428,14 @@ const EditCompanyPage: React.FC = () => {
         }
 
         if (isEditing && formCompany.id != null) {
-            //console.log("Guarde el id pq estoy editando")
+            console.log("Guarde el id pq estoy editando")
             companyId = formCompany.id;
         }
         //console.log(companyId)
         if (!companyId) {
             return navigate('/error');
         }
-        //console.log("Editando")
+        console.log("Editando")
 
         //Products
         await Promise.all([
@@ -1196,17 +1196,14 @@ const EditCompanyPage: React.FC = () => {
                 <button
                     onClick={() => navigate(-1)}
                     className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1 hover:bg-clas-negro/20">Cancelar</button>
-                {(isEditing && userProfile.role === 'admin') ?
+                {(isEditing) ?
                     <button className="bg-[#cf384c] text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
                         onClick={() => setCompanyToDelete(formCompany)}
                     >
                         Eliminar Empresa
                     </button> : <></>}
                 <button
-                    onClick={() => {
-                        if (!validate()) return;
-                        handleSubmit
-                    }}
+                    onClick={() => handleSubmit}
                     className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">{isEditing ? "Aplicar Cambios" : "Crear Empresa"}</button>
             </div>
 
