@@ -1,9 +1,9 @@
-import type { Contact } from "clas-types";
+import type { Contact, NewContactInput } from "clas-types";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
-    contact: Contact | null;
+    contact: NewContactInput | Contact | null;
     onClose: () => void;
     onConfirm: () => void;
 }
@@ -40,7 +40,7 @@ const DeleteContactConfirmModal: React.FC<Props> = ({ contact, onClose, onConfir
                             Cancelar
                         </button>
                         <button onClick={onConfirm}
-                            className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-70">
+                            className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700">
                             Eliminar
                         </button>
                     </div>

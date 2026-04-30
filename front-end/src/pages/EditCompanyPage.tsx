@@ -1,26 +1,23 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Company, Product, Contact, NewContactInput, NewCompanyInput, 
-    Filter, UserProfile, NewProductInput, NewCertificationInput,
-    FileBundleInput
-} from "clas-types";
+import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput, Certification} from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId } from "../api/CompanyAPI";
-import { PhoneIcon, EnvelopeIcon} from "@heroicons/react/24/solid";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
 import ProductCatalog from "../components/ProductCatalog";
-import CertificationCard from "../components/CertificationCard";
 import FileUpload from "../components/FileUpload";
 import FilterModal from "../components/FilterModal";
 import NewCertificationModal from "../components/NewCertificationModal";
 import NewContactModal from "../components/NewContactModal";
 import DeleteCompanyConfirmModal from "../components/DeleteCompanyConfirmModal";
 import ProductModal from "../components/ProductModal";
-import DeleteProductConfirmModal from "../components/DeleteProductConfirmModal";
+import DeleteProductServiceConfirmModal from "../components/DeleteProductConfirmModal";
 import DeleteContactConfirmModal from "../components/DeleteContactConfirmModal";
 import { getProfile } from "../api/LoginAPI";
 import ServiceModal from "../components/ServiceModal";
 import { createFileModule } from "../api/fileModuleAPI";
+import DeleteCertificationConfirmModal from "../components/DeleteCertificationConfirmModal";
+
 
 
 const unverifiedUser : UserProfile = {
@@ -70,19 +67,23 @@ const emptyFormCompany: NewCompanyInput = {
 }
 
 const emptyFormProduct: NewProductInput = {
+    id: "",
     name: "",
     description: ""
 }
 
 const emptyFormCertification: NewCertificationInput = {
+    id: "",
     name: ""
 }
 
 const emptyFormContact: NewContactInput = {
+        id: "",
         type: null,
         contactInfo: "",
         position: ""
 }
+
 
 const EditCompanyPage: React.FC = () => {
 
@@ -96,7 +97,6 @@ const EditCompanyPage: React.FC = () => {
    
     {/* Filter Modal  */}
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedFilter, setSelectedFilter] = useState<Filter[]>([]);
     {/* Certification Modal */}
     const [isCertificationOpen, setIsCertificationOpen] = useState(false);
     {/* Contact Modal */}
@@ -107,16 +107,23 @@ const EditCompanyPage: React.FC = () => {
     const [isServiceOpen, setIsServiceOpen] = useState(false);
 
     {/* Obtain data */}
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const [companyToDelete, setCompanyToDelete] = useState<NewCompanyInput | null>(null);
+    const [companyToDelete, setCompanyToDelete] = useState<Company | NewCompanyInput | null>(null);
 
-    const [isProductDeleteOpen, setIsProductDeleteOpen] = useState(false);
-    const [productToDelete, setProductToDelete] = useState<Product | null>(null);
-
+    const [productToDelete, setProductToDelete] = useState<Product | NewProductInput | null>(null);
     const [productsToDelete, setProductsToDelete] = useState<Number[]>([])
+    const [currentProduct, setCurrentProduct] = useState(emptyFormProduct);
+
+    const [serviceToDelete, setServiceToDelete] = useState<Service | NewProductInput | null>(null);
+    const [servicesToDelete, setServicesToDelete] = useState<Number[]>([])
+    const [currentService, setCurrentService] = useState(emptyFormProduct);
     
-    const [isContactDeleteOpen, setIsContactDeleteOpen] = useState(false);
-    const [contactToDelete, setContactToDelete] = useState<Contact | null>(null);
+    const [contactToDelete, setContactToDelete] = useState<NewContactInput | Contact | null>(null);
+    const [contactsToDelete, setContactsToDelete] = useState<Number[]> ([]) 
+    const [currentContact, setCurrentContact] = useState(emptyFormContact);
+
+    const [certificationToDelete, setCertificationToDelete] = useState<NewCertificationInput | Certification | null>(null);
+    const [certificationsToDelete, setCertificationsToDelete] = useState<Number[]>([]);
+    const [currentCertification, setCurrentCertification] = useState(emptyFormCertification);
 
 
     {/* Logo Handling */}
@@ -131,17 +138,105 @@ const EditCompanyPage: React.FC = () => {
         handleChange('logo', logoBoundle);
     };
 
-    const handleContact = (newContact: NewContactInput) => {
-        handleChange("contacts", [...formCompany.contacts, newContact])
+    const handleOpenCreate = () => {
+        setCurrentProduct(emptyFormProduct);
+        setIsProductOpen(true);
     }
-    const handleCertification = (newCertification: NewCertificationInput) => {
-        handleChange("certifications", [...formCompany.certifications, newCertification])
+
+    const handleOpenEdit = (productToEdit: Product) => {
+        
+        setCurrentProduct(productToEdit);
+        setIsProductOpen(true);
     }
-    const handleService = (newService: NewProductInput) => {
-        handleChange("services", [...formCompany.services, newService])
+
+    const handleOpenCreateService = () => {
+        setCurrentService(emptyFormProduct);
+        setIsServiceOpen(true);
     }
-    const handleProduct = (newProduct: NewProductInput) => {
-        handleChange("products", [...formCompany.products, newProduct])
+
+    const handleOpenEditService = (serviceToEdit: Service) => {
+        setCurrentService(serviceToEdit);
+        setIsServiceOpen(true);
+    }
+
+    const handleOpenCreateContact = () => {
+        setCurrentContact(emptyFormContact);
+        setIscontactOpen(true);
+    }
+
+    const handleOpenEditContact = (contactToEdit: Contact) => {
+        setCurrentContact(contactToEdit);
+        setIscontactOpen(true);
+    }
+
+    const handleOpenCreateCertification = () => {
+        setCurrentCertification(emptyFormCertification);
+        setIsCertificationOpen(true);
+    }
+
+    const handleOpenEditCertification = (certificationToEdit: Certification) => {
+        setCurrentCertification(certificationToEdit);
+        setIsCertificationOpen(true);
+    }
+
+    const handleContact = (newContact: NewContactInput | Contact) => {
+        const exists = formCompany.contacts.some( c => c.id === newContact.id);
+
+        if(exists){
+            const updatedList = formCompany.contacts.map( c => 
+                c.id === newContact.id ? newContact : c
+            )
+            handleChange("contacts", updatedList);
+        }else{
+        newContact.id = `temp-${crypto.randomUUID()}`;
+        handleChange("contacts", [...formCompany.contacts, newContact])}
+
+        setIscontactOpen(false);
+    }
+
+    const handleCertification = (newCertification: NewCertificationInput | Certification) => {
+        const exists = formCompany.certifications.some( c => c.id === newCertification.id);
+
+        if(exists){
+            const updatedList = formCompany.certifications.map( c => 
+                c.id === newCertification.id ? newCertification : c
+            )
+            handleChange("certifications", updatedList);
+        } else {
+        newCertification.id = `temp-${crypto.randomUUID()}`;
+        handleChange("certifications", [...formCompany.certifications, newCertification])}
+        setIsCertificationOpen(false)
+    }
+
+
+    const handleService = (newService: NewProductInput | Service) => {
+        const exists = formCompany.services.some(s => s.id === newService.id);
+        if(exists){
+            const updatedList = formCompany.services.map( s =>
+                s.id === newService.id ? newService : s
+            )
+            handleChange("services", updatedList);
+        } else {
+        newService.id = `temp-${crypto.randomUUID()}`;
+        handleChange("services", [...formCompany.services, newService])}
+        setIsServiceOpen(false);
+    }
+    const handleProduct = (newProduct: NewProductInput | Product) => {
+        const exists = formCompany.products.some(p => p.id === newProduct.id);
+
+        if(exists) {
+            const updatedList = formCompany.products.map(p =>
+                p.id === newProduct.id ? newProduct : p
+            )
+            handleChange("products", updatedList);
+        } else {
+            const productWithId = { 
+            ...newProduct, 
+            id: `temp-${crypto.randomUUID()}` 
+        };
+            handleChange("products", [...formCompany.products, productWithId]);
+        }
+        setIsProductOpen(false)
     }
     const handleFilter = (newFilters: Filter[]) => {
         handleChange("filters", newFilters)
@@ -178,20 +273,55 @@ const EditCompanyPage: React.FC = () => {
     const handleProductDelete = () => {
         if(!productToDelete) return;
         //TODO: Agregar API de producto
-        setProductsToDelete((prev) =>[...prev, productToDelete.id]);
+        const isReal = typeof productToDelete.id === 'number' || 
+                         (typeof productToDelete.id === 'string' && !productToDelete.id.startsWith('temp-'));
+        if(isReal){
+            setProductsToDelete((prev) => [...prev, productToDelete.id]);
+
+        }
+
         handleChange("products", formCompany.products.filter(p => p.id != productToDelete.id));
         setProductToDelete(null);
+        console.log(productsToDelete);
+        
     };
+
+    const handleServiceDelete = () => {
+        if(!serviceToDelete) return;
+
+        const isReal= typeof serviceToDelete.id === 'number' || 
+                         (typeof serviceToDelete.id === 'string' && !serviceToDelete.id.startsWith('temp-'));
+        
+        if(isReal){
+            setServicesToDelete((prev) => [...prev, serviceToDelete.id])
+        }
+        handleChange("services", formCompany.services.filter(s => s.id != serviceToDelete.id))
+        setServiceToDelete(null);
+    }   
 
     const handleContactDelete = () => {
         if(!contactToDelete) return;
         //TODO: Agregar API de contacto
-        deleteContact(contactToDelete.id).then(() => {
-          setContactToDelete(null);
-        });
+        const isReal= typeof contactToDelete.id === 'number' || 
+                         (typeof contactToDelete.id === 'string' && !contactToDelete.id.startsWith('temp-'));
+        if (isReal) {
+            setContactsToDelete((prev) => [...prev, contactToDelete.id])
+        }
+        handleChange("contacts", formCompany.contacts.filter(c => c.id != contactToDelete.id))
+        setContactToDelete(null);
     };
-    
-    
+
+    const handleCertificationDelete = () => {
+        if(!certificationToDelete) return;
+        //TODO: Agregar API de contacto
+        const isReal= typeof certificationToDelete.id === 'number' || 
+                         (typeof certificationToDelete.id === 'string' && !certificationToDelete.id.startsWith('temp-'));
+        if (isReal) {
+            setCertificationsToDelete((prev) => [...prev, certificationToDelete.id])
+        }
+        handleChange("certifications", formCompany.certifications.filter(c => c.id != certificationToDelete.id))
+        setCertificationToDelete(null);
+    }
 
     useEffect(()=>{
        
@@ -204,8 +334,8 @@ const EditCompanyPage: React.FC = () => {
                 description: company.description,
                 aboutUs: company.aboutUs,
                 tier: company.tier,
-                logo: null,
-                catalog: company.catalog,
+                logo: null, // jalar bien el file
+                catalog: company.catalog, //jalar bien el file
                 memberType: company.memberType,
                 website: company.website,
                 slogan: company.slogan,
@@ -471,7 +601,8 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="my-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsProductOpen(true)}
+                    type="button"
+                    onClick={handleOpenCreate}
                 >
                     Nuevo Producto
                     <PlusIcon className="h-4 w-4"/>
@@ -524,7 +655,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEdit(p)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -556,7 +688,7 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsServiceOpen(true)}
+                    onClick={handleOpenCreateService}
                 >
                     Nuevo Servicio
                     <PlusIcon className="h-4 w-4"/>
@@ -609,7 +741,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEditService(s)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -644,7 +777,7 @@ const EditCompanyPage: React.FC = () => {
                 value={formCompany.employees != null ? formCompany.employees : ""}
                 placeholder="Empleados..." 
                 className="w-2xl border-2 border-clas-gris rounded-lg p-2"
-                onChange={(e) => e.target.value}>
+                onChange={(e) => handleChange("employees", e.target.value)}>
             </input>
         </div>
         {/* Piezas */}
@@ -697,7 +830,7 @@ const EditCompanyPage: React.FC = () => {
             
             <div className="w-full flex justify-end">
                 <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIsCertificationOpen(true)} // checar
+                    onClick={handleOpenCreateCertification} 
                 >
                     Nueva Certificación
                     <PlusIcon className="h-4 w-4"/>
@@ -733,7 +866,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEditCertification(c)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -765,7 +899,7 @@ const EditCompanyPage: React.FC = () => {
             </div>
             <div className="w-full flex justify-end">
                 <button className="mb-2 flex items-center gap-2 bg-clas text-white font-semibold rounded-lg px-2 hover:bg-clas-claro"
-                    onClick={() => setIscontactOpen(true)}
+                    onClick={handleOpenCreateContact}
                 >
                     Nuevo Contacto
                     <PlusIcon className="h-4 w-4"/>
@@ -807,7 +941,8 @@ const EditCompanyPage: React.FC = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center">
-                                            <button>
+                                            <button
+                                                onClick={() => handleOpenEditContact(c)}>
                                                 <PencilIcon className=" text-clas hover:text-clas-claro h-5 w-5"/>
                                             </button>
                                         </div>
@@ -842,56 +977,78 @@ const EditCompanyPage: React.FC = () => {
         </div>
         </form>
         
-        <FilterModal //utilizado
+        <FilterModal 
                 isOpen={isOpen}
+                isEditing={true}
                 onClose={() => setIsOpen(false)}
                 selectFilter={formCompany.filters}
                 setSelectFilter={handleFilter}
         />
-        <DeleteCompanyConfirmModal //utilizado
+        <DeleteCompanyConfirmModal 
             company={companyToDelete}
             onClose={() => setCompanyToDelete(null)}
             onConfirm={handleDelete}
         />
         
-        <NewCertificationModal //utilizado
+        <NewCertificationModal 
             isCertificationOpen={isCertificationOpen}
-            onClose={() => setIsCertificationOpen(false)}
-            certification={emptyFormCertification}
+            onClose={() => {
+                setIsCertificationOpen(false)
+                setCurrentCertification(emptyFormCertification)}}
+            certification={currentCertification}
             setCertification={handleCertification}
         />
 
-        <NewContactModal //utilizado
+        <NewContactModal
             isContactOpen={isContactOpen}
-            onClose={() => setIscontactOpen(false)}
-            contact={emptyFormContact}
+            onClose={() => {
+                setIscontactOpen(false)
+                setCurrentContact(emptyFormContact)}}
+            contact={currentContact}
             setContact={handleContact}
         />
 
         <ProductModal //utilizado
             isProductOpen={isProductOpen}
-            onClose={() => setIsProductOpen(false)}
-            product={emptyFormProduct}
+            onClose={() => {
+                setIsProductOpen(false);
+                setCurrentProduct(emptyFormProduct);
+            }}
+            product={currentProduct}
             setProduct={handleProduct}
         />
 
         <ServiceModal //utilizado
             isServiceOpen={isServiceOpen}
-            onClose={() => setIsServiceOpen(false)}
-            service={emptyFormProduct}
+            onClose={() => {
+                setIsServiceOpen(false);
+                setCurrentService(emptyFormProduct);
+            }}
+            service={currentService}
             setService={handleService}
 
         />
-        <DeleteProductConfirmModal 
+        <DeleteProductServiceConfirmModal
             product={productToDelete}
-            onClose={() => setProductToDelete(null)}
-            onConfirm={() => {handleProductDelete}}
+            service={serviceToDelete}
+            onClose={() => {
+                setProductToDelete(null)
+                setServiceToDelete(null)
+             }}
+            onConfirm={productToDelete != null ? handleProductDelete : handleServiceDelete}
         />
+
         <DeleteContactConfirmModal 
             contact={contactToDelete}
             onClose={() => setContactToDelete(null)}
             onConfirm={handleContactDelete}
         />
+        <DeleteCertificationConfirmModal 
+            certification={certificationToDelete}
+            onClose={() => setCertificationToDelete(null)}
+            onConfirm={handleCertificationDelete}
+        />
+
     </div>
    )
 };

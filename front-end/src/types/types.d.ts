@@ -22,7 +22,8 @@ declare module "clas-types" {
         ADMIN = 'Admin',
     }
 
-    interface Certification {
+    export interface Certification {
+        id: Number;
         name: string;
     }
 
@@ -81,12 +82,16 @@ declare module "clas-types" {
     export enum FileType {
         LOGO = 'logo',
         IMAGE = 'image',
-        DOCUMENT = 'document'
+        DOCUMENT = 'document',
+        PRODUCT = 'product'
     }
 
     export interface FileModule{
         id: number;
+        file: File;
         type: FileType;
+        position: number;
+        companyId: number;
     }
 
     export interface FileModuleInput{
@@ -182,21 +187,32 @@ declare module "clas-types" {
     }
     
     export interface NewProductInput{
+        id: any;
         name: string;
         description: string;
     }
     
     export interface NewContactInput{
+        id: any;
         type: ContactType | null; 
         contactInfo: string;
         position: string;
     }
 
     export interface NewCertificationInput{
+        id: any;
         name:string;
     }
     
-    interface FileBundleInput{
+    export interface ProductBundleInput{
+        file: File,
+        position: number,
+        companyId: number,
+        name: string,
+        description: string
+    }
+
+    export interface FileBundleInput{
         file: File, // <- Actual file
         type: 'logo' | 'document' | 'product' | 'image', 
         position: number,

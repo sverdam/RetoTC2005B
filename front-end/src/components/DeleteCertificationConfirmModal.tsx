@@ -1,18 +1,16 @@
-import type { NewProductInput, Product, Service } from "clas-types"; // TODO: Agregar Producto a tipos
+import type { Certification, NewCertificationInput} from "clas-types";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-
 interface Props{
-    product: Product | NewProductInput | null;
-    service: Service | NewProductInput | null;
+    certification: NewCertificationInput | Certification | null;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, onClose, onConfirm}) => {
+const DeleteCertificationConfirmModal: React.FC<Props> = ({ certification, onClose, onConfirm}) => {
     return(
-        <Dialog open={(product || service)!== null } onClose={onClose} className="relative z-50">
+        <Dialog open={certification !== null} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro*/}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
 
@@ -25,12 +23,12 @@ const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, o
                         </div>
                         <div>
                             <DialogTitle className="text-sm font-semibold text-gray-900">
-                                {product != null ? "Eliminar Producto" : "Eliminar Servicio"}
+                                Eliminar Contacto
                             </DialogTitle>
                             <p className="mt-1 text-sm text-gray-600">
                                 ¿Estás seguro de que quieres borrar {" "}
                                 <span className="font-medium text-gray-900">
-                                    {product?.name || service?.name}
+                                    {certification?.name}
                                 </span>?
                                 Esta acción no se puede deshacer.
                             </p>
@@ -41,10 +39,7 @@ const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, o
                             className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
                             Cancelar
                         </button>
-                        <button onClick={() => {
-                            onConfirm();
-                            
-                        }}
+                        <button onClick={onConfirm}
                             className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700">
                             Eliminar
                         </button>
@@ -55,4 +50,4 @@ const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, o
     )
 };
 
-export default DeleteProductServiceConfirmModal;
+export default DeleteCertificationConfirmModal;

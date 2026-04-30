@@ -28,12 +28,6 @@ import { getFileURLById, getGallery } from "../api/fileModuleAPI";
 import ProductServiceCard from "../components/ProductServiceCard";
 import { Description } from "@headlessui/react";
 
-const images : string[] = [
-    "https://u-mercari-images.mercdn.net/photos/m80862755279_1.jpg?1774828834",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQC_OPbbCDWa-3rZ28ONF6A1_38cwXOfiULw&s",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQIwNYMOqZG-J9N8jeEhZJv9kK8vgukYfCsw&s"
-]
-
 const unverifiedUser : UserProfile = {
     id: "-1",
     email: 'unknown',
@@ -164,46 +158,54 @@ const CompanyPage: React.FC = () => {
                     <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
                 </div>
 
-                <div className="flex flex-row w-full gap-8">
-                    <div className={`text-left flex flex-col justify-between text-lg basis-[${gallery.length === 0 ? 100 : 60}%]`}>
-                        <p>
-                        {company?.description}
-                        
-                        </p>
-                        <div className="flex flex-row justify-around">
-                            <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                                <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                                <PlusIcon className="h-6 text-clas"/>
-                                {company?.employees}
+                <div className="flex flex-col w-full gap-4">
+                    <div className="flex flex-row gap-4">
+                        <div className={`flex flex-col basis-[${gallery.length === 0 ? 100 : 60}%]`}>
+                            <p className="text-lg text-left">
+                            {company?.aboutUs}
+                            </p>
+                            <div className="grid-cols-1 py-4 sm:flex sm:flex-row justify-around">
+                                <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                                    <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                                    <PlusIcon className="h-6 text-clas"/>
+                                    {company?.employees}
+                                    </div>
+                                    <div className="text-lg text-gray-500">
+                                    Empleados
+                                    </div>
                                 </div>
-                                <div className="text-lg text-gray-500">
-                                Empleados
-                                </div>
-                            </div>
 
-                            <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                                <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                                <PlusIcon className="h-6 text-clas"/>
-                                {company?.space} m2
+                                <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                                    <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                                    <PlusIcon className="h-6 text-clas"/>
+                                    {company?.space} m²
+                                    </div>
+                                    <div className="text-lg text-gray-500">
+                                    Capacidad de planta
+                                    </div>
                                 </div>
-                                <div className="text-lg text-gray-500">
-                                Capacidad de planta
-                                </div>
-                            </div>
 
-                            <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                                <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                                <PlusIcon className="h-6 text-clas"/>
-                                {company?.pieces}
+                                <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
+                                    <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
+                                    <PlusIcon className="h-6 text-clas"/>
+                                    {company?.pieces}
+                                    </div>
+                                    <div className="text-lg text-gray-500">
+                                    Piezas / año
+                                    </div>
                                 </div>
-                                <div className="text-lg text-gray-500">
-                                Piezas / año
-                                </div>
-                            </div>
 
+                            </div>
                         </div>
-                        
-                        {company?.website ? (<div className="group flex gap-2 items-center text-clas w-fit">
+                        {
+                            gallery.length === 0 ? <></> :
+                            <div className="basis-[40%]">
+                                <PhotoCarousel images={gallery}/>
+                            </div> 
+                        }
+                    </div>
+                    
+                    {company?.website ? (<div className="group flex gap-2 items-center text-clas w-fit">
                             <a className="text-md" href={company?.website}>Visita nuestro Sitio Web
                                 <span className="block max-w-0 group-hover:max-w-full 
                                 transition-all duration-300 h-[1px] bg-clas rounded-full">
@@ -211,13 +213,6 @@ const CompanyPage: React.FC = () => {
                             </a>
                             <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
                         </div>) : <></>}
-                    </div>
-                    {
-                        gallery.length === 0 ? <></> :
-                        <div className="basis-[40%]">
-                            <PhotoCarousel images={gallery}/>
-                        </div> 
-                    }
                     
                 </div>
 
@@ -243,7 +238,7 @@ const CompanyPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div className="w-full text-left p-4 items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <MapPinIcon className="w-7 text-clas flex-shrink-0"/>  
-                    <a href={company?.location.mapLink}>{company?.location.address}</a>  
+                    <a href={company?.location?.mapLink}>{company?.location?.address}</a>  
                 </div>
                 <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
                     <EnvelopeIcon className="w-7 text-clas"/>  
@@ -263,6 +258,7 @@ const CompanyPage: React.FC = () => {
 
         
         {/* CATALOG */}
+        {(company?.products.length === 0 && company?.services.length === 0) ? <></> : 
         <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
             {/* SECTION DIVIDER */}
                 <div className="mx-auto flex items-center justify-center gap-4">
@@ -278,6 +274,7 @@ const CompanyPage: React.FC = () => {
                 </div>
 
             {/* PRODUCTS */}
+            {company?.products.length === 0 ? <></> : 
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="text-left flex flex-col justify-between">
                     <h2 className="text-2xl"><span className="text-clas">Productos</span> destacados</h2>
@@ -292,12 +289,13 @@ const CompanyPage: React.FC = () => {
                     </div>
                 )}
 
-            </div>
+            </div>}
+            
 
             {/* SERVICES */}
+            {company?.services.length === 0 ?  <></> : 
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {company?.services.length === 0? <></> : 
-                company?.services.map(service => 
+                {company?.services.map(service => 
                     <div>
                         <ProductServiceCard name={service.name} description={service.description} type="s"/>
                     </div>
@@ -309,7 +307,8 @@ const CompanyPage: React.FC = () => {
                     <p>Brindamos soluciones eficientes y adaptadas a tus necesidades.</p>
                     <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
-            </div>
+            </div>}
+            
             
             {catalog === "" ? <></> :
             <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
@@ -320,10 +319,13 @@ const CompanyPage: React.FC = () => {
             </div> }
             
 
-        </div>
+        </div>}
+        
 
 
         {/* CAPACITIES */}
+        {company?.capacity === undefined || company?.capacity === null || company.capacity.length === 0 ? 
+        <></> : 
         <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
             <div className="bg-linear-to-tr from-clas to-clas-claro rounded-xl text-white p-10 flex flex-col gap-8">
                 {/* SECTION DIVIDER */}
@@ -344,9 +346,12 @@ const CompanyPage: React.FC = () => {
             
             </div>
         </div>
+        }
+        
 
         {/* CERTIFICATIONS */}
-        <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+        {company?.certifications.length === 0 ? <></> : 
+         <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
           {/* SECTION DIVIDER */}
                 <div className="mx-auto flex items-center justify-center gap-4">
                     <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
@@ -361,11 +366,10 @@ const CompanyPage: React.FC = () => {
                 </div>
 
           <div className={`grid sm:grid-cols-2 lg:grid-cols-4 gap-4`}>
-            {company?.certifications.length === 0 ? <></> : 
-            company?.certifications.map(c => 
-            <CertificationCard name={c.name}/>)}
+            {company?.certifications.map(c => <CertificationCard name={c.name}/>)}
           </div>
-        </div>
+        </div>}
+       
 
       </div>
     </div>
