@@ -25,7 +25,7 @@ export class Filter extends Model<FilterAttributes, FilterCreationAttributes>{
    name!: string; 
 
    @Column 
-   tier!: number; 
+   tier?: number; 
 
    @ForeignKey(() => Category)
    @Column({

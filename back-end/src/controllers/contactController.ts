@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response } from "express";
-import { Contact } from "../models/contact";
+import { Contact, ContactType } from "../models/contact";
 import { Company } from "../models/company";
 
 
@@ -26,6 +26,7 @@ export const createContact: RequestHandler = (req: Request, res: Response) => {
         })
         .catch((err) => {
             console.log(`Error creating contact: ${err.message}`);
+
             res.status(500).json({
                 status: "error",
                 message: "Something happened creating a contact. " + err.message,
