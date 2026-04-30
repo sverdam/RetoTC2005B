@@ -40,16 +40,16 @@ const Footer: React.FC = () => {
                         </div>
                     </div>
                     {/* Second Column: Contact US */}
-                    <div className="flex flex-col gap-4 items-start">
+                    <div className="flex flex-col gap-4 items-center md:items-start">
                         <h4 className="text-clas-gris font-semibold text-left">CONTÁCTANOS</h4>
-                        <a href="mailto:direccion@clas.com.mx" className="text-clas-gris font-normal text-left">direccion@clas.com.mx</a>
-                        <a href="mailto:tesoreria@clas.com.mx" className="text-clas-gris font-normal text-left">tesoreria@clas.com.mx</a>
-                        <p className="text-clas-gris font-normal text-left">Obrero Mundial 10, 83210 Hermosillo, Sonora, México</p>
+                        <a href="mailto:direccion@clas.com.mx" className="text-clas-gris font-normal text-center md:text-left">direccion@clas.com.mx</a>
+                        <a href="mailto:tesoreria@clas.com.mx" className="text-clas-gris font-normal text-center md:text-left">tesoreria@clas.com.mx</a>
+                        <p className="text-clas-gris font-normal text-center md:text-left">Obrero Mundial 10, 83210 Hermosillo, Sonora, México</p>
                     </div>
                     {/* Third Column: Subscribe to Newsletter */}
                     <div className="flex flex-col gap-4 items-center md:items-start">
                         <h4 className="text-clas-gris font-semibold text-left">SUSCRÍBETE</h4>
-                        <p className="text-clas-gris font-normal text-left">Ingresa tu correo para recibir notificaciones sobre la industria automotriz</p>
+                        <p className="text-clas-gris font-normal text-center md:text-left">Ingresa tu correo para recibir notificaciones sobre la industria automotriz</p>
                         <div className="flex items-center w-full bg-clas-gris/30 rounded-lg px-4 py-1 gap-2">
                             <input
                                 type="email"
