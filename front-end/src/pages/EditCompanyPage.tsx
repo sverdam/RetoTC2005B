@@ -21,6 +21,7 @@ import { createContact, deleteContact, updateContact } from "../api/ContactAPI";
 import { createCertification, deleteCertification, updateCertification } from "../api/CertificationAPI";
 import { createService, deleteService, updateService } from "../api/ServiceAPI";
 import { createLocation, updateLocation } from "../api/LocationAPI";
+import { createCompanyFilter, deleteCompanyFilter, getCompanyFilters } from "../api/CompanyFilterAPI";
 
 
 
@@ -456,7 +457,8 @@ const EditCompanyPage: React.FC = () => {
             }
 
             if(!c) return;
-
+            console.log(c)
+            console.log(c.id)
             companyId = c.id;
 
             if (formCompany.logo){
@@ -480,11 +482,11 @@ const EditCompanyPage: React.FC = () => {
         if(isEditing && formCompany.id != null) {
             console.log("Guarde el id pq estoy editando")
             companyId = formCompany.id;
-        }else if(!isEditing) {
-            return(navigate(`/error`))
         }
-
-        if(companyId){
+        console.log(companyId)
+        if(!companyId){
+            return navigate('/error');
+        }
             console.log("Editando")
 
             //Products
@@ -546,6 +548,20 @@ const EditCompanyPage: React.FC = () => {
             ...certificationsToDelete.map(c => deleteCertification(c))
         ])
 
+            //Filtros
+            const currentFilters = await getCompanyFilters(companyId);
+            const currentFilterIds: number[] = currentFilters.map((f:any) => f.filterId);
+
+            const newFilterIds : number[] = formCompany.filters.map((f) => f.id);
+
+            const toCreate = newFilterIds.filter(id => !currentFilterIds.includes(id));
+            const toDelete = currentFilterIds.filter(id => !newFilterIds.includes(id));
+
+            await Promise.all([
+                ...toCreate.map(filterId => createCompanyFilter(companyId, filterId)),
+                ...toDelete.map(filterId => deleteCompanyFilter(companyId, filterId)),
+            ])
+
 
             const companyToSubmit:SubmitCompany = {
                 name:formCompany.name, 
@@ -589,7 +605,6 @@ const EditCompanyPage: React.FC = () => {
                 console.log("Se updeo la company :)")
             )
 
-        }
         navigate(`/empresa/${companyId}`,{state: {refresh: Date.now()}})
     } 
 
@@ -727,7 +742,11 @@ const EditCompanyPage: React.FC = () => {
         </div>
         {/* Color de Compania */}
         <div className="flex flex-col gap-2 items-start w-2xl mt-5">
+            <div className="flex gap-2 items-center">
             <label className="font-semibold text-clas-negro">Color de Compañía</label>
+            <InformationCircleIcon className="text-gray-500 h-5 w-5"/>
+                <p className="text-gray-500">De preferencia no colores claros</p>
+            </div>
             <input 
                 type="text" 
                 value={formCompany.color}
@@ -829,7 +848,7 @@ const EditCompanyPage: React.FC = () => {
                                 >
                                     <td className="px-6 py-4">
                                         <span className="px-3 py-1 text-xs font-semibold text-clas">
-                                            #{p.id}
+                                            #{String(p.id).startsWith(`temp-`) ? "New" : p.id}
                                         </span>
                                     </td>
 
@@ -915,7 +934,7 @@ const EditCompanyPage: React.FC = () => {
                                 >
                                     <td className="px-6 py-4">
                                         <span className="px-3 py-1 text-xs font-semibold text-clas">
-                                            #{s.id}
+                                            #{String(s.id).startsWith(`temp-`) ? "New" : s.id}
                                         </span>
                                     </td>
 
@@ -1165,7 +1184,7 @@ const EditCompanyPage: React.FC = () => {
             </button> : <></>}
             <button 
                 onClick={handleSubmit} 
-                className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">Aplicar Cambios</button>
+                className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">{isEditing ? "Aplicar Cambios" : "Crear Empresa" }</button>
         </div>
         
         <FilterModal 
