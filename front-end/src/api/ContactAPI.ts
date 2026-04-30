@@ -2,9 +2,14 @@ import api from ".";
 import { Axios, AxiosError } from "axios";
 import type { Contact, NewContactInput } from "clas-types";
 
+
+
 export const createContact = async (data: NewContactInput): Promise<Contact> => {
+    const {id, ...pro} = data;
     try {
-        const res = await api.post<Contact>("/contact", data);
+        console.log("Contact: ");
+        console.log(pro)
+        const res = await api.post<Contact>("/contact", pro);
         return res.data;
     } catch(error) {
         const err = error as AxiosError;
@@ -15,7 +20,7 @@ export const createContact = async (data: NewContactInput): Promise<Contact> => 
 
 export const updateContact = async (id:number, data:NewContactInput): Promise<Contact> => {
     try{
-        const res = await api.patch<Contact>("/contact", data);
+        const res = await api.patch<Contact>(`/contact/${id}`, data);
         return res.data;
     } catch (error) {
          const err = error as AxiosError;

@@ -115,7 +115,7 @@ const DirectoryPage: React.FC = () => {
                         setNameQuery(e.target.value)}
                     ></input>
                 </div>
-                {/*{userProfile.role !== 'unverified' ? <>*/}
+                {userProfile.role !== 'unverified' ? 
                 <div className="flex gap-2">
                     <Tag value="Tier 1" tagTier={Number(1)} />
                     <Tag value="Tier 2" tagTier={Number(2)}/>
@@ -126,7 +126,7 @@ const DirectoryPage: React.FC = () => {
                         Filtros
                     </button>
                 </div>
-                
+                : <></>}
             
             </div>
             
@@ -166,6 +166,7 @@ const DirectoryPage: React.FC = () => {
             </div>
             <FilterModal 
                 isOpen={isOpen}
+                isEditing={false}
                 onClose={() => setIsOpen(false)}
                 selectFilter = {selected}
                 setSelectFilter = {handleFilter}

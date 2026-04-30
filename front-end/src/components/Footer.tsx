@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
                             rel="noopener noreferrer"
                             href="https://www.facebook.com/profile.php?id=61568197160101&locale=es_LA"
                         >
-                            <img  src="..\src\assets\Social-Media-Icons\facebook.png"
+                            <img  src="../src\assets\Social-Media-Icons\facebook.png"
                                 className="h-6"    
                             />
                         </a>
@@ -40,11 +40,11 @@ const Footer: React.FC = () => {
                         </div>
                     </div>
                     {/* Second Column: Contact US */}
-                    <div className="flex flex-col gap-4 items-center md:items-start">
-                        <h4 className="text-clas-gris font-semibold">CONTÁCTANOS</h4>
-                        <p className="text-clas-gris font-normal text-center md:text-left">direccion@clas.com.mx</p>
-                        <p className="text-clas-gris font-normal text-center md:text-left">tesoreria@clas.com.mx</p>
-                        <p className="text-clas-gris font-normal text-center md:text-left">Obrero Mundial 10, 83210 Hermosillo, Sonora, México</p>
+                    <div className="flex flex-col gap-4 items-start">
+                        <h4 className="text-clas-gris font-semibold text-left">CONTÁCTANOS</h4>
+                        <a href="mailto:direccion@clas.com.mx" className="text-clas-gris font-normal text-left">direccion@clas.com.mx</a>
+                        <a href="mailto:tesoreria@clas.com.mx" className="text-clas-gris font-normal text-left">tesoreria@clas.com.mx</a>
+                        <p className="text-clas-gris font-normal text-left">Obrero Mundial 10, 83210 Hermosillo, Sonora, México</p>
                     </div>
                     {/* Third Column: Subscribe to Newsletter */}
                     <div className="flex flex-col gap-4 items-center md:items-start">

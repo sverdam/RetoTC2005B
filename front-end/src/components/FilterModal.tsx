@@ -3,7 +3,6 @@ import type { Filter, Category } from "clas-types";
 import { useState, useEffect, useMemo } from "react";
 import { getAllFilters } from "../api/FilterAPI";
 import { getAllCategories } from "../api/CategoryAPI";
-import { useNavigate } from "react-router";
 
 
 interface Props{
