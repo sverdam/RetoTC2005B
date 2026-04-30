@@ -16,21 +16,21 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
-        errorElement: < ErrorPage/>,
+        errorElement: < ErrorPage />,
         children: [
-            { index: true, element: <HomePage />},
-            { path: 'directorio', element: <DirectoryPage />},
-            { path: 'usuarios', element: <UserPage/>},
-            { path: 'usuarios/nuevo', element: <UserFormPage />},
-            { path: 'usuarios/:id', element: <UserFormPage />},
-            { path: 'empresa/:id', element: <CompanyPage />},
-            { path: 'empresa/:id/editar', element: <EditCompanyPage />},
-            { path: 'empresa/editar', element: <EditCompanyPage />},
-            { path: 'login', element: <LoginPage/>},
-            { path: 'membresia', element: <PaywallPage />},
-            { path: 'dummylogo/:id', element: <DummyLogoEditFile/>},
-            { path: 'dummygallery/:id', element: <DummyGalleryEditFile/>},
-            { path: 'error', element: <ErrorPage/>}
+            { index: true, element: <HomePage /> },
+            { path: 'directorio', element: <DirectoryPage /> },
+            { path: 'usuarios', element: <UserPage /> },
+            { path: 'usuarios/nuevo', element: <UserFormPage /> },
+            { path: 'usuarios/:id', element: <UserFormPage /> },
+            { path: 'empresa/:id', element: <CompanyPage /> },
+            { path: 'empresa/:id/editar', element: <EditCompanyPage /> },
+            { path: 'empresa/editar', element: <EditCompanyPage /> },
+            { path: 'login', element: <LoginPage /> },
+            { path: 'membresia', element: <PaywallPage /> },
+            { path: 'dummylogo/:id', element: <DummyLogoEditFile /> },
+            { path: 'dummygallery/:id', element: <DummyGalleryEditFile /> },
+            { path: 'error', element: <ErrorPage /> }
         ]
     },
 ]);

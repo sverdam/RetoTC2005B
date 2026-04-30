@@ -9,16 +9,16 @@ const App: FC = () => {
     <div className="min-h-screen flex flex-col w-full">
       <div>
         <header className="sticky top-0 z-50">
-          <Navbar/>
+          <Navbar />
         </header>
         <main>
           <Outlet />
         </main>
         <Footer />
       </div>
-     </div>
+    </div>
   );
-  
+
 };
 
 export default App
