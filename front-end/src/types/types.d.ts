@@ -55,6 +55,23 @@ declare module "clas-types" {
         services: Service[];
     }
 
+    export interface responseCompany {
+        id: number; 
+        name: string; 
+        description: string; 
+        aboutUs: string;
+        tier: number; 
+        memberType: MemberType;
+  
+        website: string;
+        slogan: string;
+        employees: number;
+        pieces: number;
+        space: number;
+        capacity: string;
+        color: string;
+    }
+
     export interface Product {
         id: number;
         name: string;

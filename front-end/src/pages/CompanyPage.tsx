@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import type { Company, Contact, UserProfile } from "clas-types";
 import ProductCatalog from "../components/ProductCatalog";
 import Button from "../components/Button";
@@ -54,6 +54,7 @@ const CompanyPage: React.FC = () => {
     const companyId = Number(id)
     const navigate = useNavigate();
     const [company, setcompany] = useState<Company>();
+    const location = useLocation();
 
     const [gallery, setGallery] = useState<string[]>([]);
     const [catalog, setCatalog] = useState<string>("");
@@ -72,7 +73,7 @@ const CompanyPage: React.FC = () => {
         getGallery(companyId).then((result: string[]) => setGallery(result));
 
         getProfile().then((profile: UserProfile) => setUserProfile(profile))
-    }, [companyId])
+    }, [companyId, location.state?.refresh])
 
     useMemo(() => {
         if (company == null) return;

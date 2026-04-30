@@ -28,7 +28,8 @@ const router = createBrowserRouter([
             { path: 'empresa/editar', element: <EditCompanyPage />},
             { path: 'login', element: <LoginPage/>},
             { path: 'membresia', element: <PaywallPage />},
-            { path: 'dummy/:id', element: <DummyEditFile/>}
+            { path: 'dummy/:id', element: <DummyEditFile/>},
+            { path: 'error', element: <ErrorPage/>}
         ]
     },
 ]);

@@ -429,9 +429,16 @@ const EditCompanyPage: React.FC = () => {
                 tier: formCompany.tier,
                 memberType: formCompany.memberType
             }
-            const c = await createCompany(toCreateCompany).catch(() => navigate('error'));
+            let c;
+            try {
+                c = await createCompany(toCreateCompany);
+            } catch (err){
+                console.error("Falló createCompany:", err); // para ver qué pasó
+                return;
+            }
 
             if(!c) return;
+
             companyId = c.id;
 
             if (formCompany.logo){
@@ -463,30 +470,34 @@ const EditCompanyPage: React.FC = () => {
             console.log("Editando")
 
             //Products
-            formCompany.products.map((p) => {
+            await Promise.all([
+                ...formCompany.products.map((p) => {
                 if(String(p.id).startsWith('temp-')){
                     p.companyId = companyId;
                     createProduct(p);
                 } else {
                     updateProduct(p.id, p);
                 }
-            })
-            productsToDelete.map(p => deleteProduct(p));
+            }),
+            ...productsToDelete.map(p => deleteProduct(p))
+            ]);
 
             //Services
-            formCompany.services.map((s) => {
+            await Promise.all([
+            ...formCompany.services.map((s) => {
                 if(String(s.id).startsWith('temp-')){
                     s.companyId = companyId;
                     createService(s);
                 } else {
                     updateService(s.id, s);
                 }
-            })
-            servicesToDelete.map(s => deleteService(s))
-
+            }),
+            ...servicesToDelete.map(s => deleteService(s))
+        ])
 
             //Contact
-            formCompany.contacts.map((c) => {
+            await Promise.all([
+            ...formCompany.contacts.map((c) => {
                 console.log(c.id);
                 if(String(c.id).startsWith('temp-')){
                     c.companyId = companyId;
@@ -494,19 +505,22 @@ const EditCompanyPage: React.FC = () => {
                 } else {
                     updateContact(c.id, c);
                 }
-            })
-            contactsToDelete.map(c => deleteContact(c))
+            }),
+            ...contactsToDelete.map(c => deleteContact(c))
+        ])
 
             //Certifications
-            formCompany.certifications.map((c) => {
+             await Promise.all([
+            ...formCompany.certifications.map((c) => {
                 if(String(c.id).startsWith('temp-')){
                     c.companyId = companyId;
                     createCertification(c);
                 }else {
                     updateCertification(c.id, c);
                 }
-            })
-            certificationsToDelete.map(c => deleteCertification(c))
+            }),
+            ...certificationsToDelete.map(c => deleteCertification(c))
+        ])
 
 
             const companyToSubmit:SubmitCompany = {
@@ -524,12 +538,8 @@ const EditCompanyPage: React.FC = () => {
                 color: formCompany.color
             }
 
-            updateCompany(companyId, companyToSubmit).then(() =>
-                console.log("Se updeo la company :)")
-            )
-
             if (formCompany.logo){
-                createFileModule({
+                await createFileModule({
                 type: formCompany.logo.type, 
                 position: formCompany.logo.position, 
                 companyId: companyId
@@ -537,7 +547,7 @@ const EditCompanyPage: React.FC = () => {
             }
 
             if (formCompany.catalog){
-            createFileModule({
+            await createFileModule({
                 type: formCompany.catalog.type, 
                 position: formCompany.catalog.position, 
                 companyId: companyId
@@ -546,13 +556,17 @@ const EditCompanyPage: React.FC = () => {
 
             if(formCompany.location){
                 if(String(formCompany.location.id).startsWith('temp-') ){
-                createLocation(formCompany.location)
+                await createLocation(formCompany.location)
             } else {
-                updateLocation(formCompany.location.id,formCompany.location)
+                await updateLocation(formCompany.location.id,formCompany.location)
             }
             }
+            await updateCompany(companyId, companyToSubmit).then(() =>
+                console.log("Se updeo la company :)")
+            )
+
         }
-        
+        navigate(`/empresa/${companyId}`,{state: {refresh: Date.now()}})
     } 
 
     return(
