@@ -564,7 +564,7 @@ const EditCompanyPage: React.FC = () => {
 
             if (formCompany.logo){
                 await createFileModule({
-                type: formCompany.logo.type, 
+                type: 'logo', 
                 position: formCompany.logo.position, 
                 companyId: companyId
             }, formCompany.logo.file);
@@ -572,7 +572,7 @@ const EditCompanyPage: React.FC = () => {
 
             if (formCompany.catalog){
             await createFileModule({
-                type: formCompany.catalog.type, 
+                type: 'catalog', 
                 position: formCompany.catalog.position, 
                 companyId: companyId
             }, formCompany.catalog.file);
