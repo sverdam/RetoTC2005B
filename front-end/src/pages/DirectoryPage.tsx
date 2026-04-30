@@ -104,7 +104,7 @@ const DirectoryPage: React.FC = () => {
 
             return matchesSearchBar && matchesFilter && matchesTier;
         });
-    }, [nameQuery, selected, companies, tier, userProfile.role]);
+    }, [nameQuery, selected, companies, tier, userProfile]);
 
     const handleFilter = (newFilters: Filter[]) => {
         setSelected(newFilters)
