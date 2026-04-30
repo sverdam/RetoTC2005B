@@ -19,10 +19,17 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose, service, setSer
     }
 
     {/* Product Image Handling */ }
-    const handleProductImageSelect = (file: File) => {
-        console.log(file);
-    };
     const isEditing = 'id' in service && service.id;
+
+    const [errors, setErrors] = useState<{ name?: boolean, description?: boolean}>({});
+
+    const validate = () => {
+        const newErrors: typeof errors = {};
+        if (!formService.name.trim()) newErrors.name = true;
+        if (!formService.description.trim()) newErrors.description = true;
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
 
     useEffect(() => {
         setFormService(service);
