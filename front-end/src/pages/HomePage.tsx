@@ -95,21 +95,21 @@ const HomePage: React.FC = () => {
 
                     <div className="mt-8 space-y-6">
                         <div>
-                            <h2 className="text-xl font-medium">🌟 Visión</h2>
+                            <h2 className="text-xl font-medium">Visión</h2>
                             <p className="text-lg text-gray-700">
                                 {info ? info.visionText : "Posicionar a Sonora como el principal clúster automotriz de México, destacado por su innovación, sostenibilidad y calidad."}
                             </p>
                         </div>
 
                         <div>
-                            <h2 className="text-xl font-medium">⚙️ Misión</h2>
+                            <h2 className="text-xl font-medium">Misión</h2>
                             <p className="text-lg text-gray-700">
                                 {info ? info.missionText : "Ser el motor que fortalece la competitividad del sector, fomentando colaboración y desarrollo continuo."}
                             </p>
                         </div>
 
                         <div>
-                            <h2 className="text-xl font-medium">🤝 Comunidad</h2>
+                            <h2 className="text-xl font-medium">Comunidad</h2>
                             <p className="text-lg text-gray-700">
                                 {info ? info.communityText : "La fuerza de CLAS está en su gente: industria, academia y gobierno trabajando juntos para convertir el crecimiento individual en éxito compartido."}
                             </p>
