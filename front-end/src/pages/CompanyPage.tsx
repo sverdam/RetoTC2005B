@@ -56,6 +56,8 @@ const CompanyPage: React.FC = () => {
     const [company, setcompany] = useState<Company>();
     const location = useLocation();
 
+    const companyColor = company?.color || "";
+
     const [gallery, setGallery] = useState<string[]>([]);
     const [catalog, setCatalog] = useState<string>("");
 
@@ -64,6 +66,7 @@ const CompanyPage: React.FC = () => {
 
     const [userProfile, setUserProfile] = useState<UserProfile>(unverifiedUser)
         
+    
 
     useEffect(() => {
         getCompanybyId(companyId).then((companies: Company) => setcompany(companies)).catch(
@@ -88,26 +91,16 @@ const CompanyPage: React.FC = () => {
    
     return(
     <div className="bg-gray-50 min-h-screen flex justify-center">
-      <div className="flex flex-col gap-20 py-10 text-clas-negro max-w-7xl ">
+      <div className="flex flex-col gap-20 py-10 text-clas-negro max-w-7xl w-full pb-20">
         {/* PROFILE */}
-        <div className="hero-intro w-full flex flex-col gap-8 px-14">
-            {/* EDIT BUTTON */}
-            {(userProfile.role === "admin" 
-                || userProfile.role === "CLAS editor"
-                || (userProfile.role === "company editor" && userProfile.companyId === company?.id)) ?
-               <div className="flex w-full justify-end">
-                   <Button text="Editar" to="editar" comp={company} />
-               </div> : <></>
-            }
+        <div className="flex flex-col gap-8 px-14">
             {/* LOGO */}
-                <div className="group relative">
-                    <div className="relative flex items-center justify-center">
+                <div className="w-full flex justify-center">
                     <img
-                        src={company?.logo ? getFileURLById(company.logo.id) : ''}
-                        alt={'logo'}
-                        className="text-sm text-clas-gris h-40 object-contain transition group-hover:scale-102"
-                    />
-                    </div>
+                            src={company?.logo ? getFileURLById(company.logo.id) : ''}
+                            alt={'Logo'}
+                            className="text-sm text-clas-gris h-40 object-contain transition group-hover:scale-101"
+                        />
                 </div>
 
             {/* INFO */}
@@ -119,9 +112,18 @@ const CompanyPage: React.FC = () => {
                             {company?.name}
                         </h1>
 
-                        <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
-                            {company?.tier === 0 ? "OEM" : `Tier ${company?.tier}`}
-                        </span>
+                        <div className="flex gap-4 items-center">
+                            <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
+                                {company?.tier === 0 ? "OEM" : `Tier ${company?.tier}`}
+                            </span>
+                            {(userProfile.role === "admin" 
+                                || userProfile.role === "CLAS editor"
+                                || (userProfile.role === "company editor" && userProfile.companyId === company?.id)) ?
+                                <Button color={companyColor} text="Editar" to="editar" comp={company} />
+                                : <></>
+                            }
+                        </div>
+                        
                     </div>
 
                     {/* SUBTEXT */}
@@ -150,7 +152,7 @@ const CompanyPage: React.FC = () => {
                 <div className="mx-auto flex items-center justify-center gap-4">
                     <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
                     {/* SECTION ICON */}
-                        <InformationCircleIcon className="text-clas h-8 w-8" />
+                        <InformationCircleIcon style={{ color: companyColor }} className="h-8 w-8" />
                     {/* SECTION TITLE */}
                     <h2 className="text-2xl">
                         Sobre Nosotros
@@ -160,60 +162,68 @@ const CompanyPage: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col w-full gap-4">
-                    <div className="flex flex-row gap-4">
-                        <div className={`w-full flex flex-col basis-[${gallery.length === 0 ? 100 : 60}%]`}>
+                    <div className="flex flex-col lg:flex-row gap-8">
+                        <div className="flex w-full h-full gap-4 justify-between flex-col">
+                            {/* ABOUT US TEXT */}
                             <p className="text-lg text-left">
                             {company?.aboutUs}
                             </p>
-                            <div className="grid-cols-1 py-4 sm:flex sm:flex-row justify-around">
-                                <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                                    <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                                    <PlusIcon className="h-6 text-clas"/>
-                                    {company?.employees}
+
+                            {/* STATS */}
+                            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-around ">
+                                <div className="flex flex-col items-start text-left transition hover:-translate-y-1">
+                                    <div className="text-3xl font-semibold flex flex-row gap-2 items-center">
+                                        <PlusIcon style={{ color: companyColor }} className="h-6 flex-shrink-0" />
+                                        <p>{company?.employees}</p>
                                     </div>
-                                    <div className="text-lg text-gray-500">
-                                    Empleados
+                                    <div className="text-lg text-gray-500 w-full text-center">
+                                        <p>Empleados</p>
                                     </div>
                                 </div>
 
-                                <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                                    <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                                    <PlusIcon className="h-6 text-clas"/>
-                                    {company?.space} m²
+                                <div className="flex flex-col items-start text-left transition hover:-translate-y-1">
+                                    <div className="text-3xl font-semibold flex flex-row gap-2 items-center">
+                                        <PlusIcon style={{ color: companyColor }} className="h-6 flex-shrink-0" />
+                                        <p>{company?.space} m²</p>
                                     </div>
-                                    <div className="text-lg text-gray-500">
-                                    Capacidad de planta
-                                    </div>
-                                </div>
-
-                                <div className="text-center justify-center space-y-1 transition hover:-translate-y-1">
-                                    <div className="text-3xl font-semibold flex flex-row gap-2 justify-center items-center">
-                                    <PlusIcon className="h-6 text-clas"/>
-                                    {company?.pieces}
-                                    </div>
-                                    <div className="text-lg text-gray-500">
-                                    Piezas / año
+                                    <div className="text-lg text-gray-500 w-full text-center">
+                                        <p>Capacidad de planta</p>
                                     </div>
                                 </div>
 
+                                <div className="flex flex-col items-start text-left transition hover:-translate-y-1">
+                                    <div className="text-3xl font-semibold flex flex-row gap-2 items-center">
+                                        <PlusIcon style={{ color: companyColor }} className="h-6 flex-shrink-0" />
+                                        <p>{company?.pieces}</p>
+                                    </div>
+                                    <div className="text-lg text-gray-500 w-full text-center">
+                                        <p>Piezas / año</p>
+                                    </div>
+                                </div>
                             </div>
+
+                            {/* WEBSITE LINK */}
+                            {company?.website ? (<div style={{ color: companyColor }} className="group flex gap-2 items-center w-fit">
+                                    <a className="text-md" href={company?.website}>Visita nuestro Sitio Web
+                                        <span style={{ background: companyColor }} className="block max-w-0 group-hover:max-w-full 
+                                        transition-all duration-300 h-[1px] rounded-full">
+                                        </span>
+                                    </a>
+                                    <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
+                                </div>) : <></>}
+
                         </div>
+
+                        {/* PHOTO CAROUSEL / GALLERY */}
                         {
                             gallery.length === 0 ? <></> :
-                            <div className="basis-[40%]">
+                            <div className="basis-[60%] lg:basis-[40%]">
                                 <PhotoCarousel images={gallery}/>
                             </div> 
                         }
                     </div>
                     
-                    {company?.website ? (<div className="group flex gap-2 items-center text-clas w-fit">
-                            <a className="text-md" href={company?.website}>Visita nuestro Sitio Web
-                                <span className="block max-w-0 group-hover:max-w-full 
-                                transition-all duration-300 h-[1px] bg-clas rounded-full">
-                                </span>
-                            </a>
-                            <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
-                        </div>) : <></>}
+                    
                     
                 </div>
 
@@ -226,7 +236,7 @@ const CompanyPage: React.FC = () => {
                 <div className="mx-auto flex items-center justify-center gap-4">
                     <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
                     {/* SECTION ICON */}
-                        <ChatBubbleOvalLeftIcon className="text-clas h-8 w-8" />
+                        <ChatBubbleOvalLeftIcon style={{ color: companyColor }} className="h-8 w-8" />
                     {/* SECTION TITLE */}
                     <h2 className="text-2xl">
                         Contáctanos
@@ -238,17 +248,17 @@ const CompanyPage: React.FC = () => {
             {/* CONTACT */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 <div className="w-full text-left p-4 items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
-                    <MapPinIcon className="w-7 text-clas flex-shrink-0"/>  
+                    <MapPinIcon style={{ color: companyColor }} className="w-7 flex-shrink-0"/>  
                     <a href={company?.location?.mapLink}>{company?.location?.address}</a>  
                 </div>
                 <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
-                    <EnvelopeIcon className="w-7 text-clas"/>  
+                    <EnvelopeIcon style={{ color: companyColor }} className="w-7"/>  
                     <div className="flex flex-col">
                         {contactEmails.map(c => <a>{c.contactInfo}</a>)}
                     </div> 
                 </div>
                 <div className="w-full p-4 text-left items-center bg-white rounded-xl flex gap-4 shadow transition hover:shadow-md hover:-translate-y-1">
-                    <PhoneIcon className="w-7 text-clas"/>  
+                    <PhoneIcon style={{ color: companyColor }} className="w-7"/>  
                      <div className="flex flex-col">
                         {contactNumbers.map(c => <a>{`${c.contactInfo}`}</a>)}
                      </div>
@@ -265,7 +275,7 @@ const CompanyPage: React.FC = () => {
                 <div className="mx-auto flex items-center justify-center gap-4">
                     <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
                     {/* SECTION ICON */}
-                        <ShoppingCartIcon className="text-clas h-8 w-8" />
+                        <ShoppingCartIcon style={{ color: companyColor }} className="h-8 w-8" />
                     {/* SECTION TITLE */}
                     <h2 className="text-2xl">
                         Catálogo
@@ -278,9 +288,9 @@ const CompanyPage: React.FC = () => {
             {company?.products.length === 0 ? <></> : 
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="text-left flex flex-col justify-between">
-                    <h2 className="text-2xl"><span className="text-clas">Productos</span> destacados</h2>
+                    <h2 className="text-2xl"><span style={{ color: companyColor }}>Productos</span> destacados</h2>
                     <p>Explora nuestros productos diseñados para ofrecer calidad, confiabilidad y alto desempeño.</p>
-                    <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
+                    <a style={{ background: companyColor }} className="text-white text-sm rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
                 
                 {company?.products.length === 0 ? <></> : 
@@ -298,23 +308,23 @@ const CompanyPage: React.FC = () => {
             <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {company?.services.map(service => 
                     <div>
-                        <ProductServiceCard name={service.name} description={service.description} type="s"/>
+                        <ProductServiceCard name={service.name} description={service.description} type="s" color={companyColor}/>
                     </div>
                 )}
 
 
                 <div className="text-right items-end flex flex-col justify-between">
-                    <h2 className="text-2xl"><span className="text-clas">Servicios</span> destacados</h2>
+                    <h2 className="text-2xl"><span style={{ color: companyColor }}>Servicios</span> destacados</h2>
                     <p>Brindamos soluciones eficientes y adaptadas a tus necesidades.</p>
-                    <a className="text-white text-sm bg-clas rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
+                    <a style={{ background: companyColor }} className="text-white text-sm rounded-full w-fit px-4 py-1 hover:bg-clas/90">Ver más</a>  
                 </div>
             </div>}
             
             
             {catalog === "" ? <></> :
-            <div className="group flex gap-2 items-center mx-auto text-clas w-fit">
+            <div style={{ color: companyColor }} className="group flex gap-2 items-center mx-auto w-fit">
                 <a className="text-md" href={catalog}>Explora el catálogo completo 
-                    <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] bg-clas rounded-full"></span>
+                    <span style={{ background: companyColor }}  className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] rounded-full"></span>
                 </a>
                 <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out"/>
             </div> }
@@ -328,7 +338,13 @@ const CompanyPage: React.FC = () => {
         {company?.capacity === undefined || company?.capacity === null || company.capacity.length === 0 ? 
         <></> : 
         <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
-            <div className="bg-linear-to-tr from-clas to-clas-claro rounded-xl text-white p-10 flex flex-col gap-8">
+            <div style={{
+                background: `linear-gradient(
+                    70deg,
+                    ${companyColor},
+                    ${companyColor}CC
+                )`
+            }} className="rounded-xl text-white p-10 flex flex-col gap-8">
                 {/* SECTION DIVIDER */}
                 <div className="mx-auto flex items-center justify-center gap-4">
                     <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
@@ -357,7 +373,7 @@ const CompanyPage: React.FC = () => {
                 <div className="mx-auto flex items-center justify-center gap-4">
                     <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
                     {/* SECTION ICON */}
-                        <CheckBadgeIcon className="text-clas h-8 w-8" />
+                        <CheckBadgeIcon style={{ color: companyColor }} className="h-8 w-8" />
                     {/* SECTION TITLE */}
                     <h2 className="text-2xl">
                         Certificaciones
@@ -366,9 +382,13 @@ const CompanyPage: React.FC = () => {
                     <div className="h-px w-20 rounded-full  bg-gradient-to-l from-transparent to-clas-gris" />
                 </div>
 
-          <div className={`grid sm:grid-cols-2 lg:grid-cols-4 gap-4`}>
-            {company?.certifications.map(c => <CertificationCard name={c.name}/>)}
-          </div>
+            <div className="flex flex-wrap justify-center gap-4">
+                {company?.certifications.map((c) => (
+                    <div className="w-full sm:w-[48%] lg:w-[23%]">
+                        <CertificationCard name={c.name} color={companyColor} />
+                    </div>
+                ))}
+            </div>
         </div>}
        
 

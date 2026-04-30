@@ -11,20 +11,21 @@ interface FileCompoundInput{
     companyId: number
 }
 
-const DummyEditFile: React.FC = () => 
+const DummyGalleryEditFile: React.FC = () => 
 {
     const {id} = useParams();
     const companyId = Number(id)
     const [fileMod, setFileMod] = useState<FileCompoundInput | null>(null);
     const [pos, setPos] = useState<number>(0);
 
+
     {/* Logo Handling */}
     const handleLogoSelect = (file: File) => {
         console.log(file);
         setFileMod({
             file: file,
-            type: 'image',
-            position: pos,
+            type: 'logo',
+            position: 0,
             companyId: companyId
         });
     };
@@ -62,7 +63,7 @@ const DummyEditFile: React.FC = () =>
         <div className="flex flex-col items-center justify-center p-5 gap-3 w-full">
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col items-start w-2xl">
-                    <label className="font-semibold text-clas-negro">Imagen para Galeria</label>
+                    <label className="font-semibold text-clas-negro">Imagen para galería</label>
                     <FileUpload onFileSelect={handleLogoSelect} />
                 </div>
 
@@ -86,4 +87,4 @@ const DummyEditFile: React.FC = () =>
     )
 }
 
-export default DummyEditFile;
+export default DummyGalleryEditFile;
