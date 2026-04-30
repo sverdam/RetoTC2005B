@@ -243,9 +243,10 @@ const EditCompanyPage: React.FC = () => {
                                 (typeof newProduct.id === 'string' && !newProduct.id.startsWith('temp-'));
                 
                 if(isReal){
-                    setServicesToDelete((prev) => [...prev, newProduct.id])
+                    setProductsToDelete((prev) => [...prev, newProduct.id]);
                 }
-                handleChange("services", formCompany.services.filter(s => s.id != newProduct.id))
+
+                handleChange("products", formCompany.products.filter(p => p.id != newProduct.id));
                 
                 const productWithId = { 
                 ...newProduct, 
