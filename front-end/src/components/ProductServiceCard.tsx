@@ -10,6 +10,7 @@ interface ProductServiceProps {
   type: "p" | "s"; // p = product, s = service
   image?: string;
   icon?: ComponentType<SVGProps<SVGSVGElement>>;
+  color?: string;
 }
 
 const ProductServiceCard: React.FC<ProductServiceProps> = ({
@@ -18,6 +19,7 @@ const ProductServiceCard: React.FC<ProductServiceProps> = ({
   type,
   image,
   icon: Icon,
+  color
 }) => {
   return (
     <div>
@@ -32,7 +34,15 @@ const ProductServiceCard: React.FC<ProductServiceProps> = ({
         )}
 
         {type === "s" && (
-          <div className="h-20 w-full bg-gradient-to-r from-clas to-clas-claro text-white flex items-center justify-center">
+          <div style={{
+              background: color
+                  ? `linear-gradient(
+                      to right,
+                      ${color},
+                      ${color}CC
+                  )`
+                  : "linear-gradient(to right, var(--clas), var(--clas-claro))"
+          }} className="h-20 w-full text-white flex items-center justify-center">
             {Icon ? (
               <Icon className="h-7 w-7" />
             ) : (
