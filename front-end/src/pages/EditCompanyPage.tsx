@@ -820,7 +820,7 @@ const EditCompanyPage: React.FC = () => {
                                 >
                                     <td className="px-6 py-4">
                                         <span className="px-3 py-1 text-xs font-semibold text-clas">
-                                            #{p.id}
+                                            #{String(p.id).startsWith(`temp-`) ? "New" : p.id}
                                         </span>
                                     </td>
 
@@ -906,7 +906,7 @@ const EditCompanyPage: React.FC = () => {
                                 >
                                     <td className="px-6 py-4">
                                         <span className="px-3 py-1 text-xs font-semibold text-clas">
-                                            #{s.id}
+                                            #{String(s.id).startsWith(`temp-`) ? "New" : s.id}
                                         </span>
                                     </td>
 
