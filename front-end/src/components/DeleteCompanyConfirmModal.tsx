@@ -3,7 +3,7 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
-    company: NewCompanyInput | null;
+    company: NewCompanyInput | null | Company;
     onClose: () => void;
     onConfirm: () => void;
 }

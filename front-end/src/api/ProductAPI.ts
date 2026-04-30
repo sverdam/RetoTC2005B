@@ -37,8 +37,9 @@ export const createProductAutomaticFile = async (info: ProductBundleInput) => {
 
 
 export const createProduct = async (data:NewProductInput): Promise<Product> => {
+    const {id, ...pro} = data;
     try{
-        const res = await api.post<Product>("/product", data);
+        const res = await api.post<Product>("/product", pro);
         return res.data;
     } catch(error){
         const err = error as AxiosError;

@@ -25,6 +25,7 @@ declare module "clas-types" {
     export interface Certification {
         id: Number;
         name: string;
+        companyId: number;
     }
 
     export interface Company {
@@ -59,12 +60,14 @@ declare module "clas-types" {
         name: string;
         description: string;
         fileModuleId: number;
+        companyId: number;
     }
 
     export interface Service {
         id: number;
         name: string;
         description: string;
+        companyId: number;
     }
 
     export enum ContactType {
@@ -75,6 +78,7 @@ declare module "clas-types" {
     export interface Contact {
         id: number; 
         type: ContactType; 
+        companyId: number;
         contactInfo: string;
         position: string;
     }
@@ -110,6 +114,14 @@ declare module "clas-types" {
         id: number; 
         address: string;
         mapLink: string;
+        companyId: number;
+    }
+    
+    export interface NewLocationInput{
+        id: any;
+        address: string;
+        mapLink: string;
+        companyId: number;
     }
 
     interface TextModule{ 
@@ -164,7 +176,7 @@ declare module "clas-types" {
         name: string;
         description: string;
         aboutUs: string;
-        tier: number | null;
+        tier: number;
         logo: FileBundleInput | null;
         catalog: FileBundleInput | null;
         memberType: MemberType | null;
@@ -175,21 +187,43 @@ declare module "clas-types" {
         space: number | null;
         capacity: string;
         color: string;
-        location: Location | null;
-        contacts: Contact[];
+        location: NewLocationInput | undefined;
+        contacts: NewContactInput[];
         user: User[];
         textModules: TextModule[]; 
         fileModules: FileModule[];
-        certifications: Certification[];
+        certifications: NewCertificationInput[];
         filters: Filter[];
-        products: Product[];
-        services: Service[];
+        products: NewProductInput[];
+        services: NewProductInput[];
+    }
+
+    export interface SubmitCompany {
+        name: string;
+        description: string;
+        aboutUs: string;
+        tier: number;
+        memberType: MemberType | null;
+        website: string;
+        slogan: string;
+        employees: number | null;
+        pieces: number | null;
+        space: number | null;
+        capacity: string;
+        color: string;
+    }
+
+    export interface typeCreateCompany{
+        name: string;
+        tier: number;
+        memberType: MemberType;
     }
     
     export interface NewProductInput{
         id: any;
         name: string;
         description: string;
+        companyId: number | undefined;
     }
     
     export interface NewContactInput{
@@ -197,14 +231,17 @@ declare module "clas-types" {
         type: ContactType | null; 
         contactInfo: string;
         position: string;
+        companyId: number | undefined;
     }
 
     export interface NewCertificationInput{
         id: any;
         name:string;
+        companyId: number | undefined;
     }
     
     export interface ProductBundleInput{
+        id: any;
         file: File,
         position: number,
         companyId: number,

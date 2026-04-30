@@ -13,3 +13,4 @@ export const getAllFilters = async (): Promise<Filter[]> => {
         throw err;
     }
 }
+

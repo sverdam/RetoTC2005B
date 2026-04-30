@@ -1,6 +1,6 @@
 import api from ".";
 import { AxiosError } from "axios";
-import type { Company, NewCompanyInput } from "clas-types";
+import type { Company, typeCreateCompany, NewCompanyInput, SubmitCompany } from "clas-types";
 
 
 export const getAllCompanies = async (): Promise<Company[]> => {
@@ -40,7 +40,7 @@ export const getCompanybyId = async(id: number): Promise<Company> => {
     }
 }
 
-export const createCompany = async(data:NewCompanyInput): Promise<Company> => {
+export const createCompany = async (data:typeCreateCompany): Promise<Company> => {
     try{
         const res = await api.post<Company>("/company", data);
         return res.data;
@@ -51,7 +51,7 @@ export const createCompany = async(data:NewCompanyInput): Promise<Company> => {
     } 
 }
 
-export const updateCompany = async (id: number, data: NewCompanyInput): Promise<Company> => {
+export const updateCompany = async (id: number, data: SubmitCompany): Promise<Company> => {
     try{
         const res = await api.patch<Company>(`/company/${id}`, data);
         return res.data;
