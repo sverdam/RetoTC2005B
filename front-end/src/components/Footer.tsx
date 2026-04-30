@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
                             rel="noopener noreferrer"
                             href="https://www.facebook.com/profile.php?id=61568197160101&locale=es_LA"
                         >
-                            <img  src="../src\assets\Social-Media-Icons\facebook.png"
+                            <img  src="..\src\assets\Social-Media-Icons\facebook.png"
                                 className="h-6"    
                             />
                         </a>
