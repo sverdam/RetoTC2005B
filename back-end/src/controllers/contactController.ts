@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response } from "express";
-import { Contact } from "../models/contact";
+import { Contact, ContactType } from "../models/contact";
 import { Company } from "../models/company";
 
 
@@ -25,15 +25,6 @@ export const createContact: RequestHandler = (req: Request, res: Response) => {
             });
         })
         .catch((err) => {
-
-
-            if (err.name === 'SequelizeValidationError') {
-                // Map the array to extract only the readable messages
-                const messages = err.errors.map(e => e.message);
-                console.log('Validation Errors:', messages);
-            } else {
-                console.error('Other Error:', err);
-            }
 
             res.status(500).json({
                 status: "error",
