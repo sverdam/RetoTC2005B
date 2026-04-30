@@ -4,11 +4,10 @@ import type { LandingPage } from 'clas-types'
 
 export const getLandingPage = async (): Promise<LandingPage> => {
     try {
-        const res = await api.get<LandingPage> (`/landing`);
-        console.log(res.data);
+        const res = await api.get<LandingPage>(`/landing`);
+        //sconsole.log(res.data);
         return res.data;
-    }catch(error)
-    {
+    } catch (error) {
         const err = error as AxiosError;
         console.error("Error fetching data: ", err.message);
         throw err;

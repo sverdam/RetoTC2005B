@@ -1,15 +1,17 @@
 // sophhh
-import {useState} from "react";
+import { useState } from "react";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 
 interface Props {
+    id: string;
     onFileSelect: (file: File) => void;
     width?: string;
+    required?: boolean;
 };
 
-const FileUpload: React.FC<Props> = ({ onFileSelect, width = "w-full" }) => {
+const FileUpload: React.FC<Props> = ({ id, onFileSelect, width = "w-full", required = false }) => {
 
-    const [fileName, setFileName] = useState< string | null >(null);
+    const [fileName, setFileName] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -19,21 +21,22 @@ const FileUpload: React.FC<Props> = ({ onFileSelect, width = "w-full" }) => {
         }
     };
 
-    return(
+    return (
         <div className={width}>
             <label
-                htmlFor="fileUpload"
+                htmlFor={id}
                 className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-clas-gris rounded-lg cursor-pointer hover:bg-clas-gris/20 transition"
             >
-                <input 
-                    id="fileUpload"
+                <input
+                    id={id}
                     type="file"
                     className="hidden"
+                    required={required}
                     onChange={handleChange}
                 />
                 <div className="flex flex-col items-center gap-2">
                     <div>
-                        <DocumentArrowUpIcon className="h-7 w-7 text-clas-gris"/>
+                        <DocumentArrowUpIcon className="h-7 w-7 text-clas-gris" />
                     </div>
                     <span className="text-clas-negro font-medium">
                         {fileName ? fileName : "Sube tu archivo"}
@@ -46,6 +49,6 @@ const FileUpload: React.FC<Props> = ({ onFileSelect, width = "w-full" }) => {
             </label>
         </div>
     )
-}   
+}
 
 export default FileUpload;

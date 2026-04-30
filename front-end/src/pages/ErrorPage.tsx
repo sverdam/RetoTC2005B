@@ -1,4 +1,4 @@
-interface Props {}
+interface Props { }
 const ErrorPage: React.FC<Props> = () => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center px-4">

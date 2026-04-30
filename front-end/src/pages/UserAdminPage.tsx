@@ -1,10 +1,7 @@
 import {
-  PhotoIcon,
   TrashIcon,
   PencilIcon,
-  UserIcon,
-  CheckCircleIcon,
-  XCircleIcon,
+  UserIcon
 } from "@heroicons/react/24/outline";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -45,27 +42,26 @@ const UserPage: React.FC = () => {
   const [roleQuery, setRoleQuery] = useState("");
 
   const [companies, setCompanies] = useState<Company[]>([]);
-  const [companyId, setCompanyId] = useState<number | null> (null);
+  const [companyId, setCompanyId] = useState<number | null>(null);
 
-  const [userToDelete, setUserToDelete] = useState<User | null> (null);
-  const [userToView, setUserToView] = useState<User | null> (null);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [userToView, setUserToView] = useState<User | null>(null);
   const navigate = useNavigate();
-  
-  
+
+
   useEffect(() => {
-    getAllUsers().then((users: User[]) => 
-      {
-        setUsers(users)
-        setRoles([... new Set(users.map(user => user.role))])
-      });
+    getAllUsers().then((users: User[]) => {
+      setUsers(users)
+      setRoles([... new Set(users.map(user => user.role))])
+    });
     getAllCompanies().then((companies: Company[]) => setCompanies(companies));
- 
+
   }, []);
 
 
   const filteredUsers = useMemo(() => {
     console.log(users);
-    const _name= nameQuery.trim().toLowerCase();
+    const _name = nameQuery.trim().toLowerCase();
     const _email = emailQuery.trim().toLowerCase();
     const _role = roleQuery.trim().toLowerCase();
 
@@ -74,13 +70,13 @@ const UserPage: React.FC = () => {
       const matchesEmail = _email.length === 0 || u.email.toLowerCase().includes(_email);
       const matchesCompany = companyId === null || u.company?.id === companyId;
       const matchesRole = _role.length === 0 || u.role.toLowerCase() === _role;
-      
+
       return matchesName && matchesEmail && matchesCompany && matchesRole;
     });
   }, [emailQuery, nameQuery, companyId, roleQuery, users]);
 
   const handleDelete = () => {
-    if(!userToDelete) return;
+    if (!userToDelete) return;
     deleteUser(userToDelete.id).then(() => {
       setUsers((prev) => prev.filter((p) => p.id !== userToDelete.id));
       setUserToDelete(null);
@@ -89,13 +85,13 @@ const UserPage: React.FC = () => {
 
   const formatRole = (role: string) => {
     role = role.toLowerCase();
-    switch (role){
+    switch (role) {
       case "user":
         return "USUARIO"
 
       case "clas editor":
         return "EDITOR CLAS"
-      
+
       case "company editor":
         return "EDITOR EMPRESA"
 
@@ -128,7 +124,7 @@ const UserPage: React.FC = () => {
               </label>
               <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 value={companyId ?? ""}
-                onChange={(e) => 
+                onChange={(e) =>
                   setCompanyId(e.target.value === "" ? null : Number(e.target.value))
                 }
               >
@@ -147,7 +143,7 @@ const UserPage: React.FC = () => {
               </label>
               <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 value={roleQuery ?? ""}
-                onChange={(e) => 
+                onChange={(e) =>
                   setRoleQuery(e.target.value)
                 }
               >
@@ -218,12 +214,12 @@ const UserPage: React.FC = () => {
                   </th>
                   <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Nombre
-                      {/* <span className="flex items-center gap-1">
+                    {/* <span className="flex items-center gap-1">
                         Nombre
                         <SortIcon className="h-4 w-4 text-gray-400" />
                       </span> */}
                   </th>
-                  
+
                   <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
                     Correo
                     {/* <span className="flex items-center gap-1">
@@ -256,11 +252,11 @@ const UserPage: React.FC = () => {
                   </tr>
                 ) : (
                   filteredUsers.map((user, index) => (
-                    <tr key={user.id} className = "hover:bg-gray-50">
+                    <tr key={user.id} className="hover:bg-gray-50">
                       <td className="px-3 py-3 font-medium text-gray-900">
                         {index + 1}
                       </td>
-                      
+
                       <td className="px-3 py-3 text-center text-gray-700">
                         {user.company?.name}
                       </td>
@@ -281,26 +277,26 @@ const UserPage: React.FC = () => {
                       </td>
 
                       {/*Edit*/}
-                    <td className="px-3 py-3 text-center">
-                      <button onClick={() => navigate(`/usuarios/${user.id}`)} className="text-blue-600 hover:text-blue-800">
-                        <PencilIcon className="h-4 w-4" />
-                      </button>
-                    </td>
+                      <td className="px-3 py-3 text-center">
+                        <button onClick={() => navigate(`/usuarios/${user.id}`)} className="text-blue-600 hover:text-blue-800">
+                          <PencilIcon className="h-4 w-4" />
+                        </button>
+                      </td>
 
-                    {/* delete*/}
-                    <td className="px-3 py-3 text-center">
-                      <button
-                        onClick={() =>
-                          setUserToDelete(user)
-                        }
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <TrashIcon className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
+                      {/* delete*/}
+                      <td className="px-3 py-3 text-center">
+                        <button
+                          onClick={() =>
+                            setUserToDelete(user)
+                          }
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          <TrashIcon className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
                   ))
-                )} 
+                )}
               </tbody>
             </table>
             <DeleteConfirmModal

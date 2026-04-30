@@ -1,42 +1,42 @@
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 
 const Footer: React.FC = () => {
-    return(
+    return (
         <footer className="bg-clas-negro px-14 py-10">
             <div className="flex flex-col gap-7">
                 <div className="flex flex-col items-center md:grid md:grid-cols-3  gap-7">
                     {/* First Column: CLAS Logo and Social Media */}
                     <div className="flex flex-col gap-4 items-center md:items-start">
-                        <img src="..\src\assets\CLAS-logo-gray.png" className="w-37"/>
+                        <img src="..\src\assets\CLAS-logo-gray.png" className="w-37" />
                         <div className="flex gap-3">
                             <a className="flex items-center justify-center rounded-full border border-clas-gris h-10 w-10"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://www.facebook.com/profile.php?id=61568197160101&locale=es_LA"
-                        >
-                            <img  src="..\src\assets\Social-Media-Icons\facebook.png"
-                                className="h-6"    
-                            />
-                        </a>
-                        <a className="flex items-center justify-center rounded-full border border-clas-gris h-10 w-10"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://www.instagram.com/clusterautomotrizsonora/"
-                        >
-                            <img  src="..\src\assets\Social-Media-Icons\instagram.png"
-                                className="h-6"    
-                            />
-                        </a>
-                        <a className="flex items-center justify-center rounded-full border border-clas-gris h-10 w-10"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://x.com/Clusterautoson?fbclid=IwY2xjawRM2vNleHRuA2FlbQIxMABicmlkETF5OXN1cVhhWDFUVlQyQlBOc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHu6Q2TOIkMkv_Nxiq872aRgWgFPAi2IoJVDCDtam50_jEerH-oL5HGDL3XVA_aem_AgLqod_-nz14tByRnk-M3g"
-                        >
-                            {/* TODO: Arreglar el logo de twitter */}
-                            <img  src="..\src\assets\Social-Media-Icons\x.png"
-                                className="h-6"    
-                            />
-                        </a>
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href="https://www.facebook.com/profile.php?id=61568197160101&locale=es_LA"
+                            >
+                                <img src="..\src\assets\Social-Media-Icons\facebook.png"
+                                    className="h-6"
+                                />
+                            </a>
+                            <a className="flex items-center justify-center rounded-full border border-clas-gris h-10 w-10"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href="https://www.instagram.com/clusterautomotrizsonora/"
+                            >
+                                <img src="..\src\assets\Social-Media-Icons\instagram.png"
+                                    className="h-6"
+                                />
+                            </a>
+                            <a className="flex items-center justify-center rounded-full border border-clas-gris h-10 w-10"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                href="https://x.com/Clusterautoson?fbclid=IwY2xjawRM2vNleHRuA2FlbQIxMABicmlkETF5OXN1cVhhWDFUVlQyQlBOc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHu6Q2TOIkMkv_Nxiq872aRgWgFPAi2IoJVDCDtam50_jEerH-oL5HGDL3XVA_aem_AgLqod_-nz14tByRnk-M3g"
+                            >
+                                {/* TODO: Arreglar el logo de twitter */}
+                                <img src="..\src\assets\Social-Media-Icons\x.png"
+                                    className="h-6"
+                                />
+                            </a>
                         </div>
                     </div>
                     {/* Second Column: Contact US */}
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                </div>  
+                </div>
                 <div className="h-0.25 bg-clas-gris"></div>
                 {/* Derechos reservados y contacto CLAS*/}
                 <div className="flex flex-wrap w-full justify-center items-center md:justify-end">
@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
                 </div>
             </div>
         </footer>
-        
+
     );
 };
 
