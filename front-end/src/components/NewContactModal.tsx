@@ -17,6 +17,18 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
 
     const isEditing = 'id' in contact && contact.id;
 
+    const [errors, setErrors] = useState<{ contactInfo?: boolean, type?: boolean, position?: boolean }>({});
+
+    const validate = () => {
+        const newErrors: typeof errors = {};
+        if (!formContact.contactInfo.trim()) newErrors.contactInfo = true;
+        if (!formContact.type.trim()) newErrors.type = true;
+        if (!formContact.position.trim()) newErrors.position = true;
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+
     useEffect(() => {
         setFormContact(contact)
     }, [contact])
@@ -37,6 +49,7 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Puesto
+                                {errors.position && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <input type="text"
                                 required
@@ -49,6 +62,7 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Tipo de Contacto
+                                {errors.type && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <select
                                 required
@@ -72,6 +86,7 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Contacto
+                                {errors.contactInfo && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <input
                                 required
@@ -91,6 +106,7 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
                         </button>
                         <button
                             onClick={() => {
+                                if (!validate) return;
                                 setContact(formContact);
                                 onClose();
                             }}
