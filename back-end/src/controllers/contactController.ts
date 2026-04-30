@@ -25,6 +25,7 @@ export const createContact: RequestHandler = (req: Request, res: Response) => {
             });
         })
         .catch((err) => {
+            console.log(`Error creating contact: ${err.message}`);
             res.status(500).json({
                 status: "error",
                 message: "Something happened creating a contact. " + err.message,
