@@ -60,7 +60,7 @@ const HomePage: React.FC = () => {
 
             <div className="relative h-[720px] w-full flex items-center">
                 <img src={heroImage} alt="hero image" className="w-full h-[720px] object-cover absolute z-0" ></img>
-                <div className="animate-fade-up relative z-10 max-w-2xl px-14 text-left text-white">
+                <div className="animate-hero relative z-10 max-w-2xl px-14 text-left text-white">
                     <h1 className="text-5xl font-medium mb-4">
                         Impulsando el futuro automotriz de Sonora
                     </h1>
@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
 
             {/* About Us Section */}
             <div className="flex flex-col gap-6 px-14 text-clas-negro">
-                <div className="animate-fade-up w-full flex flex-col md:flex-row gap-x-10 gap-y-6 text-left">
+                <div className="animate-fade-in w-full flex flex-col md:flex-row gap-x-10 gap-y-6 text-left">
                     <div className="basis-[60%]">
                         <div className="flex flex-col gap-4">
                             <div>
@@ -109,7 +109,7 @@ const HomePage: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        <div className="flex flex-col gap-2 w-full items-start">
+                        <div className="flex flex-col gap-2 w-full items-start animate-slide-in" style={{ animationDelay: "0ms" }}>
                             <div className="flex gap-2 text-clas w-full items-center justify-start">
                                 <EyeIcon className="h-6 flex-shrink-0"/>
                                 <h2 className="text-xl font-medium">Visión</h2>
@@ -119,7 +119,7 @@ const HomePage: React.FC = () => {
                             </p>
                         </div>
 
-                        <div className="flex flex-col gap-2 w-full items-start">
+                        <div className="flex flex-col gap-2 w-full items-start animate-slide-in" style={{ animationDelay: "200ms" }}>
                             <div className="flex gap-2 text-clas w-full items-center justify-start">
                                 <StarIcon className="h-6 flex-shrink-0"/>
                                 <h2 className="text-xl font-medium">Misión</h2>
@@ -129,7 +129,7 @@ const HomePage: React.FC = () => {
                             </p>
                         </div>
 
-                        <div className="flex flex-col gap-2 w-full items-start">
+                        <div className="flex flex-col gap-2 w-full items-start animate-slide-in" style={{ animationDelay: "400ms" }}>
                             <div className="flex gap-2 text-clas w-full items-center justify-start">
                                 <PuzzlePieceIcon className="h-6 flex-shrink-0"/>
                                 <h2 className="text-xl font-medium">Comunidad</h2>
@@ -144,7 +144,7 @@ const HomePage: React.FC = () => {
             
 
             {/*Our Team section*/}
-            <div className="animate-fade-up w-full bg-gray-50 py-20 px-14">
+            <div className="animate-fade-in w-full bg-gray-50 py-20 px-14">
                 <div className="flex flex-col gap-4">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
@@ -167,7 +167,7 @@ const HomePage: React.FC = () => {
 
 
             {/*News section*/}
-            <div className="animate-fade-up w-full px-14">
+            <div className="animate-fade-in w-full px-14">
                 <div className="flex flex-col gap-4">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
@@ -181,7 +181,7 @@ const HomePage: React.FC = () => {
             </div>
 
             {/*TO DO: Add contact details to Contact and Location section*/}
-            <div className="animate-fade-up w-full flex flex-col gap-6 px-14 py-20 pb-20 bg-gray-50">
+            <div className="animate-fade-in w-full flex flex-col gap-6 px-14 py-20 pb-20 bg-gray-50">
                 <div className="flex flex-col gap-4">
                     <div>
     
@@ -195,7 +195,7 @@ const HomePage: React.FC = () => {
                 </div>
 
                 {/*CONTACTS*/}
-                <div className="animate-fade-up w-full justify-center grid grid-cols-1 sm:grid-cols-3 sm:px-30 gap-10">
+                <div className="animate-fade-in w-full justify-center grid grid-cols-1 sm:grid-cols-3 sm:px-30 gap-10">
                     <div>
                         <a href="https://maps.app.goo.gl/ux6pGm7EbhTyhdr86" className="text-gray-500 text-md hover:underline">
                             Obrero Mundial 10, 83210 Hermosillo, Sonora, Mexico

@@ -19,18 +19,103 @@
 }
 
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
   }
 
-  to {
+
+.animate-fade-in {
+  animation-name: fadeIn;
+  animation-duration: 500ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(40%);
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0%);
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-.animate-fade-up {
-  animation: fadeUp 0.7s ease-out forwards;
+.animate-slide-in {
+  animation-name: slideIn;
+  animation-duration: 500ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+
+  opacity: 0;
+}
+
+@keyframes heroIntro {
+  0% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.animate-hero {
+  animation-name: heroIntro;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+
+@keyframes companyIntro {
+  0% {
+    min-height: 80vh;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  60% {
+    min-height: 80vh;
+    justify-content: center;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    min-height: fit-content;
+    justify-content: flex-start;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-company {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: companyIntro 2s ease-in-out forwards;
 }

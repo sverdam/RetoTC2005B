@@ -91,9 +91,10 @@ const CompanyPage: React.FC = () => {
 
     return (
         <div className="bg-gray-50 min-h-screen flex justify-center">
-            <div className="flex flex-col gap-20 py-10 text-clas-negro max-w-7xl w-full pb-20">
-                {/* PROFILE */}
-                <div className="flex flex-col gap-8 px-14">
+            <div className="flex flex-col gap-20 pt-10 text-clas-negro max-w-7xl w-full pb-20">
+                <div className="flex flex-col gap-10">
+                    {/* PROFILE */}
+                <div className="animate-company flex flex-col gap-8 px-14">
                     {/* LOGO */}
                     <div className="w-full flex justify-center">
                         <img
@@ -148,7 +149,7 @@ const CompanyPage: React.FC = () => {
                 </div>
 
                 {/* ABOUT / PHOTO CAROUSEL */}
-                <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+                <div className="animate-fade-in w-full flex flex-col gap-8 px-14">
                     {/* SECTION DIVIDER */}
                     <div className="mx-auto flex items-center justify-center gap-4">
                         <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
@@ -229,10 +230,12 @@ const CompanyPage: React.FC = () => {
                     </div>
 
                 </div>
+                </div>
+                
 
 
                 {/* CONTACT US */}
-                <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+                <div className="animate-fade-in w-full flex flex-col gap-8 px-14">
                     {/* SECTION DIVIDER */}
                     <div className="mx-auto flex items-center justify-center gap-4">
                         <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
@@ -271,7 +274,7 @@ const CompanyPage: React.FC = () => {
 
                 {/* CATALOG */}
                 {(company?.products.length === 0 && company?.services.length === 0) ? <></> :
-                    <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+                    <div className="animate-fade-in w-full flex flex-col gap-8 px-14">
                         {/* SECTION DIVIDER */}
                         <div className="mx-auto flex items-center justify-center gap-4">
                             <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
@@ -339,7 +342,7 @@ const CompanyPage: React.FC = () => {
                 {/* CAPACITIES */}
                 {company?.capacity === undefined || company?.capacity === null || company.capacity.length === 0 ?
                     <></> :
-                    <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+                    <div className="animate-fade-in w-full flex flex-col gap-8 px-14">
                         <div style={{
                             background: `linear-gradient(
                     70deg,
@@ -370,7 +373,7 @@ const CompanyPage: React.FC = () => {
 
                 {/* CERTIFICATIONS */}
                 {company?.certifications.length === 0 ? <></> :
-                    <div className="animate-fade-up w-full flex flex-col gap-8 px-14">
+                    <div className="animate-fade-in w-full flex flex-col gap-8 px-14">
                         {/* SECTION DIVIDER */}
                         <div className="mx-auto flex items-center justify-center gap-4">
                             <div className="h-px w-20 rounded-full bg-gradient-to-r from-transparent to-clas-gris" />
