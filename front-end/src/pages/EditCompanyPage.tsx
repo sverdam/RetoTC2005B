@@ -1196,7 +1196,7 @@ const EditCompanyPage: React.FC = () => {
                     </button> : <></>}
                 <button
                     onClick={() => {
-                        if (!validate) return;
+                        if (!validate()) return;
                         handleSubmit
                     }}
                     className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">{isEditing ? "Aplicar Cambios" : "Crear Empresa"}</button>
