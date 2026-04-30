@@ -40,7 +40,7 @@ const DirectoryCard: React.FC<Props> = ({ company, user }) => {
                 <InformationCircleIcon className="h-5 w-5 text-gray-400"/>
                 <h4 className="text-gray-400">{ formatMember(company.memberType)}</h4>
                 <h4 className="text-gray-400">|</h4>
-                <h4 className="text-gray-400">{company.tier === 0 ? 'OEM' : `Tier ${company.tier}`}</h4>
+                <h4 className="text-gray-400">{company.tier === 0 ? 'OEM' : ( company.tier === 4 ? "Otros servicios" : `Tier ${company.tier}`)}</h4>
             </div>
 
             {/* NAME */}

@@ -111,7 +111,7 @@ const CompanyPage: React.FC = () => {
 
                         <div className="flex gap-4 items-center">
                             <span className="bg-white text-sm px-3 py-1 rounded-full border border-clas-gris">
-                                {company?.tier === 0 ? "OEM" : `Tier ${company?.tier}`}
+                                {company?.tier === 0 ? 'OEM' : ( company?.tier === 4 ? "Otros servicios" : `Tier ${company?.tier}`)}
                             </span>
                             {(userProfile.role === "admin" 
                                 || userProfile.role === "CLAS editor"
