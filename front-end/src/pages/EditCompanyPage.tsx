@@ -1203,7 +1203,7 @@ const EditCompanyPage: React.FC = () => {
                         Eliminar Empresa
                     </button> : <></>}
                 <button
-                    onClick={() => handleSubmit}
+                    onClick={(e) => handleSubmit(e)}
                     className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">{isEditing ? "Aplicar Cambios" : "Crear Empresa"}</button>
             </div>
 
