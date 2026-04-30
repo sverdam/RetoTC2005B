@@ -301,7 +301,7 @@ const EditCompanyPage: React.FC = () => {
         const logoBoundle : FileBundleInput = {
             file: file,
             type: 'document',
-            position: 0,
+            position: 1,
             companyId: -1
         }
 
@@ -572,7 +572,7 @@ const EditCompanyPage: React.FC = () => {
 
             if (formCompany.catalog){
             await createFileModule({
-                type: 'catalog', 
+                type: 'document', 
                 position: formCompany.catalog.position, 
                 companyId: companyId
             }, formCompany.catalog.file);
