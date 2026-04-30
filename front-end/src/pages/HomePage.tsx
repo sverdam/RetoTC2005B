@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { getLandingPage } from "../api/LandingPageApi";
 import { getLogos } from "../api/fileModuleAPI";
 import ProfileCard from "../components/ProfileCard";
+import PhotoCarousel from "../components/PhotoCarousel";
+import { EyeIcon, PuzzlePieceIcon, StarIcon } from "@heroicons/react/24/outline";
 
 const companyLogos = [
     { src: ford, alt: "Ford" },
@@ -21,6 +23,15 @@ const companyLogos = [
     { src: soluciones_industriales, alt: "Soluciones Industriales" },
     { src: suppliers_city, alt: "Suppliers City" },
 ];
+
+const carouselImages = [
+    "https://img1.wsimg.com/isteam/ip/592f6b3f-6860-4413-a097-d94fc382c4b8/SM1-204_(2048)-66bb25f.jpg/:/rs=w:1160,h:773",
+    "https://img1.wsimg.com/isteam/ip/592f6b3f-6860-4413-a097-d94fc382c4b8/SM1-42_(2048)-07244f7.jpg/:/rs=w:1160,h:773",
+    "https://img1.wsimg.com/isteam/ip/592f6b3f-6860-4413-a097-d94fc382c4b8/SM1-100_(2048)-446be96.jpg/:/rs=w:1160,h:773",
+    "https://img1.wsimg.com/isteam/ip/592f6b3f-6860-4413-a097-d94fc382c4b8/SM1-55_(2048)-8ae623b.jpg/:/rs=w:1160,h:773",
+    "https://img1.wsimg.com/isteam/ip/592f6b3f-6860-4413-a097-d94fc382c4b8/SM1-65_(2048)-f10808f.jpg/:/rs=w:1160,h:773",
+    "https://img1.wsimg.com/isteam/ip/592f6b3f-6860-4413-a097-d94fc382c4b8/SM1-132_(2048)-6d29971.jpg/:/rs=w:1160,h:773",
+]
 
 interface LogoInterface {
     src: string,
@@ -74,58 +85,63 @@ const HomePage: React.FC = () => {
             />
 
             {/* About Us Section */}
-            <div className="animate-fade-up w-full flex gap-10 text-left text-clas-negro px-14">
+            <div className="flex flex-col gap-6 px-14 text-clas-negro">
+                <div className="animate-fade-up w-full flex flex-col md:flex-row gap-x-10 gap-y-6 text-left">
+                    <div className="basis-[60%]">
+                        <div className="flex flex-col gap-4">
+                            <div>
+                                <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
+                                    ¿Quiénes somos?
+                                </h1>
 
-                <div className="basis-[60%]">
-                    <div className="flex flex-col gap-4">
-                        <div>
-                            <p className="text-clas font-medium mb-2">
-                                Sobre Nosotros
-                            </p>
-
-                            <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
-                                ¿Quiénes somos?
-                            </h1>
-
-                            <p className="text-lg text-gray-700 leading-relaxed">
-                                {info ? info.mainText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
-                            </p>
+                                <p className="text-lg text-gray-700 leading-relaxed">
+                                    {info ? info.mainText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="mt-8 space-y-6">
-                        <div>
-                            <h2 className="text-xl font-medium">Visión</h2>
-                            <p className="text-lg text-gray-700">
+                    <div className="flex flex-col gap-2 basis-[40%]">
+                        <PhotoCarousel images={carouselImages}/>
+                        <p className="text-sm text-gray-500 w-full text-right">Galería Sonora Move 2026</p>
+                    </div>
+
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <div className="flex flex-col gap-2 w-full items-start">
+                            <div className="flex gap-2 text-clas w-full items-center justify-start">
+                                <EyeIcon className="h-6 flex-shrink-0"/>
+                                <h2 className="text-xl font-medium">Visión</h2>
+                            </div>
+                            <p className="text-lg text-left text-gray-700">
                                 {info ? info.visionText : "Posicionar a Sonora como el principal clúster automotriz de México, destacado por su innovación, sostenibilidad y calidad."}
                             </p>
                         </div>
 
-                        <div>
-                            <h2 className="text-xl font-medium">Misión</h2>
-                            <p className="text-lg text-gray-700">
+                        <div className="flex flex-col gap-2 w-full items-start">
+                            <div className="flex gap-2 text-clas w-full items-center justify-start">
+                                <StarIcon className="h-6 flex-shrink-0"/>
+                                <h2 className="text-xl font-medium">Misión</h2>
+                            </div>
+                            <p className="text-lg text-left text-gray-700">
                                 {info ? info.missionText : "Ser el motor que fortalece la competitividad del sector, fomentando colaboración y desarrollo continuo."}
                             </p>
                         </div>
 
-                        <div>
-                            <h2 className="text-xl font-medium">Comunidad</h2>
-                            <p className="text-lg text-gray-700">
+                        <div className="flex flex-col gap-2 w-full items-start">
+                            <div className="flex gap-2 text-clas w-full items-center justify-start">
+                                <PuzzlePieceIcon className="h-6 flex-shrink-0"/>
+                                <h2 className="text-xl font-medium">Comunidad</h2>
+                            </div>
+                            
+                            <p className="text-lg text-left text-gray-700">
                                 {info ? info.communityText : "La fuerza de CLAS está en su gente: industria, academia y gobierno trabajando juntos para convertir el crecimiento individual en éxito compartido."}
                             </p>
                         </div>
-                    </div>
                 </div>
-
-                <div className="basis-[40%]">
-                    <img
-                        className="h-full w-full object-cover rounded-3xl"
-                        src="https://www.usnews.com/object/image/00000190-bd0f-d31e-abf1-fdcf4dcf0000/4187-2025gv80.jpg?update-time=1721158814747&size=responsive970"
-                        alt="CLAS"
-                    />
-                </div>
-
             </div>
+            
 
             {/*Our Team section*/}
             <div className="animate-fade-up w-full bg-gray-50 py-20 px-14">
@@ -149,13 +165,26 @@ const HomePage: React.FC = () => {
                 </div>
             </div>
 
-            {/*TO DO: Add contact details to Contact and Location section*/}
-            <div className="animate-fade-up w-full flex flex-col gap-6 px-14">
+
+            {/*News section*/}
+            <div className="animate-fade-up w-full px-14">
                 <div className="flex flex-col gap-4">
                     <div>
-                        <p className="text-clas font-medium mb-2">
-                            Contacto
+                        <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
+                            Últimas noticias
+                        </h1>
+                        <p className="text-lg text-gray-700 leading-relaxed">
+                            PDF NEWSLETTER
                         </p>
+                    </div>
+                </div>
+            </div>
+
+            {/*TO DO: Add contact details to Contact and Location section*/}
+            <div className="animate-fade-up w-full flex flex-col gap-6 px-14 py-20 bg-gray-50">
+                <div className="flex flex-col gap-4">
+                    <div>
+    
                         <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
                             Acércate a CLAS
                         </h1>
