@@ -247,13 +247,12 @@ const EditCompanyPage: React.FC = () => {
                     setProductsToDelete((prev) => [...prev, newProduct.id]);
                 }
 
-                handleChange("products", formCompany.products.filter(p => p.id != newProduct.id));
-                
                 const productWithId = { 
                 ...newProduct, 
                 id: `temp-${crypto.randomUUID()}` 
                 };
-                handleChange("products", [...formCompany.products, productWithId]);
+                handleChange("products", [...(formCompany.products.filter(p => String(p.id) !== String(newProduct.id))), 
+                                productWithId]);
             }
         } else {
             const productWithId = { 
