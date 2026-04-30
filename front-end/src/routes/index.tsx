@@ -7,10 +7,10 @@ import UserFormPage from "../pages/UserFormPage";
 import CompanyPage from "../pages/CompanyPage";
 import HomePage from "../pages/HomePage";
 import EditCompanyPage from "../pages/EditCompanyPage";
-import NewCompanyPage from "../pages/NewCompanyPage";
 import LoginPage from "../pages/LoginPage";
 import PaywallPage from "../pages/PaywallPage";
-import DummyEditFile from "../pages/DummyEditFile";
+import DummyLogoEditFile from "../pages/DummyLogoEditFile";
+import DummyGalleryEditFile from "../pages/DummyGalleryEditFile";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +28,8 @@ const router = createBrowserRouter([
             { path: 'empresa/editar', element: <EditCompanyPage />},
             { path: 'login', element: <LoginPage/>},
             { path: 'membresia', element: <PaywallPage />},
-            { path: 'dummy/:id', element: <DummyEditFile/>}
+            { path: 'dummylogo/:id', element: <DummyLogoEditFile/>},
+            { path: 'dummygallery/:id', element: <DummyGalleryEditFile/>}
         ]
     },
 ]);
