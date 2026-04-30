@@ -293,7 +293,7 @@ const EditCompanyPage: React.FC = () => {
 
     {/* Product Image Handling */}
     const handleProductImageSelect = (file: File) => {
-        console.log(file);
+        //console.log(file);
     };
 
     {/* Catalog Handling */}
@@ -328,7 +328,7 @@ const EditCompanyPage: React.FC = () => {
 
         handleChange("products", formCompany.products.filter(p => p.id != productToDelete.id));
         setProductToDelete(null);
-        console.log(productsToDelete);
+        //console.log(productsToDelete);
         
     };
 
@@ -435,13 +435,13 @@ const EditCompanyPage: React.FC = () => {
         },[])
     
     const handleSubmit = async (e: React.FormEvent) => {
-        console.log("Entre para subir");
+        //console.log("Entre para subir");
         e.preventDefault();
         let companyId: number | undefined; 
 
         
         if(!isEditing && formCompany.memberType != null){
-            console.log("Quiero crear")
+            //console.log("Quiero crear")
             const toCreateCompany: typeCreateCompany = {
                 name: formCompany.name,
                 tier: formCompany.tier,
@@ -451,13 +451,13 @@ const EditCompanyPage: React.FC = () => {
             try {
                 c = await createCompany(toCreateCompany);
             } catch (err){
-                console.error("Falló createCompany:", err); // para ver qué pasó
+                console.error("Falló createCompany:", err);
                 return;
             }
 
             if(!c) return;
-            console.log(c)
-            console.log(c.id)
+            //console.log(c)
+            //console.log(c.id)
             companyId = c.id;
 
             if (formCompany.logo?.file){
@@ -479,14 +479,14 @@ const EditCompanyPage: React.FC = () => {
         }
 
         if(isEditing && formCompany.id != null) {
-            console.log("Guarde el id pq estoy editando")
+            //console.log("Guarde el id pq estoy editando")
             companyId = formCompany.id;
         }
-        console.log(companyId)
+        //console.log(companyId)
         if(!companyId){
             return navigate('/error');
         }
-            console.log("Editando")
+            //console.log("Editando")
 
             //Products
             await Promise.all([
@@ -523,7 +523,7 @@ const EditCompanyPage: React.FC = () => {
             //Contact
             await Promise.all([
             ...formCompany.contacts.map((c) => {
-                console.log(c.id);
+                //console.log(c.id);
                 if(String(c.id).startsWith('temp-')){
                     c.companyId = companyId;
                     createContact(c);

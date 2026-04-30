@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftIcon, PlusIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
-import type { Company, User, NewUserInput, UserRole } from "clas-types";
+import type { Company, NewUserInput } from "clas-types";
 import { getAllCompanies } from '../api/CompanyAPI';
 import { createUser, getUserById, updateUser } from '../api/UserAPI';
 import type { AxiosError } from 'axios';
 
 
 const inputClass =
-  "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20";
+    "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20";
 
 const labelClass = "block text-xs font-medium text-gray-600 mb-1";
 
 // Valor inicial del formulario
-const emptyForm: NewUserInput ={
+const emptyForm: NewUserInput = {
     name: "",
     email: "",
     password: "",
@@ -27,16 +27,15 @@ const UserFormPage: React.FC = () => {
 
     const isEditing = id !== undefined;
 
-    const [ companies, setCompanies ] = useState<Company[]>([]);
-    const [ form, setForm] = useState<NewUserInput>(emptyForm);
-    const [ error, setError ] = useState<string>("");
+    const [companies, setCompanies] = useState<Company[]>([]);
+    const [form, setForm] = useState<NewUserInput>(emptyForm);
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
         getAllCompanies().then(setCompanies);
 
-        if (isEditing)
-        {
-            getUserById(Number(id)).then( user => {
+        if (isEditing) {
+            getUserById(Number(id)).then(user => {
                 setForm({
                     name: user.name,
                     email: user.email,
@@ -48,24 +47,24 @@ const UserFormPage: React.FC = () => {
 
             );
         }
-    },[]);
+    }, []);
 
     const handleChange = (field: keyof NewUserInput, value: string | number | boolean) => {
-        setForm((prev) => ({...prev, [field]: value}));
+        setForm((prev) => ({ ...prev, [field]: value }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (isEditing){
+        if (isEditing) {
             updateUser(Number(id), form).then(() => navigate("/usuarios")).catch
-            (
-                (error: AxiosError) => setError(`Algo paso modificando el usuario: ${error.message}`)
-            )
+                (
+                    (error: AxiosError) => setError(`Algo paso modificando el usuario: ${error.message}`)
+                )
         } else {
             createUser(form).then(() => navigate("/usuarios")).catch
-            (
-                (error: AxiosError) => setError(`Algo paso creando el usuario: ${error.message}`)
-            );;
+                (
+                    (error: AxiosError) => setError(`Algo paso creando el usuario: ${error.message}`)
+                );;
         }
     };
 
@@ -78,7 +77,7 @@ const UserFormPage: React.FC = () => {
                         <button
                             type="button"
                             onClick={() => navigate("/usuarios")}
-                            className="text-blue-700 hover:text:blue-900"    
+                            className="text-blue-700 hover:text:blue-900"
                         >
                             <ArrowLeftIcon className="h-4 w-4" />
                         </button>
@@ -134,7 +133,7 @@ const UserFormPage: React.FC = () => {
                                     onChange={(e) => handleChange("password", e.target.value)}>
                                 </input>
                             </div>
-                            
+
                             {/* Company */}
                             <div>
                                 <label className={labelClass}>
@@ -162,11 +161,11 @@ const UserFormPage: React.FC = () => {
                                     Tipo de usuario
                                 </label>
                                 <select
-                                    required 
+                                    required
                                     className={inputClass}
                                     value={form.role.toString()}
-                                    onChange={(e) => handleChange("role", e.target.value )}
-                                    >
+                                    onChange={(e) => handleChange("role", e.target.value)}
+                                >
                                     <option
                                         value="user">
                                         USUARIO
@@ -183,7 +182,7 @@ const UserFormPage: React.FC = () => {
                                         value="admin">
                                         ADMIN
                                     </option>
-                                    
+
                                 </select>
                             </div>
                         </div>
@@ -192,7 +191,7 @@ const UserFormPage: React.FC = () => {
                     {error.length > 0 ? <div className="text-red-700 p-2">
                         <p>{error}</p>
                     </div> : <></>}
-                    
+
 
                     {/* Footer */}
                     <div className="flex justify-end gap-2 border-t border-gray-200 px-6 py-4">
@@ -202,12 +201,12 @@ const UserFormPage: React.FC = () => {
                             className="rounded-md border border-gray-500 bg-white
                             px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50
                             focus:outline-none focus:ring-2 focus:ring-gray-300">
-                                Cancelar
+                            Cancelar
                         </button>
                         <button className="inline-flex items-center gap-2 rounded-md
                         bg-clas px-4 py-2 text-sm font-medium text-white shadow-sm 
                         hover:bg-clas-claro focus: outline-none focus:ring-2 focus:ring-blue-500/30">
-                            {isEditing ? <><PencilSquareIcon className="h-4 w-4" />Guardar Cambios</>: <><PlusIcon className="h-4 w-4" />Guardar Usuario</>}
+                            {isEditing ? <><PencilSquareIcon className="h-4 w-4" />Guardar Cambios</> : <><PlusIcon className="h-4 w-4" />Guardar Usuario</>}
                         </button>
                     </div>
                 </div>

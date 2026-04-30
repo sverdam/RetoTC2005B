@@ -4,24 +4,23 @@ import { useParams } from "react-router";
 import FileUpload from "../components/FileUpload";
 import { createFileModule } from "../api/fileModuleAPI";
 
-interface FileCompoundInput{
+interface FileCompoundInput {
     file: File, // <- Actual file
-    type: 'logo' | 'document' | 'product' | 'image', 
+    type: 'logo' | 'document' | 'product' | 'image',
     position: number, // <- any number
     companyId: number
 }
 
-const DummyGalleryEditFile: React.FC = () => 
-{
-    const {id} = useParams();
+const DummyGalleryEditFile: React.FC = () => {
+    const { id } = useParams();
     const companyId = Number(id)
     const [fileMod, setFileMod] = useState<FileCompoundInput | null>(null);
     const [pos, setPos] = useState<number>(0);
 
 
-    {/* Logo Handling */}
+    {/* Logo Handling */ }
     const handleLogoSelect = (file: File) => {
-        console.log(file);
+        //console.log(file);
         setFileMod({
             file: file,
             type: 'logo',
@@ -31,7 +30,7 @@ const DummyGalleryEditFile: React.FC = () =>
     };
 
     const handlePosition = (newPosition: number | string) => {
-        console.log(newPosition);
+        //console.log(newPosition);
         setPos(Number(newPosition));
     }
 
@@ -40,12 +39,12 @@ const DummyGalleryEditFile: React.FC = () =>
         console.log("SUBMIT");
         if (fileMod === null) return;
         createFileModule({
-            type: fileMod.type, 
-            position: fileMod.position, 
+            type: fileMod.type,
+            position: fileMod.position,
             companyId: fileMod.companyId
         }, fileMod?.file).then(() => console.log("Yey"))
-        .catch(() => console.log("Not"))
-        .finally(() => console.log("Finally"));
+            .catch(() => console.log("Not"))
+            .finally(() => console.log("Finally"));
     }
 
     useMemo(() => {
@@ -70,12 +69,12 @@ const DummyGalleryEditFile: React.FC = () =>
                 <div className="flex flex-col items-start w-2xl">
                     <label className="font-semibold text-clas-negro">Position</label>
                     <input type="text" onChange={e => handlePosition(e.target.value)}
-                    value={pos}
-                    placeholder="Link de embebido..." 
-                    className="w-2xl border-2 border-clas-gris rounded-lg p-2"/>
+                        value={pos}
+                        placeholder="Link de embebido..."
+                        className="w-2xl border-2 border-clas-gris rounded-lg p-2" />
                 </div>
 
-                
+
                 <div className="mt-4">
                     <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">
                         Aplicar Cambios
