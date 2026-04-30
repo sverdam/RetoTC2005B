@@ -1,7 +1,7 @@
 // Esqueleto para Company Page cuando sea usuario admin de empresa
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput, Certification, typeCreateCompany, SubmitCompany, NewLocationInput} from "clas-types";
+import type {Company, Product, Contact, NewContactInput, NewCompanyInput, Filter, UserProfile, NewProductInput, NewCertificationInput, Service, FileBundleInput, Certification, typeCreateCompany, SubmitCompany, NewLocationInput, ProductBundleInput} from "clas-types";
 import { deleteCompany, createCompany, getCompanybyId, updateCompany } from "../api/CompanyAPI";
 import { InformationCircleIcon, PlusIcon, TrashIcon, PencilIcon} from "@heroicons/react/24/outline";
 import FileUpload from "../components/FileUpload";
@@ -16,7 +16,7 @@ import { getProfile } from "../api/LoginAPI";
 import ServiceModal from "../components/ServiceModal";
 import { createFileModule } from "../api/fileModuleAPI";
 import DeleteCertificationConfirmModal from "../components/DeleteCertificationConfirmModal";
-import { createProduct, deleteProduct, updateProduct } from "../api/ProductAPI";
+import { createProduct, createProductAutomaticFile, deleteProduct, updateProduct } from "../api/ProductAPI";
 import { createContact, deleteContact, updateContact } from "../api/ContactAPI";
 import { createCertification, deleteCertification, updateCertification } from "../api/CertificationAPI";
 import { createService, deleteService, updateService } from "../api/ServiceAPI";
@@ -117,9 +117,9 @@ const EditCompanyPage: React.FC = () => {
     {/* Obtain data */}
     const [companyToDelete, setCompanyToDelete] = useState<Company | NewCompanyInput | null>(null);
 
-    const [productToDelete, setProductToDelete] = useState<Product | NewProductInput | null>(null);
+    const [productToDelete, setProductToDelete] = useState<Product | NewProductInput | ProductBundleInput | null>(null);
     const [productsToDelete, setProductsToDelete] = useState<number[]>([])
-    const [currentProduct, setCurrentProduct] = useState(emptyFormProduct);
+    const [currentProduct, setCurrentProduct] = useState<NewProductInput | ProductBundleInput>(emptyFormProduct);
 
     const [serviceToDelete, setServiceToDelete] = useState<Service | NewProductInput | null>(null);
     const [servicesToDelete, setServicesToDelete] = useState<number[]>([])
@@ -151,7 +151,7 @@ const EditCompanyPage: React.FC = () => {
         setIsProductOpen(true);
     }
 
-    const handleOpenEdit = (productToEdit: Product | NewProductInput) => {
+    const handleOpenEdit = (productToEdit: Product | NewProductInput | NewProductInput) => {
         
         setCurrentProduct(productToEdit);
         setIsProductOpen(true);
@@ -229,19 +229,37 @@ const EditCompanyPage: React.FC = () => {
         handleChange("services", [...formCompany.services, newService])}
         setIsServiceOpen(false);
     }
-    const handleProduct = (newProduct: NewProductInput | Product) => {
+    const handleProduct = (newProduct:  ProductBundleInput | NewProductInput | Product) => {
         const exists = formCompany.products.some(p => p.id === newProduct.id);
 
         if(exists) {
-            const updatedList = formCompany.products.map(p =>
-                p.id === newProduct.id ? newProduct : p
-            )
-            handleChange("products", updatedList);
+            if (!("file" in newProduct)){
+                const updatedList = formCompany.products.map(p =>
+                    p.id === newProduct.id ? newProduct : p
+                )
+                handleChange("products", updatedList);
+            }else{
+                
+                const isReal= typeof newProduct.id === 'number' || 
+                                (typeof newProduct.id === 'string' && !newProduct.id.startsWith('temp-'));
+                
+                if(isReal){
+                    setProductsToDelete((prev) => [...prev, newProduct.id]);
+                }
+
+                handleChange("products", formCompany.products.filter(p => p.id != newProduct.id));
+                
+                const productWithId = { 
+                ...newProduct, 
+                id: `temp-${crypto.randomUUID()}` 
+                };
+                handleChange("products", [...formCompany.products, productWithId]);
+            }
         } else {
             const productWithId = { 
             ...newProduct, 
             id: `temp-${crypto.randomUUID()}` 
-        };
+            };
             handleChange("products", [...formCompany.products, productWithId]);
         }
         setIsProductOpen(false)
@@ -284,7 +302,7 @@ const EditCompanyPage: React.FC = () => {
         const logoBoundle : FileBundleInput = {
             file: file,
             type: 'document',
-            position: 0,
+            position: 1,
             companyId: -1
         }
 
@@ -443,7 +461,7 @@ const EditCompanyPage: React.FC = () => {
             console.log(c.id)
             companyId = c.id;
 
-            if (formCompany.logo){
+            if (formCompany.logo?.file){
                 createFileModule({
                 type: formCompany.logo.type, 
                 position: formCompany.logo.position, 
@@ -451,7 +469,7 @@ const EditCompanyPage: React.FC = () => {
             }, formCompany.logo.file);
             }
 
-            if (formCompany.catalog){
+            if (formCompany.catalog?.file){
             createFileModule({
                 type: formCompany.catalog.type, 
                 position: formCompany.catalog.position, 
@@ -474,10 +492,16 @@ const EditCompanyPage: React.FC = () => {
             //Products
             await Promise.all([
                 ...formCompany.products.map((p) => {
-                if(String(p.id).startsWith('temp-')){
+                if(String(p.id).startsWith('temp-') && "file" in p){
                     p.companyId = companyId;
-                    createProduct(p);
-                } else {
+                    createProductAutomaticFile(p);
+
+                } 
+                else if (String(p.id).startsWith('temp-') )
+                {
+                    console.error(`Product "${p.name}" is not a product bundle, so it cannot be created.`);
+                }
+                else {
                     updateProduct(p.id, p);
                 }
             }),
@@ -554,17 +578,17 @@ const EditCompanyPage: React.FC = () => {
                 color: formCompany.color
             }
 
-            if (formCompany.logo){
+            if (formCompany.logo?.file){
                 await createFileModule({
-                type: formCompany.logo.type, 
+                type: 'logo', 
                 position: formCompany.logo.position, 
                 companyId: companyId
             }, formCompany.logo.file);
             }
 
-            if (formCompany.catalog){
+            if (formCompany.catalog?.file){
             await createFileModule({
-                type: formCompany.catalog.type, 
+                type: 'document', 
                 position: formCompany.catalog.position, 
                 companyId: companyId
             }, formCompany.catalog.file);
@@ -595,7 +619,7 @@ const EditCompanyPage: React.FC = () => {
                 <InformationCircleIcon className="text-gray-500 h-5"/>
                 <p className="text-gray-500">Imagen en formato .png sin fondo</p>
             </div>
-            <FileUpload onFileSelect={handleLogoSelect} />
+            <FileUpload id="logo-upload" onFileSelect={handleLogoSelect} />
         </div>
         <div className="flex flex-col gap-3 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">Nombre de la empresa</label>
@@ -771,7 +795,7 @@ const EditCompanyPage: React.FC = () => {
                 <InformationCircleIcon className="text-gray-500 h-5"/>
                 <p className="text-gray-500">Archivo en formato .pdf</p>
             </div>
-            <FileUpload onFileSelect={handleCatalogSelect} />
+            <FileUpload id="pdf-upload" onFileSelect={handleCatalogSelect} />
         </div>
 
         {isEditing ? 

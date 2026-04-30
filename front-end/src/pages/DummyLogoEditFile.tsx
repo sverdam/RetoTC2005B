@@ -58,7 +58,7 @@ const DummyLogoEditFile: React.FC = () =>
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col items-start w-2xl">
                     <label className="font-semibold text-clas-negro">Imagen para logo</label>
-                    <FileUpload onFileSelect={handleLogoSelect} />
+                    <FileUpload id="logo-upload" onFileSelect={handleLogoSelect} />
                 </div>
                 
                 <div className="mt-4">

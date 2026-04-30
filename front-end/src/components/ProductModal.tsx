@@ -1,30 +1,48 @@
 import {Dialog, DialogPanel, DialogTitle} from "@headlessui/react"
 import FileUpload from "./FileUpload";
-import type { NewProductInput, Product} from "clas-types";
+import type { NewProductInput, Product, ProductBundleInput} from "clas-types";
 import { useEffect, useState } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 interface Props{
     isProductOpen: boolean;
     onClose: () => void;
-    product: NewProductInput | Product;
+    product: NewProductInput | Product | ProductBundleInput;
     setProduct: (newProduct: any) => void;
 
 }
 
+function randomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setProduct}) => {
     
-    const [formProduct, setFormProduct] = useState<NewProductInput | Product>(product);
+    const [formProduct, setFormProduct] = useState<NewProductInput | Product | ProductBundleInput>(product);
 
     const handleChange = (field:keyof NewProductInput, value:any) => {
         setFormProduct((prev) => ({...prev, [field]: value}))
     }
     {/* Product Image Handling */}
     const handleProductImageSelect = (file: File) => {
-        console.log(file);
+        console.log("Handle Product Image?");
+        setFormProduct( (prev) => {
+            const newProductObject : ProductBundleInput = {
+                ...prev,
+                file: file,
+                position: randomInt(1, 10000000)
+            }
+            console.log("NEW PRODUCT OBJECT");
+            console.log(newProductObject);
+            return newProductObject;
+        }
+            
+        )
     };
 
-    const isEditing = 'id' in product && product.id;
+    const isEditing = 'id' in product && !!product.id;
 
     useEffect(() => {
         setFormProduct(product);
@@ -73,7 +91,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                                 <InformationCircleIcon className="text-clas-gris h-5"/>
                                 <p className="text-clas-gris">Imagen en formato .jpg</p>
                             </div>
-                            <FileUpload onFileSelect={handleProductImageSelect} />
+                            <FileUpload onFileSelect={handleProductImageSelect} width="w-full" required={!isEditing}/>
                         </div>
                         
                     </div>

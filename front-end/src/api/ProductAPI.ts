@@ -15,6 +15,11 @@ export const deleteProduct = async (id: number): Promise<void> => {
 
 
 export const createProductAutomaticFile = async (info: ProductBundleInput) => {
+
+    if (info.companyId === null){
+        console.error("Tried creating a file modules without companyId");
+    }
+
     const formData = new FormData();
 
     for (const [key, value] of Object.entries(info)) {

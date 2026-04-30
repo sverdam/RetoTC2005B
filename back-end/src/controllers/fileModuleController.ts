@@ -43,9 +43,12 @@ export const createFileModule: RequestHandler = async (req: Request, res: Respon
     })
 
     }catch (err: any){
+
+        console.log("Something happened while creating the File Module. " + err.message,);
+
         return res.status(500).json({
             status: "error",
-            message: "Something happened while creating the File Module" + err.message,
+            message: "Something happened while creating the File Module. " + err.message,
             payload: null
         })
     }
