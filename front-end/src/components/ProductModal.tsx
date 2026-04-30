@@ -44,6 +44,17 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose, product, setPro
 
     const isEditing = 'id' in product && !!product.id;
 
+    const [errors, setErrors] = useState<{ name?: boolean, description?: boolean, file?: boolean }>({});
+
+    const validate = () => {
+        const newErrors: typeof errors = {};
+        if (!formProduct.name.trim()) newErrors.name = true;
+        if (!formProduct.description.trim()) newErrors.description = true;
+        if (!isEditing && !('file' in formProduct && formProduct.file)) newErrors.file = true;
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+
     useEffect(() => {
         setFormProduct(product);
     }, [product])
@@ -62,6 +73,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose, product, setPro
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Nombre
+                                {errors.name && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <input type="text"
                                 required
@@ -74,6 +86,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose, product, setPro
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Descripción
+                                {errors.description && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <input type="text"
                                 required
@@ -86,12 +99,13 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose, product, setPro
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Imagen del producto
+                                {errors.file && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <div className="flex items-center gap-3 my-2">
                                 <InformationCircleIcon className="text-clas-gris h-5" />
                                 <p className="text-clas-gris">Imagen en formato .jpg</p>
                             </div>
-                            <FileUpload id={"product-image"} onFileSelect={handleProductImageSelect} width="w-full" required={!isEditing}/>
+                            <FileUpload id={"product-image"} onFileSelect={handleProductImageSelect} width="w-full" required={!isEditing} />
                         </div>
 
                     </div>
@@ -103,18 +117,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose, product, setPro
                         </button>
                         <button
                             onClick={() => {
-                                if (!formProduct.name.trim()) {
-                                    alert("El nombre es obligatorio");
-                                    return;
-                                }
-                                if (!formProduct.description.trim()) {
-                                    alert("La descripción es obligatoria");
-                                    return;
-                                }
-                                if (!isEditing && !('file' in formProduct && formProduct.file)) {
-                                    alert("La imagen es obligatoria");
-                                    return;
-                                }
+                                if (!validate()) return;
                                 setProduct(formProduct)
                                 onClose();
                             }}
