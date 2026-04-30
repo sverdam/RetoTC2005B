@@ -211,7 +211,7 @@ declare module "clas-types" {
         fileModules: FileModule[];
         certifications: NewCertificationInput[];
         filters: Filter[];
-        products: NewProductInput[];
+        products: (ProductBundleInput | NewProductInput)[];
         services: NewProductInput[];
     }
 
@@ -259,9 +259,9 @@ declare module "clas-types" {
     
     export interface ProductBundleInput{
         id: any;
-        file: File,
+        file: File | undefined,
         position: number,
-        companyId: number | null,
+        companyId: number | undefined,
         name: string,
         description: string
     }
