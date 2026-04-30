@@ -29,7 +29,8 @@ const router = createBrowserRouter([
             { path: 'login', element: <LoginPage/>},
             { path: 'membresia', element: <PaywallPage />},
             { path: 'dummylogo/:id', element: <DummyLogoEditFile/>},
-            { path: 'dummygallery/:id', element: <DummyGalleryEditFile/>}
+            { path: 'dummygallery/:id', element: <DummyGalleryEditFile/>},
+            { path: 'error', element: <ErrorPage/>}
         ]
     },
 ]);
