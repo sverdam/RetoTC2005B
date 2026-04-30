@@ -3,16 +3,16 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 
-interface Props{
+interface Props {
     product: Product | NewProductInput | null;
     service: Service | NewProductInput | null;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, onClose, onConfirm}) => {
-    return(
-        <Dialog open={(product || service)!== null } onClose={onClose} className="relative z-50">
+const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, onClose, onConfirm }) => {
+    return (
+        <Dialog open={(product || service) !== null} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro*/}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
 
@@ -43,7 +43,7 @@ const DeleteProductServiceConfirmModal: React.FC<Props> = ({ product, service, o
                         </button>
                         <button onClick={() => {
                             onConfirm();
-                            
+
                         }}
                             className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700">
                             Eliminar

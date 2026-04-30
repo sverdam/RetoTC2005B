@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-interface PhotoCarouselProps{
-    images: string[];
+interface PhotoCarouselProps {
+  images: string[];
 }
 
-const PhotoCarousel: React.FC<PhotoCarouselProps> = ({images}) => {
+const PhotoCarousel: React.FC<PhotoCarouselProps> = ({ images }) => {
   const [current, setCurrent] = useState(0);
 
   const prev = () => {
@@ -33,9 +33,8 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({images}) => {
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`h-[3px] rounded-full transition-all ${
-              current === i ? "w-8 bg-white" : "w-4 bg-white/50"
-            }`}
+            className={`h-[3px] rounded-full transition-all ${current === i ? "w-8 bg-white" : "w-4 bg-white/50"
+              }`}
           />
         ))}
       </div>

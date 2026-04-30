@@ -2,14 +2,14 @@ import type { Contact, NewContactInput } from "clas-types";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-interface Props{
+interface Props {
     contact: NewContactInput | Contact | null;
     onClose: () => void;
     onConfirm: () => void;
 }
 
-const DeleteContactConfirmModal: React.FC<Props> = ({ contact, onClose, onConfirm}) => {
-    return(
+const DeleteContactConfirmModal: React.FC<Props> = ({ contact, onClose, onConfirm }) => {
+    return (
         <Dialog open={contact !== null} onClose={onClose} className="relative z-50">
             {/* Overlay Oscuro*/}
             <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
