@@ -245,7 +245,7 @@ declare module "clas-types" {
 
     export interface NewContactInput {
         id: any;
-        type: ContactType ;
+        type: ContactType | null ;
         contactInfo: string;
         position: string;
         companyId: number | undefined;
