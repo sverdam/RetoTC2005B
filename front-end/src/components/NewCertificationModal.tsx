@@ -13,6 +13,15 @@ const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, 
     const [newCertification, setNewCertification] = useState<NewCertificationInput | Certification>(certification);
     const isEditing = 'id' in certification && certification.id;
 
+    const [errors, setErrors] = useState<{ name?: boolean }>({});
+
+    const validate = () => {
+        const newErrors: typeof errors = {};
+        if (!certification.name.trim()) newErrors.name = true;
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
+
     useEffect(() => {
         setNewCertification(certification);
     }, [certification])
@@ -31,6 +40,7 @@ const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, 
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Certificación
+                                {errors.name && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <input type="text"
                                 required
@@ -49,6 +59,7 @@ const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, 
                         </button>
                         <button
                             onClick={() => {
+                                if (!validate) return;
                                 setCertification(newCertification);
                                 onClose();
                             }}
