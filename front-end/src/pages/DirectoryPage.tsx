@@ -79,7 +79,9 @@ const DirectoryPage: React.FC = () => {
         console.log(tier)
         const _name = nameQuery.trim().toLowerCase();
         return companies.filter((p) => {
-            const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name) || p.products?.some(pr => pr.name.toLowerCase().includes(_name)) || p.services?.some(s => s.name.toLowerCase().includes(_name));
+            const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name) 
+                || p.products?.some(pr => pr.name.toLowerCase().includes(_name)) 
+                || p.services?.some(s => s.name.toLowerCase().includes(_name));
             const matchesFilter = selected.length === 0 || selected.every((f) => 
             p.filters?.some((c) => c.name === f.name)
             );;
@@ -108,7 +110,7 @@ const DirectoryPage: React.FC = () => {
             <div className="w-full flex flex-wrap gap-4 justify-center">
                 <div className="flex gap-2 p-2 items-center rounded-full border border-gray-300 bg-gray-100">
                     <MagnifyingGlassIcon className="h-4 w-4" />
-                    <input className="border-none focus:outline-none w-90 sm:w-120" placeholder="Buscar por nombre, producto o servicio..."
+                    <input className="border-none focus:outline-none w-90 sm:w-120" placeholder={userProfile.role !== "unverified" ? "Buscar por nombre, producto o servicio..." : "Buscar por nombre..."}
                         type="text"
                         value={nameQuery}
                         onChange={(e) =>
