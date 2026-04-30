@@ -19,7 +19,7 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({images}) => {
     <div className="relative w-full">
 
       {/* IMAGE */}
-      <div className="relative h-56 md:h-60 w-full overflow-hidden rounded-xl">
+      <div className="relative h-60 md:h-80 lg:h-60 w-full overflow-hidden rounded-xl">
         <img
           src={images[current]}
           className="w-full h-full object-cover transition duration-500"
