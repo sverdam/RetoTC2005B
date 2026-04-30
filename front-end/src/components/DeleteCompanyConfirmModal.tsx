@@ -23,25 +23,25 @@ const DeleteCompanyConfirmModal: React.FC<Props> = ({ company, onClose, onConfir
                         </div>
                         <div>
                             <DialogTitle className="text-sm font-semibold text-gray-900">
-                                Delete Company
+                                Eliminar Compañía
                             </DialogTitle>
                             <p className="mt-1 text-sm text-gray-600">
-                                Are you sure you want to delete {" "}
+                                ¿Está seguro de querer eliminar {" "}
                                 <span className="font-medium text-gray-900">
                                     {company?.name}
                                 </span>?
-                                This action cannot be undone.
+                                Esta acción no se puede deshacer.
                             </p>
                         </div>
                     </div>
                     <div className="flex justify-end gap-2">
                         <button onClick={onClose}
                             className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-                            Cancel
+                            Cancelar
                         </button>
                         <button onClick={onConfirm}
                             className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-70">
-                            Delete
+                            Eliminar
                         </button>
                     </div>
                 </DialogPanel>

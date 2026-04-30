@@ -718,7 +718,11 @@ const EditCompanyPage: React.FC = () => {
         </div>
         {/* Color de Compania */}
         <div className="flex flex-col gap-2 items-start w-2xl mt-5">
+            <div className="flex gap-2 items-center">
             <label className="font-semibold text-clas-negro">Color de Compañía</label>
+            <InformationCircleIcon className="text-gray-500 h-5 w-5"/>
+                <p className="text-gray-500">De preferencia no colores claros</p>
+            </div>
             <input 
                 type="text" 
                 value={formCompany.color}
