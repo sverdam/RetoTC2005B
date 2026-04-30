@@ -3,12 +3,13 @@ import {useState} from "react";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 
 interface Props {
+    id: string;
     onFileSelect: (file: File) => void;
     width?: string;
     required?: boolean;
 };
 
-const FileUpload: React.FC<Props> = ({ onFileSelect, width = "w-full", required = false }) => {
+const FileUpload: React.FC<Props> = ({ id, onFileSelect, width = "w-full", required = false }) => {
 
     const [fileName, setFileName] = useState< string | null >(null);
 
@@ -23,11 +24,11 @@ const FileUpload: React.FC<Props> = ({ onFileSelect, width = "w-full", required 
     return(
         <div className={width}>
             <label
-                htmlFor="fileUpload"
+                htmlFor={id}
                 className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-clas-gris rounded-lg cursor-pointer hover:bg-clas-gris/20 transition"
             >
                 <input 
-                    id="fileUpload"
+                    id={id}
                     type="file"
                     className="hidden"
                     required={required}

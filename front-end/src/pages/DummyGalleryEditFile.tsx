@@ -64,7 +64,7 @@ const DummyGalleryEditFile: React.FC = () =>
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col items-start w-2xl">
                     <label className="font-semibold text-clas-negro">Imagen para galería</label>
-                    <FileUpload onFileSelect={handleLogoSelect} />
+                    <FileUpload id="gallery-upload" onFileSelect={handleLogoSelect} />
                 </div>
 
                 <div className="flex flex-col items-start w-2xl">

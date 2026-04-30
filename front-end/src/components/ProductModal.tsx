@@ -27,12 +27,18 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
     }
     {/* Product Image Handling */}
     const handleProductImageSelect = (file: File) => {
-        setFormProduct( (prev) =>
-            ({
+        console.log("Handle Product Image?");
+        setFormProduct( (prev) => {
+            const newProductObject : ProductBundleInput = {
                 ...prev,
                 file: file,
                 position: randomInt(1, 10000000)
-            })
+            }
+            console.log("NEW PRODUCT OBJECT");
+            console.log(newProductObject);
+            return newProductObject;
+        }
+            
         )
     };
 
@@ -85,7 +91,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                                 <InformationCircleIcon className="text-clas-gris h-5"/>
                                 <p className="text-clas-gris">Imagen en formato .jpg</p>
                             </div>
-                            <FileUpload onFileSelect={handleProductImageSelect} required={!isEditing}/>
+                            <FileUpload onFileSelect={handleProductImageSelect} width="w-full" required={!isEditing}/>
                         </div>
                         
                     </div>

@@ -603,7 +603,7 @@ const EditCompanyPage: React.FC = () => {
                 <InformationCircleIcon className="text-gray-500 h-5"/>
                 <p className="text-gray-500">Imagen en formato .png sin fondo</p>
             </div>
-            <FileUpload onFileSelect={handleLogoSelect} />
+            <FileUpload id="logo-upload" onFileSelect={handleLogoSelect} />
         </div>
         <div className="flex flex-col gap-3 items-start w-2xl mt-5">
             <label className="font-semibold text-clas-negro">Nombre de la empresa</label>
@@ -775,7 +775,7 @@ const EditCompanyPage: React.FC = () => {
                 <InformationCircleIcon className="text-gray-500 h-5"/>
                 <p className="text-gray-500">Archivo en formato .pdf</p>
             </div>
-            <FileUpload onFileSelect={handleCatalogSelect} />
+            <FileUpload id="pdf-upload" onFileSelect={handleCatalogSelect} />
         </div>
 
         {isEditing ? 
