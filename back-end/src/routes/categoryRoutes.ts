@@ -7,8 +7,11 @@ import {
   updateCategory,
   restoreCategory
 } from '../controllers/categoryController';
+import { unverifiedCheck } from '../middlewares/authMiddleware';
 
 const categoryRouter: Router = Router();
+
+categoryRouter.use(unverifiedCheck);
 
 categoryRouter.get('/', getAllCategories);
 

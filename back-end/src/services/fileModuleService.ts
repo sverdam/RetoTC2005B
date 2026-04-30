@@ -74,6 +74,7 @@ export const ChangeFileName = (FileModule: FileData) => {
 
     if (FileModule.type === 'image'){FileModule.storedName = `img-${FileModule.companyId}-${FileModule.position}${extension}`;}
     else if(FileModule.type === 'logo'){FileModule.storedName =  `logo-${FileModule.companyId}-${FileModule.position}${extension}`;}
+    else if(FileModule.type === 'product'){FileModule.storedName =  `product-${FileModule.companyId}-${FileModule.position}${extension}`;}
     else if(FileModule.type === 'document'){FileModule.storedName = `document-${FileModule.companyId}-${FileModule.position}${extension}`;}
 
     else {throw new Error(`Invalid file type: ${FileModule.type}`);}
@@ -84,6 +85,7 @@ export const ConstructFinalPath = (type: string, storedName: string) =>{
     if (type === 'image'){finalPath = `files/images/${storedName}`;}
     else if(type === 'logo'){finalPath = `files/logos/${storedName}`;}
     else if(type === 'document'){finalPath = `files/documents/${storedName}`;}
+    else if(type === 'product'){finalPath = `files/products/${storedName}`;}
 
     else {throw new Error(`Invalid file type: ${type}`);}
     return finalPath;

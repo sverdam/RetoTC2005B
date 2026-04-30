@@ -10,7 +10,7 @@ const SECRET_KEY = process.env.SECRET_KEY ?? "unknown";
 export interface UserPayload extends JwtPayload {
   id: string;
   email: string;
-  companyId: number
+  companyId: number;
   role: string;
 }
 
@@ -24,7 +24,7 @@ export const unverifiedUser: UserPayload = {
 export function createToken(user: User)
 {
     const token = jwt.sign(
-        { id: user.id, email: user.email, comapnyId: user.companyId, role: user.role }, 
+        { id: user.id, email: user.email, companyId: user.companyId, role: user.role }, 
         SECRET_KEY, 
         { expiresIn: '2 hours' });
     return token;

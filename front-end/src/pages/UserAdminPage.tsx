@@ -1,18 +1,16 @@
 import {
-  PhotoIcon,
   TrashIcon,
   PencilIcon,
-  UserIcon,
-  CheckCircleIcon,
-  XCircleIcon,
+  UserIcon
 } from "@heroicons/react/24/outline";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import type { User, Company } from "clas-types";
-import { getAllUsers, deleteUser} from "../api/UserAPI";
+import { getAllUsers, deleteUser } from "../api/UserAPI";
 import { getAllCompanies } from "../api/CompanyAPI";
 import DeleteConfirmModal from "../components/DeleteConfirmModal";
-import UserDetailModal from "../components/userDetailModal";
+//import UserDetailModal from "../components/userDetailModal";
+//import UserDetailModal from "../components/userDetailModal";
 
 const SortIcon = ({ className }: { className?: string }) => (
   <svg
@@ -37,100 +35,100 @@ const SortIcon = ({ className }: { className?: string }) => (
 const UserPage: React.FC = () => {
 
   const [users, setUsers] = useState<User[]>([]);
+  const [roles, setRoles] = useState<string[]>([])
+
   const [nameQuery, setNameQuery] = useState("");
-  const [positionQuery, setPositionQuery] = useState("");
+  const [emailQuery, setEmailQuery] = useState("");
+  const [roleQuery, setRoleQuery] = useState("");
+
   const [companies, setCompanies] = useState<Company[]>([]);
-  const [companyId, setCompanyId] = useState<number | null> (null);
-  const [userToDelete, setUserToDelete] = useState<User | null> (null);
-  const [userToView, setUserToView] = useState<User | null> (null);
+  const [companyId, setCompanyId] = useState<number | null>(null);
+
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [userToView, setUserToView] = useState<User | null>(null);
   const navigate = useNavigate();
-  
-  
+
+
   useEffect(() => {
-    getAllUsers().then((users: User[]) => setUsers(users));
+    getAllUsers().then((users: User[]) => {
+      setUsers(users)
+      setRoles([... new Set(users.map(user => user.role))])
+    });
     getAllCompanies().then((companies: Company[]) => setCompanies(companies));
- 
+
   }, []);
 
 
   const filteredUsers = useMemo(() => {
     console.log(users);
-    const _name= nameQuery.trim().toLowerCase();
-    const _position = positionQuery.trim().toLowerCase();
+    const _name = nameQuery.trim().toLowerCase();
+    const _email = emailQuery.trim().toLowerCase();
+    const _role = roleQuery.trim().toLowerCase();
 
-    return users.filter((p) => {
-      const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name);
-      const matchesPosition = _position.length === 0 || p.position.toLowerCase().includes(_position);
-      const matchesCompany = companyId === null || p.company.id === companyId;
+    return users.filter((u) => {
+      const matchesName = _name.length === 0 || u.name.toLowerCase().includes(_name);
+      const matchesEmail = _email.length === 0 || u.email.toLowerCase().includes(_email);
+      const matchesCompany = companyId === null || u.company?.id === companyId;
+      const matchesRole = _role.length === 0 || u.role.toLowerCase() === _role;
 
-      return matchesName && matchesPosition && matchesCompany;
+      return matchesName && matchesEmail && matchesCompany && matchesRole;
     });
-  }, [positionQuery, nameQuery, companyId, users]);
+  }, [emailQuery, nameQuery, companyId, roleQuery, users]);
 
   const handleDelete = () => {
-    if(!userToDelete) return;
+    if (!userToDelete) return;
     deleteUser(userToDelete.id).then(() => {
       setUsers((prev) => prev.filter((p) => p.id !== userToDelete.id));
       setUserToDelete(null);
     });
   };
 
+  const formatRole = (role: string) => {
+    role = role.toLowerCase();
+    switch (role) {
+      case "user":
+        return "USUARIO"
+
+      case "clas editor":
+        return "EDITOR CLAS"
+
+      case "company editor":
+        return "EDITOR EMPRESA"
+
+      default:
+        return role.toUpperCase();
+    }
+  }
+
   return (
     <div className="p-4">
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
 
         {/* Header */}
-        <div className="border-b border-blue-200 bg-blue-50 px-4 py-3 flex items-center !gap-2">
-          <UserIcon className="!h-4 !w-4 text-blue-700" />
-          <p className="text-sm font-semibold text-blue-900">
-            All Users
+        <div className=" rounded-t-lg border-b border-clas bg-clas/20 px-4 py-3 flex items-center !gap-2">
+          <UserIcon className="!h-4 !w-4 text-clas" />
+          <p className="text-sm font-semibold text-clas">
+            Usuarios
           </p>
         </div>
 
         {/* Filter */}
         <div className="px-4 py-4 space-y-3">
-          <h2 className="text-sm font-semibold text-gray-900">Filter</h2>
+          <h2 className="text-sm font-semibold text-clas-negro">Filtros</h2>
 
           <div className="flex flex-wrap gap-3 items-end">
 
             <div>
-              <label className="block text-xs font-medium text-gray-600">
-                Name
-              </label>
-              <input
-                className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                type="text"
-                placeholder="Name"
-                value={nameQuery}
-                onChange={(e) => setNameQuery(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-gray-600">
-                Position
-              </label>
-              <input
-                className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                type="text"
-                placeholder="Position"
-                value={positionQuery}
-                onChange={(e) =>
-                  setPositionQuery(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-gray-600">
-                Company
+              <label className="block text-xs font-medium text-clas-negro/70">
+                Compañia
               </label>
               <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 value={companyId ?? ""}
-                onChange={(e) => 
+                onChange={(e) =>
                   setCompanyId(e.target.value === "" ? null : Number(e.target.value))
                 }
               >
-                <option value="">All Companies</option>
+                <option value="">Todas</option>
                 {companies.map((com) => (
                   <option key={com.id} value={com.id}>
                     {com.name}
@@ -140,9 +138,50 @@ const UserPage: React.FC = () => {
             </div>
 
             <div>
-              <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
-                Filter
-              </button>
+              <label className="block text-xs font-medium text-clas-negro/70">
+                Rol
+              </label>
+              <select className="mt-1 w-40 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                value={roleQuery ?? ""}
+                onChange={(e) =>
+                  setRoleQuery(e.target.value)
+                }
+              >
+                <option value="">Cualquiera</option>
+                {roles.map((role) => (
+                  <option key={role} value={role}>
+                    {formatRole(role)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+
+            <div>
+              <label className="block text-xs font-medium text-gray-600">
+                Nombre
+              </label>
+              <input
+                className="mt-1 w-40 rounded-md border border-clas-negro/70 bg-white px-2 py-1.5 text-sm text-clas-negro/70 shadow-sm focus:border-clas focus:outline-none focus:ring-2 focus:ring-clas/20"
+                type="text"
+                placeholder="Nombre"
+                value={nameQuery}
+                onChange={(e) => setNameQuery(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-clas-negro/70">
+                Correo
+              </label>
+              <input
+                className="mt-1 w-40 rounded-md border border-clas-negro/70 bg-white px-2 py-1.5 text-sm text-clas-negro/70 shadow-sm focus:border-clas focus:outline-none focus:ring-2 focus:ring-clas/20"
+                type="text"
+                placeholder="Correo"
+                value={emailQuery}
+                onChange={(e) =>
+                  setEmailQuery(e.target.value)}
+              />
             </div>
 
           </div>
@@ -151,10 +190,10 @@ const UserPage: React.FC = () => {
         {/* Results */}
         <div className="px-4 py-4 space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-sm font-semibold text-gray-900">Results</h2>
-            <button className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-              onClick={() => navigate("/users/new")}>
-              NEW USER
+            <h2 className="text-sm font-semibold text-clas-negro">Resultados</h2>
+            <button className="inline-flex items-center justify-center rounded-md bg-clas px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-clas-claro focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              onClick={() => navigate("/usuarios/nuevo")}>
+              NUEVO USUARIO
             </button>
           </div>
 
@@ -163,45 +202,43 @@ const UserPage: React.FC = () => {
 
               <thead className="bg-gray-50 text-gray-600">
                 <tr className="border-b border-gray-200">
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      #
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    #ID
+                    {/* <span className="flex items-center gap-1">
+                      #ID
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Image
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Compañia
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      Name
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Nombre
+                    {/* <span className="flex items-center gap-1">
+                        Nombre
+                        <SortIcon className="h-4 w-4 text-gray-400" />
+                      </span> */}
+                  </th>
+
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Correo
+                    {/* <span className="flex items-center gap-1">
+                      Correo
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      Position
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Rol
+                    {/* <span className="flex items-center gap-1">
+                      Rol
                       <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                    </span> */}
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      Email
-                      <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Modificar
                   </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    <span className="flex items-center gap-1">
-                      isAdmin
-                      <SortIcon className="h-4 w-4 text-gray-400" />
-                    </span>
-                  </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Modify
-                  </th>
-                  <th className="px-3 py-2 text-left text-xs font-semibold text-gray-600">
-                    Delete
+                  <th className="px-3 py-2 text-center text-xs font-semibold text-gray-600">
+                    Eliminar
                   </th>
                 </tr>
               </thead>
@@ -209,29 +246,26 @@ const UserPage: React.FC = () => {
               <tbody className="divide-y divide-gray-200">
                 {filteredUsers.length === 0 ? (
                   <tr>
-                    <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={10}>
-                      No users found.
+                    <td className="px-3 py-6 text-center text-sm text-gray-500" colSpan={9}>
+                      No se encontraron usuarios.
                     </td>
                   </tr>
                 ) : (
                   filteredUsers.map((user, index) => (
-                    <tr key={user.id} className = "hover:bg-gray-50">
+                    <tr key={user.id} className="hover:bg-gray-50">
                       <td className="px-3 py-3 font-medium text-gray-900">
-                        {index+1}
+                        {index + 1}
                       </td>
-                      
+
                       <td className="px-3 py-3 text-center text-gray-700">
-                        <PhotoIcon className="mx-auto h-4 w-4 text-gray-400" />
+                        {user.company?.name}
                       </td>
 
                       <td className="px-3 py-3">
-                        <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
+                        {user.name}
+                        {/* <button onClick={() => setUserToView(user)}className="text-blue-600 hover:underline text-sm font-medium">
                           {user.name}
-                        </button>
-                      </td>
-
-                      <td className="px-3 py-3 text-sm text-gray-600">
-                        {user.position}
+                        </button> */}
                       </td>
 
                       <td className="px-3 py-3 text-sm text-gray-600">
@@ -239,46 +273,42 @@ const UserPage: React.FC = () => {
                       </td>
 
                       <td className="px-3 py-3 text-gray-700 text-center">
-                        {user.isAdmin ? (
-                          <CheckCircleIcon className="h-4 w-4 text-green-600 inline-block" />
-                        ) : (
-                          <XCircleIcon className="h-4 w-4 inline-block" />
-                        )}
+                        {formatRole(user.role.toUpperCase())}
                       </td>
 
                       {/*Edit*/}
-                    <td className="px-3 py-3 text-center">
-                      <button onClick={() => setUserToView(user)} className="text-blue-600 hover:text-blue-800">
-                        <PencilIcon className="h-4 w-4" />
-                      </button>
-                    </td>
+                      <td className="px-3 py-3 text-center">
+                        <button onClick={() => navigate(`/usuarios/${user.id}`)} className="text-blue-600 hover:text-blue-800">
+                          <PencilIcon className="h-4 w-4" />
+                        </button>
+                      </td>
 
-                    {/* delete*/}
-                    <td className="px-3 py-3 text-center">
-                      <button
-                        onClick={() =>
-                          setUserToDelete(user)
-                        }
-                        className="text-red-600 hover:text-red-800"
-                      >
-                        <TrashIcon className="h-4 w-4" />
-                      </button>
-                    </td>
-                  </tr>
+                      {/* delete*/}
+                      <td className="px-3 py-3 text-center">
+                        <button
+                          onClick={() =>
+                            setUserToDelete(user)
+                          }
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          <TrashIcon className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
                   ))
-                )} 
+                )}
               </tbody>
             </table>
             <DeleteConfirmModal
               user={userToDelete}
               onClose={() => setUserToDelete(null)}
               onConfirm={handleDelete} />
-            <UserDetailModal 
+            {/* <UserDetailModal 
               user={userToView}
               onClose={() => setUserToView(null)}
-              onEdit={() => {navigate(`/users/${userToView?.id}/edit`, {state: {user: userToView } });
+              onEdit={() => {navigate(`/usuarios/${userToView?.id}`, {state: {user: userToView } });
                 setUserToView(null);
-              }} />
+              }} /> */}
           </div>
         </div>
       </div>

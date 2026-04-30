@@ -5,7 +5,11 @@ import { Location } from "../models/location";
 import { Contact } from "../models/contact";
 import { TextModule } from "../models/textModule";
 import { FileModule, FileType } from "../models/fileModule";
+import { Service } from "../models/services";
 import { Certification } from "../models/certification";
+import { Capacity } from "../models/capacities";
+import { Product } from "../models/product";
+import { Filter } from "../models/filter";
 
 
 // This functinos recieves a company, looks for its logo in the FileModule table, and finally it attaches it to the company object.
@@ -29,7 +33,14 @@ const addFilesToCompany = async (company: Company | null) => {
             plain: true      
         });
 
-    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule?.dataValues};
+    
+    const productsArray: Array<Product> = await Product.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            include: [{ model: FileModule, attributes: [], where: {companyId: company.id}
+                }],
+        });
+
+    const result = {...company.dataValues, logo: logoModule?.dataValues, catalog: pdfModule?.dataValues, products: productsArray};
 
     return result;
 }
@@ -44,7 +55,7 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
         payload: null, 
         }); 
     } 
-    
+
     // Save Company in the database 
     const company = { ...req.body }; 
     Company.create(company) 
@@ -68,7 +79,15 @@ export const createCompany: RequestHandler = (req: Request, res: Response) => {
 export const getAllCompanies: RequestHandler = async (req:Request, res:Response)=>{ 
     try { 
         const companies:Array<Company> = await Company.findAll({
-            include: [
+            attributes: { exclude: (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ?
+            ["website", "slogan", "employees", "pieces", "space", "capacity"]  
+            :
+            []},
+            include: 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? 
+            []
+             :
+            [
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -91,10 +110,22 @@ export const getAllCompanies: RequestHandler = async (req:Request, res:Response)
                                     "storedName", "originalName", "path", "mimeType", "size", "position"] }
                 },
                 {
+                    model: Service,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
+                {
                     model: Certification,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
-            ]
+                {
+                    model: Capacity,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
+                {
+                    model: Filter,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt", "tier", "CompanyFilter"] }
+                }
+            ]//E
         }); 
 
         //companies.map(company => addLogoToCompany);
@@ -120,7 +151,12 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
     const id = Number(req.params.id)
     try { 
         const company:Company | null = await Company.findByPk(id, {
-            include: [ 
+            attributes: { exclude: (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ?
+            ["website", "slogan", "employees", "pieces", "space", "capacity"]  
+            :
+            []},
+            include: 
+            (req.user?.role === 'unverified' && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true") ? [] :[ 
                 {
                     model: User,
                     attributes: { exclude: ["password", "companyId", "createdAt", "updatedAt", "deletedAt"] }
@@ -143,9 +179,25 @@ export const getCompanyById: RequestHandler = async (req:Request, res:Response)=
                                     "storedName", "originalName", "path", "mimeType", "size", "position"] }
                 },
                 {
+                    model: Service,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
+                {
                     model: Certification,
                     attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
                 },
+                {
+                    model: Filter,
+                    attributes: {exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
+                {
+                    model: Capacity,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt"] }
+                },
+                {
+                    model: Filter,
+                    attributes: { exclude: ["companyId", "createdAt", "updatedAt", "deletedAt", "tier", "CompanyFilter"] }
+                }
             ]
         }); 
 
@@ -172,7 +224,21 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
         message: "Content can not be empty.", 
         payload: null, 
         }); 
-    } 
+    }
+    
+    //Validate credentials
+    if  (  req.user?.role !== 'admin'
+        && req.user?.role !== 'CLAS editor'
+        && !(req.user?.role === 'company editor' && req.user?.companyId === Number(req.params.id))  // nor is it part of the company
+        && ( process.env.ALLOW_ALL_REQUESTS ?? "true") !== "true"  
+        
+    ){
+        return res.status(403).json({ 
+        status: "error", 
+        message: "Forbidden: You do not have pemission to modify a company.", 
+        payload: null, 
+        }); 
+    }
 
     // Save Company in the database 
     Company.update({ ...req.body }, { where: { id: req.params.id } }) 
@@ -203,6 +269,7 @@ export const updateCompany:RequestHandler = (req: Request, res: Response) => {
 // Delete a Company with the specified id in the request 
 
 export const deleteCompany: RequestHandler = async (req: Request, res: Response): Promise<void> => { 
+    
     const id = Number(req.params.id);
     try { 
         await Company.destroy({ where: { id } }); 

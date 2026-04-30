@@ -11,12 +11,26 @@
 }
 
 #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-    font-family: 'Google Sans', sans-serif;
-    font-weight: 300;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 300;
 }
 
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.7s ease-out forwards;
+}
