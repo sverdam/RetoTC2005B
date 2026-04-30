@@ -181,7 +181,7 @@ const HomePage: React.FC = () => {
             </div>
 
             {/*TO DO: Add contact details to Contact and Location section*/}
-            <div className="animate-fade-up w-full flex flex-col gap-6 px-14 py-20 bg-gray-50">
+            <div className="animate-fade-up w-full flex flex-col gap-6 px-14 py-20 pb-20 bg-gray-50">
                 <div className="flex flex-col gap-4">
                     <div>
     
@@ -226,7 +226,6 @@ const HomePage: React.FC = () => {
                 </div>
             </div>
 
-            <div></div>
         </div>
     );
 };
