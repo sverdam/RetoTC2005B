@@ -35,3 +35,5 @@ Finally, to adjust the db tables for correct auto-increment, run:
 ```
 npm run syncKeys
 ```
+
+Note: The seed doesnt add files, but it creates empty slots for them in the database. They can be updated to have the actual file via postman. This only happens with the seeder, uploading files from the app works as expected. 
