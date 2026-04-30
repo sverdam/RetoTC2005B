@@ -160,7 +160,7 @@ const CompanyPage: React.FC = () => {
 
                 <div className="flex flex-col w-full gap-4">
                     <div className="flex flex-row gap-4">
-                        <div className={`flex flex-col basis-[${gallery.length === 0 ? 100 : 60}%]`}>
+                        <div className={`w-full flex flex-col basis-[${gallery.length === 0 ? 100 : 60}%]`}>
                             <p className="text-lg text-left">
                             {company?.aboutUs}
                             </p>
