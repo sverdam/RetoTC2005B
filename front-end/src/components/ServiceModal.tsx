@@ -49,6 +49,7 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose, service, setSer
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Nombre
+                                {errors.name && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <input type="text"
                                 required
@@ -61,6 +62,7 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose, service, setSer
                         <div className="flex flex-col gap-1">
                             <label className="font-semibold text-clas-negro">
                                 Descripción
+                                {errors.description && <span className="text-red-400 text-sm font-normal">* Campo obligatorio</span>}
                             </label>
                             <input type="text"
                                 required
@@ -80,6 +82,7 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose, service, setSer
                         </button>
                         <button
                             onClick={() => {
+                                if(!validate) return;
                                 setService(formService)
                                 onClose();
                             }}
