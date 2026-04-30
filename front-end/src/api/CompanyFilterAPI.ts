@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 
 export const getCompanyFilters = async (companyId: number) => {
     try{
-    const res = await api.get(`/company-filter/company/${companyId}`);
+    const res = await api.get(`/companyFilter/company/${companyId}`);
     return res.data; 
     } catch(error) {
         const err = error as AxiosError;
@@ -14,7 +14,7 @@ export const getCompanyFilters = async (companyId: number) => {
 
 export const createCompanyFilter = async (companyId: number, filterId: number) => {
     try{
-    const res = await api.post(`/company-filter`, { companyId, filterId });
+    const res = await api.post(`/companyFilter`, { companyId, filterId });
     return res.data;
     } catch(error) {
         const err = error as AxiosError;
@@ -25,7 +25,7 @@ export const createCompanyFilter = async (companyId: number, filterId: number) =
 
 export const deleteCompanyFilter = async (companyId: number, filterId: number) => {
     try{
-    const res = await api.delete(`/company-filter/company/${companyId}/filter/${filterId}`);
+    const res = await api.delete(`/companyFilter/company/${companyId}/filter/${filterId}`);
     return res.data;
     } catch(error) {
         const err = error as AxiosError;
