@@ -438,7 +438,8 @@ const EditCompanyPage: React.FC = () => {
             }
 
             if(!c) return;
-
+            console.log(c)
+            console.log(c.id)
             companyId = c.id;
 
             if (formCompany.logo){
@@ -462,11 +463,11 @@ const EditCompanyPage: React.FC = () => {
         if(isEditing && formCompany.id != null) {
             console.log("Guarde el id pq estoy editando")
             companyId = formCompany.id;
-        }else if(!isEditing) {
-            return(navigate(`/error`))
         }
-
-        if(companyId){
+        console.log(companyId)
+        if(!companyId){
+            return navigate('/error');
+        }
             console.log("Editando")
 
             //Products
@@ -565,7 +566,6 @@ const EditCompanyPage: React.FC = () => {
                 console.log("Se updeo la company :)")
             )
 
-        }
         navigate(`/empresa/${companyId}`,{state: {refresh: Date.now()}})
     } 
 
@@ -1141,7 +1141,7 @@ const EditCompanyPage: React.FC = () => {
             </button> : <></>}
             <button 
                 onClick={handleSubmit} 
-                className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">Aplicar Cambios</button>
+                className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">{isEditing ? "Aplicar Cambios" : "Crear Empresa" }</button>
         </div>
         
         <FilterModal 

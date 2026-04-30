@@ -42,8 +42,8 @@ export const getCompanybyId = async(id: number): Promise<Company> => {
 
 export const createCompany = async (data:typeCreateCompany): Promise<responseCompany> => {
     try{
-        const res = await api.post<responseCompany>("/company", data);
-        return res.data;
+        const res = await api.post<any>("/company", data);
+        return res.data.payload;
     } catch(error){
         const err = error as AxiosError;
         console.error("Error creating company: ", err.message);
