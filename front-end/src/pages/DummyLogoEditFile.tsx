@@ -4,21 +4,20 @@ import { useParams } from "react-router";
 import FileUpload from "../components/FileUpload";
 import { createFileModule } from "../api/fileModuleAPI";
 
-interface FileCompoundInput{
+interface FileCompoundInput {
     file: File, // <- Actual file
-    type: 'logo' | 'document' | 'product' | 'image', 
+    type: 'logo' | 'document' | 'product' | 'image',
     position: number, // <- any number
     companyId: number
 }
 
-const DummyLogoEditFile: React.FC = () => 
-{
-    const {id} = useParams();
+const DummyLogoEditFile: React.FC = () => {
+    const { id } = useParams();
     const companyId = Number(id)
     const [fileMod, setFileMod] = useState<FileCompoundInput | null>(null);
     const pos = 0;
 
-    {/* Logo Handling */}
+    {/* Logo Handling */ }
     const handleLogoSelect = (file: File) => {
         console.log(file);
         setFileMod({
@@ -34,12 +33,12 @@ const DummyLogoEditFile: React.FC = () =>
         console.log("SUBMIT");
         if (fileMod === null) return;
         createFileModule({
-            type: fileMod.type, 
-            position: fileMod.position, 
+            type: fileMod.type,
+            position: fileMod.position,
             companyId: fileMod.companyId
         }, fileMod?.file).then(() => console.log("Yey"))
-        .catch(() => console.log("Not"))
-        .finally(() => console.log("Finally"));
+            .catch(() => console.log("Not"))
+            .finally(() => console.log("Finally"));
     }
 
     useMemo(() => {
@@ -60,7 +59,7 @@ const DummyLogoEditFile: React.FC = () =>
                     <label className="font-semibold text-clas-negro">Imagen para logo</label>
                     <FileUpload id="logo-upload" onFileSelect={handleLogoSelect} />
                 </div>
-                
+
                 <div className="mt-4">
                     <button className="bg-clas text-white font-semibold rounded-lg px-2 py-1 hover:bg-clas-claro">
                         Aplicar Cambios

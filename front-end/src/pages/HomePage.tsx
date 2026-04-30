@@ -14,12 +14,12 @@ import { getLogos } from "../api/fileModuleAPI";
 import ProfileCard from "../components/ProfileCard";
 
 const companyLogos = [
-  { src: ford, alt: "Ford"},
-  { src: beyond_movilidad, alt: "Beyond Movilidad Compartida"},
-  { src: martinrea, alt: "Martinrea"},
-  { src: schnellecke, alt: "Schnellecke Logistics"},
-  { src: soluciones_industriales, alt: "Soluciones Industriales"},
-  { src: suppliers_city, alt: "Suppliers City"},
+    { src: ford, alt: "Ford" },
+    { src: beyond_movilidad, alt: "Beyond Movilidad Compartida" },
+    { src: martinrea, alt: "Martinrea" },
+    { src: schnellecke, alt: "Schnellecke Logistics" },
+    { src: soluciones_industriales, alt: "Soluciones Industriales" },
+    { src: suppliers_city, alt: "Suppliers City" },
 ];
 
 interface LogoInterface {
@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
 
     const [info, setInfo] = useState<LandingPage | null>(null);
     const [dbLogos, setDbLogos] = useState<LogoInterface[]>(companyLogos);
-    
+
     useEffect(() => {
         getLandingPage().then((result) => {
             setInfo(result);
@@ -51,10 +51,10 @@ const HomePage: React.FC = () => {
                 <img src={heroImage} alt="hero image" className="w-full h-[720px] object-cover absolute z-0" ></img>
                 <div className="animate-fade-up relative z-10 max-w-2xl px-14 text-left text-white">
                     <h1 className="text-5xl font-medium mb-4">
-                    Impulsando el futuro automotriz de Sonora
+                        Impulsando el futuro automotriz de Sonora
                     </h1>
                     <p className="mb-6 text-lg">
-                    {info ? info.bannerText : "Colaboración que impulsa la innovación, competitividad y el crecimiento sostenible del sector automotriz sonorense."}
+                        {info ? info.bannerText : "Colaboración que impulsa la innovación, competitividad y el crecimiento sostenible del sector automotriz sonorense."}
                     </p>
                     <Button text="Conoce nuestro directorio" to="/directorio" />
                 </div>
@@ -74,56 +74,56 @@ const HomePage: React.FC = () => {
             />
 
             {/* About Us Section */}
-           <div className="animate-fade-up w-full flex gap-10 text-left text-clas-negro px-14">
+            <div className="animate-fade-up w-full flex gap-10 text-left text-clas-negro px-14">
 
-            <div className="basis-[60%]">
-                <div className="flex flex-col gap-4">
-                <div>
-                    <p className="text-clas font-medium mb-2">
-                    Sobre Nosotros
-                    </p>
+                <div className="basis-[60%]">
+                    <div className="flex flex-col gap-4">
+                        <div>
+                            <p className="text-clas font-medium mb-2">
+                                Sobre Nosotros
+                            </p>
 
-                    <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
-                    ¿Quiénes somos?
-                    </h1>
+                            <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
+                                ¿Quiénes somos?
+                            </h1>
 
-                    <p className="text-lg text-gray-700 leading-relaxed">
-                    {info ? info.mainText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
-                    </p>
+                            <p className="text-lg text-gray-700 leading-relaxed">
+                                {info ? info.mainText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 space-y-6">
+                        <div>
+                            <h2 className="text-xl font-medium">🌟 Visión</h2>
+                            <p className="text-lg text-gray-700">
+                                {info ? info.visionText : "Posicionar a Sonora como el principal clúster automotriz de México, destacado por su innovación, sostenibilidad y calidad."}
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 className="text-xl font-medium">⚙️ Misión</h2>
+                            <p className="text-lg text-gray-700">
+                                {info ? info.missionText : "Ser el motor que fortalece la competitividad del sector, fomentando colaboración y desarrollo continuo."}
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 className="text-xl font-medium">🤝 Comunidad</h2>
+                            <p className="text-lg text-gray-700">
+                                {info ? info.communityText : "La fuerza de CLAS está en su gente: industria, academia y gobierno trabajando juntos para convertir el crecimiento individual en éxito compartido."}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                </div>
 
-                <div className="mt-8 space-y-6">
-                <div>
-                    <h2 className="text-xl font-medium">🌟 Visión</h2>
-                    <p className="text-lg text-gray-700">
-                    {info ? info.visionText : "Posicionar a Sonora como el principal clúster automotriz de México, destacado por su innovación, sostenibilidad y calidad."}
-                    </p>
+                <div className="basis-[40%]">
+                    <img
+                        className="h-full w-full object-cover rounded-3xl"
+                        src="https://www.usnews.com/object/image/00000190-bd0f-d31e-abf1-fdcf4dcf0000/4187-2025gv80.jpg?update-time=1721158814747&size=responsive970"
+                        alt="CLAS"
+                    />
                 </div>
-
-                <div>
-                    <h2 className="text-xl font-medium">⚙️ Misión</h2>
-                    <p className="text-lg text-gray-700">
-                    {info ? info.missionText : "Ser el motor que fortalece la competitividad del sector, fomentando colaboración y desarrollo continuo."}
-                    </p>
-                </div>
-
-                <div>
-                    <h2 className="text-xl font-medium">🤝 Comunidad</h2>
-                    <p className="text-lg text-gray-700">
-                    {info ? info.communityText : "La fuerza de CLAS está en su gente: industria, academia y gobierno trabajando juntos para convertir el crecimiento individual en éxito compartido."}
-                    </p>
-                </div>
-                </div>
-            </div>
-
-            <div className="basis-[40%]">
-                <img
-                className="h-full w-full object-cover rounded-3xl"
-                src="https://www.usnews.com/object/image/00000190-bd0f-d31e-abf1-fdcf4dcf0000/4187-2025gv80.jpg?update-time=1721158814747&size=responsive970"
-                alt="CLAS"
-                />
-            </div>
 
             </div>
 
@@ -132,19 +132,19 @@ const HomePage: React.FC = () => {
                 <div className="flex flex-col gap-4">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
-                        Conoce al equipo <span className="text-clas">CLAS</span>
+                            Conoce al equipo <span className="text-clas">CLAS</span>
                         </h1>
                         <p className="text-lg text-gray-700 leading-relaxed">
-                        {info ? info.aboutUsText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
+                            {info ? info.aboutUsText : "Detrás de CLAS hay un equipo comprometido que impulsa cada iniciativa con visión, experiencia y colaboración. Conoce a las personas que hacen posible el crecimiento de la industria automotriz en Sonora."}
                         </p>
                     </div>
 
                     {/*Profile Cards*/}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-between">
-                        <ProfileCard name="Juan Carlos Campoy Ramos" position="Presidente" company="New Concept Technology" mail="presidencia@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-8fa2f20.png/:/cr=t:14.81%25,l:5.78%25,w:84.75%25,h:51.43%25/rs=w:730,h:730,cg:true,m"/>
-                        <ProfileCard name="Mario Alberto Montiel Guzmán" position="Vicepresidente" company="Schnellecke Logistics México" mail="vicepresidencia@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Imagen%20de%20WhatsApp%202025-07-09%20a%20las%2013.07.50_b.jpg/:/cr=t:0%25,l:15.14%25,w:66.81%25,h:70.43%25/rs=w:730,h:730,cg:true,m"/>
-                        <ProfileCard name="Diego Cacho Campillo" position="Tesorero" company="Grupo Industrial ESD" mail="tesoreria@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Diego%20Cacho.jpg/:/cr=t:2.17%25,l:0%25,w:100%25,h:71.41%25/rs=w:365,h:365,cg:true/qt=q:14"/>
-                        <ProfileCard name="Margarita Bejarano Celaya" position="Directora" company="CLAS" mail="direccion@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-074403d.png/:/cr=t:0%25,l:15.07%25,w:48.08%25,h:32.04%25/rs=w:365,h:365,cg:true,m/qt=q:14"/>
+                        <ProfileCard name="Juan Carlos Campoy Ramos" position="Presidente" company="New Concept Technology" mail="presidencia@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-8fa2f20.png/:/cr=t:14.81%25,l:5.78%25,w:84.75%25,h:51.43%25/rs=w:730,h:730,cg:true,m" />
+                        <ProfileCard name="Mario Alberto Montiel Guzmán" position="Vicepresidente" company="Schnellecke Logistics México" mail="vicepresidencia@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Imagen%20de%20WhatsApp%202025-07-09%20a%20las%2013.07.50_b.jpg/:/cr=t:0%25,l:15.14%25,w:66.81%25,h:70.43%25/rs=w:730,h:730,cg:true,m" />
+                        <ProfileCard name="Diego Cacho Campillo" position="Tesorero" company="Grupo Industrial ESD" mail="tesoreria@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/Diego%20Cacho.jpg/:/cr=t:2.17%25,l:0%25,w:100%25,h:71.41%25/rs=w:365,h:365,cg:true/qt=q:14" />
+                        <ProfileCard name="Margarita Bejarano Celaya" position="Directora" company="CLAS" mail="direccion@clas.com.mx" image="https://img1.wsimg.com/isteam/ip/dcf17818-4267-46ce-a60c-cfa6c45c9047/blob-074403d.png/:/cr=t:0%25,l:15.07%25,w:48.08%25,h:32.04%25/rs=w:365,h:365,cg:true,m/qt=q:14" />
                     </div>
                 </div>
             </div>
@@ -154,20 +154,20 @@ const HomePage: React.FC = () => {
                 <div className="flex flex-col gap-4">
                     <div>
                         <p className="text-clas font-medium mb-2">
-                        Contacto
+                            Contacto
                         </p>
                         <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
-                        Acércate a CLAS
+                            Acércate a CLAS
                         </h1>
                         <p className="text-lg text-gray-700 leading-relaxed">
-                        {info ? info.contactText : "¿Te interesa formar parte del Cluster Automotriz de Sonora? Acércate a nosotros para obtener más información."}
+                            {info ? info.contactText : "¿Te interesa formar parte del Cluster Automotriz de Sonora? Acércate a nosotros para obtener más información."}
                         </p>
                     </div>
                 </div>
 
                 {/*CONTACTS*/}
                 <div className="animate-fade-up w-full justify-center grid grid-cols-1 sm:grid-cols-3 sm:px-30 gap-10">
-                    <div> 
+                    <div>
                         <a href="https://maps.app.goo.gl/ux6pGm7EbhTyhdr86" className="text-gray-500 text-md hover:underline">
                             Obrero Mundial 10, 83210 Hermosillo, Sonora, Mexico
                         </a>
@@ -175,29 +175,29 @@ const HomePage: React.FC = () => {
 
                     <div>
                         <a href="mailto:direccion@clas.com.mx" className="text-gray-500 text-md hover:underline">
-                        direccion@clas.com.mx
-                    </a>
+                            direccion@clas.com.mx
+                        </a>
                     </div>
 
                     <div>
                         <a href="mailto:tesoreria@clas.com.mx" className="text-gray-500 text-md hover:underline">
-                        tesoreria@clas.com.mx
-                    </a>
+                            tesoreria@clas.com.mx
+                        </a>
                     </div>
                 </div>
 
                 {/*LOCATION*/}
                 <div className="h-[380px]">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3486.390661977626!2d-110.99815782502202!3d29.094145875415716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ce8543be63d777%3A0xcbfc449d5fa1bb40!2sCl%C3%BAster%20Automotriz%20de%20Sonora!5e0!3m2!1ses-419!2smx!4v1776759191201!5m2!1ses-419!2smx"
-                    className="w-full h-full border-0"
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
+                        className="w-full h-full border-0"
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
                     ></iframe>
                 </div>
             </div>
 
-<div></div>
+            <div></div>
         </div>
     );
 };
