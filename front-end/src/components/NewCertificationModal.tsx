@@ -59,7 +59,7 @@ const NewCertificationModal: React.FC<Props> = ({ isCertificationOpen, onClose, 
                         </button>
                         <button
                             onClick={() => {
-                                if (!validate) return;
+                                if (!validate()) return;
                                 setCertification(newCertification);
                                 onClose();
                             }}

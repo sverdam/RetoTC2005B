@@ -82,7 +82,7 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose, service, setSer
                         </button>
                         <button
                             onClick={() => {
-                                if(!validate) return;
+                                if(!validate()) return;
                                 setService(formService)
                                 onClose();
                             }}

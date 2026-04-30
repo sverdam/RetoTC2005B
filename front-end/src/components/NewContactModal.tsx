@@ -17,13 +17,13 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
 
     const isEditing = 'id' in contact && contact.id;
 
-    const [errors, setErrors] = useState<{ contactInfo?: boolean, type?: boolean, position?: boolean }>({});
+    const [errors, setErrors] = useState<{ contactInfo?: boolean, position?: boolean, type?:boolean }>({});
 
     const validate = () => {
         const newErrors: typeof errors = {};
         if (!formContact.contactInfo.trim()) newErrors.contactInfo = true;
-        if (!formContact.type.trim()) newErrors.type = true;
         if (!formContact.position.trim()) newErrors.position = true;
+        if (!formContact.type) newErrors.type = true;
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -106,7 +106,7 @@ const NewContactModal: React.FC<Props> = ({ isContactOpen, onClose, contact, set
                         </button>
                         <button
                             onClick={() => {
-                                if (!validate) return;
+                                if (!validate()) return;
                                 setContact(formContact);
                                 onClose();
                             }}
