@@ -36,7 +36,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
         )
     };
 
-    const isEditing = 'id' in product && product.id;
+    const isEditing = 'id' in product && !!product.id;
 
     useEffect(() => {
         setFormProduct(product);
@@ -85,7 +85,7 @@ const ProductModal: React.FC<Props> = ({ isProductOpen, onClose , product, setPr
                                 <InformationCircleIcon className="text-clas-gris h-5"/>
                                 <p className="text-clas-gris">Imagen en formato .jpg</p>
                             </div>
-                            <FileUpload onFileSelect={handleProductImageSelect} />
+                            <FileUpload onFileSelect={handleProductImageSelect} required={!isEditing}/>
                         </div>
                         
                     </div>
