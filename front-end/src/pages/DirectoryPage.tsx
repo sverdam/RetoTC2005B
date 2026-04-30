@@ -78,18 +78,33 @@ const DirectoryPage: React.FC = () => {
         console.log(companies);
         console.log(tier)
         const _name = nameQuery.trim().toLowerCase();
-        return companies.filter((p) => {
-            const matchesName = _name.length === 0 || p.name.toLowerCase().includes(_name) 
-                || p.products?.some(pr => pr.name.toLowerCase().includes(_name)) 
-                || p.services?.some(s => s.name.toLowerCase().includes(_name));
-            const matchesFilter = selected.length === 0 || selected.every((f) => 
-            p.filters?.some((c) => c.name === f.name)
-            );;
-            const matchesTier = tier.length === 0 || tier.includes(p.tier);
 
-            return matchesName && matchesFilter && matchesTier;
+        return companies.filter((p) => {
+            const matchesName = 
+                _name.length === 0 || 
+                p.name.toLowerCase().includes(_name);
+                
+            const matchesProductsOrServices =
+                p.products?.some(pr => pr.name.toLowerCase().includes(_name)) 
+                || p.services?.some(s => s.name.toLowerCase().includes(_name));
+
+            const matchesSearchBar = 
+                userProfile.role === "unverified"
+                    ? matchesName
+                    : matchesName || matchesProductsOrServices;
+
+            const matchesFilter = 
+                selected.length === 0 || 
+                selected.every((f) => 
+                    p.filters?.some((c) => c.name === f.name)
+            );
+
+            const matchesTier = 
+                tier.length === 0 || tier.includes(p.tier);
+
+            return matchesSearchBar && matchesFilter && matchesTier;
         });
-    }, [nameQuery, selected, companies, tier]);
+    }, [nameQuery, selected, companies, tier, userProfile.role]);
 
     const handleFilter = (newFilters: Filter[]) => {
         setSelected(newFilters)
