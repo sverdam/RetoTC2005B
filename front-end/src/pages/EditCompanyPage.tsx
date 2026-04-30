@@ -461,7 +461,7 @@ const EditCompanyPage: React.FC = () => {
             console.log(c.id)
             companyId = c.id;
 
-            if (formCompany.logo){
+            if (formCompany.logo?.file){
                 createFileModule({
                 type: formCompany.logo.type, 
                 position: formCompany.logo.position, 
@@ -469,7 +469,7 @@ const EditCompanyPage: React.FC = () => {
             }, formCompany.logo.file);
             }
 
-            if (formCompany.catalog){
+            if (formCompany.catalog?.file){
             createFileModule({
                 type: formCompany.catalog.type, 
                 position: formCompany.catalog.position, 
@@ -578,7 +578,7 @@ const EditCompanyPage: React.FC = () => {
                 color: formCompany.color
             }
 
-            if (formCompany.logo){
+            if (formCompany.logo?.file){
                 await createFileModule({
                 type: 'logo', 
                 position: formCompany.logo.position, 
@@ -586,7 +586,7 @@ const EditCompanyPage: React.FC = () => {
             }, formCompany.logo.file);
             }
 
-            if (formCompany.catalog){
+            if (formCompany.catalog?.file){
             await createFileModule({
                 type: 'document', 
                 position: formCompany.catalog.position, 
