@@ -13,7 +13,8 @@ import { getLandingPage } from "../api/LandingPageApi";
 import { getLogos } from "../api/fileModuleAPI";
 import ProfileCard from "../components/ProfileCard";
 import PhotoCarousel from "../components/PhotoCarousel";
-import { EyeIcon, PuzzlePieceIcon, StarIcon } from "@heroicons/react/24/outline";
+import { ArrowUpRightIcon, EyeIcon, PuzzlePieceIcon, StarIcon } from "@heroicons/react/24/outline";
+import newsletter from "../assets/Newsletter 08-CLAS 2026.pdf"
 
 const companyLogos = [
     { src: ford, alt: "Ford" },
@@ -173,9 +174,34 @@ const HomePage: React.FC = () => {
                         <h1 className="text-3xl md:text-4xl font-bold text-clas-negro mb-4">
                             Últimas noticias
                         </h1>
-                        <p className="text-lg text-gray-700 leading-relaxed">
-                            PDF NEWSLETTER
-                        </p>
+                        
+                        {/*NEWSLETTER PDF*/}
+                        <div className="w-full flex flex-col items-center gap-6">
+                            <iframe
+                                src={`${newsletter}#toolbar=0&navpanes=0&scrollbar=0`}
+                                title="Newsletter CLAS"
+                                className="w-full max-w-6xl h-screen rounded-xl"
+                                style={{
+                                border: "none",
+                                }}
+                            />
+
+                            {/* DOWNLOAD LINK */}
+                            <div className="group flex gap-2 items-center w-fit text-clas">
+                                <a
+                                className="text-md"
+                                href={newsletter}
+                                download
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >
+                                Descargar PDF
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-300 h-[1px] rounded-full bg-clas"></span>
+                                </a>
+
+                                <ArrowUpRightIcon className="h-4 group-hover:-translate-y-1 transition-all ease-in-out" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
