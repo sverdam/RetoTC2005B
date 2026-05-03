@@ -1196,7 +1196,7 @@ const EditCompanyPage: React.FC = () => {
                 <button
                     onClick={() => navigate(-1)}
                     className="bg-white border-2 border-clas-negro/70 text-clas-negro/70 font-semibold rounded-lg px-2 py-1 hover:bg-clas-negro/20">Cancelar</button>
-                {(isEditing) ?
+                {(isEditing && userProfile.role === 'admin') ?
                     <button className="bg-[#cf384c] text-white font-semibold rounded-lg px-2 py-1 hover:bg-red-700"
                         onClick={() => setCompanyToDelete(formCompany)}
                     >
