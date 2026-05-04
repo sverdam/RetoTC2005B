@@ -1,7 +1,7 @@
 
 # General Use
 Manual for general usage of the app:
-https://tecmx-my.sharepoint.com/:w:/g/personal/a01255663_tec_mx/IQBQ-mBeVlaATrv2b4LxFHEhAcI223qu0bu_Ndyp7k_vW9E?e=HnPihE
+https://drive.google.com/file/d/1nH39HQKVi__o59sEl1c1JZ-rD8XY4heR/view?usp=sharing
 
 
 # Backend Setup
