@@ -44,8 +44,8 @@ const Navbar: React.FC = () => {
       <div className="w-full px-14 py-2.5 flex items-center justify-between">
         <NavLink to="/" className="flex items-center">
           <img
-            src="..\src\assets\CLAS-Logotipo-03.jpeg"
-            alt="Logo"
+            src="..\src\assets\clas_logo_og.jpeg"
+            alt="logo"
             className="mr-3 w-12 flex-shrink-0"
           />
         </NavLink>

@@ -54,7 +54,7 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose, service, setSer
                             <input type="text"
                                 required
                                 value={formService.name}
-                                placeholder="Nombre del producto..."
+                                placeholder="Nombre del servicio..."
                                 className="w-full border-2 border-clas-gris rounded-lg p-2"
                                 onChange={(e) => handleChange("name", e.target.value)}>
                             </input>
@@ -67,7 +67,7 @@ const ServiceModal: React.FC<Props> = ({ isServiceOpen, onClose, service, setSer
                             <input type="text"
                                 required
                                 value={formService.description}
-                                placeholder="Descripción del producto..."
+                                placeholder="Descripción del servicio..."
                                 className="w-full border-2 border-clas-gris rounded-lg p-2"
                                 onChange={(e) => handleChange("description", e.target.value)}>
                             </input>
